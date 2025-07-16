@@ -1,0 +1,39 @@
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# Ant build
+build/
+dist/
+bin/
+out/
+
+# IntelliJ IDEA
+*.ipr
+*.iws
+.idea/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# VS Code
+.vscode/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Misc
+*.swp
+*.bak
+*.tmp
+*.orig
+*~
+
+# Dependency JARs (optional)
+!lib/*.jar
