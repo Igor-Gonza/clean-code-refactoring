@@ -15,17 +15,19 @@
 package org.jhotdraw.xml;
 
 import java.io.*;
+
 /**
- * Interface for objects that can be made persistent using 
+ * Interface for objects that can be made persistent using
  * <code>DOMOutput.writeObject</code> and <code>DOMInput.readObject</code>.
  * <p>
  * By convention every object implementing the DOMStorable interface MUST
  * provide a public parameterless constructor.
  *
- * @author  Werner Randelshofer
- * @version 1.0 February 17, 2004 Create.
+ * @author Werner Randelshofer
+ * @version 1.0 February 17, 2004, Create.
  */
 public interface DOMStorable {
-    public void write(DOMOutput out) throws IOException;
-    public void read(DOMInput in) throws IOException;
+  void write(DOMOutput out) throws IOException;
+
+  void read(DOMInput in) throws IOException;
 }

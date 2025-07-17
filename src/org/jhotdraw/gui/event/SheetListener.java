@@ -15,16 +15,17 @@
 package org.jhotdraw.gui.event;
 
 import java.util.*;
+
 /**
  * SheetListener.
  *
- * @author  Werner Randelshofer
+ * @author Werner Randelshofer
  * @version 1.0 26. September 2005 Created.
  */
 public interface SheetListener extends EventListener {
-    /**
-     * This method is invoked, when the user selected an option on the
-     * JOptionPane or the JFileChooser pane on the JSheet.
-     */
-    public void optionSelected(SheetEvent evt);
+  /**
+   * This method is invoked, when the user selected an option on the
+   * JOptionPane or the JFileChooser pane on the JSheet.
+   */
+  void optionSelected(SheetEvent evt);
 }

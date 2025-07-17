@@ -13,8 +13,9 @@
  */
 package org.jhotdraw.beans;
 
-import java.beans.*;
-import java.io.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
 
 /**
  * Abstract class for models that have to support property change listeners.<p>
@@ -28,41 +29,44 @@ import java.io.*;
  * <br>1.0 2001-08-04
  */
 public class AbstractBean extends Object implements Serializable, Cloneable {
-    protected PropertyChangeSupport propertySupport = new PropertyChangeSupport(this);
-    
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        propertySupport.addPropertyChangeListener(listener);
+  protected PropertyChangeSupport propertySupport = new PropertyChangeSupport(this);
+
+  public void addPropertyChangeListener(PropertyChangeListener listener) {
+    propertySupport.addPropertyChangeListener(listener);
+  }
+
+  public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+    propertySupport.addPropertyChangeListener(propertyName, listener);
+  }
+
+  public void removePropertyChangeListener(PropertyChangeListener listener) {
+    propertySupport.removePropertyChangeListener(listener);
+  }
+
+  public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+    propertySupport.removePropertyChangeListener(propertyName, listener);
+  }
+
+  protected void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {
+    propertySupport.firePropertyChange(propertyName, oldValue, newValue);
+  }
+
+  protected void firePropertyChange(String propertyName, int oldValue, int newValue) {
+    propertySupport.firePropertyChange(propertyName, oldValue, newValue);
+  }
+
+  protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+    propertySupport.firePropertyChange(propertyName, oldValue, newValue);
+  }
+
+  public AbstractBean clone() {
+    AbstractBean that;
+    try {
+      that = (AbstractBean) super.clone();
+    } catch (CloneNotSupportedException ex) {
+      throw new InternalError("Clone failed", ex);
     }
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        propertySupport.addPropertyChangeListener( propertyName, listener);
-    }
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        propertySupport.removePropertyChangeListener(listener);
-    }
-    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        propertySupport.removePropertyChangeListener(propertyName, listener);
-    }
-    
-    protected void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {
-        propertySupport.firePropertyChange(propertyName, oldValue, newValue);
-    }
-    protected void firePropertyChange(String propertyName, int oldValue, int newValue) {
-        propertySupport.firePropertyChange(propertyName, oldValue, newValue);
-    }
-    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-        propertySupport.firePropertyChange(propertyName, oldValue, newValue);
-    }
-    
-    public AbstractBean clone() {
-        AbstractBean that;
-        try {
-            that = (AbstractBean) super.clone();
-        } catch (CloneNotSupportedException ex) {
-            InternalError error =  new InternalError("Clone failed");
-            error.initCause(ex);
-            throw error;
-        }
-        that.propertySupport = new PropertyChangeSupport(that);
-        return that;
-    }
+    that.propertySupport = new PropertyChangeSupport(that);
+    return that;
+  }
 }

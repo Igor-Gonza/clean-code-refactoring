@@ -14,14 +14,15 @@
 
 package org.jhotdraw.undo;
 
-import javax.swing.undo.*;
-import java.util.*;
+import javax.swing.undo.CompoundEdit;
+import javax.swing.undo.UndoableEdit;
+
 /**
- * This is basically the same like javax.swing.undo.CompoundEdit but
+ * This is basically the same as javax.swing.undo.CompoundEdit but
  * it has a slightly different behaviour:
  * The compound edit ends, when it is added to itself. This way it
  * can be fired two times to an UndoManager: The first time, when
- * a sequence of compuondable edits starts, end the last time, when
+ * a sequence of compoundable edits starts, end the last time, when
  * the sequence is over.
  * <p>
  * For example:
@@ -36,120 +37,132 @@ import java.util.*;
  * fireUndoableEditEvent(ce);
  * </pre>
  *
- * @author  Werner Randelshofer
+ * @author Werner Randelshofer
  * @version 1.1 2006-06-20 Method setSignificant added.
  * <br>1.0 2001-01-01 Created.
  */
 public class CompositeEdit extends CompoundEdit {
-    private String presentationName;
-    private boolean isSignificant;
-    private boolean isVerbose;
-    
-    public void setVerbose(boolean b) {
-        isVerbose = b;
+  private String presentationName;
+  private boolean isSignificant;
+  private boolean isVerbose;
+
+  public void setVerbose(boolean b) {
+    isVerbose = b;
+  }
+
+  /**
+   * Creates new CompositeEdit.
+   * Which uses CompoundEdit.getPresentationName.
+   *
+   * @see javax.swing.undo.CompoundEdit#getPresentationName()
+   */
+  public CompositeEdit() {
+    isSignificant = true;
+  }
+
+  /**
+   * Creates new CompositeEdit.
+   * Which uses CompoundEdit.getPresentationName.
+   *
+   * @see javax.swing.undo.CompoundEdit#getPresentationName()
+   */
+  public CompositeEdit(boolean isSignificant) {
+    this.isSignificant = isSignificant;
+  }
+
+  /**
+   * Creates new CompositeEdit.
+   * Which uses the given presentation name.
+   * If the presentation name is null, then CompoundEdit.getPresentationName
+   * is used.
+   *
+   * @see javax.swing.undo.CompoundEdit#getPresentationName()
+   */
+  public CompositeEdit(String presentationName) {
+    this.presentationName = presentationName;
+    isSignificant = true;
+  }
+
+  /**
+   * Creates new CompositeEdit.
+   * Which uses the given presentation name.
+   * If the presentation name is null, then CompoundEdit.getPresentationName
+   * is used.
+   *
+   * @see javax.swing.undo.CompoundEdit#getPresentationName()
+   */
+  public CompositeEdit(String presentationName, boolean isSignificant) {
+    this.presentationName = presentationName;
+    this.isSignificant = isSignificant;
+  }
+
+  /**
+   * Returns the presentation name.
+   * If the presentation name is null, then CompoundEdit.getPresentationName
+   * is returned.
+   *
+   * @see javax.swing.undo.CompoundEdit#getPresentationName()
+   */
+  public String getPresentationName() {
+    return (presentationName != null) ? presentationName : super.getPresentationName();
+  }
+
+  /**
+   * Returns the undo presentation name.
+   * If the presentation name is null, then CompoundEdit.getUndoPresentationName
+   * is returned.
+   *
+   * @see javax.swing.undo.CompoundEdit#getUndoPresentationName()
+   */
+  public String getUndoPresentationName() {
+    return ((presentationName != null) ? UndoRedoManager.getLabels().getString("undo") + " " + presentationName : super.getUndoPresentationName());
+  }
+
+  /**
+   * Returns the redo presentation name.
+   * If the presentation name is null, then CompoundEdit.getRedoPresentationName
+   * is returned.
+   *
+   * @see javax.swing.undo.CompoundEdit#getRedoPresentationName()
+   */
+  public String getRedoPresentationName() {
+    return ((presentationName != null) ? UndoRedoManager.getLabels().getString("redo") + " " + presentationName : super.getRedoPresentationName());
+  }
+
+  /**
+   * If this edit is inProgress, accepts anEdit and returns
+   * true.
+   *
+   * <p>The last edit added to this CompositeEdit is given a
+   * chance to addEdit(anEdit). If it refuses (returns false), anEdit is
+   * given a chance to replaceEdit the last edit. If anEdit returns
+   * false here, it is added to edits.</p>
+   *
+   * <p>If the CompositeEdit is added to itself, then method end()
+   * is called, and true is returned.</p>
+   */
+  public boolean addEdit(UndoableEdit anEdit) {
+    if (anEdit == this) {
+      end();
+      return true;
+    } else if (isInProgress() && (anEdit instanceof CompositeEdit)) {
+      return true;
+    } else {
+      return super.addEdit(anEdit);
     }
-    /**
-     * Creates new CompositeEdit.
-     * Which uses CompoundEdit.getPresentatioName.
-     *
-     * @see javax.swing.undo.CompoundEdit#getPresentationName()
-     */
-    public CompositeEdit() {
-        isSignificant = true;
-    }
-    /**
-     * Creates new CompositeEdit.
-     * Which uses CompoundEdit.getPresentatioName.
-     *
-     * @see javax.swing.undo.CompoundEdit#getPresentationName()
-     */
-    public CompositeEdit(boolean isSignificant) {
-        this.isSignificant = isSignificant;
-    }
-    /**
-     * Creates new CompositeEdit.
-     * Which uses the given presentation name.
-     * If the presentation name is null, then CompoundEdit.getPresentatioName
-     * is used.
-     * @see javax.swing.undo.CompoundEdit#getPresentationName()
-     */
-    public CompositeEdit(String presentationName) {
-        this.presentationName = presentationName;
-        isSignificant = true;
-    }
-    /**
-     * Creates new CompositeEdit.
-     * Which uses the given presentation name.
-     * If the presentation name is null, then CompoundEdit.getPresentatioName
-     * is used.
-     * @see javax.swing.undo.CompoundEdit#getPresentationName()
-     */
-    public CompositeEdit(String presentationName, boolean isSignificant) {
-        this.presentationName = presentationName;
-        this.isSignificant = isSignificant;
-    }
-    
-    /**
-     * Returns the presentation name.
-     * If the presentation name is null, then CompoundEdit.getPresentatioName
-     * is returned.
-     * @see javax.swing.undo.CompoundEdit#getPresentationName()
-     */
-    public String getPresentationName() {
-        return (presentationName != null) ? presentationName : super.getPresentationName();
-    }
-    /**
-     * Returns the undo presentation name.
-     * If the presentation name is null, then CompoundEdit.getUndoPresentationName
-     * is returned.
-     * @see javax.swing.undo.CompoundEdit#getUndoPresentationName()
-     */
-    public String getUndoPresentationName() {
-        return ((presentationName != null) ? UndoRedoManager.getLabels().getString("undo")+" "+presentationName : super.getUndoPresentationName());
-    }
-    /**
-     * Returns the redo presentation name.
-     * If the presentation name is null, then CompoundEdit.getRedoPresentationName
-     * is returned.
-     * @see javax.swing.undo.CompoundEdit#getRedoPresentationName()
-     */
-    public String getRedoPresentationName() {
-        return ((presentationName != null) ? UndoRedoManager.getLabels().getString("redo")+" "+presentationName : super.getRedoPresentationName());
-    }
-    
-    /**
-     * If this edit is inProgress, accepts anEdit and returns
-     * true.
-     *
-     * <p>The last edit added to this CompositeEdit is given a
-     * chance to addEdit(anEdit). If it refuses (returns false), anEdit is
-     * given a chance to replaceEdit the last edit. If anEdit returns
-     * false here, it is added to edits.</p>
-     *
-     * <p>If the CompositeEdit is added to itself, then method end()
-     * is called, and true is returned.</p>
-     */
-    public boolean addEdit(UndoableEdit anEdit) {
-        if (anEdit == this) {
-                end();
-            return true;
-        } else if (isInProgress() && (anEdit instanceof CompositeEdit)) {
-            return true;
-        } else {
-            return super.addEdit(anEdit);
-        }
-    }
-    
-    /**
-     * Returns false if this edit is insignificant - for example one
-     * that maintains the user's selection, but does not change
-     * any model state.
-     */
-    public boolean isSignificant() {
-        return (isSignificant) ? super.isSignificant() : false;
-        //return isSignificant;
-    }
-    public void setSignificant(boolean newValue) {
-      isSignificant = newValue;
-    }
+  }
+
+  /**
+   * Returns false if this edit is insignificant - for example one
+   * that maintains the user's selection, but does not change
+   * any model state.
+   */
+  public boolean isSignificant() {
+    return isSignificant && super.isSignificant();
+    //return isSignificant;
+  }
+
+  public void setSignificant(boolean newValue) {
+    isSignificant = newValue;
+  }
 }
