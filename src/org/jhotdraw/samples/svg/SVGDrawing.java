@@ -22,7 +22,7 @@ import org.jhotdraw.xml.*;
  * SVGDrawing.
  *
  * @author Werner Randelshofer
- * @version 1.0 July 8, 2006 Created.
+ * @version 1.0 July 8, 2006, Created.
  */
 public class SVGDrawing extends DefaultDrawing {
     private String title;
@@ -77,7 +77,7 @@ public class SVGDrawing extends DefaultDrawing {
                 in.closeElement();
             } else {
                 in.closeElement();
-                Object f = (Object) in.readObject(i);
+                Object f = in.readObject(i);
                 if (f instanceof SVGDrawing) {
                     SVGGroup g = new SVGGroup();
                     g.willChange();

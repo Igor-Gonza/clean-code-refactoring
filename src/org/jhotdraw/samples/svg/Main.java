@@ -15,26 +15,29 @@
 package org.jhotdraw.samples.svg;
 
 import org.jhotdraw.app.*;
+
 /**
  * Main.
  *
  * @author Werner Randelshofer.
- * @version 1.0 July 8, 2006 Created.
+ * @version 1.0 July 8, 2006, Created.
  */
 public class Main {
-    
-    /** Creates a new instance. */
-    public static void main(String[] args) {
-        Application app = new DefaultOSXApplication();
-        
-        
-        SVGApplicationModel model = new SVGApplicationModel();
-        model.setName("SVG Draw");
-        model.setVersion("0.1");
-        model.setCopyright("Copyright 2006 (c) Werner Randelshofer.");
-        model.setProjectClassName("org.jhotdraw.samples.svg.SVGProject");
-        app.setModel(model);
-        app.launch(args);
-    }
-    
+
+  /**
+   * Creates a new instance.
+   */
+  public static void main(String[] args) {
+    Application app = new DefaultOSXApplication();
+
+
+    SVGApplicationModel model = new SVGApplicationModel();
+    model.setName("SVG Draw");
+    model.setVersion("0.1");
+    model.setCopyright("Copyright 2006 (c) Werner Randelshofer.");
+    model.setProjectClassName("org.jhotdraw.samples.svg.SVGProject");
+    app.setModel(model);
+    app.launch(args);
+  }
+
 }

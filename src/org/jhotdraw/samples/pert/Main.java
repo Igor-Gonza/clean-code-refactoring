@@ -18,35 +18,38 @@ import org.jhotdraw.app.Application;
 import org.jhotdraw.app.DefaultApplicationModel;
 import org.jhotdraw.app.DefaultOSXApplication;
 import org.jhotdraw.app.DefaultSDIApplication;
+
 /**
  * Main.
  *
  * @author Werner Randelshofer.
- * @version 1.0 June 10, 2006 Created.
+ * @version 1.0 June 10, 2006, Created.
  */
 public class Main {
-    
-    /** Creates a new instance. */
-    public static void main(String[] args) {
-        Application app;
-        String os = System.getProperty("os.name").toLowerCase();
-        if (os.startsWith("mac")) {
-            app = new DefaultOSXApplication();
-        } else if (os.startsWith("win")) {
-          //  app = new DefaultMDIApplication();
-            app = new DefaultSDIApplication();
-        } else {
-            app = new DefaultSDIApplication();
-        }
-        
-        
-        DefaultApplicationModel model = new PertApplicationModel();
-        model.setName("Pert");
-        model.setVersion("1.0");
-        model.setCopyright("Copyright 2006 (c) Werner Randelshofer.");
-        model.setProjectClassName("org.jhotdraw.samples.pert.PertProject");
-        app.setModel(model);
-        app.launch(args);
+
+  /**
+   * Creates a new instance.
+   */
+  public static void main(String[] args) {
+    Application app;
+    String os = System.getProperty("os.name").toLowerCase();
+    if (os.startsWith("mac")) {
+      app = new DefaultOSXApplication();
+    } else if (os.startsWith("win")) {
+      //  app = new DefaultMDIApplication();
+      app = new DefaultSDIApplication();
+    } else {
+      app = new DefaultSDIApplication();
     }
-    
+
+
+    DefaultApplicationModel model = new PertApplicationModel();
+    model.setName("Pert");
+    model.setVersion("1.0");
+    model.setCopyright("Copyright 2006 (c) Werner Randelshofer.");
+    model.setProjectClassName("org.jhotdraw.samples.pert.PertProject");
+    app.setModel(model);
+    app.launch(args);
+  }
+
 }

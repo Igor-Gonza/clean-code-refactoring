@@ -16,6 +16,7 @@ package org.jhotdraw.samples.svg.figures;
 
 import java.awt.*;
 import java.awt.geom.*;
+
 import org.jhotdraw.draw.*;
 import org.jhotdraw.samples.svg.*;
 
@@ -25,53 +26,55 @@ import org.jhotdraw.samples.svg.*;
  * FIXME - Implement me
  *
  * @author Werner Randelshofer
- * @version 1.0 July 8, 2006 Created.
+ * @version 1.0 July 8, 2006, Created.
  */
 public class SVGImage extends AttributedFigure implements SVGFigure {
-    private Rectangle2D.Double bounds = new Rectangle2D.Double();
-    
-    /** Creates a new instance. */
-    public SVGImage() {
-        SVGUtil.setDefaults(this);
-    }
+  private Rectangle2D.Double bounds = new Rectangle2D.Double();
 
-    protected void drawFill(Graphics2D g) {
-        g.fill(bounds);
-    }
+  /**
+   * Creates a new instance.
+   */
+  public SVGImage() {
+    SVGUtil.setDefaults(this);
+  }
 
-    protected void drawStroke(Graphics2D g) {
-        g.draw(bounds);
-    }
+  protected void drawFill(Graphics2D g) {
+    g.fill(bounds);
+  }
 
-    public void basicTransform(AffineTransform ty) {
-    }
+  protected void drawStroke(Graphics2D g) {
+    g.draw(bounds);
+  }
 
-    public void basicSetBounds(Point2D.Double start, Point2D.Double end) {
-    }
+  public void basicTransform(AffineTransform ty) {
+  }
 
-    public Rectangle2D.Double getBounds() {
-        return (Rectangle2D.Double) bounds.clone();
-    }
+  public void basicSetBounds(Point2D.Double start, Point2D.Double end) {
+  }
 
-    public Object getRestoreData() {
-        return getBounds();
-    }
+  public Rectangle2D.Double getBounds() {
+    return (Rectangle2D.Double) bounds.clone();
+  }
 
-    public void restoreTo(Object restoreData) {
-        bounds = (Rectangle2D.Double) ((Rectangle2D.Double) restoreData).clone();
-    }
+  public Object getRestoreData() {
+    return getBounds();
+  }
 
-    public boolean contains(Point2D.Double p) {
-        return bounds.contains(p);
-    }
-    
-    public SVGImage clone() {
-        SVGImage that = (SVGImage) super.clone();
-        that.bounds = (Rectangle2D.Double) bounds.clone();
-        return that;
-    }
-    
-    public boolean isEmpty() {
-        return true;
-    }
+  public void restoreTo(Object restoreData) {
+    bounds = (Rectangle2D.Double) ((Rectangle2D.Double) restoreData).clone();
+  }
+
+  public boolean contains(Point2D.Double p) {
+    return bounds.contains(p);
+  }
+
+  public SVGImage clone() {
+    SVGImage that = (SVGImage) super.clone();
+    that.bounds = (Rectangle2D.Double) bounds.clone();
+    return that;
+  }
+
+  public boolean isEmpty() {
+    return true;
+  }
 }

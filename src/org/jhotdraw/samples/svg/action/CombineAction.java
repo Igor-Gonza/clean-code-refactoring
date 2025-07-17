@@ -15,82 +15,88 @@
 package org.jhotdraw.samples.svg.action;
 
 import org.jhotdraw.draw.*;
-import org.jhotdraw.draw.action.*;
-import org.jhotdraw.samples.svg.figures.*;
-import org.jhotdraw.undo.*;
-import org.jhotdraw.util.*;
-import java.util.*;
-import javax.swing.*;
-import javax.swing.undo.*;
+import org.jhotdraw.draw.action.GroupAction;
+import org.jhotdraw.samples.svg.figures.SVGPath;
+import org.jhotdraw.util.ResourceBundleUtil;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * CombinePathsAction.
  *
- * @author  Werner Randelshofer
+ * @author Werner Randelshofer
  * @version 1.0 2006-07-12 Created.
  */
 public class CombineAction extends GroupAction {
-    public final static String ID = "selectionCombine";
-    
-    /** Creates a new instance. */
-    public CombineAction(DrawingEditor editor) {
-        super(editor, new SVGPath());
-        
-        labels = ResourceBundleUtil.getLAFBundle(
-                "org.jhotdraw.samples.svg.Labels",
-                Locale.getDefault()
-                );
-        labels.configureAction(this, ID);
-    }
-    
-   @Override protected boolean canGroup() {
-        boolean canCombine = getView().getSelectionCount() > 1;
-        if (canCombine) {
-            for (Figure f : getView().getSelectedFigures()) {
-                if (!(f instanceof SVGPath)) {
-                    canCombine = false;
-                    break;
-                }
-            }
+  public final static String ID = "selectionCombine";
+
+  /**
+   * Creates a new instance.
+   */
+  public CombineAction(DrawingEditor editor) {
+    super(editor, new SVGPath());
+
+    labels = ResourceBundleUtil.getLAFBundle(
+            "org.jhotdraw.samples.svg.Labels",
+            Locale.getDefault()
+    );
+    labels.configureAction(this, ID);
+  }
+
+  @Override
+  protected boolean canGroup() {
+    boolean canCombine = getView().getSelectionCount() > 1;
+    if (canCombine) {
+      for (Figure f : getView().getSelectedFigures()) {
+        if (!(f instanceof SVGPath)) {
+          canCombine = false;
+          break;
         }
-        return canCombine;
+      }
     }
-    public Collection<Figure> ungroupFigures(DrawingView view, CompositeFigure group) {
-        LinkedList<Figure> figures = new LinkedList<Figure>(group.getChildren());
-        view.clearSelection();
-        group.basicRemoveAllChildren();
-        LinkedList<Figure> paths = new LinkedList<Figure>();
-        for (Figure f : figures) {
-            SVGPath path = new SVGPath();
-            path.removeAllChildren();
-            for (Map.Entry<AttributeKey,Object> entry : group.getAttributes().entrySet()) {
-                path.basicSetAttribute(entry.getKey(), entry.getValue());
-            }
-            path.add(f);
-            view.getDrawing().basicAdd(path);
-            paths.add(path);
-        }
-        view.getDrawing().remove(group);
-        view.addToSelection(paths);
-        return figures;
+    return canCombine;
+  }
+
+  public Collection<Figure> ungroupFigures(DrawingView view, CompositeFigure group) {
+    LinkedList<Figure> figures = new LinkedList<>(group.getChildren());
+    view.clearSelection();
+    group.basicRemoveAllChildren();
+    LinkedList<Figure> paths = new LinkedList<>();
+    for (Figure f : figures) {
+      SVGPath path = new SVGPath();
+      path.removeAllChildren();
+      for (Map.Entry<AttributeKey, Object> entry : group.getAttributes().entrySet()) {
+        path.basicSetAttribute(entry.getKey(), entry.getValue());
+      }
+      path.add(f);
+      view.getDrawing().basicAdd(path);
+      paths.add(path);
     }
-    public void groupFigures(DrawingView view, CompositeFigure group, Collection<Figure> figures) {
-        Collection<Figure> sorted = view.getDrawing().sort(figures);
-        view.getDrawing().basicRemoveAll(figures);
-        view.clearSelection();
-        view.getDrawing().add(group);
-        group.willChange();
-      ((SVGPath) group).removeAllChildren();
-        for (Map.Entry<AttributeKey,Object> entry : figures.iterator().next().getAttributes().entrySet()) {
-            group.basicSetAttribute(entry.getKey(), entry.getValue());
-        }
-        for (Figure f : sorted) {
-            SVGPath path = (SVGPath) f;
-            for (Figure child : path.getChildren()) {
-                group.basicAdd(child);
-            }
-        }
-        group.changed();
-        view.addToSelection(group);
+    view.getDrawing().remove(group);
+    view.addToSelection(paths);
+    return figures;
+  }
+
+  public void groupFigures(DrawingView view, CompositeFigure group, Collection<Figure> figures) {
+    Collection<Figure> sorted = view.getDrawing().sort(figures);
+    view.getDrawing().basicRemoveAll(figures);
+    view.clearSelection();
+    view.getDrawing().add(group);
+    group.willChange();
+    group.removeAllChildren();
+    for (Map.Entry<AttributeKey, Object> entry : figures.iterator().next().getAttributes().entrySet()) {
+      group.basicSetAttribute(entry.getKey(), entry.getValue());
     }
+    for (Figure f : sorted) {
+      SVGPath path = (SVGPath) f;
+      for (Figure child : path.getChildren()) {
+        group.basicAdd(child);
+      }
+    }
+    group.changed();
+    view.addToSelection(group);
+  }
 }

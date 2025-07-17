@@ -14,52 +14,57 @@
 
 package org.jhotdraw.samples.svg;
 
-import org.jhotdraw.samples.svg.figures.*;
-import org.jhotdraw.draw.*;
-import org.jhotdraw.util.*;
-import org.jhotdraw.undo.*;
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.event.*;
-import java.util.*;
-import org.jhotdraw.geom.*;
+import org.jhotdraw.draw.AttributeKey;
+import org.jhotdraw.draw.BezierFigure;
+import org.jhotdraw.draw.BezierTool;
+import org.jhotdraw.samples.svg.figures.SVGPath;
+
+import java.util.Map;
+
 /**
  * Tool to scribble a SVGPath
  *
- * @author  Werner Randelshofer
+ * @author Werner Randelshofer
  * @version 1.0 2006-07-12 Created.
  */
 public class PathTool extends BezierTool {
-    /**
-     * The path prototype for new figures.
-     */
-    private SVGPath pathPrototype;
-    
-    /** Creates a new instance. */
-    public PathTool(SVGPath pathPrototype, BezierFigure bezierPrototype) {
-        this(pathPrototype, bezierPrototype, null);
+  /**
+   * The path prototype for new figures.
+   */
+  private SVGPath pathPrototype;
+
+  /**
+   * Creates a new instance.
+   */
+  public PathTool(SVGPath pathPrototype, BezierFigure bezierPrototype) {
+    this(pathPrototype, bezierPrototype, null);
+  }
+
+  /**
+   * Creates a new instance.
+   */
+  public PathTool(SVGPath pathPrototype, BezierFigure bezierPrototype, Map attributes) {
+    super(bezierPrototype, attributes);
+    this.pathPrototype = pathPrototype;
+  }
+
+  protected SVGPath createPath() {
+    SVGPath f = (SVGPath) pathPrototype.clone();
+    getEditor().applyDefaultAttributesTo(f);
+    if (attributes != null) {
+      for (Map.Entry<AttributeKey, Object> entry : attributes.entrySet()) {
+        f.setAttribute(entry.getKey(), entry.getValue());
+      }
     }
-    /** Creates a new instance. */
-    public PathTool(SVGPath pathPrototype, BezierFigure bezierPrototype, Map attributes) {
-        super(bezierPrototype, attributes);
-        this.pathPrototype = pathPrototype;
-    }
-    protected SVGPath createPath() {
-        SVGPath f = (SVGPath) pathPrototype.clone();
-        getEditor().applyDefaultAttributesTo(f);
-        if (attributes != null) {
-            for (Map.Entry<AttributeKey, Object> entry : attributes.entrySet()) {
-                f.setAttribute(entry.getKey(), entry.getValue());
-            }
-        }
-        return f;
-    }
-    protected void finishCreation(BezierFigure createdFigure) {
-        getDrawing().remove(createdFigure);
-        SVGPath createdPath = createPath();
-        createdPath.removeAllChildren();
-        createdPath.add(createdFigure);
-        getDrawing().add(createdPath);
-        getView().addToSelection(createdPath);
-    }
+    return f;
+  }
+
+  protected void finishCreation(BezierFigure createdFigure) {
+    getDrawing().remove(createdFigure);
+    SVGPath createdPath = createPath();
+    createdPath.removeAllChildren();
+    createdPath.add(createdFigure);
+    getDrawing().add(createdPath);
+    getView().addToSelection(createdPath);
+  }
 }

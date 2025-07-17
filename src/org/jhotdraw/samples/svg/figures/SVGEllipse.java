@@ -14,64 +14,74 @@
 
 package org.jhotdraw.samples.svg.figures;
 
-import java.awt.*;
-import java.awt.geom.*;
-import java.io.*;
-import org.jhotdraw.draw.*;
-import org.jhotdraw.samples.svg.*;
-import org.jhotdraw.xml.*;
+import org.jhotdraw.draw.EllipseFigure;
+import org.jhotdraw.samples.svg.SVGUtil;
+import org.jhotdraw.xml.DOMInput;
+import org.jhotdraw.xml.DOMOutput;
+
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+
 /**
- * SVGEllipse presents a SVG ellipse or a SVG circle element.
+ * SVGEllipse presents an SVG ellipse or an SVG circle element.
  * It is always written as an SVG ellipse element.
  * <p>
  * FIXME - Add support for transforms.
  *
  * @author Werner Randelshofer
- * @version 1.0 July 8, 2006 Created.
+ * @version 1.0 July 8, 2006, Created.
  */
 public class SVGEllipse extends EllipseFigure implements SVGFigure {
-    
-    /** Creates a new instance. */
-    public SVGEllipse() {
-        SVGUtil.setDefaults(this);
-    }
-    
-    @Override public void write(DOMOutput out) throws IOException {
-        Rectangle2D.Double r = getBounds();
-        out.addAttribute("cx", r.x + r.width / 2d);
-        out.addAttribute("cy", r.y + r.height / 2d);
-        out.addAttribute("rx", r.width / 2);
-        out.addAttribute("ry", r.height / 2);
-        writeAttributes(out);
-    }
-    protected void writeAttributes(DOMOutput out) throws IOException {
-        SVGUtil.writeAttributes(this, out);
-    }
-    
-    @Override public void read(DOMInput in) throws IOException {
-        double rx, ry;
-        if (in.getTagName().equals("circle")) {
-            rx = ry = SVGUtil.getDimension(in, "r");
-        } else {
-            rx = SVGUtil.getDimension(in, "rx");
-            ry = SVGUtil.getDimension(in, "ry");
-        }
-        double x = SVGUtil.getDimension(in, "cx") - rx;
-        double y = SVGUtil.getDimension(in, "cy") - ry;
-        double w = rx * 2d;
-        double h = ry * 2d;
-        setBounds(new Point2D.Double(x,y), new Point2D.Double(x+w,y+h));
-        readAttributes(in);
-        
-        AffineTransform tx = SVGUtil.getTransform(in, "transform");
-        basicTransform(tx);
-    }
-    protected void readAttributes(DOMInput in) throws IOException {
-        SVGUtil.readAttributes(this, in);
-    }
 
-    public boolean isEmpty() {
-        Rectangle2D.Double b = getBounds();
-        return b.width <= 0 || b.height <= 0;
+  /**
+   * Creates a new instance.
+   */
+  public SVGEllipse() {
+    SVGUtil.setDefaults(this);
+  }
+
+  @Override
+  public void write(DOMOutput out) throws IOException {
+    Rectangle2D.Double r = getBounds();
+    out.addAttribute("cx", r.x + r.width / 2d);
+    out.addAttribute("cy", r.y + r.height / 2d);
+    out.addAttribute("rx", r.width / 2);
+    out.addAttribute("ry", r.height / 2);
+    writeAttributes(out);
+  }
+
+  protected void writeAttributes(DOMOutput out) throws IOException {
+    SVGUtil.writeAttributes(this, out);
+  }
+
+  @Override
+  public void read(DOMInput in) throws IOException {
+    double rx, ry;
+    if (in.getTagName().equals("circle")) {
+      rx = ry = SVGUtil.getDimension(in, "r");
+    } else {
+      rx = SVGUtil.getDimension(in, "rx");
+      ry = SVGUtil.getDimension(in, "ry");
     }
+    double x = SVGUtil.getDimension(in, "cx") - rx;
+    double y = SVGUtil.getDimension(in, "cy") - ry;
+    double w = rx * 2d;
+    double h = ry * 2d;
+    setBounds(new Point2D.Double(x, y), new Point2D.Double(x + w, y + h));
+    readAttributes(in);
+
+    AffineTransform tx = SVGUtil.getTransform(in, "transform");
+    basicTransform(tx);
+  }
+
+  protected void readAttributes(DOMInput in) throws IOException {
+    SVGUtil.readAttributes(this, in);
+  }
+
+  public boolean isEmpty() {
+    Rectangle2D.Double b = getBounds();
+    return b.width <= 0 || b.height <= 0;
+  }
 }

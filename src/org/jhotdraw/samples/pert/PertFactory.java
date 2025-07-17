@@ -14,35 +14,39 @@
 
 package org.jhotdraw.samples.pert;
 
-import org.jhotdraw.samples.pert.figures.*;
-import java.util.*;
 import org.jhotdraw.draw.*;
-import org.jhotdraw.xml.*;
+import org.jhotdraw.samples.pert.figures.DependencyFigure;
+import org.jhotdraw.samples.pert.figures.SeparatorLineFigure;
+import org.jhotdraw.samples.pert.figures.TaskFigure;
+import org.jhotdraw.xml.DefaultDOMFactory;
+
 /**
  * PertFactory.
- * 
+ *
  * @author Werner Randelshofer
  * @version 2006-01-18 Created.
  */
 public class PertFactory extends DefaultDOMFactory {
-    private final static Object[][] classTagArray = {
-        { DefaultDrawing.class, "PertDiagram" },
-        { TaskFigure.class, "task" },
-        { DependencyFigure.class, "dep" },
-        { ListFigure.class, "list" },
-        { TextFigure.class, "text" },
-        { GroupFigure.class, "g" },
-        { TextAreaFigure.class, "ta" },
-        { SeparatorLineFigure.class, "separator" },
-        
-        { ChopBoxConnector.class, "rectConnector" },
-        { ArrowTip.class, "arrowTip" }
-    };
-    
-    /** Creates a new instance. */
-    public PertFactory() {
-        for (Object[] o : classTagArray) {
-            addStorableClass((String) o[1], (Class) o[0]);
-        }
+  private final static Object[][] classTagArray = {
+          {DefaultDrawing.class, "PertDiagram"},
+          {TaskFigure.class, "task"},
+          {DependencyFigure.class, "dep"},
+          {ListFigure.class, "list"},
+          {TextFigure.class, "text"},
+          {GroupFigure.class, "g"},
+          {TextAreaFigure.class, "ta"},
+          {SeparatorLineFigure.class, "separator"},
+
+          {ChopBoxConnector.class, "rectConnector"},
+          {ArrowTip.class, "arrowTip"}
+  };
+
+  /**
+   * Creates a new instance.
+   */
+  public PertFactory() {
+    for (Object[] o : classTagArray) {
+      addStorableClass((String) o[1], (Class) o[0]);
     }
+  }
 }
