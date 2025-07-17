@@ -15,15 +15,15 @@
 
 package org.jhotdraw.draw;
 
-import org.jhotdraw.beans.*;
+import org.jhotdraw.beans.AbstractBean;
+
 import java.awt.*;
-import java.awt.datatransfer.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.beans.*;
 import java.util.*;
-import java.io.*;
+
 import static org.jhotdraw.draw.AttributeKeys.*;
+
 /**
  * DefaultDrawingEditor.
  *
@@ -32,177 +32,183 @@ import static org.jhotdraw.draw.AttributeKeys.*;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class DefaultDrawingEditor extends AbstractBean implements DrawingEditor, ToolListener {
-    private HashMap<AttributeKey, Object> defaultAttributes = new HashMap<AttributeKey,Object>();
-    private Tool tool;
-    private HashSet<DrawingView> views;
-    private DrawingView activeView;
-    private boolean isEnabled = true;
-    private DrawingView focusedView;
-    
-    private FocusListener focusHandler = new FocusListener() {
-        public void focusGained(FocusEvent e) {
-            setFocusedView((DrawingView) findView((Container) e.getSource()));
-        }
-        
-        public void focusLost(FocusEvent e) {
-            if (! e.isTemporary()) {
-            setFocusedView(null);
-            }
-        }
-    };
-    
-    /** Creates a new instance. */
-    public DefaultDrawingEditor() {
-        setDefaultAttribute(FILL_COLOR, Color.white);
-        setDefaultAttribute(STROKE_COLOR, Color.black);
-        setDefaultAttribute(TEXT_COLOR, Color.black);
-        
-        views = new HashSet<DrawingView>();
+  private HashMap<AttributeKey, Object> defaultAttributes = new HashMap<>();
+  private Tool tool;
+  private HashSet<DrawingView> views;
+  private DrawingView activeView;
+  private boolean isEnabled = true;
+  private DrawingView focusedView;
+
+  private FocusListener focusHandler = new FocusListener() {
+    public void focusGained(FocusEvent e) {
+      setFocusedView(findView((Container) e.getSource()));
     }
-    
-    public void setTool(Tool t) {
-        if (t == tool) return;
-        if (tool != null) {
-            for (DrawingView v : views) {
-                v.removeMouseListener(tool);
-                v.removeMouseMotionListener(tool);
-                v.removeKeyListener(tool);
-            }
-            tool.deactivate(this);
-            tool.removeToolListener(this);
-        }
-        tool = t;
-        if (tool != null) {
-            tool.activate(this);
-            for (DrawingView v : views) {
-                v.addMouseListener(tool);
-                v.addMouseMotionListener(tool);
-                v.addKeyListener(tool);
-            }
-            tool.addToolListener(this);
-        }
-    }
-    
-    public void areaInvalidated(ToolEvent evt) {
-        Rectangle r = evt.getInvalidatedArea();
-        evt.getView().getContainer().repaint(r.x, r.y, r.width, r.height);
-    }
-    public void toolStarted(ToolEvent evt) {
-        setView(evt.getView());
-    }
-    public void setView(DrawingView newValue) {
-        DrawingView oldValue = activeView;
-        activeView = newValue;
-        firePropertyChange("view", oldValue, newValue);
-        for (DrawingView v : views) {
-            v.getContainer().repaint();
-        }
-    }
-    public void toolDone(ToolEvent evt) {
-        // FIXME - Maybe we should do this with all views of the editor??
-        DrawingView v = getView();
-        if (v != null) {
-            Container c = v.getContainer();
-            c.invalidate();
-            if (c.getParent() != null) c.getParent().validate();
-        }
-    }
-    
-    public Tool getTool() {
-        return tool;
-    }
-    
-    public DrawingView getView() {
-        return activeView != null ? activeView : views.iterator().next();
-    }
-    
-    private void updateFocusedView() {
-        for (DrawingView v : views) {
-            if (v.getContainer().hasFocus()) {
-                setFocusedView(v);
-                return;
-            }
-        }
+
+    public void focusLost(FocusEvent e) {
+      if (!e.isTemporary()) {
         setFocusedView(null);
+      }
     }
-    
-    private void setFocusedView(DrawingView newValue) {
-        DrawingView oldValue = focusedView;
-        focusedView = newValue;
-        firePropertyChange("focusedView", oldValue, newValue);
+  };
+
+  /**
+   * Creates a new instance.
+   */
+  public DefaultDrawingEditor() {
+    setDefaultAttribute(FILL_COLOR, Color.white);
+    setDefaultAttribute(STROKE_COLOR, Color.black);
+    setDefaultAttribute(TEXT_COLOR, Color.black);
+
+    views = new HashSet<>();
+  }
+
+  public void setTool(Tool t) {
+    if (t == tool) return;
+    if (tool != null) {
+      for (DrawingView v : views) {
+        v.removeMouseListener(tool);
+        v.removeMouseMotionListener(tool);
+        v.removeKeyListener(tool);
+      }
+      tool.deactivate(this);
+      tool.removeToolListener(this);
     }
-    public DrawingView getFocusedView() {
-        return focusedView;
+    tool = t;
+    if (tool != null) {
+      tool.activate(this);
+      for (DrawingView v : views) {
+        v.addMouseListener(tool);
+        v.addMouseMotionListener(tool);
+        v.addKeyListener(tool);
+      }
+      tool.addToolListener(this);
     }
-    
-    public void applyDefaultAttributesTo(Figure f) {
-        for (Map.Entry<AttributeKey, Object> entry : defaultAttributes.entrySet()) {
-            f.setAttribute(entry.getKey(), entry.getValue());
-        }
+  }
+
+  public void areaInvalidated(ToolEvent evt) {
+    Rectangle r = evt.getInvalidatedArea();
+    evt.getView().getContainer().repaint(r.x, r.y, r.width, r.height);
+  }
+
+  public void toolStarted(ToolEvent evt) {
+    setView(evt.getView());
+  }
+
+  public void setView(DrawingView newValue) {
+    DrawingView oldValue = activeView;
+    activeView = newValue;
+    firePropertyChange("view", oldValue, newValue);
+    for (DrawingView v : views) {
+      v.getContainer().repaint();
     }
-    
-    public Object getDefaultAttribute(AttributeKey key) {
-        return defaultAttributes.get(key);
+  }
+
+  public void toolDone(ToolEvent evt) {
+    // FIXME - Maybe we should do this with all views of the editor??
+    DrawingView v = getView();
+    if (v != null) {
+      Container c = v.getContainer();
+      c.invalidate();
+      if (c.getParent() != null) c.getParent().validate();
     }
-    
-    public void setDefaultAttribute(AttributeKey key, Object newValue) {
-        Object oldValue = defaultAttributes.put(key, newValue);
-        firePropertyChange(key.getKey(), oldValue, newValue);
+  }
+
+  public Tool getTool() {
+    return tool;
+  }
+
+  public DrawingView getView() {
+    return activeView != null ? activeView : views.iterator().next();
+  }
+
+  private void updateFocusedView() {
+    for (DrawingView v : views) {
+      if (v.getContainer().hasFocus()) {
+        setFocusedView(v);
+        return;
+      }
     }
-    
-    public void remove(DrawingView view) {
-        view.getContainer().removeFocusListener(focusHandler);
-        views.remove(view);
-        if (tool != null) {
-            view.removeMouseListener(tool);
-            view.removeMouseMotionListener(tool);
-            view.removeKeyListener(tool);
-        }
-        
-        view.removeNotify(this);
-        if (activeView == view) {
-            view = (views.size() > 0) ? views.iterator().next() : null;
-        }
-        updateFocusedView();
+    setFocusedView(null);
+  }
+
+  private void setFocusedView(DrawingView newValue) {
+    DrawingView oldValue = focusedView;
+    focusedView = newValue;
+    firePropertyChange("focusedView", oldValue, newValue);
+  }
+
+  public DrawingView getFocusedView() {
+    return focusedView;
+  }
+
+  public void applyDefaultAttributesTo(Figure f) {
+    for (Map.Entry<AttributeKey, Object> entry : defaultAttributes.entrySet()) {
+      f.setAttribute(entry.getKey(), entry.getValue());
     }
-    
-    public void add(DrawingView view) {
-        views.add(view);
-        view.addNotify(this);
-        view.getContainer().addFocusListener(focusHandler);
-        if (tool != null) {
-            view.addMouseListener(tool);
-            view.addMouseMotionListener(tool);
-            view.addKeyListener(tool);
-        }
-        updateFocusedView();
+  }
+
+  public Object getDefaultAttribute(AttributeKey key) {
+    return defaultAttributes.get(key);
+  }
+
+  public void setDefaultAttribute(AttributeKey key, Object newValue) {
+    Object oldValue = defaultAttributes.put(key, newValue);
+    firePropertyChange(key.getKey(), oldValue, newValue);
+  }
+
+  public void remove(DrawingView view) {
+    view.getContainer().removeFocusListener(focusHandler);
+    views.remove(view);
+    if (tool != null) {
+      view.removeMouseListener(tool);
+      view.removeMouseMotionListener(tool);
+      view.removeKeyListener(tool);
     }
-    
-    public void setCursor(Cursor c) {
+
+    view.removeNotify(this);
+    if (activeView == view) {
+      view = (!views.isEmpty()) ? views.iterator().next() : null;
     }
-    
-    public Collection<DrawingView> getDrawingViews() {
-        return Collections.unmodifiableCollection(views);
+    updateFocusedView();
+  }
+
+  public void add(DrawingView view) {
+    views.add(view);
+    view.addNotify(this);
+    view.getContainer().addFocusListener(focusHandler);
+    if (tool != null) {
+      view.addMouseListener(tool);
+      view.addMouseMotionListener(tool);
+      view.addKeyListener(tool);
     }
-    
-    public DrawingView findView(Container c) {
-        for (DrawingView v : views) {
-            if (v.getContainer() == c) {
-                return v;
-            }
-        }
-        return null;
+    updateFocusedView();
+  }
+
+  public void setCursor(Cursor c) {
+  }
+
+  public Collection<DrawingView> getDrawingViews() {
+    return Collections.unmodifiableCollection(views);
+  }
+
+  public DrawingView findView(Container c) {
+    for (DrawingView v : views) {
+      if (v.getContainer() == c) {
+        return v;
+      }
     }
-    
-    public void setEnabled(boolean newValue) {
-        if (newValue != isEnabled) {
-            boolean oldValue = isEnabled;
-            isEnabled = newValue;
-            firePropertyChange("enabled", oldValue, newValue);
-        }
+    return null;
+  }
+
+  public void setEnabled(boolean newValue) {
+    if (newValue != isEnabled) {
+      boolean oldValue = isEnabled;
+      isEnabled = newValue;
+      firePropertyChange("enabled", oldValue, newValue);
     }
-    
-    public boolean isEnabled() {
-        return isEnabled;
-    }
+  }
+
+  public boolean isEnabled() {
+    return isEnabled;
+  }
 }

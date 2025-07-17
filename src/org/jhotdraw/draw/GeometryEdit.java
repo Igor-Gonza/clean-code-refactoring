@@ -15,40 +15,43 @@
 package org.jhotdraw.draw;
 
 import javax.swing.undo.*;
+
 /**
  * GeometryEdit.
  *
  * @author Werner Randelshofer
- * @version 1.0 January 22, 2006 Created.
+ * @version 1.0 January 22, 2006, Created.
  */
 public class GeometryEdit extends AbstractUndoableEdit {
-    private Figure owner;
-    private Object oldGeometry;
-    private Object newGeometry;
-    
-    /** Creates a new instance. */
-    public GeometryEdit(Figure owner, Object oldGeometry, Object newGeometry) {
-        this.owner = owner;
-        this.oldGeometry = oldGeometry;
-        this.newGeometry = newGeometry;
-    }
+  private Figure owner;
+  private Object oldGeometry;
+  private Object newGeometry;
 
-    public String getPresentationName() {
-        return "Geometry changed";
-    }
-    
-    public void undo() throws CannotUndoException {
-        super.undo();
-        owner.willChange();
-        owner.restoreTo(oldGeometry);
-        owner.changed();
-    }
+  /**
+   * Creates a new instance.
+   */
+  public GeometryEdit(Figure owner, Object oldGeometry, Object newGeometry) {
+    this.owner = owner;
+    this.oldGeometry = oldGeometry;
+    this.newGeometry = newGeometry;
+  }
 
-    public void redo() throws CannotRedoException {
-        super.redo();
-        owner.willChange();
-        owner.restoreTo(newGeometry);
-        owner.changed();
-    }
-    
+  public String getPresentationName() {
+    return "Geometry changed";
+  }
+
+  public void undo() throws CannotUndoException {
+    super.undo();
+    owner.willChange();
+    owner.restoreTo(oldGeometry);
+    owner.changed();
+  }
+
+  public void redo() throws CannotRedoException {
+    super.redo();
+    owner.willChange();
+    owner.restoreTo(newGeometry);
+    owner.changed();
+  }
+
 }

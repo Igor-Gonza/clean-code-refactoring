@@ -17,30 +17,32 @@ package org.jhotdraw.draw;
 
 import java.awt.*;
 import java.awt.geom.*;
+
 /**
  * Interface to constrain a Point2D.Double. This can be used to implement
  * different kinds of grids.
  *
- * @author  Werner Randelshofer
- * @version 2.1 2006-07-03 Method isVisible() added. 
+ * @author Werner Randelshofer
+ * @version 2.1 2006-07-03 Method isVisible() added.
  * <br>2.0 2006-01-17 Changed to support double precision coordinates.
  * <br>1.0 2004-03-14  Created.
  */
 public interface Constrainer {
-	/**
-	 * Constrains the given point.
-         * This method changes the point which is passed as a parameter.
-         * @return constrained point.
-	 */
-	public Point2D.Double constrainPoint(Point2D.Double p);
+  /**
+   * Constrains the given point.
+   * This method changes the point which is passed as a parameter.
+   *
+   * @return constrained point.
+   */
+  Point2D.Double constrainPoint(Point2D.Double p);
 
-        /**
-         * Returns true if the Constrainer grid is visible.
-         */
-        public boolean isVisible();
-        
-	/**
-	 * Draws the constrainer grid for the specified drawing view.
-	 */
-	public void draw(Graphics2D g, DrawingView view);
+  /**
+   * Returns true if the Constrainer grid is visible.
+   */
+  boolean isVisible();
+
+  /**
+   * Draws the constrainer grid for the specified drawing view.
+   */
+  void draw(Graphics2D g, DrawingView view);
 }

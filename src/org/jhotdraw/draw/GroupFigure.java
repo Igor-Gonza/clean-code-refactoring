@@ -16,34 +16,34 @@
 package org.jhotdraw.draw;
 
 import java.awt.geom.*;
+
 import org.jhotdraw.geom.*;
+
 /**
  * A Figure that groups a collection of figures.
  *
  * @author Werner Randelshofer
- * @version 2.0 2006-01-14 Changed to support double precison coordinates.
+ * @version 2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class GroupFigure extends AbstractCompositeFigure {
-    
-    /** Creates a new instance. */
-    public GroupFigure() {
-    }
-    
-    public boolean canConnect() {
-        return true;
-    }
-    
-    /**
-     * This is a default implementation that chops the point at the rectangle
-     * returned by getBounds() of the figure.
-     * <p>
-     * Figures which have a non-rectangular shape need to override this method.
-     * <p>
-     * FIXME Invoke chop on each child and return the closest point.
-     */
-    public Point2D.Double chop(Point2D.Double from) {
-        Rectangle2D.Double r = getBounds();
-        return Geom.angleToPoint(r, Geom.pointToAngle(r, from));
-    }
+
+  /**
+   * Creates a new instance.
+   */
+  public GroupFigure() {
+  }
+
+  /**
+   * This is a default implementation that chops the point at the rectangle
+   * returned by getBounds() of the figure.
+   * <p>
+   * Figures which have a non-rectangular shape need to override this method.
+   * <p>
+   * FIXME Invoke chop on each child and return the closest point.
+   */
+  public Point2D.Double chop(Point2D.Double from) {
+    Rectangle2D.Double r = getBounds();
+    return Geom.angleToPoint(r, Geom.pointToAngle(r, from));
+  }
 }

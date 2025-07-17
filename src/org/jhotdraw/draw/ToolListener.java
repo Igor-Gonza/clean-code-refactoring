@@ -15,8 +15,8 @@
 
 package org.jhotdraw.draw;
 
-import java.awt.*;
-import java.util.*;
+import java.util.EventListener;
+
 /**
  * Change event passed to ToolListener's.
  *
@@ -25,19 +25,21 @@ import java.util.*;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public interface ToolListener extends EventListener {
-    /**
-     * Informs the listener that a tool has starteds interacting with a 
-     * specific drawing view.
-     */
-    void toolStarted(ToolEvent event);
-    /**
-     * Informs the listener that a tool has done its interaction.
-     * This method can be used to switch back to the default tool.
-     */
-    void toolDone(ToolEvent event);
-    /**
-     * Sent when an area of the drawing view needs to be repainted.
-     */
-    public void areaInvalidated(ToolEvent e);
-    
+  /**
+   * Informs the listener that a tool has started interacting with a
+   * specific drawing view.
+   */
+  void toolStarted(ToolEvent event);
+
+  /**
+   * Informs the listener that a tool has done its interaction.
+   * This method can be used to switch back to the default tool.
+   */
+  void toolDone(ToolEvent event);
+
+  /**
+   * Sent when an area of the drawing view needs to be repainted.
+   */
+  void areaInvalidated(ToolEvent e);
+
 }

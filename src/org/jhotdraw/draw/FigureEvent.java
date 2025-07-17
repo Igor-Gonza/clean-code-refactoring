@@ -15,9 +15,9 @@
 
 package org.jhotdraw.draw;
 
-import java.awt.*;
-import java.awt.geom.*;
-import java.util.*;
+import java.awt.geom.Rectangle2D;
+import java.util.EventObject;
+
 /**
  * Change event passed to FigureListeners.
  *
@@ -27,51 +27,54 @@ import java.util.*;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class FigureEvent extends EventObject {
-    private Rectangle2D.Double invalidatedArea;
-    private AttributeKey attribute;
-    private Object oldValue;
-    private Object newValue;
-    
-    /**
-     * Constructs an event for the given source Figure.
-     * @param invalidatedArea The bounds of the invalidated area on the drawing.
-     */
-    public FigureEvent(Figure source, Rectangle2D.Double invalidatedArea) {
-        super(source);
-        this.invalidatedArea = invalidatedArea;
-    }
-    
-    /**
-     * Constructs an event for the given source Figure.
-     */
-    public FigureEvent(Figure source, AttributeKey attribute, Object oldValue, Object newValue) {
-        super(source);
-        this.attribute = attribute;
-        this.oldValue = oldValue;
-        this.newValue = newValue;
-    }
-    
-    /**
-     *  Gets the changed figure
-     */
-    public Figure getFigure() {
-        return (Figure) getSource();
-    }
-    
-    /**
-     *  Gets the bounds of the invalidated area on the drawing.
-     */
-    public Rectangle2D.Double getInvalidatedArea() {
-        return invalidatedArea;
-    }
-    
-    public AttributeKey getAttribute() {
-        return attribute;
-    }
-    public Object getOldValue() {
-        return oldValue;
-    }
-    public Object getNewValue() {
-        return newValue;
-    }
+  private Rectangle2D.Double invalidatedArea;
+  private AttributeKey attribute;
+  private Object oldValue;
+  private Object newValue;
+
+  /**
+   * Constructs an event for the given source Figure.
+   *
+   * @param invalidatedArea The bounds of the invalidated area on the drawing.
+   */
+  public FigureEvent(Figure source, Rectangle2D.Double invalidatedArea) {
+    super(source);
+    this.invalidatedArea = invalidatedArea;
+  }
+
+  /**
+   * Constructs an event for the given source Figure.
+   */
+  public FigureEvent(Figure source, AttributeKey attribute, Object oldValue, Object newValue) {
+    super(source);
+    this.attribute = attribute;
+    this.oldValue = oldValue;
+    this.newValue = newValue;
+  }
+
+  /**
+   * Gets the changed figure
+   */
+  public Figure getFigure() {
+    return (Figure) getSource();
+  }
+
+  /**
+   * Gets the bounds of the invalidated area on the drawing.
+   */
+  public Rectangle2D.Double getInvalidatedArea() {
+    return invalidatedArea;
+  }
+
+  public AttributeKey getAttribute() {
+    return attribute;
+  }
+
+  public Object getOldValue() {
+    return oldValue;
+  }
+
+  public Object getNewValue() {
+    return newValue;
+  }
 }

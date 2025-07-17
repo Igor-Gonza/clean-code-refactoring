@@ -14,32 +14,32 @@
 
 package org.jhotdraw.draw;
 
-import org.jhotdraw.util.*;
-import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.Point2D;
+
 /**
  * ChopBezierConnector.
  * <p>
  * XXX - This connector does not take the stroke width of the polygon into
  * account.
- * 
- * 
+ *
  * @author Werner Randelshofer
- * @version 2.0 2006-01-14 Changed to support double precison coordinates.
+ * @version 2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 5. M�rz 2004  Created.
  */
 public class ChopBezierConnector extends ChopBoxConnector {
-    
-    /** Creates a new instance. */
-    public ChopBezierConnector() {
-    }
-    
-    public ChopBezierConnector(BezierFigure owner) {
-        super(owner);
-    }
-    
-    protected Point2D.Double chop(Figure target, Point2D.Double from) {
-        BezierFigure bf = (BezierFigure) getConnectorTarget(target);
-        return bf.chop(from);
-    }
+
+  /**
+   * Creates a new instance.
+   */
+  public ChopBezierConnector() {
+  }
+
+  public ChopBezierConnector(BezierFigure owner) {
+    super(owner);
+  }
+
+  protected Point2D.Double chop(Figure target, Point2D.Double from) {
+    BezierFigure bf = (BezierFigure) getConnectorTarget(target);
+    return bf.chop(from);
+  }
 }

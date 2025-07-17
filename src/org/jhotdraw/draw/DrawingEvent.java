@@ -14,9 +14,9 @@
 
 package org.jhotdraw.draw;
 
-import java.awt.*;
-import java.awt.geom.*;
-import java.util.*;
+import java.awt.geom.Rectangle2D;
+import java.util.EventObject;
+
 /**
  * Change event passed to DrawingChangeListeners.
  *
@@ -25,38 +25,40 @@ import java.util.*;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class DrawingEvent extends EventObject {
-    private Rectangle2D.Double invalidatedArea;
-    private Figure figure;
-    
-    /**
-     * Constructs an event for the provided Drawing.
-     * @param figure The changed figure.
-     * @param invalidatedArea The bounds of the invalidated area on the drawing.
-     */
-    public DrawingEvent(Drawing source, Figure figure, Rectangle2D.Double invalidatedArea) {
-        super(source);
-        this.figure = figure;
-        this.invalidatedArea = invalidatedArea;
-    }
-    
-    
-    /**
-     *  Gets the changed drawing.
-     */
-    public Drawing getDrawing() {
-        return (Drawing) getSource();
-    }
-    /**
-     *  Gets the changed figure.
-     */
-    public Figure getFigure() {
-        return figure;
-    }
-    
-    /**
-     *  Gets the bounds of the invalidated area on the drawing.
-     */
-    public Rectangle2D.Double getInvalidatedArea() {
-        return invalidatedArea;
-    }
+  private Rectangle2D.Double invalidatedArea;
+  private Figure figure;
+
+  /**
+   * Constructs an event for the provided Drawing.
+   *
+   * @param figure          The changed figure.
+   * @param invalidatedArea The bounds of the invalidated area on the drawing.
+   */
+  public DrawingEvent(Drawing source, Figure figure, Rectangle2D.Double invalidatedArea) {
+    super(source);
+    this.figure = figure;
+    this.invalidatedArea = invalidatedArea;
+  }
+
+
+  /**
+   * Gets the changed drawing.
+   */
+  public Drawing getDrawing() {
+    return (Drawing) getSource();
+  }
+
+  /**
+   * Gets the changed figure.
+   */
+  public Figure getFigure() {
+    return figure;
+  }
+
+  /**
+   * Gets the bounds of the invalidated area on the drawing.
+   */
+  public Rectangle2D.Double getInvalidatedArea() {
+    return invalidatedArea;
+  }
 }

@@ -17,13 +17,16 @@ package org.jhotdraw.draw;
 
 import org.jhotdraw.xml.DOMStorable;
 
-import java.awt.Graphics2D;
-import java.awt.font.*;
-import java.awt.geom.*;
-import java.util.*;
-import javax.swing.undo.*;
-import javax.swing.event.*;
-import java.io.*;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.UndoableEdit;
+import java.awt.*;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * Drawing is a container for figures.
  * <p>
@@ -35,212 +38,227 @@ import java.io.*;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public interface Drawing extends Serializable, DOMStorable {
-    /**
-     * Removes all figures from the drawing.
-     */
-    public void clear();
-    /**
-     * Adds a figure to the drawing.
-     * The drawing sends an <code>addNotify</code> message to the figure
-     * after it has been added.
-     *
-     * @param figure to be added to the drawing
-     */
-    public void add(Figure figure);
-    /**
-     * Adds a collection of figures to the drawing.
-     * The drawing sends an <code>addNotify</code>  message to each figure
-     * after it has been added.
-     *
-     * @param figures to be added to the drawing
-     */
-    public void addAll(Collection<Figure> figures);
-    
-    /**
-     * Removes a figure from the drawing.
-     * The drawing sends a <code>removeNotify</code>  message to the figure
-     * before it is removed.
-     *
-     * @param figure that is part of the drawing and should be removed
-     */
-    public void remove(Figure figure);
-    /**
-     * Removes the specified figures from the drawing.
-     * The drawing sends a <code>removeNotify</code>  message to each figure
-     * before it is removed.
-     *
-     * @param figures A collection of figures which are part of the drawing
-     * and should be removed
-     */
-    public void removeAll(Collection<Figure> figures);
-    
-    /**
-     * Removes a figure temporarily from the drawing.
-     * The drawing sends no </code>removeNotify</code> message to the figure.
-     *
-     * @see #basicAdd(Figure)
-     * @param figure that is part of the drawing and should be removed
-     */
-    public void basicRemove(Figure figure);
-    /**
-     * Removes the specified figures temporarily from the drawing.
-     * The drawing sends no </code>removeNotify</code> message to the figures.
-     *
-     * @see #basicAddAll(Collection)
-     * @param figures A collection of figures which are part of the drawing
-     * and should be removed
-     */
-    public void basicRemoveAll(Collection<Figure> figures);
-    /**
-     * Reinserts a figure which was temporarily removed using basicRemove.
-     * The drawing sends no <code>addNotify</code> message to the figure.
-     *
-     * @see #basicRemove(Figure)
-     * @param figure that is part of the drawing and should be removed
-     */
-    public void basicAdd(Figure figure);
-    /**
-     * Reinserts a figure which was temporarily removed using basicRemove.
-     * The drawing sends no <code>addNotify</code> message to the figure.
-     *
-     * @see #basicRemove(Figure)
-     * @param figure that is part of the drawing and should be removed
-     */
-    public void basicAdd(int index, Figure figure);
-    /**
-     * Reinssets the specified figures which were temporarily basicRemoveed from
-     * the drawing.
-     * The drawing sends no <code>addNotify</code> message to the figures.
-     *
-     * @see #basicRemoveAll(Collection)
-     * @param figures A collection of figures which are part of the drawing
-     * and should be reinserted.
-     */
-    public void basicAddAll(Collection<Figure> figures);
-    
-    /**
-     * Draws all the figures from back to front.
-     */
-    void draw(Graphics2D g);
-    
-    /**
-     * Draws only the figures in the supplied set.
-     * /
-     * void draw(Graphics2D g, ArrayList figures);
-     */
-    
-    /**
-     * Returns all figures that lie within or intersect the specified
-     * bounds. The figures are returned in Z-order from back to front.
-     */
-    public Collection<Figure> findFigures(Rectangle2D.Double bounds);
-    /**
-     * Returns all figures that lie within the specified
-     * bounds. The figures are returned in Z-order from back to front.
-     */
-    public Collection<Figure> findFiguresWithin(Rectangle2D.Double bounds);
-    /**
-     * Returns the figures of the drawing.
-     * @return A Collection of Figure's.
-     */
-    public Collection<Figure> getFigures();
-    
-    /**
-     * Returns the number of figures in this drawing.
-     */
-    public int getFigureCount();
-    
-    /**
-     * Finds a top level Figure. Use this call for hit detection that
-     * should not descend into the figure's children.
-     */
-    Figure findFigure(Point2D.Double p);
-    
-    /**
-     * Finds a top level Figure. Use this call for hit detection that
-     * should not descend into the figure's children.
-     */
-    Figure findFigureExcept(Point2D.Double p, Figure ignore);
-    /**
-     * Finds a top level Figure. Use this call for hit detection that
-     * should not descend into the figure's children.
-     */
-    Figure findFigureExcept(Point2D.Double p, Collection<Figure> ignore);
-    
-    /**
-     * Returns true if this drawing contains the specified figure.
-     */
-    boolean contains(Figure f);
-    
-    /**
-     * Returns a list of the figures in Z-Order from front to back.
-     */
-    public List<Figure> getFiguresFrontToBack();
-    /**
-     * Finds a figure but descends into a figure's
-     * children. Use this method to implement <i>click-through</i>
-     * hit detection, that is, you want to detect the inner most
-     * figure containing the given point.
-     */
-    public Figure findFigureInside(Point2D.Double p);
-    
-    /**
-     * Sends a figure to the back of the drawing.
-     *
-     * @param figure that is part of the drawing
-     */
-    public void sendToBack(Figure figure);
-    
-    /**
-     * Brings a figure to the front.
-     *
-     * @param figure that is part of the drawing
-     */
-    public void bringToFront(Figure figure);
-    
-    /**
-     * Returns a copy of the provided collection which is sorted
-     * in z order from back to front.
-     */
-    public Collection<Figure> sort(Collection<Figure> figures);
-    
-    /**
-     * Adds a listener for this drawing.
-     */
-    void addDrawingListener(DrawingListener listener);
-    
-    /**
-     * Removes a listener from this drawing.
-     */
-    void removeDrawingListener(DrawingListener listener);
-    /**
-     * Adds a listener for undooable edit events.
-     */
-    public void addUndoableEditListener(UndoableEditListener l);
-    
-    /**
-     * Removes a listener for undoable edit events.
-     */
-    public void removeUndoableEditListener(UndoableEditListener l);
-    /**
-     * Notify all listenerList that have registered interest for
-     * notification on this event type.
-     */
-    public void fireUndoableEditHappened(UndoableEdit edit);
-    
-    /**
-     * Returns the font render context used to do text leyout and text drawing.
-     */
-    public FontRenderContext getFontRenderContext();
-    /**
-     * Sets the font render context used to do text leyout and text drawing.
-     */
-    public void setFontRenderContext(FontRenderContext frc);
-    
-    /**
-     * Returns the lock object on which all threads acting in Figures in this
-     * drawing synchronize to prevent race conditions.
-     */
-    public Object getLock();
+  /**
+   * Removes all figures from the drawing.
+   */
+   void clear();
+
+  /**
+   * Adds a figure to the drawing.
+   * The drawing sends an <code>addNotify</code> message to the figure
+   * after it has been added.
+   *
+   * @param figure to be added to the drawing
+   */
+   void add(Figure figure);
+
+  /**
+   * Adds a collection of figures to the drawing.
+   * The drawing sends an <code>addNotify</code>  message to each figure
+   * after it has been added.
+   *
+   * @param figures to be added to the drawing
+   */
+   void addAll(Collection<Figure> figures);
+
+  /**
+   * Removes a figure from the drawing.
+   * The drawing sends a <code>removeNotify</code>  message to the figure
+   * before it is removed.
+   *
+   * @param figure that is part of the drawing and should be removed
+   */
+   void remove(Figure figure);
+
+  /**
+   * Removes the specified figures from the drawing.
+   * The drawing sends a <code>removeNotify</code>  message to each figure
+   * before it is removed.
+   *
+   * @param figures A collection of figures which are part of the drawing
+   *                and should be removed
+   */
+   void removeAll(Collection<Figure> figures);
+
+  /**
+   * Removes a figure temporarily from the drawing.
+   * The drawing sends no </code>removeNotify</code> message to the figure.
+   *
+   * @param figure that is part of the drawing and should be removed
+   * @see #basicAdd(Figure)
+   */
+   void basicRemove(Figure figure);
+
+  /**
+   * Removes the specified figures temporarily from the drawing.
+   * The drawing sends no </code>removeNotify</code> message to the figures.
+   *
+   * @param figures A collection of figures which are part of the drawing
+   *                and should be removed
+   * @see #basicAddAll(Collection)
+   */
+   void basicRemoveAll(Collection<Figure> figures);
+
+  /**
+   * Reinserts a figure which was temporarily removed using basicRemove.
+   * The drawing sends no <code>addNotify</code> message to the figure.
+   *
+   * @param figure that is part of the drawing and should be removed
+   * @see #basicRemove(Figure)
+   */
+   void basicAdd(Figure figure);
+
+  /**
+   * Reinserts a figure which was temporarily removed using basicRemove.
+   * The drawing sends no <code>addNotify</code> message to the figure.
+   *
+   * @param figure that is part of the drawing and should be removed
+   * @see #basicRemove(Figure)
+   */
+   void basicAdd(int index, Figure figure);
+
+  /**
+   * Reinserts the specified figures which were temporarily basicRemoved from
+   * the drawing.
+   * The drawing sends no <code>addNotify</code> message to the figures.
+   *
+   * @param figures A collection of figures which are part of the drawing
+   *                and should be reinserted.
+   * @see #basicRemoveAll(Collection)
+   */
+   void basicAddAll(Collection<Figure> figures);
+
+  /**
+   * Draws all the figures from back to front.
+   */
+  void draw(Graphics2D g);
+
+  /*
+   * Draws only the figures in the supplied set.
+   * /
+   * void draw(Graphics2D g, ArrayList figures);
+   */
+
+  /**
+   * Returns all figures that lie within or intersect the specified
+   * bounds. The figures are returned in Z-order from back to front.
+   */
+   Collection<Figure> findFigures(Rectangle2D.Double bounds);
+
+  /**
+   * Returns all figures that lie within the specified
+   * bounds. The figures are returned in Z-order from back to front.
+   */
+   Collection<Figure> findFiguresWithin(Rectangle2D.Double bounds);
+
+  /**
+   * Returns the figures of the drawing.
+   *
+   * @return A Collection of Figure's.
+   */
+   Collection<Figure> getFigures();
+
+  /**
+   * Returns the number of figures in this drawing.
+   */
+   int getFigureCount();
+
+  /**
+   * Finds a top level Figure. Use this call for hit detection that
+   * should not descend into the figure's children.
+   */
+  Figure findFigure(Point2D.Double p);
+
+  /**
+   * Finds a top level Figure. Use this call for hit detection that
+   * should not descend into the figure's children.
+   */
+  Figure findFigureExcept(Point2D.Double p, Figure ignore);
+
+  /**
+   * Finds a top level Figure. Use this call for hit detection that
+   * should not descend into the figure's children.
+   */
+  Figure findFigureExcept(Point2D.Double p, Collection<Figure> ignore);
+
+  /**
+   * Returns true if this drawing contains the specified figure.
+   */
+  boolean contains(Figure f);
+
+  /**
+   * Returns a list of the figures in Z-Order from front to back.
+   */
+   List<Figure> getFiguresFrontToBack();
+
+  /**
+   * Finds a figure but descends into a figure's
+   * children. Use this method to implement <i>click-through</i>
+   * hit detection, that is, you want to detect the innermost
+   * figure containing the given point.
+   */
+   Figure findFigureInside(Point2D.Double p);
+
+  /**
+   * Sends a figure to the back of the drawing.
+   *
+   * @param figure that is part of the drawing
+   */
+   void sendToBack(Figure figure);
+
+  /**
+   * Brings a figure to the front.
+   *
+   * @param figure that is part of the drawing
+   */
+   void bringToFront(Figure figure);
+
+  /**
+   * Returns a copy of the provided collection which is sorted
+   * in z order from back to front.
+   */
+   Collection<Figure> sort(Collection<Figure> figures);
+
+  /**
+   * Adds a listener for this drawing.
+   */
+  void addDrawingListener(DrawingListener listener);
+
+  /**
+   * Removes a listener from this drawing.
+   */
+  void removeDrawingListener(DrawingListener listener);
+
+  /**
+   * Adds a listener for undoable edit events.
+   */
+   void addUndoableEditListener(UndoableEditListener l);
+
+  /**
+   * Removes a listener for undoable edit events.
+   */
+   void removeUndoableEditListener(UndoableEditListener l);
+
+  /**
+   * Notify all listenerList that have registered interest for
+   * notification on this event type.
+   */
+   void fireUndoableEditHappened(UndoableEdit edit);
+
+  /**
+   * Returns the font render context used to do text layout and text drawing.
+   */
+   FontRenderContext getFontRenderContext();
+
+  /**
+   * Sets the font render context used to do text layout and text drawing.
+   */
+   void setFontRenderContext(FontRenderContext frc);
+
+  /**
+   * Returns the lock object on which all threads acting in Figures in this
+   * drawing synchronize to prevent race conditions.
+   */
+   Object getLock();
 }
 

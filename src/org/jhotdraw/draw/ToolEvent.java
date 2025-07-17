@@ -15,8 +15,8 @@
 package org.jhotdraw.draw;
 
 import java.awt.*;
-import java.awt.geom.*;
-import java.util.*;
+import java.util.EventObject;
+
 /**
  * An event sent to ToolListener's.
  *
@@ -26,32 +26,36 @@ import java.util.*;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class ToolEvent extends EventObject {
-    private Rectangle invalidatedArea;
-    private DrawingView view;
-    
-    /** Creates a new instance. */
-    public ToolEvent(Tool src, DrawingView view, Rectangle invalidatedArea) {
-        super(src);
-        this.view = view;
-        this.invalidatedArea = invalidatedArea;
-    }
-    
-    /**
-     * Gets the tool which is the source of the event.
-     */
-    public Tool getTool() {
-        return (Tool) getSource();
-    }
-    /**
-     * Gets the drawing view of the tool.
-     */
-    public DrawingView getView() {
-        return view;
-    }
-    /**
-     *  Gets the bounds of the invalidated area on the drawing view.
-     */
-    public Rectangle getInvalidatedArea() {
-        return invalidatedArea;
-    }
+  private Rectangle invalidatedArea;
+  private DrawingView view;
+
+  /**
+   * Creates a new instance.
+   */
+  public ToolEvent(Tool src, DrawingView view, Rectangle invalidatedArea) {
+    super(src);
+    this.view = view;
+    this.invalidatedArea = invalidatedArea;
+  }
+
+  /**
+   * Gets the tool which is the source of the event.
+   */
+  public Tool getTool() {
+    return (Tool) getSource();
+  }
+
+  /**
+   * Gets the drawing view of the tool.
+   */
+  public DrawingView getView() {
+    return view;
+  }
+
+  /**
+   * Gets the bounds of the invalidated area on the drawing view.
+   */
+  public Rectangle getInvalidatedArea() {
+    return invalidatedArea;
+  }
 }

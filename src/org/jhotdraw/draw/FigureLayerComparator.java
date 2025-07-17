@@ -15,21 +15,24 @@
 package org.jhotdraw.draw;
 
 import java.util.*;
+
 /**
  * FigureLayerComparator.
  *
- * @author  Werner Randelshofer
+ * @author Werner Randelshofer
  * @version 1.0 1. April 2004  Created.
  */
 public class FigureLayerComparator implements Comparator<Figure> {
-    public final static FigureLayerComparator INSTANCE = new FigureLayerComparator();
-    
-    /** Creates a new instance. */
-    private FigureLayerComparator() {
-    }
-    
-    public int compare(Figure f1, Figure f2) {
-        return f1.getLayer() - f2.getLayer();
-    }
-    
+  public final static FigureLayerComparator INSTANCE = new FigureLayerComparator();
+
+  /**
+   * Creates a new instance.
+   */
+  private FigureLayerComparator() {
+  }
+
+  public int compare(Figure f1, Figure f2) {
+    return f1.getLayer() - f2.getLayer();
+  }
+
 }

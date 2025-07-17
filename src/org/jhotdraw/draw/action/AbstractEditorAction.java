@@ -17,11 +17,13 @@ package org.jhotdraw.draw.action;
 import org.jhotdraw.draw.Drawing;
 import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.DrawingView;
-import org.jhotdraw.util.*;
+import org.jhotdraw.util.ResourceBundleUtil;
+
 import javax.swing.*;
-import javax.swing.undo.*;
-import java.util.*;
-import java.beans.*;
+import javax.swing.undo.UndoableEdit;
+import java.beans.PropertyChangeListener;
+import java.util.Locale;
+
 /**
  * Abstract super class for actions which act on a DrawingEditor.
  *
@@ -30,52 +32,54 @@ import java.beans.*;
  * <br>1.0 2003-12-01 Created.
  */
 public abstract class AbstractEditorAction extends AbstractAction {
-    protected DrawingEditor editor;
-    protected final static ResourceBundleUtil labels = 
-            ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
-    private PropertyChangeListener propertyChangeHandler = new PropertyChangeListener() {
-        public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getPropertyName().equals("enabled")) {
-                updateEnabledState();
-            }
-        }
-    };
-    
-    /** Creates a new instance. */
-    public AbstractEditorAction(DrawingEditor editor) {
-        this.editor = editor;
-        if (editor != null) {
-            editor.addPropertyChangeListener(propertyChangeHandler);
-                updateEnabledState();
-        }
+  protected DrawingEditor editor;
+  protected final static ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
+  private PropertyChangeListener propertyChangeHandler = evt -> {
+    if (evt.getPropertyName().equals("enabled")) {
+      updateEnabledState();
     }
-    
-    public void setEditor(DrawingEditor newValue) {
-        if (editor != null) {
-            editor.removePropertyChangeListener(propertyChangeHandler);
-        }
-        editor = newValue;
-        if (editor != null) {
-            editor.addPropertyChangeListener(propertyChangeHandler);
-                updateEnabledState();
-        }
+  };
+
+  /**
+   * Creates a new instance.
+   */
+  public AbstractEditorAction(DrawingEditor editor) {
+    this.editor = editor;
+    if (editor != null) {
+      editor.addPropertyChangeListener(propertyChangeHandler);
+      updateEnabledState();
     }
-    
-    public void updateEnabledState() {
-            setEnabled(editor != null && editor.isEnabled());
+  }
+
+  public void setEditor(DrawingEditor newValue) {
+    if (editor != null) {
+      editor.removePropertyChangeListener(propertyChangeHandler);
     }
-    
-    public DrawingEditor getEditor() {
-        return editor;
+    editor = newValue;
+    if (editor != null) {
+      editor.addPropertyChangeListener(propertyChangeHandler);
+      updateEnabledState();
     }
-    protected DrawingView getView() {
-        return editor.getView();
-    }
-    protected Drawing getDrawing() {
-        return getView().getDrawing();
-    }
-    protected void fireUndoableEditHappened(UndoableEdit edit) {
-        getDrawing().fireUndoableEditHappened(edit);
-    }
+  }
+
+  public void updateEnabledState() {
+    setEnabled(editor != null && editor.isEnabled());
+  }
+
+  public DrawingEditor getEditor() {
+    return editor;
+  }
+
+  protected DrawingView getView() {
+    return editor.getView();
+  }
+
+  protected Drawing getDrawing() {
+    return getView().getDrawing();
+  }
+
+  protected void fireUndoableEditHappened(UndoableEdit edit) {
+    getDrawing().fireUndoableEditHappened(edit);
+  }
 
 }

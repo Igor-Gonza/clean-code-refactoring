@@ -16,7 +16,8 @@
 
 package org.jhotdraw.draw;
 
-import java.util.*;
+import java.util.EventListener;
+
 /**
  * Listener interested in Drawing changes.
  *
@@ -24,19 +25,19 @@ import java.util.*;
  * @version 1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public interface DrawingListener extends EventListener {
-    
-    /**
-     * Sent when an area of the drawing needs to be repainted.
-     */
-    public void areaInvalidated(DrawingEvent e);
-    
-    /**
-     * Sent when a figure was added.
-     */
-    public void figureAdded(DrawingEvent e);
-    
-    /**
-     * Sent when a figure was removed.
-     */
-    public void figureRemoved(DrawingEvent e);
+
+  /**
+   * Sent when an area of the drawing needs to be repainted.
+   */
+  void areaInvalidated(DrawingEvent e);
+
+  /**
+   * Sent when a figure was added.
+   */
+  void figureAdded(DrawingEvent e);
+
+  /**
+   * Sent when a figure was removed.
+   */
+  void figureRemoved(DrawingEvent e);
 }

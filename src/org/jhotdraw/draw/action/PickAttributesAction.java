@@ -14,11 +14,12 @@
 
 package org.jhotdraw.draw.action;
 
-import org.jhotdraw.util.*;
-import javax.swing.*;
-import java.util.*;
-import java.awt.*;
 import org.jhotdraw.draw.*;
+import org.jhotdraw.util.ResourceBundleUtil;
+
+import java.util.Collection;
+import java.util.Locale;
+import java.util.Map;
 /**
  * PickAttributesAction.
  * 
@@ -42,8 +43,8 @@ public class PickAttributesAction extends AbstractSelectedAction {
     public void pickAttributes() {
         DrawingEditor editor = getEditor();
         Collection<Figure> selection = getView().getSelectedFigures();
-        if (selection.size() > 0) {
-            Figure figure = (Figure) selection.iterator().next();
+        if (!selection.isEmpty()) {
+            Figure figure = selection.iterator().next();
             for (Map.Entry<AttributeKey, Object> entry : figure.getAttributes().entrySet()) {
                 if (entry.getKey() != AttributeKeys.TEXT) {
                editor.setDefaultAttribute(entry.getKey(), entry.getValue());

@@ -16,6 +16,7 @@ package org.jhotdraw.draw;
 
 import java.awt.*;
 import java.util.*;
+
 /**
  * HandleEvent.
  *
@@ -23,21 +24,24 @@ import java.util.*;
  * @version 1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class HandleEvent extends EventObject {
-    private Rectangle invalidatedArea;
-    
-    /** Creates a new instance. */
-    public HandleEvent(Handle src, Rectangle invalidatedArea) {
-        super(src);
-        this.invalidatedArea = invalidatedArea;
-    }
-    
-    public Handle getHandle() {
-        return (Handle) getSource();
-    }
-    /**
-     *  Gets the bounds of the invalidated area on the drawing view.
-     */
-    public Rectangle getInvalidatedArea() {
-        return invalidatedArea;
-    }
+  private Rectangle invalidatedArea;
+
+  /**
+   * Creates a new instance.
+   */
+  public HandleEvent(Handle src, Rectangle invalidatedArea) {
+    super(src);
+    this.invalidatedArea = invalidatedArea;
+  }
+
+  public Handle getHandle() {
+    return (Handle) getSource();
+  }
+
+  /**
+   * Gets the bounds of the invalidated area on the drawing view.
+   */
+  public Rectangle getInvalidatedArea() {
+    return invalidatedArea;
+  }
 }

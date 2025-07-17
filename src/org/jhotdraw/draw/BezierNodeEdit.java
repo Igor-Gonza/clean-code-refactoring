@@ -14,6 +14,7 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.geom.BezierPath;
+
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
@@ -23,59 +24,64 @@ import javax.swing.undo.UndoableEdit;
 /**
  * BezierNodeEdit.
  *
- * @version 1.0 2006-06-24 
  * @author Werner Randelshofer
+ * @version 1.0 2006-06-24
  */
 class BezierNodeEdit extends AbstractUndoableEdit {
-    private BezierFigure owner;
-    private int index;
-    private BezierPath.Node oldValue;
-    private BezierPath.Node newValue;
-    
-    /** Creates a new instance. */
-    public BezierNodeEdit(BezierFigure owner, int index, BezierPath.Node oldValue, BezierPath.Node newValue) {
-        this.owner = owner;
-        this.index = index;
-        this.oldValue = oldValue;
-        this.newValue = newValue;
+  private BezierFigure owner;
+  private int index;
+  private BezierPath.Node oldValue;
+  private BezierPath.Node newValue;
+
+  /**
+   * Creates a new instance.
+   */
+  public BezierNodeEdit(BezierFigure owner, int index, BezierPath.Node oldValue, BezierPath.Node newValue) {
+    this.owner = owner;
+    this.index = index;
+    this.oldValue = oldValue;
+    this.newValue = newValue;
+  }
+
+  public String getPresentationName() {
+    return "Punkt verschieben";
+  }
+
+  public void redo() throws CannotRedoException {
+    super.redo();
+    owner.willChange();
+    owner.basicSetNode(index, newValue);
+    owner.changed();
+  }
+
+  public void undo() throws CannotUndoException {
+    super.undo();
+    owner.willChange();
+    owner.basicSetNode(index, oldValue);
+    owner.changed();
+  }
+
+  public boolean addEdit(UndoableEdit anEdit) {
+    if (anEdit instanceof BezierNodeEdit) {
+      BezierNodeEdit that = (BezierNodeEdit) anEdit;
+      if (that.owner == this.owner && that.index == this.index) {
+        this.newValue = that.newValue;
+        that.die();
+        return true;
+      }
     }
-    public String getPresentationName() {
-        return "Punkt verschieben";
+    return false;
+  }
+
+  public boolean replaceEdit(UndoableEdit anEdit) {
+    if (anEdit instanceof BezierNodeEdit) {
+      BezierNodeEdit that = (BezierNodeEdit) anEdit;
+      if (that.owner == this.owner && that.index == this.index) {
+        that.oldValue = this.oldValue;
+        this.die();
+        return true;
+      }
     }
-    
-    public void redo() throws CannotRedoException {
-        super.redo();
-        owner.willChange();
-        owner.basicSetNode(index, newValue);
-        owner.changed();
-    }
-    public void undo() throws CannotUndoException {
-        super.undo();
-        owner.willChange();
-        owner.basicSetNode(index, oldValue);
-        owner.changed();
-    }
-    
-    public boolean addEdit(UndoableEdit anEdit) {
-        if (anEdit instanceof BezierNodeEdit) {
-            BezierNodeEdit that = (BezierNodeEdit) anEdit;
-            if (that.owner == this.owner && that.index == this.index) {
-                this.newValue = that.newValue;
-                that.die();
-                return true;
-            }
-        }
-        return false;
-    }
-    public boolean replaceEdit(UndoableEdit anEdit) {
-        if (anEdit instanceof BezierNodeEdit) {
-            BezierNodeEdit that = (BezierNodeEdit) anEdit;
-            if (that.owner == this.owner && that.index == this.index) {
-                that.oldValue = this.oldValue;
-                this.die();
-                return true;
-            }
-        }
-        return false;
-    }
+    return false;
+  }
 }

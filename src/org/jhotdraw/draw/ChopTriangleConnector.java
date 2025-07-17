@@ -20,22 +20,25 @@ import java.awt.geom.*;
  * ChopTriangleConnector.
  *
  * @author Werner Randelshofer.
- * @version 1.0 June 17, 2006 Created.
+ * @version 1.0 June 17, 2006, Created.
  */
 public class ChopTriangleConnector extends ChopBoxConnector {
-    
-    /**
-     * Only used for DOMStorable input.
-     */
-    public ChopTriangleConnector() {
-    }
-    /** Creates a new instance. */
-    public ChopTriangleConnector(TriangleFigure owner) {
-        super(owner);
-    }
-    
-    protected Point2D.Double chop(Figure target, Point2D.Double from) {
-        TriangleFigure bf = (TriangleFigure) getConnectorTarget(target);
-        return bf.chop(from);
-    }
+
+  /**
+   * Only used for DOMStorable input.
+   */
+  public ChopTriangleConnector() {
+  }
+
+  /**
+   * Creates a new instance.
+   */
+  public ChopTriangleConnector(TriangleFigure owner) {
+    super(owner);
+  }
+
+  protected Point2D.Double chop(Figure target, Point2D.Double from) {
+    TriangleFigure bf = (TriangleFigure) getConnectorTarget(target);
+    return bf.chop(from);
+  }
 }

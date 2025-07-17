@@ -21,13 +21,15 @@ package org.jhotdraw.draw;
  * @version 1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class FigureSelectionEvent extends java.util.EventObject {
-    
-    /** Creates a new instance. */
-    public FigureSelectionEvent(DrawingView source) {
-        super(source);
-    }
-    
-    public DrawingView getView() {
-        return (DrawingView) source;
-    }
+
+  /**
+   * Creates a new instance.
+   */
+  public FigureSelectionEvent(DrawingView source) {
+    super(source);
+  }
+
+  public DrawingView getView() {
+    return (DrawingView) source;
+  }
 }

@@ -16,8 +16,8 @@
 
 package org.jhotdraw.draw;
 
-import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.Point2D;
+
 /**
  * Locators can be used to locate a position on a figure.<p>
  *
@@ -27,15 +27,18 @@ import java.awt.geom.*;
  */
 public interface Locator {
 
-	/**
-	 * Locates a position on the provided figure.
-	 * @return a point on the figure.
-	 */
-	public Point2D.Double locate(Figure owner);
-	/**
-	 * Locates a position on the provided figure relative to the dependent
-         * figure.
-	 * @return a point on the figure.
-	 */
-	public Point2D.Double locate(Figure owner, Figure dependent);
+  /**
+   * Locates a position on the provided figure.
+   *
+   * @return a point on the figure.
+   */
+  Point2D.Double locate(Figure owner);
+
+  /**
+   * Locates a position on the provided figure relative to the dependent
+   * figure.
+   *
+   * @return a point on the figure.
+   */
+  Point2D.Double locate(Figure owner, Figure dependent);
 }

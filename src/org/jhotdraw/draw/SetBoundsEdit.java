@@ -16,9 +16,12 @@
 
 package org.jhotdraw.draw;
 
-import javax.swing.undo.*;
-import java.awt.*;
-import java.awt.geom.*;
+import javax.swing.undo.AbstractUndoableEdit;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoableEdit;
+import java.awt.geom.Point2D;
+
 /**
  * SetBoundsEdit.
  *
@@ -27,58 +30,63 @@ import java.awt.geom.*;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class SetBoundsEdit extends AbstractUndoableEdit {
-    private AbstractFigure owner;
-    private Point2D.Double oldAnchor, oldLead;
-    private Point2D.Double newAnchor, newLead;
-    
-    /** Creates a new instance. */
-    public SetBoundsEdit(AbstractFigure owner, Point2D.Double oldAnchor, Point2D.Double oldLead, Point2D.Double newAnchor, Point2D.Double newLead) {
-        this.owner = owner;
-        this.oldAnchor = oldAnchor;
-        this.oldLead = oldLead;
-        this.newAnchor = newAnchor;
-        this.newLead = newLead;
+  private AbstractFigure owner;
+  private Point2D.Double oldAnchor, oldLead;
+  private Point2D.Double newAnchor, newLead;
+
+  /**
+   * Creates a new instance.
+   */
+  public SetBoundsEdit(AbstractFigure owner, Point2D.Double oldAnchor, Point2D.Double oldLead, Point2D.Double newAnchor, Point2D.Double newLead) {
+    this.owner = owner;
+    this.oldAnchor = oldAnchor;
+    this.oldLead = oldLead;
+    this.newAnchor = newAnchor;
+    this.newLead = newLead;
+  }
+
+  public String getPresentationName() {
+    return "Abmessungen ändern";
+  }
+
+  public boolean addEdit(UndoableEdit anEdit) {
+    if (anEdit instanceof SetBoundsEdit) {
+      SetBoundsEdit that = (SetBoundsEdit) anEdit;
+      if (that.owner == this.owner) {
+        this.newAnchor = that.newAnchor;
+        this.newLead = that.newLead;
+        that.die();
+        return true;
+      }
     }
-    public String getPresentationName() {
-        return "Abmessungen \u00e4ndern";
+    return false;
+  }
+
+  public boolean replaceEdit(UndoableEdit anEdit) {
+    if (anEdit instanceof SetBoundsEdit) {
+      SetBoundsEdit that = (SetBoundsEdit) anEdit;
+      if (that.owner == this.owner) {
+        that.oldAnchor = this.oldAnchor;
+        that.oldLead = this.oldLead;
+        this.die();
+        return true;
+      }
     }
-    
-    public boolean addEdit(UndoableEdit anEdit) {
-        if (anEdit instanceof SetBoundsEdit) {
-            SetBoundsEdit that = (SetBoundsEdit) anEdit;
-            if (that.owner == this.owner) {
-                this.newAnchor = that.newAnchor;
-                this.newLead = that.newLead;
-                that.die();
-                return true;
-            }
-        }
-        return false;
-    }
-    public boolean replaceEdit(UndoableEdit anEdit) {
-        if (anEdit instanceof SetBoundsEdit) {
-            SetBoundsEdit that = (SetBoundsEdit) anEdit;
-            if (that.owner == this.owner) {
-                that.oldAnchor = this.oldAnchor;
-                that.oldLead = this.oldLead;
-                this.die();
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    public void redo() throws CannotRedoException {
-        super.redo();
-        owner.willChange();
-        owner.setBounds(newAnchor, newLead);
-        owner.changed();
-    }
-    public void undo() throws CannotUndoException {
-        super.undo();
-        owner.willChange();
-        owner.setBounds(oldAnchor, oldLead);
-        owner.changed();
-    }
+    return false;
+  }
+
+  public void redo() throws CannotRedoException {
+    super.redo();
+    owner.willChange();
+    owner.setBounds(newAnchor, newLead);
+    owner.changed();
+  }
+
+  public void undo() throws CannotUndoException {
+    super.undo();
+    owner.willChange();
+    owner.setBounds(oldAnchor, oldLead);
+    owner.changed();
+  }
 }
 

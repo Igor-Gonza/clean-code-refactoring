@@ -15,7 +15,8 @@
 
 package org.jhotdraw.draw;
 
-import java.util.*;
+import java.util.EventListener;
+
 /**
  * HandleListener.
  *
@@ -23,17 +24,18 @@ import java.util.*;
  * @version 1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public interface HandleListener extends EventListener {
-    /**
-     * Sent when an area of the drawing view needs to be repainted.
-     */
-    public void areaInvalidated(HandleEvent e);
-    
-    /**
-     * Sent when requesting to remove a handle.
-     */
-    public void handleRequestRemove(HandleEvent e);
-    /**
-     * Sent when requesting to add secondary handles.
-     */
-    public void handleRequestSecondaryHandles(HandleEvent e);
+  /**
+   * Sent when an area of the drawing view needs to be repainted.
+   */
+  void areaInvalidated(HandleEvent e);
+
+  /**
+   * Sent when requesting to remove a handle.
+   */
+  void handleRequestRemove(HandleEvent e);
+
+  /**
+   * Sent when requesting to add secondary handles.
+   */
+  void handleRequestSecondaryHandles(HandleEvent e);
 }

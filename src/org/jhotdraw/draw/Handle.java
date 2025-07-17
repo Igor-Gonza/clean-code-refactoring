@@ -16,13 +16,12 @@
 package org.jhotdraw.draw;
 
 import java.awt.*;
-import java.awt.geom.*;
-import java.awt.event.*;
-import javax.swing.event.*;
-import java.util.*;
+import java.awt.event.KeyListener;
+import java.util.Collection;
+
 /**
  * Handles are used to change a figure by direct manipulation.
- * Handles know their owning figure and they provide methods to
+ * Handles know their owning figure, and they provide methods to
  * locate the handle on the figure and to track changes.
  * <p>
  * Handles are used for user interaction. Unlike figures, a handle works with
@@ -34,101 +33,109 @@ import java.util.*;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public interface Handle extends KeyListener {
-    /**
-     * Returns the owner of this handle.
-     */
-    public Figure getOwner();
-    /**
-     * Sets the view of the handle.
-     */
-    public void setView(DrawingView view);
-    /**
-     * Adds a listener for this handle.
-     */
-    public void addHandleListener(HandleListener l);
-    
-    /**
-     * Removes a listener for this handle.
-     */
-    void removeHandleListener(HandleListener l);
-    /**
-     * Returns the bounding box of the handle.
-     */
-    Rectangle  getBounds();
-    /**
-     * Returns the draw bounds of the handle.
-     */
-    Rectangle getDrawBounds();
-    
-    /**
-     * Tests if a point is contained in the handle.
-     */
-    public boolean contains(Point p);
-    
-    /**
-     * Draws this handle.
-     */
-    public void draw(Graphics2D g);
-    /**
-     * Invalidates the handle. This method informs its listeners
-     * that its current display box is invalid and should be
-     * refreshed.
-     */
-    public void invalidate();
-    
-    /**
-     * Disposes the resources aquired by the handler.
-     */
-    public void dispose();
-    
-    /**
-     * Returns a cursor for the handle.
-     */
-    public Cursor getCursor();
-    
-    /**
-     * Returns true, if this handle is combinable with the specified handle.
-     * This method is used to determine, if multiple handles need to be tracked,
-     * when more than one figure is selected.
-     */
-    public boolean isCombinableWith(Handle handle);
-    
-    /**
-     * Tracks the start of the interaction. The default implementation
-     * does nothing.
-     *  @param anchor the position where the interaction started
-     */
-    public void trackStart(Point anchor, int modifiersEx);
-    
-    /**
-     * Tracks a step of the interaction.
-     *  @param anchor the position where the interaction started
-     * @param lead the current position
-     */
-    public void trackStep(Point anchor, Point lead, int modifiersEx);
-    
-    /**
-     * Tracks the end of the interaction.
-     *  @param anchor the position where the interaction started
-     * @param lead the current position
-     */
-    public void trackEnd(Point anchor, Point lead, int modifiersEx);
-    
-    /**
-     * Tracks a double click.
-     */
-    public void trackDoubleClick(Point p, int modifiersEx);
-    
-    /**
-     * This method is invoked by the drawing view, when its transform
-     * has changed. This means, that DrawingView.viewToDrawing and
-     * DrawingView.drawingToView will return different values than they
-     * did before.
-     */
-    public void viewTransformChanged();
-    
-    /**
-     * Creates secondary handles.
-     */
-    public Collection<Handle> createSecondaryHandles();
+  /**
+   * Returns the owner of this handle.
+   */
+   Figure getOwner();
+
+  /**
+   * Sets the view of the handle.
+   */
+   void setView(DrawingView view);
+
+  /**
+   * Adds a listener for this handle.
+   */
+   void addHandleListener(HandleListener l);
+
+  /**
+   * Removes a listener for this handle.
+   */
+  void removeHandleListener(HandleListener l);
+
+  /**
+   * Returns the bounding box of the handle.
+   */
+  Rectangle getBounds();
+
+  /**
+   * Returns the draw bounds of the handle.
+   */
+  Rectangle getDrawBounds();
+
+  /**
+   * Tests if a point is contained in the handle.
+   */
+   boolean contains(Point p);
+
+  /**
+   * Draws this handle.
+   */
+   void draw(Graphics2D g);
+
+  /**
+   * Invalidates the handle. This method informs its listeners
+   * that its current display box is invalid and should be
+   * refreshed.
+   */
+   void invalidate();
+
+  /**
+   * Disposes the resources acquired by the handler.
+   */
+   void dispose();
+
+  /**
+   * Returns a cursor for the handle.
+   */
+   Cursor getCursor();
+
+  /**
+   * Returns true, if this handle is combinable with the specified handle.
+   * This method is used to determine, if multiple handles need to be tracked,
+   * when more than one figure is selected.
+   */
+   boolean isCombinableWith(Handle handle);
+
+  /**
+   * Tracks the start of the interaction. The default implementation
+   * does nothing.
+   *
+   * @param anchor the position where the interaction started
+   */
+   void trackStart(Point anchor, int modifiersEx);
+
+  /**
+   * Tracks a step of the interaction.
+   *
+   * @param anchor the position where the interaction started
+   * @param lead   the current position
+   */
+   void trackStep(Point anchor, Point lead, int modifiersEx);
+
+  /**
+   * Tracks the end of the interaction.
+   *
+   * @param anchor the position where the interaction started
+   * @param lead   the current position
+   */
+   void trackEnd(Point anchor, Point lead, int modifiersEx);
+
+  /**
+   * Tracks a double click.
+   */
+   void trackDoubleClick(Point p, int modifiersEx);
+
+  /**
+   * This method is invoked by the drawing view, when its transform
+   * has changed. This means, that DrawingView.viewToDrawing and
+   * DrawingView.drawingToView will return different values than they
+   * did before.
+   */
+   void viewTransformChanged();
+
+  /**
+   * Creates secondary handles.
+   */
+   Collection<Handle> createSecondaryHandles();
 }

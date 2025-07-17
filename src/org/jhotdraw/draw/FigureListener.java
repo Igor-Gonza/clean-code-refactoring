@@ -17,6 +17,7 @@
 package org.jhotdraw.draw;
 
 import java.util.*;
+
 /**
  * Listener interested in Figure changes.
  *
@@ -24,30 +25,34 @@ import java.util.*;
  * @version 1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public interface FigureListener extends EventListener {
-    
-    /**
-     * Sent when an area used by the figure needs to be repainted.
-     */
-    public void figureAreaInvalidated(FigureEvent e);
-    /**
-     * Sent when an attribute of the figure has changed.
-     */
-    public void figureAttributeChanged(FigureEvent e);
-    /**
-     * Sent when the geometry (e.g. the bounds) of the figure has changed.
-     */
-    public void figureChanged(FigureEvent e);
-    
-    /**
-     * Sent when a figure was added to a drawing.
-     */
-    public void figureAdded(FigureEvent e);
-    /**
-     * Sent when a figure was removed from a drawing.
-     */
-    public void figureRemoved(FigureEvent e);
-    /**
-     * Sent when the figure requests to be removed from a drawing.
-     */
-    public void figureRequestRemove(FigureEvent e);
+
+  /**
+   * Sent when an area used by the figure needs to be repainted.
+   */
+  void figureAreaInvalidated(FigureEvent e);
+
+  /**
+   * Sent when an attribute of the figure has changed.
+   */
+  void figureAttributeChanged(FigureEvent e);
+
+  /**
+   * Sent when the geometry (e.g. the bounds) of the figure has changed.
+   */
+  void figureChanged(FigureEvent e);
+
+  /**
+   * Sent when a figure was added to a drawing.
+   */
+  void figureAdded(FigureEvent e);
+
+  /**
+   * Sent when a figure was removed from a drawing.
+   */
+  void figureRemoved(FigureEvent e);
+
+  /**
+   * Sent when the figure requests to be removed from a drawing.
+   */
+  void figureRequestRemove(FigureEvent e);
 }

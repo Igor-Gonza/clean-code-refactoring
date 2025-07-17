@@ -38,7 +38,7 @@ public class AttributeChangeEdit extends AbstractUndoableEdit {
     }    
     public String getPresentationName() {
         // FIXME - Localize me
-        return "Eigenschaft \u00e4ndern";
+        return "Eigenschaft ändern";
     }
     
     public void redo() throws CannotRedoException {

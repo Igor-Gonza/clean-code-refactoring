@@ -14,53 +14,65 @@
 
 package org.jhotdraw.draw.action;
 
-import org.jhotdraw.util.*;
-import javax.swing.*;
-import java.util.*;
-import javax.swing.undo.*;
-import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.Drawing;
+import org.jhotdraw.draw.DrawingEditor;
+import org.jhotdraw.draw.DrawingView;
+import org.jhotdraw.draw.Figure;
+import org.jhotdraw.util.ResourceBundleUtil;
+
+import javax.swing.undo.AbstractUndoableEdit;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Locale;
 
 /**
  * ToFrontAction.
  *
- * @author  Werner Randelshofer
+ * @author Werner Randelshofer
  * @version 1.0 24. November 2003  Created.
  */
 public class MoveToFrontAction extends AbstractSelectedAction {
-       private ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
-    
-    /** Creates a new instance. */
-    public MoveToFrontAction(DrawingEditor editor) {
-        super(editor);
-        labels.configureAction(this, "moveToFront");
+  private ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
+
+  /**
+   * Creates a new instance.
+   */
+  public MoveToFrontAction(DrawingEditor editor) {
+    super(editor);
+    labels.configureAction(this, "moveToFront");
+  }
+
+  public void actionPerformed(java.awt.event.ActionEvent e) {
+    final DrawingView view = getView();
+    final LinkedList<Figure> figures = new LinkedList<>(view.getSelectedFigures());
+    bringToFront(view, figures);
+    fireUndoableEditHappened(new AbstractUndoableEdit() {
+      public String getPresentationName() {
+        return labels.getString("moveToFront");
+      }
+
+      public void redo() throws CannotRedoException {
+        super.redo();
+        MoveToFrontAction.bringToFront(view, figures);
+      }
+
+      public void undo() throws CannotUndoException {
+        super.undo();
+        MoveToBackAction.sendToBack(view, figures);
+      }
+    });
+  }
+
+  public static void bringToFront(DrawingView view, Collection<Figure> figures) {
+    Drawing drawing = view.getDrawing();
+    Iterator i = drawing.sort(figures).iterator();
+    while (i.hasNext()) {
+      Figure figure = (Figure) i.next();
+      drawing.bringToFront(figure);
     }
-    
-    public void actionPerformed(java.awt.event.ActionEvent e) {
-        final DrawingView view = getView();
-        final LinkedList<Figure> figures = new LinkedList<Figure>(view.getSelectedFigures());
-        bringToFront(view, figures);
-        fireUndoableEditHappened(new AbstractUndoableEdit() {
-            public String getPresentationName() {
-       return labels.getString("moveToFront");
-            }
-            public void redo() throws CannotRedoException {
-                super.redo();
-                MoveToFrontAction.bringToFront(view, figures);
-            }
-            public void undo() throws CannotUndoException {
-                super.undo();
-                MoveToBackAction.sendToBack(view, figures);
-            }
-        }
-        );
-    }
-    public static void bringToFront(DrawingView view, Collection<Figure> figures) {
-        Drawing drawing = view.getDrawing();
-        Iterator i = drawing.sort(figures).iterator();
-        while (i.hasNext()) {
-            Figure figure = (Figure) i.next();
-            drawing.bringToFront(figure);
-        }
-    }
-    
+  }
+
 }

@@ -14,51 +14,52 @@
 
 package org.jhotdraw.draw.action;
 
+import org.jhotdraw.draw.AttributeKey;
+import org.jhotdraw.draw.DrawingEditor;
+
 import java.awt.*;
-import java.awt.color.*;
-import java.awt.event.*;
-import java.util.*;
-import javax.swing.*;
-import java.net.*;
-import org.jhotdraw.draw.*;
-import org.jhotdraw.geom.*;
+import java.net.URL;
+
 /**
  * ColorAttributeIcon.
  *
- * @author  Werner Randelshofer
+ * @author Werner Randelshofer
  * @version 2.0 2006-06-07 Reworked.
  * <br>1.0 25. November 2003  Created.
  */
 public class ColorAttributeIcon extends javax.swing.ImageIcon {
-    private DrawingEditor editor;
-    AttributeKey<Color> key;
-    //private Rectangle colorRect = new Rectangle(0, 12, 16, 4);
-    private Rectangle colorRect = new Rectangle(1, 17, 20, 4);
-    
-    /** Creates a new instance. */
-    public ColorAttributeIcon(DrawingEditor editor, AttributeKey<Color> key, URL imageLocation) {
-        super(imageLocation);
-        this.editor = editor;
-        this.key = key;
+  private DrawingEditor editor;
+  AttributeKey<Color> key;
+  //private Rectangle colorRect = new Rectangle(0, 12, 16, 4);
+  private Rectangle colorRect = new Rectangle(1, 17, 20, 4);
+
+  /**
+   * Creates a new instance.
+   */
+  public ColorAttributeIcon(DrawingEditor editor, AttributeKey<Color> key, URL imageLocation) {
+    super(imageLocation);
+    this.editor = editor;
+    this.key = key;
+  }
+
+  public ColorAttributeIcon(DrawingEditor editor, AttributeKey<Color> key, Image image) {
+    super(image);
+    this.editor = editor;
+    this.key = key;
+  }
+
+  public void paintIcon(java.awt.Component c, java.awt.Graphics gr, int x, int y) {
+    Graphics2D g = (Graphics2D) gr;
+    super.paintIcon(c, g, x, y);
+    Color color = (Color) editor.getDefaultAttribute(key);
+    if (color == null) {
+      // g.setColor(Color.red);
+      // g.drawLine(x, y + 12 + 3, x + 15, y + 13);
+    } else {
+      g.setColor(color);
+      g.translate(x, y);
+      g.fill(colorRect);
+      g.translate(-x, -y);
     }
-    public ColorAttributeIcon(DrawingEditor editor, AttributeKey<Color> key, Image image) {
-        super(image);
-        this.editor = editor;
-        this.key = key;
-    }
-    
-    public void paintIcon(java.awt.Component c, java.awt.Graphics gr, int x, int y) {
-        Graphics2D g = (Graphics2D) gr;
-        super.paintIcon(c, g, x, y);
-        Color color = (Color) editor.getDefaultAttribute(key);
-        if (color == null) {
-           // g.setColor(Color.red);
-           // g.drawLine(x, y + 12 + 3, x + 15, y + 13);
-        } else {
-            g.setColor(color);
-            g.translate(x, y);
-            g.fill(colorRect);
-            g.translate(-x, -y);
-        }
-    }    
+  }
 }

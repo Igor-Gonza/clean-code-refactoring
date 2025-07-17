@@ -14,36 +14,47 @@
  */
 
 
-
 package org.jhotdraw.draw;
 
-import org.jhotdraw.util.*;
+import org.jhotdraw.geom.Insets2DDouble;
+
 import java.awt.*;
-import org.jhotdraw.geom.*;
+
 /**
  * TextHolder.
  *
  * @author Werner Randelshofer
- * @version 2.0 2006-01-14 Changed to support double precison coordinates.
+ * @version 2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public interface TextHolder extends Figure {
-    public boolean isEditable();
-    public Font getFont();
-    public Color getTextColor();
-    public Color getFillColor();
-    public TextHolder getLabelFor();
-    /**
-     * Gets the number of characters used to expand tabs.
-     */
-    public int getTabSize();
-    public String getText();
-    public void setText(String text);
-	/**
-	 * Gets the number of columns to be overlaid when the figure is edited.
-	 */
-	public int getTextColumns();
-    public void setFontSize(float size);
-    public float getFontSize();
-    public Insets2DDouble getInsets();
+  boolean isEditable();
+
+  Font getFont();
+
+  Color getTextColor();
+
+  Color getFillColor();
+
+  TextHolder getLabelFor();
+
+  /**
+   * Gets the number of characters used to expand tabs.
+   */
+  int getTabSize();
+
+  String getText();
+
+  void setText(String text);
+
+  /**
+   * Gets the number of columns to be overlaid when the figure is edited.
+   */
+  int getTextColumns();
+
+  void setFontSize(float size);
+
+  float getFontSize();
+
+  Insets2DDouble getInsets();
 }

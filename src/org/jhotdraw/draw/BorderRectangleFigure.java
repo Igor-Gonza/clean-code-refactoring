@@ -14,28 +14,30 @@
 
 package org.jhotdraw.draw;
 
-import java.awt.*;
-import java.awt.geom.*;
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.border.Border;
+import java.awt.*;
+
 /**
  * BorderRectangle2D.DoubleFigure.
  *
- * @author  Werner Randelshofer
- * @version 2.0 2006-01-14 Changed to support double precison coordinates.
+ * @author Werner Randelshofer
+ * @version 2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 8. April 2004  Created.
  */
 public class BorderRectangleFigure extends RectangleFigure {
-    protected Border border;
-    protected final static JComponent borderComponent = new JPanel();
-    
-    /** Creates a new instance. */
-    public BorderRectangleFigure(Border border) {
-        this.border = border;
-    }
-    
-    public void drawFigure(Graphics2D g) {
-        Rectangle bounds = getBounds().getBounds();
-        border.paintBorder(borderComponent, g, bounds.x, bounds.y, bounds.width, bounds.height);
-    }
+  protected Border border;
+  protected final static JComponent borderComponent = new JPanel();
+
+  /**
+   * Creates a new instance.
+   */
+  public BorderRectangleFigure(Border border) {
+    this.border = border;
+  }
+
+  public void drawFigure(Graphics2D g) {
+    Rectangle bounds = getBounds().getBounds();
+    border.paintBorder(borderComponent, g, bounds.x, bounds.y, bounds.width, bounds.height);
+  }
 }

@@ -15,27 +15,29 @@
 
 package org.jhotdraw.draw;
 
-import java.awt.*;
-import java.awt.geom.*;
-import org.jhotdraw.xml.*;
+import org.jhotdraw.xml.DOMStorable;
+
+import java.awt.geom.Point2D;
+
 /**
  * AbstractLocator provides default implementations for
  * the Locator interface.
  *
  * @author Werner Randelshofer
- * @version 2,1 2006-07-08 Added support for DOMStorable. 
+ * @version 2, 1 2006-07-08 Added support for DOMStorable.
  * <br>2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public abstract class AbstractLocator implements Locator, DOMStorable {
-    
-    /** Creates a new instance. */
-    public AbstractLocator() {
-    }
-    
-    public Point2D.Double locate(Figure owner, Figure dependent) {
-        return locate(owner);
-    }
-    
-    
+
+  /**
+   * Creates a new instance.
+   */
+  public AbstractLocator() {
+  }
+
+  public Point2D.Double locate(Figure owner, Figure dependent) {
+    return locate(owner);
+  }
+
 }

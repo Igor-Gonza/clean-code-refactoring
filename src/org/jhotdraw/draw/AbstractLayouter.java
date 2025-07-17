@@ -14,20 +14,19 @@
 
 package org.jhotdraw.draw;
 
-import org.jhotdraw.util.*;
-import java.awt.*;
-import org.jhotdraw.geom.*;
+import org.jhotdraw.geom.Insets2DDouble;
+
 /**
  * AbstractLayouter.
  *
- * @author  Werner Randelshofer
+ * @author Werner Randelshofer
  * @version 2.0 2006-01-14 Changed to support double precision coordinates.
- * <br>1.0 1. Dezember 2003  Created.
+ * <br>1.0 1. December 2003  Created.
  */
 public abstract class AbstractLayouter implements Layouter {
-    
-    public Insets2DDouble getInsets(Figure child) {
-        Insets2DDouble value = (Insets2DDouble) child.getAttribute(CompositeFigure.LAYOUT_INSETS);
-        return (value == null) ? new Insets2DDouble(0, 0, 0, 0) : (Insets2DDouble) value.clone();
-    }
+
+  public Insets2DDouble getInsets(Figure child) {
+    Insets2DDouble value = (Insets2DDouble) child.getAttribute(CompositeFigure.LAYOUT_INSETS);
+    return (value == null) ? new Insets2DDouble(0, 0, 0, 0) : (Insets2DDouble) value.clone();
+  }
 }

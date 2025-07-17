@@ -15,41 +15,42 @@
 
 
 package org.jhotdraw.draw;
-import java.awt.*;
-import java.awt.geom.*;
+
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+
 /**
- * A Layouter encapsulates a algorithm to layout
+ * A Layouter encapsulates an algorithm to layout
  * a CompositeFigure. It is passed on to a figure which delegates the
  * layout task to the Layouter's layout method.
  * The Layouter might need access to some information
  * specific to a certain figure in order to layout it out properly.
- * 
+ * <p>
  * Note: Currently, only the GraphicalCompositeFigure uses
- *       such a Layouter to layout its child components.
- * 
- * 
+ * such a Layouter to layout its child components.
+ *
  * @author Werner Randelshofer
  * @version 2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public interface Layouter /*extends Serializable, Storable*/ {
-    
-    /**
-     * Calculate the layout for the figure and all its subelements. The
-     * layout is not actually performed but just its dimensions are calculated.
-     *
-     * @param anchor start point for the layout
-     * @param lead minimum lead point for the layout
-     */
-    public Rectangle2D.Double calculateLayout(CompositeFigure compositeFigure, Point2D.Double anchor, Point2D.Double lead);
-    
-    /**
-     * Method which lays out a figure. It is called by the figure
-     * if a layout task is to be performed. Implementing classes
-     * specify a certain layout algorithm in this method.
-     *
-     * @param anchor start point for the layout
-     * @param lead minimum lead point for the layout
-     */
-    public Rectangle2D.Double layout(CompositeFigure compositeFigure, Point2D.Double anchor, Point2D.Double lead);
+
+  /**
+   * Calculate the layout for the figure and all its sub elements. The
+   * layout is not actually performed but just its dimensions are calculated.
+   *
+   * @param anchor start point for the layout
+   * @param lead   minimum lead point for the layout
+   */
+  Rectangle2D.Double calculateLayout(CompositeFigure compositeFigure, Point2D.Double anchor, Point2D.Double lead);
+
+  /**
+   * Method which lays out a figure. It is called by the figure
+   * if a layout task is to be performed. Implementing classes
+   * specify a certain layout algorithm in this method.
+   *
+   * @param anchor start point for the layout
+   * @param lead   minimum lead point for the layout
+   */
+  Rectangle2D.Double layout(CompositeFigure compositeFigure, Point2D.Double anchor, Point2D.Double lead);
 }

@@ -29,17 +29,17 @@ import java.util.*;
  */
 public class HandleTracker extends AbstractTool {
     private Handle masterHandle;
-    private HandleMulticaster multicaster;
+    private HandleMultiCaster multicaster;
     private Point anchor;
     
     /** Creates a new instance. */
     public HandleTracker(Handle handle) {
         masterHandle = handle;
-        multicaster = new HandleMulticaster(handle);
+        multicaster = new HandleMultiCaster(handle);
     }
     public HandleTracker(Handle master, Collection<Handle> handles) {
         masterHandle = master;
-        multicaster = new HandleMulticaster(handles);
+        multicaster = new HandleMultiCaster(handles);
     }
 
     public void activate(DrawingEditor editor) {

@@ -16,37 +16,41 @@ package org.jhotdraw.draw.action;
 
 import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.Figure;
+
 import java.util.*;
 import javax.swing.*;
+
 /**
  * SelectSameAction.
  *
- * @author  Werner Randelshofer
+ * @author Werner Randelshofer
  * @version 1.1 2006-06-05 Optimized performance.
  * <br>1.0 25. November 2003  Created.
  */
 public class SelectSameAction extends AbstractSelectedAction {
-    
-    /** Creates a new instance. */
-    public SelectSameAction(DrawingEditor editor) {
-        super(editor);
-        putValue(AbstractAction.NAME, labels.getString("editSelectSame"));
-        //  putValue(AbstractAction.MNEMONIC_KEY, labels.getString("editSelectSameMnem"));
+
+  /**
+   * Creates a new instance.
+   */
+  public SelectSameAction(DrawingEditor editor) {
+    super(editor);
+    putValue(AbstractAction.NAME, labels.getString("editSelectSame"));
+    //  putValue(AbstractAction.MNEMONIC_KEY, labels.getString("editSelectSameMnem"));
+  }
+
+  public void actionPerformed(java.awt.event.ActionEvent e) {
+    selectSame();
+  }
+
+  public void selectSame() {
+    HashSet<Class> selectedClasses = new HashSet<>();
+    for (Figure selected : getView().getSelectedFigures()) {
+      selectedClasses.add(selected.getClass());
     }
-    
-    public void actionPerformed(java.awt.event.ActionEvent e) {
-        selectSame();
+    for (Figure f : getDrawing().getFigures()) {
+      if (selectedClasses.contains(f.getClass())) {
+        getView().addToSelection(f);
+      }
     }
-    
-    public void selectSame() {
-        HashSet<Class> selectedClasses = new HashSet<Class>();
-        for (Figure selected : getView().getSelectedFigures()) {
-            selectedClasses.add(selected.getClass());
-        }
-        for (Figure f : getDrawing().getFigures()) {
-            if (selectedClasses.contains(f.getClass())) {
-                getView().addToSelection(f);
-            }
-        }
-    }
+  }
 }

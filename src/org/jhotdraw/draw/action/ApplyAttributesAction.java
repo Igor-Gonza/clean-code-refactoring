@@ -14,12 +14,13 @@
 
 package org.jhotdraw.draw.action;
 
-import org.jhotdraw.util.*;
-import javax.swing.*;
-import java.util.*;
-import java.awt.*;
-import org.jhotdraw.draw.*;
-import org.jhotdraw.geom.*;
+import org.jhotdraw.draw.DrawingEditor;
+import org.jhotdraw.draw.Figure;
+import org.jhotdraw.draw.FigureSelectionEvent;
+import org.jhotdraw.util.ResourceBundleUtil;
+
+import java.util.Locale;
+
 /**
  * ApplyAttributesAction.
  *
@@ -27,26 +28,29 @@ import org.jhotdraw.geom.*;
  * @version 1.0 25. November 2003  Created.
  */
 public class ApplyAttributesAction extends AbstractSelectedAction {
-    private ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
-    
-    /** Creates a new instance. */
-    public ApplyAttributesAction(DrawingEditor editor) {
-        super(editor);
-        labels.configureAction(this, "attributesApply");
-        setEnabled(true);
+  private ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
+
+  /**
+   * Creates a new instance.
+   */
+  public ApplyAttributesAction(DrawingEditor editor) {
+    super(editor);
+    labels.configureAction(this, "attributesApply");
+    setEnabled(true);
+  }
+
+  public void actionPerformed(java.awt.event.ActionEvent e) {
+    applyAttributes();
+  }
+
+  public void applyAttributes() {
+    DrawingEditor editor = getEditor();
+    for (Figure figure : getView().getSelectedFigures()) {
+      editor.applyDefaultAttributesTo(figure);
     }
-    
-    public void actionPerformed(java.awt.event.ActionEvent e) {
-        applyAttributes();
-    }
-    
-    public void applyAttributes() {
-        DrawingEditor editor = getEditor();
-        for (Figure figure : getView().getSelectedFigures()) {
-            editor.applyDefaultAttributesTo(figure);
-        }
-    }
-    public void selectionChanged(FigureSelectionEvent evt) {
-        setEnabled(getView().getSelectionCount() == 1);
-    }
+  }
+
+  public void selectionChanged(FigureSelectionEvent evt) {
+    setEnabled(getView().getSelectionCount() == 1);
+  }
 }
