@@ -28,10 +28,8 @@
 
 package net.n3.nanoxml;
 
-
 import java.io.Reader;
 import java.io.IOException;
-
 
 /**
  * This reader reads data from another reader until the end of a CDATA section
@@ -40,154 +38,125 @@ import java.io.IOException;
  * @author Marc De Scheemaecker
  * @version $Name: RELEASE_2_2_1 $, $Revision: 1.3 $
  */
-class CDATAReader
-   extends Reader
-{
+class CDATAReader extends Reader {
 
-   /**
-    * The encapsulated reader.
-    */
-   private IXMLReader reader;
-    
-    
-   /**
-    * Saved char.
-    */
-   private char savedChar;
-    
+  /**
+   * The encapsulated reader.
+   */
+  private IXMLReader reader;
 
-   /**
-    * True if the end of the stream has been reached.
-    */
-   private boolean atEndOfData;
+  /**
+   * Saved char.
+   */
+  private char savedChar;
 
+  /**
+   * True if the end of the stream has been reached.
+   */
+  private boolean atEndOfData;
 
-   /**
-    * Creates the reader.
-    *
-    * @param reader the encapsulated reader
-    */
-   CDATAReader(IXMLReader reader)
-   {
-      this.reader = reader;
-      this.savedChar = 0;
-      this.atEndOfData = false;
-   }
+  /**
+   * Creates the reader.
+   *
+   * @param reader the encapsulated reader
+   */
+  CDATAReader(IXMLReader reader) {
+    this.reader = reader;
+    this.savedChar = 0;
+    this.atEndOfData = false;
+  }
 
+  /**
+   * Reads a block of data.
+   *
+   * @param buffer where to put the read data
+   * @param offset first position in buffer to put the data
+   * @param size   maximum number of chars to read
+   * @return the number of chars read, or -1 if at EOF
+   * @throws java.io.IOException if an error occurred reading the data
+   */
+  public int read(char[] buffer, int offset, int size) throws IOException {
+    int charsRead = 0;
 
-   /**
-    * Cleans up the object when it's destroyed.
-    */
-   protected void finalize()
-      throws Throwable
-   {
-      this.reader = null;
-      super.finalize();
-   }
-    
+    if (this.atEndOfData) {
+      return -1;
+    }
 
-   /**
-    * Reads a block of data.
-    *
-    * @param buffer where to put the read data
-    * @param offset first position in buffer to put the data
-    * @param size maximum number of chars to read
-    *
-    * @return the number of chars read, or -1 if at EOF
-    *
-    * @throws java.io.IOException
-    *		if an error occurred reading the data
-    */
-   public int read(char[] buffer,
-                   int    offset,
-                   int    size)
-      throws IOException
-   {
-      int charsRead = 0;
+    if ((offset + size) > buffer.length) {
+      size = buffer.length - offset;
+    }
 
-      if (this.atEndOfData) {
-         return -1;
+    while (charsRead < size) {
+      char ch = this.savedChar;
+
+      if (ch == 0) {
+        ch = this.reader.read();
+      } else {
+        this.savedChar = 0;
       }
 
-      if ((offset + size) > buffer.length) {
-         size = buffer.length - offset;
+      if (ch == ']') {
+        char ch2 = this.reader.read();
+
+        if (ch2 == ']') {
+          char ch3 = this.reader.read();
+
+          if (ch3 == '>') {
+            this.atEndOfData = true;
+            break;
+          }
+
+          this.savedChar = ch2;
+          this.reader.unread(ch3);
+        } else {
+          this.reader.unread(ch2);
+        }
+      }
+      buffer[charsRead] = ch;
+      charsRead++;
+    }
+
+    if (charsRead == 0) {
+      charsRead = -1;
+    }
+
+    return charsRead;
+  }
+
+  /**
+   * Skips remaining data and closes the stream.
+   *
+   * @throws java.io.IOException if an error occurred reading the data
+   */
+  public void close() throws IOException {
+    while (!this.atEndOfData) {
+      char ch = this.savedChar;
+
+      if (ch == 0) {
+        ch = this.reader.read();
+      } else {
+        this.savedChar = 0;
       }
 
-      while (charsRead < size) {
-         char ch = this.savedChar;
+      if (ch == ']') {
+        char ch2 = this.reader.read();
 
-         if (ch == 0) {
-            ch = this.reader.read();
-         } else {
-            this.savedChar = 0;
-         }
+        if (ch2 == ']') {
+          char ch3 = this.reader.read();
 
-         if (ch == ']') {
-            char ch2 = this.reader.read();
-            
-            if (ch2 == ']') {
-               char ch3 = this.reader.read();
+          if (ch3 == '>') {
+            break;
+          }
 
-               if (ch3 == '>') {
-                  this.atEndOfData = true;
-                  break;
-               }
-
-               this.savedChar = ch2;
-               this.reader.unread(ch3);
-            } else {
-               this.reader.unread(ch2);
-            }
-         }
-         buffer[charsRead] = ch;
-         charsRead++;
+          this.savedChar = ch2;
+          this.reader.unread(ch3);
+        } else {
+          this.reader.unread(ch2);
+        }
       }
+    }
 
-      if (charsRead == 0) {
-         charsRead = -1;
-      }
-
-      return charsRead;
-   }
-    
-
-   /**
-    * Skips remaining data and closes the stream.
-    *
-    * @throws java.io.IOException
-    *		if an error occurred reading the data
-    */
-   public void close()
-      throws IOException
-   {
-      while (! this.atEndOfData) {
-         char ch = this.savedChar;
-
-         if (ch == 0) {
-            ch = this.reader.read();
-         } else {
-            this.savedChar = 0;
-         }
-
-         if (ch == ']') {
-            char ch2 = this.reader.read();
-
-            if (ch2 == ']') {
-               char ch3 = this.reader.read();
-
-               if (ch3 == '>') {
-                  break;
-               }
-
-               this.savedChar = ch2;
-               this.reader.unread(ch3);
-            } else {
-               this.reader.unread(ch2);
-            }
-         }
-      }
-
-      this.atEndOfData = true;
-   }
+    this.atEndOfData = true;
+  }
 
 }

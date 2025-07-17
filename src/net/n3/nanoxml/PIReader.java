@@ -28,10 +28,8 @@
 
 package net.n3.nanoxml;
 
-
 import java.io.Reader;
 import java.io.IOException;
-
 
 /**
  * This reader reads data from another reader until the end of a processing
@@ -40,118 +38,90 @@ import java.io.IOException;
  * @author Marc De Scheemaecker
  * @version $Name: RELEASE_2_2_1 $, $Revision: 1.3 $
  */
-class PIReader
-   extends Reader
-{
+class PIReader extends Reader {
 
-   /**
-    * The encapsulated reader.
-    */
-   private IXMLReader reader;
+  /**
+   * The encapsulated reader.
+   */
+  private IXMLReader reader;
 
+  /**
+   * True if the end of the stream has been reached.
+   */
+  private boolean atEndOfData;
 
-   /**
-    * True if the end of the stream has been reached.
-    */
-   private boolean atEndOfData;
+  /**
+   * Creates the reader.
+   *
+   * @param reader the encapsulated reader
+   */
+  PIReader(IXMLReader reader) {
+    this.reader = reader;
+    this.atEndOfData = false;
+  }
 
+  /**
+   * Reads a block of data.
+   *
+   * @param buffer where to put the read data
+   * @param offset first position in buffer to put the data
+   * @param size   maximum number of chars to read
+   * @return the number of chars read, or -1 if at EOF
+   * @throws java.io.IOException if an error occurred reading the data
+   */
+  public int read(char[] buffer, int offset, int size) throws IOException {
+    if (this.atEndOfData) {
+      return -1;
+    }
 
-   /**
-    * Creates the reader.
-    *
-    * @param reader the encapsulated reader
-    */
-   PIReader(IXMLReader reader)
-   {
-      this.reader = reader;
-      this.atEndOfData = false;
-   }
+    int charsRead = 0;
 
+    if ((offset + size) > buffer.length) {
+      size = buffer.length - offset;
+    }
 
-   /**
-    * Cleans up the object when it's destroyed.
-    */
-   protected void finalize()
-      throws Throwable
-   {
-      this.reader = null;
-      super.finalize();
-   }
+    while (charsRead < size) {
+      char ch = this.reader.read();
 
+      if (ch == '?') {
+        char ch2 = this.reader.read();
 
-   /**
-    * Reads a block of data.
-    *
-    * @param buffer where to put the read data
-    * @param offset first position in buffer to put the data
-    * @param size maximum number of chars to read
-    *
-    * @return the number of chars read, or -1 if at EOF
-    *
-    * @throws java.io.IOException
-    *		if an error occurred reading the data
-    */
-   public int read(char[] buffer,
-                   int    offset,
-                   int    size)
-      throws IOException
-   {
-      if (this.atEndOfData) {
-         return -1;
+        if (ch2 == '>') {
+          this.atEndOfData = true;
+          break;
+        }
+
+        this.reader.unread(ch2);
       }
 
-      int charsRead = 0;
+      buffer[charsRead] = ch;
+      charsRead++;
+    }
 
-      if ((offset + size) > buffer.length) {
-         size = buffer.length - offset;
+    if (charsRead == 0) {
+      charsRead = -1;
+    }
+
+    return charsRead;
+  }
+
+  /**
+   * Skips remaining data and closes the stream.
+   *
+   * @throws java.io.IOException if an error occurred reading the data
+   */
+  public void close() throws IOException {
+    while (!this.atEndOfData) {
+      char ch = this.reader.read();
+
+      if (ch == '?') {
+        char ch2 = this.reader.read();
+
+        if (ch2 == '>') {
+          this.atEndOfData = true;
+        }
       }
-
-      while (charsRead < size) {
-         char ch = this.reader.read();
-
-         if (ch == '?') {
-            char ch2 = this.reader.read();
-
-            if (ch2 == '>') {
-               this.atEndOfData = true;
-               break;
-            }
-
-            this.reader.unread(ch2);
-         }
-
-         buffer[charsRead] = ch;
-         charsRead++;
-      }
-
-      if (charsRead == 0) {
-         charsRead = -1;
-      }
-
-      return charsRead;
-   }
-
-
-   /**
-    * Skips remaining data and closes the stream.
-    *
-    * @throws java.io.IOException
-    *		if an error occurred reading the data
-    */
-   public void close()
-      throws IOException
-   {
-      while (! this.atEndOfData) {
-         char ch = this.reader.read();
-
-         if (ch == '?') {
-            char ch2 = this.reader.read();
-
-            if (ch2 == '>') {
-               this.atEndOfData = true;
-            }
-         }
-      }
-   }
+    }
+  }
 
 }

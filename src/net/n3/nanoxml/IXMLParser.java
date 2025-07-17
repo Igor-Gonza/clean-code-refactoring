@@ -28,97 +28,80 @@
 
 package net.n3.nanoxml;
 
-
-import java.io.IOException;
-
-
 /**
  * IXMLParser is the core parser of NanoXML.
  *
  * @author Marc De Scheemaecker
  * @version $Name: RELEASE_2_2_1 $, $Revision: 1.3 $
  */
-public interface IXMLParser
-{
+public interface IXMLParser {
 
-   /**
-    * Sets the reader from which the parser retrieves its data.
-    *
-    * @param reader the reader.
-    */
-   public void setReader(IXMLReader reader);
+  /**
+   * Sets the reader from which the parser retrieves its data.
+   *
+   * @param reader the reader.
+   */
+   void setReader(IXMLReader reader);
 
+  /**
+   * Returns the reader from which the parser retrieves its data.
+   *
+   * @return the reader.
+   */
+   IXMLReader getReader();
 
-   /**
-    * Returns the reader from which the parser retrieves its data.
-    *
-    * @return the reader.
-    */
-   public IXMLReader getReader();
+  /**
+   * Sets the builder which creates the logical structure of the XML data.
+   *
+   * @param builder the builder.
+   */
+   void setBuilder(IXMLBuilder builder);
 
+  /**
+   * Returns the builder which creates the logical structure of the XML data.
+   *
+   * @return the builder.
+   */
+   IXMLBuilder getBuilder();
 
-   /**
-    * Sets the builder which creates the logical structure of the XML data.
-    *
-    * @param builder the builder.
-    */
-   public void setBuilder(IXMLBuilder builder);
+  /**
+   * Sets the validator that validates the XML data.
+   *
+   * @param validator the validator.
+   */
+   void setValidator(IXMLValidator validator);
 
+  /**
+   * Returns the validator that validates the XML data.
+   *
+   * @return the validator.
+   */
+   IXMLValidator getValidator();
 
-   /**
-    * Returns the builder which creates the logical structure of the XML data.
-    *
-    * @return the builder.
-    */
-   public IXMLBuilder getBuilder();
+  /**
+   * Sets the entity resolver.
+   *
+   * @param resolver the non-null resolver.
+   */
+   void setResolver(IXMLEntityResolver resolver);
 
+  /**
+   * Returns the entity resolver.
+   *
+   * @return the non-null resolver.
+   */
+   IXMLEntityResolver getResolver();
 
-   /**
-    * Sets the validator that validates the XML data.
-    *
-    * @param validator the validator.
-    */
-   public void setValidator(IXMLValidator validator);
-
-
-   /**
-    * Returns the validator that validates the XML data.
-    *
-    * @return the validator.
-    */
-   public IXMLValidator getValidator();
-
-
-   /**
-    * Sets the entity resolver.
-    *
-    * @param resolver the non-null resolver.
-    */
-   public void setResolver(IXMLEntityResolver resolver);
-
-
-   /**
-    * Returns the entity resolver.
-    *
-    * @return the non-null resolver.
-    */
-   public IXMLEntityResolver getResolver();
-
-
-   /**
-    * Parses the data and lets the builder create the logical data structure.
-    * The method returns the result of <I>getResult</I> of the builder. if an
-    * error occurred while reading or parsing the data, the method may throw
-    * an XMLException.
-    *
-    * @see net.n3.nanoxml.IXMLBuilder#getResult
-    *
-    * @return the logical structure built by the builder.
-    *
-    * @throws net.n3.nanoxml.XMLException
-    *		if an error occurred reading or parsing the data
-    */
-   public Object parse()
-      throws XMLException;
+  /**
+   * Parses the data and lets the builder create the logical data structure.
+   * The method returns the result of <I>getResult</I> of the builder. if an
+   * error occurred while reading or parsing the data, the method may throw
+   * an XMLException.
+   *
+   * @return the logical structure built by the builder.
+   * @throws net.n3.nanoxml.XMLException if an error occurred reading or parsing the data
+   * @see net.n3.nanoxml.IXMLBuilder#getResult
+   */
+   Object parse() throws XMLException;
 
 }
