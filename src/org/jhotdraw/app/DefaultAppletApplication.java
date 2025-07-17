@@ -26,38 +26,40 @@ import javax.swing.*;
  * @version 1.0 2006-06-10 Created.
  */
 public class DefaultAppletApplication extends AbstractApplication {
-    private JApplet applet;
-    private Project project;
-    
-    /** Creates a new instance of DefaultAppletApplication */
-    public DefaultAppletApplication(JApplet applet) {
-        this.applet = applet;
-    }
-    
-    public void show(Project p) {
-        this.project = p;
-        applet.getContentPane().removeAll();
-        applet.getContentPane().add(p.getComponent());
-    }
+  private JApplet applet;
+  private Project project;
 
-    public void hide(Project p) {
-        applet.getContentPane().removeAll();
-        this.project = null;
-    }
+  /**
+   * Creates a new instance of DefaultAppletApplication
+   */
+  public DefaultAppletApplication(JApplet applet) {
+    this.applet = applet;
+  }
 
-    public Project getCurrentProject() {
-        return project;
-    }
+  public void show(Project p) {
+    this.project = p;
+    applet.getContentPane().removeAll();
+    applet.getContentPane().add(p.getComponent());
+  }
 
-    public boolean isSharingToolsAmongProjects() {
-        return false;
-    }
+  public void hide(Project p) {
+    applet.getContentPane().removeAll();
+    this.project = null;
+  }
 
-    public Component getComponent() {
-        return applet;
-    }
+  public Project getCurrentProject() {
+    return project;
+  }
 
-    protected void initProjectActions(Project p) {
-    }
-    
+  public boolean isSharingToolsAmongProjects() {
+    return false;
+  }
+
+  public Component getComponent() {
+    return applet;
+  }
+
+  protected void initProjectActions(Project p) {
+  }
+
 }

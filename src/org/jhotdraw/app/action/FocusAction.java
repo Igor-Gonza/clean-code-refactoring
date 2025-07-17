@@ -14,86 +14,82 @@
 
 package org.jhotdraw.app.action;
 
-import org.jhotdraw.util.*;
-
-import java.beans.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.io.*;
 import org.jhotdraw.app.Project;
+import org.jhotdraw.util.ResourceBundleUtil;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyVetoException;
+import java.io.File;
+import java.util.Objects;
+
 /**
  * Requests focus for a Frame.
  *
- * @author  Werner Randelshofer
+ * @author Werner Randelshofer
  * @version 2.0 2006-05-05 Reworked.
  * <br>1.0  2005-06-10 Created.
  */
 public class FocusAction extends AbstractAction {
-    public final static String ID = "focus";
-    private Project project;
-    
-    /** Creates a new instance. */
-    public FocusAction(Project project) {
-        this.project = project;
-        ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
-        labels.configureAction(this, ID);
-        //setEnabled(false);
-        setEnabled(project != null);
-        
-        project.addPropertyChangeListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent evt) {
-                ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
-                String name = evt.getPropertyName();
-                if (name.equals("file")) {
-                    putValue(Action.NAME,
-                            (evt.getNewValue() == null) ?
-                                labels.getString("unnamedFile") :
-                                ((File) evt.getNewValue()).getName()
-                                );
-                }
-            }
-        });
+  public final static String ID = "focus";
+  private Project project;
+
+  /**
+   * Creates a new instance.
+   */
+  public FocusAction(Project project) {
+    this.project = project;
+    ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
+    labels.configureAction(this, ID);
+    //setEnabled(false);
+    setEnabled(project != null);
+
+    project.addPropertyChangeListener(evt -> {
+      ResourceBundleUtil labels1 = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
+      String name = evt.getPropertyName();
+      if (name.equals("file")) {
+        putValue(Action.NAME, (evt.getNewValue() == null) ? labels1.getString("unnamedFile") : ((File) evt.getNewValue()).getName());
+      }
+    });
+  }
+
+  public Object getValue(String key) {
+    if (Objects.equals(key, Action.NAME) && project != null) {
+      return getTitle();
+    } else {
+      return super.getValue(key);
     }
-    
-    public Object getValue(String key) {
-        if (key == Action.NAME && project != null) {
-            return getTitle();
-        } else {
-            return super.getValue(key);
-        }
+  }
+
+  private String getTitle() {
+    ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
+    String title = labels.getString("unnamedFile");
+    if (project != null) {
+      File file = project.getFile();
+      if (file == null) {
+        title = labels.getString("unnamedFile");
+      } else {
+        title = file.getName();
+      }
+      if (project.hasUnsavedChanges()) {
+        title += "*";
+      }
+      title = (labels.getFormatted("internalFrameTitle", title, project.getApplication().getName(), project.getMultipleOpenId()));
     }
-    
-    private String getTitle() {
-        ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
-        String title = labels.getString("unnamedFile");
-        if (project != null) {
-            File file = project.getFile();
-            if (file == null) {
-                title = labels.getString("unnamedFile");
-            } else {
-                title = file.getName();
-            }
-            if (project.hasUnsavedChanges()) {
-                title += "*";
-            }
-            title = (labels.getFormatted("internalFrameTitle", title, project.getApplication().getName(), project.getMultipleOpenId()));
-        }
-        return title;
-        
-    }
-    private JFrame getFrame() {
-        return (JFrame) SwingUtilities.getWindowAncestor(
-                project.getComponent()
-                );
-    }
-    private Component getRootPaneContainer() {
-        return SwingUtilities.getRootPane(
-                project.getComponent()
-                ).getParent();
-    }
-    
-    public void actionPerformed(ActionEvent evt) {
+    return title;
+
+  }
+
+  private JFrame getFrame() {
+    return (JFrame) SwingUtilities.getWindowAncestor(project.getComponent());
+  }
+
+  private Component getRootPaneContainer() {
+    return SwingUtilities.getRootPane(project.getComponent()).getParent();
+  }
+
+  public void actionPerformed(ActionEvent evt) {
         /*
         JFrame frame = getFrame();
         if (frame != null) {
@@ -108,20 +104,20 @@ public class FocusAction extends AbstractAction {
         } else {
             Toolkit.getDefaultToolkit().beep();
         }*/
-        Component rpContainer = getRootPaneContainer();
-        if (rpContainer instanceof Frame) {
-            Frame frame = (Frame) rpContainer;
-            frame.setExtendedState(frame.getExtendedState() & ~Frame.ICONIFIED);
-            frame.toFront();
-        } else if (rpContainer instanceof JInternalFrame) {
-            JInternalFrame frame = (JInternalFrame) rpContainer;
-            frame.toFront();
-            try {
-                frame.setSelected(true);
-            } catch (PropertyVetoException e) {
-                // Don't care.
-            }
-        }
-        project.getComponent().requestFocusInWindow();
+    Component rpContainer = getRootPaneContainer();
+    if (rpContainer instanceof Frame) {
+      Frame frame = (Frame) rpContainer;
+      frame.setExtendedState(frame.getExtendedState() & ~Frame.ICONIFIED);
+      frame.toFront();
+    } else if (rpContainer instanceof JInternalFrame) {
+      JInternalFrame frame = (JInternalFrame) rpContainer;
+      frame.toFront();
+      try {
+        frame.setSelected(true);
+      } catch (PropertyVetoException e) {
+        // Don't care.
+      }
     }
+    project.getComponent().requestFocusInWindow();
+  }
 }

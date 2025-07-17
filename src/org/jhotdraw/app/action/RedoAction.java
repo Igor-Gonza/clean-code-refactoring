@@ -13,87 +13,91 @@
  */
 
 package org.jhotdraw.app.action;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.text.*;
-import java.beans.*;
-import java.util.*;
-import org.jhotdraw.util.*;
+
 import org.jhotdraw.app.Application;
 import org.jhotdraw.app.Project;
+import org.jhotdraw.util.ResourceBundleUtil;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Objects;
+
 /**
  * Redoes the last user action.
  * In order to work, this action requires that the Project returns a project
  * specific undo action when invoking getAction("redo") on the Project.
  *
- *
  * @author Werner Randelshofer
  * @version 2.0 2006-06-15 Reworked.
- * <br>1.0 October 9, 2005 Created.
+ * <br>1.0 October 9, 2005, Created.
  */
 public class RedoAction extends AbstractProjectAction {
-    public final static String ID = "redo";
-    private ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
-    
-    private PropertyChangeListener redoActionPropertyListener = new PropertyChangeListener() {
-        public void propertyChange(PropertyChangeEvent evt) {
-            String name = evt.getPropertyName();
-            if (name == AbstractAction.NAME) {
-                putValue(AbstractAction.NAME, evt.getNewValue());
-            } else if (name == "enabled") {
-                updateEnabledState();
-            }
-        }
-    };
-    
-    /** Creates a new instance. */
-    public RedoAction(Application app) {
-        super(app);
-        labels.configureAction(this, ID);
+  public final static String ID = "redo";
+  private ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
+
+  private PropertyChangeListener redoActionPropertyListener = evt -> {
+    String name = evt.getPropertyName();
+    if (Objects.equals(name, AbstractAction.NAME)) {
+      putValue(AbstractAction.NAME, evt.getNewValue());
+    } else if (Objects.equals(name, "enabled")) {
+      updateEnabledState();
     }
-    
-    protected void updateEnabledState() {
-        boolean isEnabled = false;
-        Action realRedoAction = getRealRedoAction();
-        if (realRedoAction != null) {
-            isEnabled = realRedoAction.isEnabled();
-        }
-        setEnabled(isEnabled);
+  };
+
+  /**
+   * Creates a new instance.
+   */
+  public RedoAction(Application app) {
+    super(app);
+    labels.configureAction(this, ID);
+  }
+
+  protected void updateEnabledState() {
+    boolean isEnabled = false;
+    Action realRedoAction = getRealRedoAction();
+    if (realRedoAction != null) {
+      isEnabled = realRedoAction.isEnabled();
     }
-    
-    @Override protected void updateProject(Project oldValue, Project newValue) {
-        super.updateProject(oldValue, newValue);
-        if (newValue != null) {
-            putValue(AbstractAction.NAME, newValue.getAction("redo").
-                    getValue(AbstractAction.NAME));
-            updateEnabledState();
-        }
+    setEnabled(isEnabled);
+  }
+
+  @Override
+  protected void updateProject(Project oldValue, Project newValue) {
+    super.updateProject(oldValue, newValue);
+    if (newValue != null) {
+      putValue(AbstractAction.NAME, newValue.getAction("redo").getValue(AbstractAction.NAME));
+      updateEnabledState();
     }
-    /**
-     * Installs listeners on the project object.
-     */
-    @Override protected void installProjectListeners(Project p) {
-        super.installProjectListeners(p);
-        p.getAction("redo").addPropertyChangeListener(redoActionPropertyListener);
+  }
+
+  /**
+   * Installs listeners on the project object.
+   */
+  @Override
+  protected void installProjectListeners(Project p) {
+    super.installProjectListeners(p);
+    p.getAction("redo").addPropertyChangeListener(redoActionPropertyListener);
+  }
+
+  /**
+   * Installs listeners on the project object.
+   */
+  @Override
+  protected void uninstallProjectListeners(Project p) {
+    super.uninstallProjectListeners(p);
+    p.getAction("redo").removePropertyChangeListener(redoActionPropertyListener);
+  }
+
+  public void actionPerformed(ActionEvent e) {
+    Action realRedoAction = getRealRedoAction();
+    if (realRedoAction != null) {
+      realRedoAction.actionPerformed(e);
     }
-    /**
-     * Installs listeners on the project object.
-     */
-    @Override protected void uninstallProjectListeners(Project p) {
-        super.uninstallProjectListeners(p);
-        p.getAction("redo").removePropertyChangeListener(redoActionPropertyListener);
-    }
-    
-    public void actionPerformed(ActionEvent e) {
-        Action realRedoAction = getRealRedoAction();
-        if (realRedoAction != null) {
-            realRedoAction.actionPerformed(e);
-        }
-    }
-    
-    private Action getRealRedoAction() {
-        return (getCurrentProject() == null) ? null : getCurrentProject().getAction("redo");
-    }
-    
+  }
+
+  private Action getRealRedoAction() {
+    return (getCurrentProject() == null) ? null : getCurrentProject().getAction("redo");
+  }
+
 }

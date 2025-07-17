@@ -14,12 +14,11 @@
 
 package org.jhotdraw.app.action;
 
-import org.jhotdraw.util.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
 import org.jhotdraw.app.Application;
 import org.jhotdraw.app.Project;
+import org.jhotdraw.util.ResourceBundleUtil;
+
+import java.awt.event.ActionEvent;
 
 /**
  * Creates a new project.
@@ -31,26 +30,28 @@ import org.jhotdraw.app.Project;
  * <br>1.0  04 January 2005  Created.
  */
 public class NewAction extends AbstractApplicationAction {
-    public final static String ID = "new";
-    
-    /** Creates a new instance. */
-    public NewAction(Application app) {
-        super(app);
-        ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
-        labels.configureAction(this, "new");
+  public final static String ID = "new";
+
+  /**
+   * Creates a new instance.
+   */
+  public NewAction(Application app) {
+    super(app);
+    ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
+    labels.configureAction(this, "new");
+  }
+
+  public void actionPerformed(ActionEvent evt) {
+    Application app = getApplication();
+    Project newP = app.createProject();
+    int multiOpenId = 1;
+    for (Project existingP : app.projects()) {
+      if (existingP.getFile() == null) {
+        multiOpenId = Math.max(multiOpenId, existingP.getMultipleOpenId() + 1);
+      }
     }
-    
-    public void actionPerformed(ActionEvent evt) {
-        Application app = getApplication();
-        Project newP = app.createProject();
-        int multiOpenId = 1;
-        for (Project existingP : app.projects()) {
-            if (existingP.getFile() == null) {
-                multiOpenId = Math.max(multiOpenId, existingP.getMultipleOpenId() + 1);
-            }
-        }
-        newP.setMultipleOpenId(multiOpenId);
-        app.add(newP);
-        app.show(newP);
-    }
+    newP.setMultipleOpenId(multiOpenId);
+    app.add(newP);
+    app.show(newP);
+  }
 }

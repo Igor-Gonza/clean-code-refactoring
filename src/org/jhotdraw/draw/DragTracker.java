@@ -74,7 +74,7 @@ public class DragTracker extends AbstractTool {
     }
     public void mouseDragged(MouseEvent evt) {
         DrawingView view = getView();
-        if (isDragging = false) {
+        if (isDragging == false) {
         isDragging = true;
         updateCursor(editor.findView((Container) evt.getSource()),new Point(evt.getX(), evt.getY()));
         }

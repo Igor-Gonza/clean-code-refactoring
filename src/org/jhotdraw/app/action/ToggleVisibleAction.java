@@ -14,36 +14,41 @@
 
 package org.jhotdraw.app.action;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 /**
  * Toggles the visible state of a Component.
  * Is selected, when the Component is visible.
  *
  * @author Werner Randelshofer.
- * @version 1.0 June 17, 2006 Created.
+ * @version 1.0 June 17, 2006, Created.
  */
 public class ToggleVisibleAction extends AbstractAction {
-    private Component component;
-    
-    /** Creates a new instance. */
-    public ToggleVisibleAction(Component c, String name) {
-        this.component = c;
-        putValue(Action.NAME, name);
-        putValue(Actions.SELECTED_KEY, c.isVisible());
-        c.addComponentListener(new ComponentAdapter() {
-            public void componentShown(ComponentEvent e) {
-                putValue(Actions.SELECTED_KEY, component.isVisible());
-            }
-            
-            public void componentHidden(ComponentEvent e) {
-                putValue(Actions.SELECTED_KEY, component.isVisible());
-            }
-        });
-    }
+  private Component component;
 
-    public void actionPerformed(ActionEvent e) {
-        component.setVisible(! component.isVisible());
-    }
+  /**
+   * Creates a new instance.
+   */
+  public ToggleVisibleAction(Component c, String name) {
+    this.component = c;
+    putValue(Action.NAME, name);
+    putValue(Actions.SELECTED_KEY, c.isVisible());
+    c.addComponentListener(new ComponentAdapter() {
+      public void componentShown(ComponentEvent e) {
+        putValue(Actions.SELECTED_KEY, component.isVisible());
+      }
+
+      public void componentHidden(ComponentEvent e) {
+        putValue(Actions.SELECTED_KEY, component.isVisible());
+      }
+    });
+  }
+
+  public void actionPerformed(ActionEvent e) {
+    component.setVisible(!component.isVisible());
+  }
 }

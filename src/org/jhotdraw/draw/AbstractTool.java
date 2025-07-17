@@ -152,7 +152,7 @@ public abstract class AbstractTool implements Tool {
                 break;
             }
             case KeyEvent.VK_A : {
-                if ((evt.getModifiers() &
+                if ((evt.getModifiersEx() &
                         (KeyEvent.CTRL_MASK | KeyEvent.META_MASK)) != 0) {
                     getView().addToSelection(getView().getDrawing().getFigures());
                 }

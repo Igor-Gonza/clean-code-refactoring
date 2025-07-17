@@ -14,31 +14,30 @@
 
 package org.jhotdraw.app.action;
 
-import org.jhotdraw.util.*;
-
-import java.awt.event.*;
-import javax.swing.*;
 import org.jhotdraw.app.Application;
 import org.jhotdraw.app.Project;
+import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
  * Closes a project.
  *
- * @author  Werner Randelshofer
+ * @author Werner Randelshofer
  * @version 1.0  04 January 2005  Created.
  */
 public class CloseAction extends SaveBeforeAction {
-    public final static String ID = "close";
-    
-    /** Creates a new instance. */
-    public CloseAction(Application app) {
-        super(app);
-        ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
-        labels.configureAction(this, ID);
-    }
+  public final static String ID = "close";
 
-    @Override protected void doIt(Project project) {
-        project.getApplication().
-                dispose(project);
-    }
+  /**
+   * Creates a new instance.
+   */
+  public CloseAction(Application app) {
+    super(app);
+    ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
+    labels.configureAction(this, ID);
+  }
+
+  @Override
+  protected void doIt(Project project) {
+    project.getApplication().dispose(project);
+  }
 }

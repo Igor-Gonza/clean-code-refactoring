@@ -14,40 +14,38 @@
 
 package org.jhotdraw.app.action;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.text.*;
-import java.beans.*;
-import java.util.*;
-import org.jhotdraw.util.*;
 import org.jhotdraw.app.EditableComponent;
+import org.jhotdraw.util.ResourceBundleUtil;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 
 /**
  * DuplicateAction.
  *
  * @author Werner Randelshofer.
- * @version 1.0 February 27, 2006 Created.
+ * @version 1.0 February 27, 2006, Created.
  */
 public class DuplicateAction extends AbstractAction {
-    public final static String ID = "duplicate";
-    
-    /** Creates a new instance. */
-    public DuplicateAction() {
-        ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
-        labels.configureAction(this, ID);
+  public final static String ID = "duplicate";
+
+  /**
+   * Creates a new instance.
+   */
+  public DuplicateAction() {
+    ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
+    labels.configureAction(this, ID);
+  }
+
+  public void actionPerformed(ActionEvent evt) {
+    Component focusOwner = KeyboardFocusManager.getCurrentKeyboardFocusManager().getPermanentFocusOwner();
+    if (focusOwner != null) {
+      if (focusOwner instanceof EditableComponent) {
+        ((EditableComponent) focusOwner).duplicate();
+      } else {
+        focusOwner.getToolkit().beep();
+      }
     }
-    
-    public void actionPerformed(ActionEvent evt) {
-        Component focusOwner = KeyboardFocusManager.
-                getCurrentKeyboardFocusManager().
-                getPermanentFocusOwner();
-        if (focusOwner != null) {
-            if (focusOwner instanceof EditableComponent) {
-                ((EditableComponent) focusOwner).duplicate();
-            } else {
-                focusOwner.getToolkit().beep();
-            }
-        }
-    }
+  }
 }

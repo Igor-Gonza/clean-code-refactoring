@@ -11,6 +11,7 @@
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
  */
+
 package org.jhotdraw.app;
 
 /**
@@ -20,30 +21,34 @@ package org.jhotdraw.app;
  * @author Werner Randelshofer
  * @version 2.0 2001-07-18
  */
-
 public interface EditableComponent {
-	/**
-	 * Copies the selected region and place its contents into the system clipboard.
-	 */
-	public void copy();
-	/**
-	 * Cuts the selected region and place its contents into the system clipboard.
-	 */
-	public void cut();
-	/**
-	 * Deletes the component at (or after) the caret position.
-	 */
-	public void delete();
-	/**
-	 * Pastes the contents of the system clipboard at the caret position.
-	 */
-	public void paste();
-	/**
-	 * Duplicates the selected region.
-	 */
-	public void duplicate();
-	/**
-	 * Selects all.
-	 */
-	public void selectAll();
+  /**
+   * Copies the selected region and place its contents into the system clipboard.
+   */
+  void copy();
+
+  /**
+   * Cuts the selected region and place its contents into the system clipboard.
+   */
+  void cut();
+
+  /**
+   * Deletes the component at (or after) the caret position.
+   */
+  void delete();
+
+  /**
+   * Pastes the contents of the system clipboard at the caret position.
+   */
+  void paste();
+
+  /**
+   * Duplicates the selected region.
+   */
+  void duplicate();
+
+  /**
+   * Selects all.
+   */
+  void selectAll();
 }

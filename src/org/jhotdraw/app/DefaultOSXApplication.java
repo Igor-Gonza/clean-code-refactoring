@@ -18,6 +18,7 @@ import org.jhotdraw.app.action.OSXDropOnDockAction;
 import ch.randelshofer.quaqua.*;
 import org.jhotdraw.util.*;
 import org.jhotdraw.util.prefs.*;
+
 import java.util.*;
 import java.util.prefs.*;
 import java.awt.event.*;
@@ -25,6 +26,7 @@ import java.beans.*;
 import java.awt.*;
 import javax.swing.*;
 import java.io.*;
+
 import org.jhotdraw.app.action.AboutAction;
 import org.jhotdraw.app.action.Actions;
 import org.jhotdraw.app.action.ClearRecentFilesAction;
@@ -48,10 +50,11 @@ import org.jhotdraw.app.action.SaveAction;
 import org.jhotdraw.app.action.SaveAsAction;
 import org.jhotdraw.app.action.SelectAllAction;
 import org.jhotdraw.app.action.UndoAction;
+
 /**
  * A DefaultOSXApplication can handle the life cycle of multiple document windows each
  * being presented in a JFrame of its own.  The application provides all the
- * functionality needed to work with the document, such as a menu bar, tool bars
+ * functionality needed to work with the document, such as a menu bar, toolbars
  * and palette windows.
  * <p>
  * OSX stands for Mac OS X Application Document Interface. An OSX application can handle
@@ -85,7 +88,7 @@ import org.jhotdraw.app.action.UndoAction;
  *  -
  *  Quit "Application-Name" (ExitAction.ID)
  * </pre>
- *
+ * <p>
  * The <b>file menu</b> has the following standard menu items.
  * DefaultOSXApplication wires the menu items to the action objects
  * specified in brackets. If the application hasn't an action with the
@@ -105,7 +108,7 @@ import org.jhotdraw.app.action.UndoAction;
  *  Page Setup... (PrintPageSetupAction.ID)
  *  Print... (PrintAction.ID)
  * </pre>
- *
+ * <p>
  * The <b>edit menu</b> has the following standard menu items.
  * DefaultOSXApplication wires the menu items to the action objects
  * specified in brackets. If the application hasn't an action with the
@@ -123,399 +126,391 @@ import org.jhotdraw.app.action.UndoAction;
  * </pre>
  *
  * @author Werner Randelshofer
- * @version 1.0 October 4, 2005 Created.
+ * @version 1.0 October 4, 2005, Created.
  */
 public class DefaultOSXApplication extends AbstractApplication {
-    private OSXPaletteHandler paletteHandler;
-    private Project currentProject;
-    private Preferences prefs;
-    private LinkedList<Action> paletteActions;
-    
-    /** Creates a new instance. */
-    public DefaultOSXApplication() {
-    }
-    
-    public void init() {
-        super.init();
-        prefs = Preferences.userNodeForPackage((getModel() == null) ? getClass() : getModel().getClass());
-        initLookAndFeel();
-        paletteHandler = new OSXPaletteHandler(this);
-        initLabels();
-        initApplicationActions();
-        paletteActions = new LinkedList<Action>();
-        initPalettes(paletteActions);
-        initScreenMenuBar();
-    }
-    
-    public void launch(String[] args) {
-        System.setProperty("apple.awt.graphics.UseQuartz","false");
-        super.launch(args);
-    }
-    
-    
-    protected void initLookAndFeel() {
-        System.setProperty("apple.laf.useScreenMenuBar","true");
-        System.setProperty("com.apple.macos.useScreenMenuBar","true");
-        
-        
-        try {
-            UIManager.setLookAndFeel(QuaquaManager.getLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    protected void initApplicationActions() {
-        ApplicationModel mo = getModel();
-        mo.putAction(AboutAction.ID, new AboutAction(this));
-        mo.putAction(ExitAction.ID, new ExitAction(this));
-        mo.putAction(OSXDropOnDockAction.ID, new OSXDropOnDockAction(this));
-        
-        mo.putAction(NewAction.ID, new NewAction(this));
-        mo.putAction(OpenAction.ID, new OpenAction(this));
-        mo.putAction(ClearRecentFilesAction.ID, new ClearRecentFilesAction(this));
-        mo.putAction(SaveAction.ID, new SaveAction(this));
-        mo.putAction(SaveAsAction.ID, new SaveAsAction(this));
-        mo.putAction(CloseAction.ID, new CloseAction(this));
-        
-        mo.putAction(UndoAction.ID, new UndoAction(this));
-        mo.putAction(RedoAction.ID, new RedoAction(this));
-        mo.putAction(CutAction.ID, new CutAction());
-        mo.putAction(CopyAction.ID, new CopyAction());
-        mo.putAction(PasteAction.ID, new PasteAction());
-        mo.putAction(DeleteAction.ID, new DeleteAction());
-        mo.putAction(DuplicateAction.ID, new DuplicateAction());
-        mo.putAction(SelectAllAction.ID, new SelectAllAction());
-        
-        mo.putAction(MaximizeAction.ID, new MaximizeAction(this));
-        mo.putAction(MinimizeAction.ID, new MinimizeAction(this));
-    }
-    
-    protected void initProjectActions(Project p) {
-        p.putAction(FocusAction.ID, new FocusAction(p));
-    }
-    
-    
-    public void addPalette(Window palette) {
-        paletteHandler.addPalette(palette);
-    }
-    
-    public void removePalette(Window palette) {
-        paletteHandler.removePalette(palette);
-    }
-    
-    public void show(final Project p) {
-        if (! p.isShowing()) {
-            p.setShowing(true);
-            File file = p.getFile();
-            final JFrame f = new JFrame();
-            String title;
-            if (file == null) {
-                title = labels.getString("unnamedFile");
-            } else {
-                title = file.getName();
-            }
-            f.setTitle(labels.getFormatted("frameTitle", title, getName(), p.getMultipleOpenId()));
-            f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-            f.setPreferredSize(new Dimension(400,400));
-        
+  private OSXPaletteHandler paletteHandler;
+  private Project currentProject;
+  private Preferences prefs;
+  private LinkedList<Action> paletteActions;
 
-            
-            PreferencesUtil.installFramePrefsHandler(prefs, "project", f);
-            Point loc = f.getLocation();
-            boolean moved;
-            do {
-                moved = false;
-                for (Iterator i=projects().iterator(); i.hasNext(); ) {
-                    Project aProject = (Project) i.next();
-                    if (aProject != p && aProject.isShowing() &&
-                            SwingUtilities.getWindowAncestor(aProject.getComponent()).
-                            getLocation().equals(loc)) {
-                        loc.x += 22;
-                        loc.y += 22;
-                        moved = true;
-                        break;
-                    }
-                }
-            } while (moved);
-            f.setLocation(loc);
-            
-            paletteHandler.add(f, p);
-            
-            f.addWindowListener(new WindowAdapter() {
-                public void windowClosing(final WindowEvent evt) {
-                    setCurrentProject(p);
-                    getModel().getAction(CloseAction.ID).actionPerformed(
-                            new ActionEvent(f, ActionEvent.ACTION_PERFORMED,
-                            "windowClosing")
-                            );
-                }
-            });
-            
-            p.addPropertyChangeListener(new PropertyChangeListener() {
-                public void propertyChange(PropertyChangeEvent evt) {
-                    String name = evt.getPropertyName();
-                    if (name.equals("hasUnsavedChanges")) {
-                        f.getRootPane().putClientProperty("windowModified",new Boolean(p.hasUnsavedChanges()));
-                    } else if (name.equals("file")) {
-                        f.setTitle((p.getFile() == null) ? "Unnamed" : p.getFile().getName());
-                    }
-                }
-            });
-            
-            f.setJMenuBar(createMenuBar(p));
-            
-            f.getContentPane().add(p.getComponent());
-            f.setVisible(true);
-        }
+  /**
+   * Creates a new instance.
+   */
+  public DefaultOSXApplication() {
+  }
+
+  public void init() {
+    super.init();
+    prefs = Preferences.userNodeForPackage((getModel() == null) ? getClass() : getModel().getClass());
+    initLookAndFeel();
+    paletteHandler = new OSXPaletteHandler(this);
+    initLabels();
+    initApplicationActions();
+    paletteActions = new LinkedList<>();
+    initPalettes(paletteActions);
+    initScreenMenuBar();
+  }
+
+  public void launch(String[] args) {
+    System.setProperty("apple.awt.graphics.UseQuartz", "false");
+    super.launch(args);
+  }
+
+
+  protected void initLookAndFeel() {
+    System.setProperty("apple.laf.useScreenMenuBar", "true");
+    System.setProperty("com.apple.macos.useScreenMenuBar", "true");
+
+
+    try {
+      UIManager.setLookAndFeel(QuaquaManager.getLookAndFeelClassName());
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-    
-    public void hide(Project p) {
-        if (p.isShowing()) {
-            JFrame f = (JFrame) SwingUtilities.getWindowAncestor(p.getComponent());
-            f.setVisible(false);
-            f.remove(p.getComponent());
-            paletteHandler.remove(f, p);
-            f.dispose();
+  }
+
+  protected void initApplicationActions() {
+    ApplicationModel mo = getModel();
+    mo.putAction(AboutAction.ID, new AboutAction(this));
+    mo.putAction(ExitAction.ID, new ExitAction(this));
+    mo.putAction(OSXDropOnDockAction.ID, new OSXDropOnDockAction(this));
+
+    mo.putAction(NewAction.ID, new NewAction(this));
+    mo.putAction(OpenAction.ID, new OpenAction(this));
+    mo.putAction(ClearRecentFilesAction.ID, new ClearRecentFilesAction(this));
+    mo.putAction(SaveAction.ID, new SaveAction(this));
+    mo.putAction(SaveAsAction.ID, new SaveAsAction(this));
+    mo.putAction(CloseAction.ID, new CloseAction(this));
+
+    mo.putAction(UndoAction.ID, new UndoAction(this));
+    mo.putAction(RedoAction.ID, new RedoAction(this));
+    mo.putAction(CutAction.ID, new CutAction());
+    mo.putAction(CopyAction.ID, new CopyAction());
+    mo.putAction(PasteAction.ID, new PasteAction());
+    mo.putAction(DeleteAction.ID, new DeleteAction());
+    mo.putAction(DuplicateAction.ID, new DuplicateAction());
+    mo.putAction(SelectAllAction.ID, new SelectAllAction());
+
+    mo.putAction(MaximizeAction.ID, new MaximizeAction(this));
+    mo.putAction(MinimizeAction.ID, new MinimizeAction(this));
+  }
+
+  protected void initProjectActions(Project p) {
+    p.putAction(FocusAction.ID, new FocusAction(p));
+  }
+
+
+  public void addPalette(Window palette) {
+    paletteHandler.addPalette(palette);
+  }
+
+  public void removePalette(Window palette) {
+    paletteHandler.removePalette(palette);
+  }
+
+  public void show(final Project p) {
+    if (!p.isShowing()) {
+      p.setShowing(true);
+      File file = p.getFile();
+      final JFrame f = new JFrame();
+      String title;
+      if (file == null) {
+        title = labels.getString("unnamedFile");
+      } else {
+        title = file.getName();
+      }
+      f.setTitle(labels.getFormatted("frameTitle", title, getName(), p.getMultipleOpenId()));
+      f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+      f.setPreferredSize(new Dimension(400, 400));
+
+
+      PreferencesUtil.installFramePrefsHandler(prefs, "project", f);
+      Point loc = f.getLocation();
+      boolean moved;
+      do {
+        moved = false;
+        for (Iterator i = projects().iterator(); i.hasNext(); ) {
+          Project aProject = (Project) i.next();
+          if (aProject != p && aProject.isShowing() && SwingUtilities.getWindowAncestor(aProject.getComponent()).getLocation().equals(loc)) {
+            loc.x += 22;
+            loc.y += 22;
+            moved = true;
+            break;
+          }
         }
+      } while (moved);
+      f.setLocation(loc);
+
+      paletteHandler.add(f, p);
+
+      f.addWindowListener(new WindowAdapter() {
+        public void windowClosing(final WindowEvent evt) {
+          setCurrentProject(p);
+          getModel().getAction(CloseAction.ID).actionPerformed(new ActionEvent(f, ActionEvent.ACTION_PERFORMED, "windowClosing"));
+        }
+      });
+
+      p.addPropertyChangeListener(evt -> {
+        String name = evt.getPropertyName();
+        if (name.equals("hasUnsavedChanges")) {
+          f.getRootPane().putClientProperty("windowModified", p.hasUnsavedChanges());
+        } else if (name.equals("file")) {
+          f.setTitle((p.getFile() == null) ? "Unnamed" : p.getFile().getName());
+        }
+      });
+
+      f.setJMenuBar(createMenuBar(p));
+
+      f.getContentPane().add(p.getComponent());
+      f.setVisible(true);
     }
-    
-    /**
-     * Creates a menu bar.
-     *
-     * @param p The project for which the menu bar is created. This may be
-     * <code>null</code> if the menu bar is attached to an application
-     * component, such as the screen menu bar or a floating palette window.
-     */
-    protected JMenuBar createMenuBar(final Project p) {
-        ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
-        ApplicationModel model = getModel();
-        
-        JMenuBar mb = new JMenuBar();
-        JMenu m;
-        JMenuItem mi;
-        final JMenu openRecentMenu;
-        
-        m = new JMenu();
-        labels.configureMenu(m, "file");
-        mi = m.add(model.getAction(NewAction.ID));
-        mi.setIcon(null);
-        mi = m.add(model.getAction(OpenAction.ID));
-        mi.setIcon(null);
-        openRecentMenu = new JMenu();
-        labels.configureMenu(openRecentMenu, "openRecent");
-        openRecentMenu.add(model.getAction(ClearRecentFilesAction.ID));
-        updateOpenRecentMenu(openRecentMenu);
-        m.add(openRecentMenu);
-        m.addSeparator();
-        mi = m.add(model.getAction(CloseAction.ID));
-        mi.setIcon(null);
-        mi = m.add(model.getAction(SaveAction.ID));
-        mi.setIcon(null);
-        mi = m.add(model.getAction(SaveAsAction.ID));
-        mi.setIcon(null);
-        if (model.getAction(ExportAction.ID) != null) {
-            mi = m.add(model.getAction(ExportAction.ID));
-            mi.setIcon(null);
-        }
-        mb.add(m);
-        
-        m = new JMenu();
-        labels.configureMenu(m, "edit");
-        mi = m.add(model.getAction(UndoAction.ID));
-        mi.setIcon(null);
-        mi = m.add(model.getAction(RedoAction.ID));
-        mi.setIcon(null);
-        m.addSeparator();
-        mi = m.add(model.getAction(CutAction.ID));
-        mi.setIcon(null);
-        mi = m.add(model.getAction(CopyAction.ID));
-        mi.setIcon(null);
-        mi = m.add(model.getAction(PasteAction.ID));
-        mi.setIcon(null);
-        mi = m.add(model.getAction(DuplicateAction.ID));
-        mi.setIcon(null);
-        mi = m.add(model.getAction(DeleteAction.ID));
-        mi.setIcon(null);
-        m.addSeparator();
-        mi = m.add(model.getAction(SelectAllAction.ID));
-        mi.setIcon(null);
-        mb.add(m);
-        
-        for (JMenu mm : model.createMenus(this, p)) {
-            mb.add(mm);
-        }
-        
-        
-        m = new JMenu();
-        final JMenu windowMenu = m;
-        labels.configureMenu(m, "window");
-        mi = m.add(model.getAction(MinimizeAction.ID));
-        mi.setIcon(null);
-        mi = m.add(model.getAction(MaximizeAction.ID));
-        mi.setIcon(null);
-        m.addSeparator();
-        for (Project pr : projects()) {
-            if (pr.getAction(FocusAction.ID) != null) {
-                windowMenu.add(pr.getAction(FocusAction.ID));
-            }
-        }
-        if (paletteActions.size() > 0) {
+  }
+
+  public void hide(Project p) {
+    if (p.isShowing()) {
+      JFrame f = (JFrame) SwingUtilities.getWindowAncestor(p.getComponent());
+      f.setVisible(false);
+      f.remove(p.getComponent());
+      paletteHandler.remove(f, p);
+      f.dispose();
+    }
+  }
+
+  /**
+   * Creates a menu bar.
+   *
+   * @param p The project for which the menu bar is created. This may be
+   *          <code>null</code> if the menu bar is attached to an application
+   *          component, such as the screen menu bar or a floating palette window.
+   */
+  protected JMenuBar createMenuBar(final Project p) {
+    ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
+    ApplicationModel model = getModel();
+
+    JMenuBar mb = new JMenuBar();
+    JMenu m;
+    JMenuItem mi;
+    final JMenu openRecentMenu;
+
+    m = new JMenu();
+    labels.configureMenu(m, "file");
+    mi = m.add(model.getAction(NewAction.ID));
+    mi.setIcon(null);
+    mi = m.add(model.getAction(OpenAction.ID));
+    mi.setIcon(null);
+    openRecentMenu = new JMenu();
+    labels.configureMenu(openRecentMenu, "openRecent");
+    openRecentMenu.add(model.getAction(ClearRecentFilesAction.ID));
+    updateOpenRecentMenu(openRecentMenu);
+    m.add(openRecentMenu);
+    m.addSeparator();
+    mi = m.add(model.getAction(CloseAction.ID));
+    mi.setIcon(null);
+    mi = m.add(model.getAction(SaveAction.ID));
+    mi.setIcon(null);
+    mi = m.add(model.getAction(SaveAsAction.ID));
+    mi.setIcon(null);
+    if (model.getAction(ExportAction.ID) != null) {
+      mi = m.add(model.getAction(ExportAction.ID));
+      mi.setIcon(null);
+    }
+    mb.add(m);
+
+    m = new JMenu();
+    labels.configureMenu(m, "edit");
+    mi = m.add(model.getAction(UndoAction.ID));
+    mi.setIcon(null);
+    mi = m.add(model.getAction(RedoAction.ID));
+    mi.setIcon(null);
+    m.addSeparator();
+    mi = m.add(model.getAction(CutAction.ID));
+    mi.setIcon(null);
+    mi = m.add(model.getAction(CopyAction.ID));
+    mi.setIcon(null);
+    mi = m.add(model.getAction(PasteAction.ID));
+    mi.setIcon(null);
+    mi = m.add(model.getAction(DuplicateAction.ID));
+    mi.setIcon(null);
+    mi = m.add(model.getAction(DeleteAction.ID));
+    mi.setIcon(null);
+    m.addSeparator();
+    mi = m.add(model.getAction(SelectAllAction.ID));
+    mi.setIcon(null);
+    mb.add(m);
+
+    for (JMenu mm : model.createMenus(this, p)) {
+      mb.add(mm);
+    }
+
+
+    m = new JMenu();
+    final JMenu windowMenu = m;
+    labels.configureMenu(m, "window");
+    mi = m.add(model.getAction(MinimizeAction.ID));
+    mi.setIcon(null);
+    mi = m.add(model.getAction(MaximizeAction.ID));
+    mi.setIcon(null);
+    m.addSeparator();
+    for (Project pr : projects()) {
+      if (pr.getAction(FocusAction.ID) != null) {
+        windowMenu.add(pr.getAction(FocusAction.ID));
+      }
+    }
+    if (!paletteActions.isEmpty()) {
+      m.addSeparator();
+      for (Action a : paletteActions) {
+        JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(a);
+        Actions.configureJCheckBoxMenuItem(cbmi, a);
+        cbmi.setIcon(null);
+        m.add(cbmi);
+      }
+    }
+    mb.add(m);
+
+    addPropertyChangeListener(new PropertyChangeListener() {
+      public void propertyChange(PropertyChangeEvent evt) {
+        String name = evt.getPropertyName();
+        if (Objects.equals(name, "projectCount")) {
+          if (p == null || projects().contains(p)) {
+            JMenu m = windowMenu;
+            m.removeAll();
+            m.add(getModel().getAction(MinimizeAction.ID));
+            m.add(getModel().getAction(MaximizeAction.ID));
             m.addSeparator();
-            for (Action a: paletteActions) {
+            for (Iterator i = projects().iterator(); i.hasNext(); ) {
+              Project pr = (Project) i.next();
+              if (pr.getAction(FocusAction.ID) != null) {
+                m.add(pr.getAction(FocusAction.ID));
+              }
+            }
+            if (!paletteActions.isEmpty()) {
+              m.addSeparator();
+              for (Action a : paletteActions) {
                 JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(a);
                 Actions.configureJCheckBoxMenuItem(cbmi, a);
                 cbmi.setIcon(null);
                 m.add(cbmi);
+              }
             }
+          } else {
+            removePropertyChangeListener(this);
+          }
+        } else if (Objects.equals(name, "recentFiles")) {
+          updateOpenRecentMenu(openRecentMenu);
         }
-        mb.add(m);
-        
-        addPropertyChangeListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent evt) {
-                String name = evt.getPropertyName();
-                if (name == "projectCount") {
-                    if (p == null || projects().contains(p)) {
-                        JMenu m = windowMenu;
-                        m.removeAll();
-                        m.add(getModel().getAction(MinimizeAction.ID));
-                        m.add(getModel().getAction(MaximizeAction.ID));
-                        m.addSeparator();
-                        for (Iterator i=projects().iterator(); i.hasNext(); ) {
-                            Project pr = (Project) i.next();
-                            if (pr.getAction(FocusAction.ID) != null) {
-                                m.add(pr.getAction(FocusAction.ID));
-                            }
-                        }
-                        if (paletteActions.size() > 0) {
-                            m.addSeparator();
-                            for (Action a: paletteActions) {
-                                JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(a);
-                                Actions.configureJCheckBoxMenuItem(cbmi, a);
-                                cbmi.setIcon(null);
-                                m.add(cbmi);
-                            }
-                        }
-                    } else {
-                        removePropertyChangeListener(this);
-                    }
-                } else if (name == "recentFiles") {
-                    updateOpenRecentMenu(openRecentMenu);
-                }
-            }
-        });
-        
-        return mb;
+      }
+    });
+
+    return mb;
+  }
+
+  private void updateOpenRecentMenu(JMenu openRecentMenu) {
+    if (openRecentMenu.getItemCount() > 0) {
+      JMenuItem clearRecentFilesItem = openRecentMenu.getItem(openRecentMenu.getItemCount() - 1);
+      openRecentMenu.removeAll();
+      for (File f : recentFiles()) {
+        openRecentMenu.add(new OpenRecentAction(DefaultOSXApplication.this, f));
+      }
+      if (!recentFiles().isEmpty()) {
+        openRecentMenu.addSeparator();
+      }
+      openRecentMenu.add(clearRecentFilesItem);
     }
-    
-    private void updateOpenRecentMenu(JMenu openRecentMenu) {
-        if (openRecentMenu.getItemCount() > 0) {
-            JMenuItem clearRecentFilesItem = (JMenuItem) openRecentMenu.getItem(
-                    openRecentMenu.getItemCount() - 1
-                    );
-            openRecentMenu.removeAll();
-            for (File f : recentFiles()) {
-                openRecentMenu.add(new OpenRecentAction(DefaultOSXApplication.this, f));
-            }
-            if (recentFiles().size() > 0) {
-                openRecentMenu.addSeparator();
-            }
-            openRecentMenu.add(clearRecentFilesItem);
-        }
+  }
+
+  public Project getCurrentProject() {
+    return currentProject;
+  }
+
+  public void setCurrentProject(Project newValue) {
+    Project oldValue = currentProject;
+    currentProject = newValue;
+
+    firePropertyChange("currentProject", oldValue, newValue);
+  }
+
+  protected void initScreenMenuBar() {
+    ApplicationModel model = getModel();
+    net.roydesign.app.Application mrJApp = net.roydesign.app.Application.getInstance();
+    mrJApp.setFramelessJMenuBar(createMenuBar(null));
+
+    mrJApp.getAboutJMenuItem().setAction(model.getAction(AboutAction.ID));
+    mrJApp.getQuitJMenuItem().setAction(model.getAction(ExitAction.ID));
+    mrJApp.addOpenDocumentListener(model.getAction(OSXDropOnDockAction.ID));
+  }
+
+  protected void initPalettes(LinkedList<Action> paletteActions) {
+    LinkedList<JToolBar> toolBars = new LinkedList<>(getModel().createToolBars(this, null));
+    JToolBar stb = new JToolBar();
+    stb.setName(labels.getString("standardToolBarTitle"));
+    addStandardActionsTo(stb);
+    toolBars.addFirst(stb);
+
+    int i = 0;
+    int x = 0;
+    for (JToolBar tb : toolBars) {
+      i++;
+      tb.setFloatable(false);
+      tb.setOrientation(JToolBar.VERTICAL);
+      tb.setFocusable(false);
+
+      JFrame d = new JFrame();
+      //JDialog d = new JDialog();
+      //palettes.add(d);
+      d.setFocusable(false);
+      d.setResizable(false);
+      d.getContentPane().setLayout(new BorderLayout());
+      d.getContentPane().add(tb, BorderLayout.CENTER);
+
+      //d.setTitle(tb.getName());
+      d.setAlwaysOnTop(true);
+      d.setUndecorated(true);
+      d.getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
+      d.getRootPane().setFont(new Font("Lucida Grande", Font.PLAIN, 11));
+      d.getRootPane().putClientProperty("Quaqua.RootPane.isVertical", Boolean.FALSE);
+      d.getRootPane().putClientProperty("Quaqua.RootPane.isPalette", Boolean.TRUE);
+
+      d.setJMenuBar(createMenuBar(null));
+
+      d.pack();
+      d.setFocusableWindowState(false);
+      PreferencesUtil.installPalettePrefsHandler(prefs, "toolbar." + i, d, x);
+      x += d.getWidth();
+
+      paletteActions.add(new OSXTogglePaletteAction(this, d, tb.getName()));
+      addPalette(d);
     }
-    
-    public Project getCurrentProject() {
-        return currentProject;
-    }
-    
-    public void setCurrentProject(Project newValue) {
-        Project oldValue = currentProject;
-        currentProject = newValue;
-        
-        firePropertyChange("currentProject", oldValue, newValue);
-    }
-    
-    protected void initScreenMenuBar() {
-        ApplicationModel model = getModel();
-        net.roydesign.app.Application mrjapp = net.roydesign.app.Application.getInstance();
-        mrjapp.setFramelessJMenuBar(createMenuBar(null));
-        
-        mrjapp.getAboutJMenuItem().setAction(model.getAction(AboutAction.ID));
-        mrjapp.getQuitJMenuItem().setAction(model.getAction(ExitAction.ID));
-        mrjapp.addOpenDocumentListener(model.getAction(OSXDropOnDockAction.ID));
-    }
-    protected void initPalettes(LinkedList<Action> paletteActions) {
-        LinkedList<JToolBar> toolBars = new LinkedList<JToolBar>(getModel().createToolBars(this, null));
-        JToolBar stb = new JToolBar();
-        stb.setName(labels.getString("standardToolBarTitle"));
-        addStandardActionsTo(stb);
-        toolBars.addFirst(stb);
-        
-        int i=0;
-        int x=0;
-        for (JToolBar tb : toolBars) {
-            i++;
-            tb.setFloatable(false);
-            tb.setOrientation(JToolBar.VERTICAL);
-            tb.setFocusable(false);
-            
-            JFrame d = new JFrame();
-            //JDialog d = new JDialog();
-            //palettes.add(d);
-            d.setFocusable(false);
-            d.setResizable(false);
-            d.getContentPane().setLayout(new BorderLayout());
-            d.getContentPane().add(tb,BorderLayout.CENTER);
-            
-            //d.setTitle(tb.getName());
-            d.setAlwaysOnTop(true);
-            d.setUndecorated(true);
-            d.getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
-            d.getRootPane().setFont(
-                    new Font("Lucida Grande", Font.PLAIN, 11)
-                    );
-            d.getRootPane().putClientProperty("Quaqua.RootPane.isVertical", Boolean.FALSE);
-            d.getRootPane().putClientProperty("Quaqua.RootPane.isPalette", Boolean.TRUE);
-            
-            d.setJMenuBar(createMenuBar(null));
-            
-            d.pack();
-            d.setFocusableWindowState(false);
-            PreferencesUtil.installPalettePrefsHandler(prefs, "toolbar."+i, d, x);
-            x += d.getWidth();
-            
-            paletteActions.add(new OSXTogglePaletteAction(this, d, tb.getName()));
-            addPalette(d);
-        }
-    }
-    protected void addStandardActionsTo(JToolBar tb) {
-        JButton b;
-        ApplicationModel mo = getModel();
-        
-        b = tb.add(mo.getAction(NewAction.ID));
-        b.setFocusable(false);
-        b = tb.add(mo.getAction(OpenAction.ID));
-        b.setFocusable(false);
-        b = tb.add(mo.getAction(SaveAction.ID));
-        tb.addSeparator();
-        b = tb.add(mo.getAction(UndoAction.ID));
-        b.setFocusable(false);
-        b = tb.add(mo.getAction(RedoAction.ID));
-        b.setFocusable(false);
-        tb.addSeparator();
-        b = tb.add(mo.getAction(CutAction.ID));
-        b.setFocusable(false);
-        b = tb.add(mo.getAction(CopyAction.ID));
-        b.setFocusable(false);
-        b = tb.add(mo.getAction(PasteAction.ID));
-        b.setFocusable(false);
-    }
-    
-    public boolean isSharingToolsAmongProjects() {
-        return true;
-    }
-    
-    public Component getComponent() {
-        return null;
-    }
+  }
+
+  protected void addStandardActionsTo(JToolBar tb) {
+    JButton b;
+    ApplicationModel mo = getModel();
+
+    b = tb.add(mo.getAction(NewAction.ID));
+    b.setFocusable(false);
+    b = tb.add(mo.getAction(OpenAction.ID));
+    b.setFocusable(false);
+    b = tb.add(mo.getAction(SaveAction.ID));
+    tb.addSeparator();
+    b = tb.add(mo.getAction(UndoAction.ID));
+    b.setFocusable(false);
+    b = tb.add(mo.getAction(RedoAction.ID));
+    b.setFocusable(false);
+    tb.addSeparator();
+    b = tb.add(mo.getAction(CutAction.ID));
+    b.setFocusable(false);
+    b = tb.add(mo.getAction(CopyAction.ID));
+    b.setFocusable(false);
+    b = tb.add(mo.getAction(PasteAction.ID));
+    b.setFocusable(false);
+  }
+
+  public boolean isSharingToolsAmongProjects() {
+    return true;
+  }
+
+  public Component getComponent() {
+    return null;
+  }
 }

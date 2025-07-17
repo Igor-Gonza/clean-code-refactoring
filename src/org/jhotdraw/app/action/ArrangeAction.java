@@ -1,5 +1,5 @@
 /*
- * @(#)ArrangeAction.java  1.0  7. Februar 2006
+ * @(#)ArrangeAction.java  1.0  7. February 2006
  *
  * Copyright (c) 1996-2006 by the original authors of JHotDraw
  * and all its contributors ("JHotDraw.org")
@@ -14,42 +14,50 @@
 
 package org.jhotdraw.app.action;
 
-import org.jhotdraw.util.*;
-import java.awt.event.ActionEvent;
+import org.jhotdraw.util.ResourceBundleUtil;
+
 import javax.swing.*;
-import java.awt.*;
+import java.awt.event.ActionEvent;
+
 /**
  * ArrangeAction.
  * <p>
  * FIXME - Register as PropertyChangeListener on Arrangeable.
  *
  * @author Werner Randelshofer
- * @version 1.0 7. Februar 2006 Created.
+ * @version 1.0 7. February 2006 Created.
  */
 public class ArrangeAction extends AbstractAction {
-    public final static String VERTICAL_ID = "arrangeVertical";
-    public final static String HORIZONTAL_ID = "arrangeHorizontal";
-    public final static String CASCADE_ID = "arrangeCascade";
-    private Arrangeable arrangeable;
-    private Arrangeable.Arrangement arrangement;
-    
-    /** Creates a new instance. */
-    public ArrangeAction(Arrangeable arrangeable, Arrangeable.Arrangement arrangement) {
-        this.arrangeable = arrangeable;
-        this.arrangement = arrangement;
-        ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
-        String labelID;
-        switch (arrangement) {
-            case VERTICAL : labelID = VERTICAL_ID; break;
-            case HORIZONTAL : labelID = HORIZONTAL_ID; break;
-            case CASCADE :
-            default :
-                labelID = CASCADE_ID; break;
-        }
-        labels.configureAction(this, labelID);
+  public final static String VERTICAL_ID = "arrangeVertical";
+  public final static String HORIZONTAL_ID = "arrangeHorizontal";
+  public final static String CASCADE_ID = "arrangeCascade";
+  private Arrangeable arrangeable;
+  private Arrangeable.Arrangement arrangement;
+
+  /**
+   * Creates a new instance.
+   */
+  public ArrangeAction(Arrangeable arrangeable, Arrangeable.Arrangement arrangement) {
+    this.arrangeable = arrangeable;
+    this.arrangement = arrangement;
+    ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
+    String labelID;
+    switch (arrangement) {
+      case VERTICAL:
+        labelID = VERTICAL_ID;
+        break;
+      case HORIZONTAL:
+        labelID = HORIZONTAL_ID;
+        break;
+      case CASCADE:
+      default:
+        labelID = CASCADE_ID;
+        break;
     }
-    
-    public void actionPerformed(ActionEvent e) {
-            arrangeable.setArrangement(arrangement);
-    }
+    labels.configureAction(this, labelID);
+  }
+
+  public void actionPerformed(ActionEvent e) {
+    arrangeable.setArrangement(arrangement);
+  }
 }

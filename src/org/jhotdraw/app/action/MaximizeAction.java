@@ -19,36 +19,38 @@ import org.jhotdraw.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
 import org.jhotdraw.app.Application;
+
 /**
  * Maximizes the Frame of the current project.
- * 
+ *
  * @author Werner Randelshofer
  * @version 2.0 2005-05-05 Reworked.
  * <br>1.0  2005-06-10 Created.
  */
 public class MaximizeAction extends AbstractProjectAction {
-    public final static String ID = "maximize";
-    
-    /** Creates a new instance. */
-    public MaximizeAction(Application app) {
-        super(app);
-        ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
-        labels.configureAction(this, ID);
+  public final static String ID = "maximize";
+
+  /**
+   * Creates a new instance.
+   */
+  public MaximizeAction(Application app) {
+    super(app);
+    ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
+    labels.configureAction(this, ID);
+  }
+
+  private JFrame getFrame() {
+    return (JFrame) SwingUtilities.getWindowAncestor(getCurrentProject().getComponent());
+  }
+
+  public void actionPerformed(ActionEvent evt) {
+    JFrame frame = getFrame();
+    if (frame != null) {
+      frame.setExtendedState(frame.getExtendedState() ^ Frame.MAXIMIZED_BOTH);
+    } else {
+      Toolkit.getDefaultToolkit().beep();
     }
-    
-    private JFrame getFrame() {
-        return (JFrame) SwingUtilities.getWindowAncestor(
-                getCurrentProject().getComponent()
-                );
-    }
-    
-    public void actionPerformed(ActionEvent evt) {
-        JFrame frame = getFrame();
-        if (frame != null) {
-            frame.setExtendedState(frame.getExtendedState() ^ Frame.MAXIMIZED_BOTH);
-        } else {
-            Toolkit.getDefaultToolkit().beep();
-        }
-    }
+  }
 }

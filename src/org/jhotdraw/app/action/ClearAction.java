@@ -14,12 +14,9 @@
 
 package org.jhotdraw.app.action;
 
-import org.jhotdraw.util.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
 import org.jhotdraw.app.Application;
 import org.jhotdraw.app.Project;
+import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
  * Clears a project.
@@ -28,17 +25,20 @@ import org.jhotdraw.app.Project;
  * @version 1.0  2005-10-16 Created.
  */
 public class ClearAction extends SaveBeforeAction {
-    public final static String ID = "clear";
-    
-    /** Creates a new instance. */
-    public ClearAction(Application app) {
-        super(app);
-        ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
-        labels.configureAction(this, "new");
-    }
-    
-    @Override public void doIt(Project project) {
-        project.clear();
-        project.setFile(null);
-    }
+  public final static String ID = "clear";
+
+  /**
+   * Creates a new instance.
+   */
+  public ClearAction(Application app) {
+    super(app);
+    ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
+    labels.configureAction(this, "new");
+  }
+
+  @Override
+  public void doIt(Project project) {
+    project.clear();
+    project.setFile(null);
+  }
 }
