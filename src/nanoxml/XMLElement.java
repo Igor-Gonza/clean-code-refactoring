@@ -123,7 +123,7 @@ public class XMLElement implements Serializable {
    *     <li>The keySet().iterator and the values are strings.
    * </ul></dd></dl>
    */
-  private HashMap attributes;
+  private HashMap<String, String> attributes;
 
   /**
    * Child iterator of the element.
@@ -135,7 +135,7 @@ public class XMLElement implements Serializable {
    *         or a subclass of <code>XMLElement</code>.
    * </ul></dd></dl>
    */
-  private ArrayList children;
+  private ArrayList<XMLElement> children;
 
   /**
    * The name of the element.
@@ -175,28 +175,28 @@ public class XMLElement implements Serializable {
    *     <li>The values are char arrays
    * </ul></dd></dl>
    */
-  private HashMap entities;
+  private final HashMap<String, char[]> entities;
 
   /**
    * The line number where the element starts.
    *
    * <dl><dt><b>Invariants:</b></dt><dd>
-   * <ul><li><code>lineNr &gt= 0</code>
+   * <ul><li><code>lineNumber &gt= 0</code>
    * </ul></dd></dl>
    */
-  private int lineNr;
+  private final int lineNumber;
 
   /**
    * <code>true</code> if the case of the element and attribute names
    * are case-insensitive.
    */
-  private boolean ignoreCase;
+  private final boolean ignoreCase;
 
   /**
    * <code>true</code> if the leading and trailing whitespace of #PCDATA
    * sections have to be ignored.
    */
-  private boolean ignoreWhitespace;
+  private final boolean ignoreWhitespace;
 
   /**
    * Character read too much.
@@ -230,7 +230,7 @@ public class XMLElement implements Serializable {
    * characters are not encoded into entities. The encoding is left
    * to the underlying writer.
    */
-  private boolean isEncodeUnicodeCharacters = true;
+  private final boolean isEncodeUnicodeCharacters;
 
   /**
    * Creates and initializes a new XML element.
@@ -255,7 +255,7 @@ public class XMLElement implements Serializable {
    * XMLElement(HashMap, boolean)
    */
   public XMLElement() {
-    this(new HashMap(), false, true, true);
+    this(new HashMap<>(), false, true, true);
   }
 
   /**
@@ -284,7 +284,7 @@ public class XMLElement implements Serializable {
    * @see #XMLElement(java.util.HashMap, boolean)
    * XMLElement(HashMap, boolean)
    */
-  public XMLElement(HashMap entities) {
+  public XMLElement(HashMap<String, char[]> entities) {
     this(entities, false, true, true);
   }
 
@@ -313,7 +313,7 @@ public class XMLElement implements Serializable {
    * XMLElement(HashMap, boolean)
    */
   public XMLElement(boolean skipLeadingWhitespace) {
-    this(new HashMap(), skipLeadingWhitespace, true, true);
+    this(new HashMap<>(), skipLeadingWhitespace, true, true);
   }
 
   /**
@@ -344,7 +344,7 @@ public class XMLElement implements Serializable {
    * @see #XMLElement(java.util.HashMap)
    * XMLElement(HashMap)
    */
-  public XMLElement(HashMap entities, boolean skipLeadingWhitespace) {
+  public XMLElement(HashMap<String, char[]> entities, boolean skipLeadingWhitespace) {
     this(entities, skipLeadingWhitespace, true, true);
   }
 
@@ -377,7 +377,7 @@ public class XMLElement implements Serializable {
    * @see #XMLElement(java.util.HashMap, boolean)
    * XMLElement(HashMap, boolean)
    */
-  public XMLElement(HashMap entities, boolean skipLeadingWhitespace, boolean ignoreCase) {
+  public XMLElement(HashMap<String, char[]> entities, boolean skipLeadingWhitespace, boolean ignoreCase) {
     this(entities, skipLeadingWhitespace, true, ignoreCase);
   }
 
@@ -415,28 +415,22 @@ public class XMLElement implements Serializable {
    *                                 </ul></dd></dl><dl>
    * @see #createElement()
    */
-  protected XMLElement(HashMap entities, boolean skipLeadingWhitespace, boolean fillBasicConversionTable, boolean ignoreCase) {
+  protected XMLElement(HashMap<String, char[]> entities, boolean skipLeadingWhitespace, boolean fillBasicConversionTable, boolean ignoreCase) {
     this(entities, skipLeadingWhitespace, fillBasicConversionTable, ignoreCase, true);
   }
 
-  protected XMLElement(HashMap entities, boolean skipLeadingWhitespace, boolean fillBasicConversionTable, boolean ignoreCase, boolean encodeUnicodeCharacters) {
+  protected XMLElement(HashMap<String, char[]> entities, boolean skipLeadingWhitespace, boolean fillBasicConversionTable, boolean ignoreCase, boolean encodeUnicodeCharacters) {
     this.ignoreWhitespace = skipLeadingWhitespace;
     this.ignoreCase = ignoreCase;
     this.name = null;
     this.contents = "";
-    this.attributes = new HashMap();
-    this.children = new ArrayList();
+    this.attributes = new HashMap<>();
+    this.children = new ArrayList<>();
     this.entities = entities;
-    this.lineNr = 0;
+    this.lineNumber = 0;
     this.isEncodeUnicodeCharacters = encodeUnicodeCharacters;
-    Iterator iter = this.entities.keySet().iterator();
-    while (iter.hasNext()) {
-      Object key = iter.next();
-      Object value = this.entities.get(key);
-      if (value instanceof String) {
-        value = ((String) value).toCharArray();
-        this.entities.put(key, value);
-      }
+    for (String key : this.entities.keySet()) {
+      this.entities.compute(key, (k, value) -> value);
     }
     if (fillBasicConversionTable) {
       this.entities.put("amp", new char[]{'&'});
@@ -571,7 +565,7 @@ public class XMLElement implements Serializable {
    * <ul><li><code>result != null</code>
    * </ul></dd></dl>
    */
-  public Iterator enumerateAttributeNames() {
+  public Iterator<String> enumerateAttributeNames() {
     return this.attributes.keySet().iterator();
   }
 
@@ -582,7 +576,7 @@ public class XMLElement implements Serializable {
    * <ul><li><code>result != null</code>
    * </ul></dd></dl>
    */
-  public Iterator iterateChildren() {
+  public Iterator<XMLElement> iterateChildren() {
     return this.children.iterator();
   }
 
@@ -601,14 +595,8 @@ public class XMLElement implements Serializable {
    * @see #removeChild(nanoxml.XMLElement)
    * removeChild(XMLElement)
    */
-  public ArrayList getChildren() {
-    try {
-      return (ArrayList) this.children.clone();
-    } catch (Exception e) {
-      // this never happens, however, some Java compilers are so
-      // brain-dead that they require this exception clause
-      return null;
-    }
+  public ArrayList<XMLElement> getChildren() {
+    return new ArrayList<>(this.children);
   }
 
   /**
@@ -630,8 +618,8 @@ public class XMLElement implements Serializable {
    * <ul><li><code>result >= 0</code>
    * </ul></dd></dl>
    */
-  public int getLineNr() {
-    return this.lineNr;
+  public int getLineNumber() {
+    return this.lineNumber;
   }
 
   /**
@@ -704,12 +692,12 @@ public class XMLElement implements Serializable {
    * @see #getAttribute(java.lang.String, java.lang.Object)
    * getAttribute(String, Object)
    */
-  public Object getAttribute(String name, Map valueSet, String defaultKey, boolean allowLiterals) {
+  public String getAttribute(String name, Map<String, String> valueSet, String defaultKey, boolean allowLiterals) {
     if (this.ignoreCase) {
       name = name.toUpperCase();
     }
-    Object key = this.attributes.get(name);
-    Object result;
+    String key = this.attributes.get(name);
+    String result;
     if (key == null) {
       key = defaultKey;
     }
@@ -718,7 +706,7 @@ public class XMLElement implements Serializable {
       if (allowLiterals) {
         result = key;
       } else {
-        throw this.invalidValue(name, (String) key);
+        throw this.invalidValueError(name, key);
       }
     }
     return result;
@@ -812,8 +800,8 @@ public class XMLElement implements Serializable {
    * java.lang.String)
    * getStringAttribute(String, String)
    */
-  public String getStringAttribute(String name, HashMap valueSet, String defaultKey, boolean allowLiterals) {
-    return (String) this.getAttribute(name, valueSet, defaultKey, allowLiterals);
+  public String getStringAttribute(String name, HashMap<String, String> valueSet, String defaultKey, boolean allowLiterals) {
+    return this.getAttribute(name, valueSet, defaultKey, allowLiterals);
   }
 
   /**
@@ -865,14 +853,14 @@ public class XMLElement implements Serializable {
     if (this.ignoreCase) {
       name = name.toUpperCase();
     }
-    String value = (String) this.attributes.get(name);
+    String value = this.attributes.get(name);
     if (value == null) {
       return defaultValue;
     } else {
       try {
         return Integer.parseInt(value);
       } catch (NumberFormatException e) {
-        throw this.invalidValue(name, value);
+        throw this.invalidValueError(name, value);
       }
     }
   }
@@ -880,8 +868,7 @@ public class XMLElement implements Serializable {
   public int getIntAttribute(String name, int min, int max, int defaultValue) {
     int v = getIntAttribute(name, defaultValue);
     if (v < min) return min;
-    if (v > max) return max;
-    return v;
+    return Math.min(v, max);
   }
 
   /**
@@ -916,28 +903,28 @@ public class XMLElement implements Serializable {
    * @see #getIntAttribute(java.lang.String, int)
    * getIntAttribute(String, int)
    */
-  public int getIntAttribute(String name, HashMap valueSet, String defaultKey, boolean allowLiteralNumbers) {
+  public int getIntAttribute(String name, HashMap<String, Integer> valueSet, String defaultKey, boolean allowLiteralNumbers) {
     if (this.ignoreCase) {
       name = name.toUpperCase();
     }
-    Object key = this.attributes.get(name);
+    String key = this.attributes.get(name);
     Integer result;
     if (key == null) {
       key = defaultKey;
     }
     try {
-      result = (Integer) valueSet.get(key);
+      result = valueSet.get(key);
     } catch (ClassCastException e) {
-      throw this.invalidValueSet(name);
+      throw this.invalidValueSetError(name);
     }
     if (result == null) {
       if (!allowLiteralNumbers) {
-        throw this.invalidValue(name, (String) key);
+        throw this.invalidValueError(name, key);
       }
       try {
-        result = Integer.valueOf((String) key);
+        result = Integer.valueOf(key);
       } catch (NumberFormatException e) {
-        throw this.invalidValue(name, (String) key);
+        throw this.invalidValueError(name, key);
       }
     }
     return result;
@@ -992,14 +979,14 @@ public class XMLElement implements Serializable {
     if (this.ignoreCase) {
       name = name.toUpperCase();
     }
-    String value = (String) this.attributes.get(name);
+    String value = this.attributes.get(name);
     if (value == null) {
       return defaultValue;
     } else {
       try {
         return Double.parseDouble(value);
       } catch (NumberFormatException e) {
-        throw this.invalidValue(name, value);
+        throw this.invalidValueError(name, value);
       }
     }
   }
@@ -1037,28 +1024,28 @@ public class XMLElement implements Serializable {
    * @see #getDoubleAttribute(java.lang.String, double)
    * getDoubleAttribute(String, double)
    */
-  public double getDoubleAttribute(String name, HashMap valueSet, String defaultKey, boolean allowLiteralNumbers) {
+  public double getDoubleAttribute(String name, HashMap<String, Double> valueSet, String defaultKey, boolean allowLiteralNumbers) {
     if (this.ignoreCase) {
       name = name.toUpperCase();
     }
-    Object key = this.attributes.get(name);
+    String key = this.attributes.get(name);
     Double result;
     if (key == null) {
       key = defaultKey;
     }
     try {
-      result = (Double) valueSet.get(key);
+      result = valueSet.get(key);
     } catch (ClassCastException e) {
-      throw this.invalidValueSet(name);
+      throw this.invalidValueSetError(name);
     }
     if (result == null) {
       if (!allowLiteralNumbers) {
-        throw this.invalidValue(name, (String) key);
+        throw this.invalidValueError(name, key);
       }
       try {
-        result = Double.valueOf((String) key);
+        result = Double.valueOf(key);
       } catch (NumberFormatException e) {
-        throw this.invalidValue(name, (String) key);
+        throw this.invalidValueError(name, key);
       }
     }
     return result;
@@ -1095,7 +1082,7 @@ public class XMLElement implements Serializable {
     if (this.ignoreCase) {
       name = name.toUpperCase();
     }
-    Object value = this.attributes.get(name);
+    String value = this.attributes.get(name);
     if (value == null) {
       return defaultValue;
     } else if (value.equals(trueValue)) {
@@ -1103,7 +1090,7 @@ public class XMLElement implements Serializable {
     } else if (value.equals(falseValue)) {
       return false;
     } else {
-      throw this.invalidValue(name, (String) value);
+      throw this.invalidValueError(name, value);
     }
   }
 
@@ -1166,8 +1153,8 @@ public class XMLElement implements Serializable {
   public void parseFromReader(Reader reader, int startingLineNr) throws IOException, XMLParseException {
     this.name = null;
     this.contents = "";
-    this.attributes = new HashMap();
-    this.children = new ArrayList();
+    this.attributes = new HashMap<>();
+    this.children = new ArrayList<>();
     this.charReadTooMuch = '\0';
     this.reader = reader;
     this.parserLineNr = startingLineNr;
@@ -1176,7 +1163,7 @@ public class XMLElement implements Serializable {
       char ch = this.scanWhitespace();
 
       if (ch != '<') {
-        throw this.expectedInput("<");
+        throw this.expectedInputError("<");
       }
 
       ch = this.readChar();
@@ -1478,12 +1465,10 @@ public class XMLElement implements Serializable {
     writer.write('<');
     writer.write(this.name);
     if (!this.attributes.isEmpty()) {
-      Iterator iter = this.attributes.keySet().iterator();
-      while (iter.hasNext()) {
+      for (String s : this.attributes.keySet()) {
         writer.write(' ');
-        String key = (String) iter.next();
-        String value = (String) this.attributes.get(key);
-        writer.write(key);
+        String value = this.attributes.get(s);
+        writer.write(s);
         writer.write('=');
         writer.write('"');
         this.writeEncoded(writer, value);
@@ -1502,9 +1487,9 @@ public class XMLElement implements Serializable {
       writer.write('>');
     } else {
       writer.write('>');
-      Iterator iter = this.iterateChildren();
+      Iterator<XMLElement> iter = this.iterateChildren();
       while (iter.hasNext()) {
-        XMLElement child = (XMLElement) iter.next();
+        XMLElement child = iter.next();
         child.write(writer);
       }
       writer.write('<');
@@ -1523,7 +1508,6 @@ public class XMLElement implements Serializable {
    *               <ul><li><code>writer != null</code>
    *                   <li><code>writer</code> is not closed
    *               </ul></dd></dl>
-   * @throws java.io.IOException If the data could not be written to the writer.
    * @see #toString()
    */
   public void print(PrintWriter writer) {
@@ -1540,7 +1524,6 @@ public class XMLElement implements Serializable {
    *                   <li><code>writer</code> is not closed
    *               </ul></dd></dl>
    * @param indent The indentation.
-   * @throws java.io.IOException If the data could not be written to the writer.
    * @see #toString()
    */
   protected void print(PrintWriter writer, int indent) {
@@ -1556,12 +1539,10 @@ public class XMLElement implements Serializable {
       writer.write('<');
       writer.write(this.name);
       if (!this.attributes.isEmpty()) {
-        Iterator enm = this.attributes.keySet().iterator();
-        while (enm.hasNext()) {
+        for (String s : this.attributes.keySet()) {
           writer.write(' ');
-          String key = (String) enm.next();
-          String value = (String) this.attributes.get(key);
-          writer.write(key);
+          String value = this.attributes.get(s);
+          writer.write(s);
           writer.write('=');
           writer.write('"');
           this.writeEncoded(writer, value);
@@ -1581,9 +1562,7 @@ public class XMLElement implements Serializable {
       } else {
         writer.write('>');
         writer.write('\n');
-        Iterator enm = this.getChildren().iterator();
-        while (enm.hasNext()) {
-          XMLElement child = (XMLElement) enm.next();
+        for (XMLElement child : this.getChildren()) {
           child.print(writer, indent + 1);
         }
         writer.write(spaces);
@@ -1650,12 +1629,11 @@ public class XMLElement implements Serializable {
           writer.write(';');
           break;
         default:
-          int unicode = ch;
-          if (unicode < 32 || (isEncodeUnicodeCharacters && unicode > 126)) {
+          if ((int) ch < 32 || (isEncodeUnicodeCharacters && (int) ch > 126)) {
             writer.write('&');
             writer.write('#');
             writer.write('x');
-            writer.write(Integer.toString(unicode, 16));
+            writer.write(Integer.toString(ch, 16));
             writer.write(';');
           } else {
             writer.write(ch);
@@ -1751,7 +1729,7 @@ public class XMLElement implements Serializable {
   protected void scanString(StringBuffer string) throws IOException {
     char delimiter = this.readChar();
     if ((delimiter != '\'') && (delimiter != '"')) {
-      throw this.expectedInput("' or \"");
+      throw this.expectedInputError("' or \"");
     }
     for (; ; ) {
       char ch = this.readChar();
@@ -1808,7 +1786,7 @@ public class XMLElement implements Serializable {
       this.unreadChar(ch);
       this.skipSpecialTag(0);
       return false;
-    } else if (!this.checkLiteral("CDATA[")) {
+    } else if (this.checkNonLiteral("CDATA[")) {
       this.skipSpecialTag(1); // one [ has already been read
       return false;
     } else {
@@ -1866,7 +1844,7 @@ public class XMLElement implements Serializable {
       }
     }
     if (this.readChar() != '>') {
-      throw this.expectedInput(">");
+      throw this.expectedInputError(">");
     }
   }
 
@@ -1936,14 +1914,14 @@ public class XMLElement implements Serializable {
    *                <ul><li><code>literal != null</code>
    *                </ul></dd></dl>
    */
-  protected boolean checkLiteral(String literal) throws IOException {
+  protected boolean checkNonLiteral(String literal) throws IOException {
     int length = literal.length();
     for (int i = 0; i < length; i += 1) {
       if (this.readChar() != literal.charAt(i)) {
-        return false;
+        return true;
       }
     }
-    return true;
+    return false;
   }
 
   /**
@@ -1957,7 +1935,7 @@ public class XMLElement implements Serializable {
     } else {
       int i = this.reader.read();
       if (i < 0) {
-        throw this.unexpectedEndOfData();
+        throw this.unexpectedEndOfDataError();
       } else if (i == 10) {
         this.parserLineNr += 1;
         return '\n';
@@ -1990,7 +1968,7 @@ public class XMLElement implements Serializable {
       String key = buf.toString();
       ch = this.scanWhitespace();
       if (ch != '=') {
-        throw this.expectedInput("=");
+        throw this.expectedInputError("=");
       }
       this.unreadChar(this.scanWhitespace());
       buf.setLength(0);
@@ -2001,7 +1979,7 @@ public class XMLElement implements Serializable {
     if (ch == '/') {
       ch = this.readChar();
       if (ch != '>') {
-        throw this.expectedInput(">");
+        throw this.expectedInputError(">");
       }
       return;
     }
@@ -2041,11 +2019,11 @@ public class XMLElement implements Serializable {
         if (ch == '!') {
           ch = this.readChar();
           if (ch != '-') {
-            throw this.expectedInput("Comment or Element");
+            throw this.expectedInputError("Comment or Element");
           }
           ch = this.readChar();
           if (ch != '-') {
-            throw this.expectedInput("Comment or Element");
+            throw this.expectedInputError("Comment or Element");
           }
           this.skipComment();
         } else {
@@ -2056,7 +2034,7 @@ public class XMLElement implements Serializable {
         }
         ch = this.scanWhitespace();
         if (ch != '<') {
-          throw this.expectedInput("<");
+          throw this.expectedInputError("<");
         }
         ch = this.readChar();
       }
@@ -2070,14 +2048,14 @@ public class XMLElement implements Serializable {
     }
     ch = this.readChar();
     if (ch != '/') {
-      throw this.expectedInput("/");
+      throw this.expectedInputError("/");
     }
     this.unreadChar(this.scanWhitespace());
-    if (!this.checkLiteral(name)) {
-      throw this.expectedInput(name);
+    if (this.checkNonLiteral(name)) {
+      throw this.expectedInputError(name);
     }
     if (this.scanWhitespace() != '>') {
-      throw this.expectedInput(">");
+      throw this.expectedInputError(">");
     }
   }
 
@@ -2111,13 +2089,13 @@ public class XMLElement implements Serializable {
           ch = (char) Integer.parseInt(key.substring(1), 10);
         }
       } catch (NumberFormatException e) {
-        throw this.unknownEntity(key);
+        throw this.unknownEntityError(key);
       }
       buf.append(ch);
     } else {
-      char[] value = (char[]) this.entities.get(key);
+      char[] value = this.entities.get(key);
       if (value == null) {
-        throw this.unknownEntity(key);
+        throw this.unknownEntityError(key);
       }
       buf.append(value);
     }
@@ -2137,92 +2115,34 @@ public class XMLElement implements Serializable {
     this.charReadTooMuch = ch;
   }
 
-  /**
-   * Creates a parse exception for when an invalid value set is given to
-   * a method.
-   *
-   * @param name The name of the entity.
-   *             <p>
-   *             </dl><dl><dt><b>Preconditions:</b></dt><dd>
-   *             <ul><li><code>name != null</code>
-   *             </ul></dd></dl>
-   */
-  protected XMLParseException invalidValueSet(String name) {
-    String msg = "Invalid value set (entity name = \"" + name + "\")";
-    return new XMLParseException(this.getName(), this.parserLineNr, msg);
+  protected XMLParseException invalidValueSetError(String name) {
+    String message = String.format("Invalid value set (entity name = \"%s\")", name);
+    return new XMLParseException(this.getName(), this.parserLineNr, message);
   }
 
-  /**
-   * Creates a parse exception for when an invalid value is given to a
-   * method.
-   *
-   * @param name  The name of the entity.
-   * @param value The value of the entity.
-   *              <p>
-   *              </dl><dl><dt><b>Preconditions:</b></dt><dd>
-   *              <ul><li><code>name != null</code>
-   *                  <li><code>value != null</code>
-   *              </ul></dd></dl>
-   */
-  protected XMLParseException invalidValue(String name, String value) {
-    String msg = "Attribute \"" + name + "\" does not contain a valid " + "value (\"" + value + "\")";
-    return new XMLParseException(this.getName(), this.parserLineNr, msg);
+  protected XMLParseException invalidValueError(String name, String value) {
+    String message = String.format("Attribute \"%s\" does not contain a valid " + "value (\"%s\")", name, value);
+    return new XMLParseException(this.getName(), this.parserLineNr, message);
   }
 
-  /**
-   * Creates a parse exception for when the end of the data input has been
-   * reached.
-   */
-  protected XMLParseException unexpectedEndOfData() {
-    String msg = "Unexpected end of data reached";
-    return new XMLParseException(this.getName(), this.parserLineNr, msg);
+  protected XMLParseException unexpectedEndOfDataError() {
+    String message = "Unexpected end of data reached";
+    return new XMLParseException(this.getName(), this.parserLineNr, message);
   }
 
-  /**
-   * Creates a parse exception for when a syntax error occurred.
-   *
-   * @param context The context in which the error occurred.
-   *                <p>
-   *                </dl><dl><dt><b>Preconditions:</b></dt><dd>
-   *                <ul><li><code>context != null</code>
-   *                    <li><code>context.length() &gt; 0</code>
-   *                </ul></dd></dl>
-   */
   protected XMLParseException syntaxError(String context) {
-    String msg = "Syntax error while parsing " + context;
-    return new XMLParseException(this.getName(), this.parserLineNr, msg);
+    String message = "Syntax error while parsing " + context;
+    return new XMLParseException(this.getName(), this.parserLineNr, message);
   }
 
-  /**
-   * Creates a parse exception for when the next character read is not
-   * the character that was expected.
-   *
-   * @param charSet The set of characters (in human-readable form) that was
-   *                expected.
-   *                <p>
-   *                </dl><dl><dt><b>Preconditions:</b></dt><dd>
-   *                <ul><li><code>charSet != null</code>
-   *                    <li><code>charSet.length() &gt; 0</code>
-   *                </ul></dd></dl>
-   */
-  protected XMLParseException expectedInput(String charSet) {
-    String msg = "Expected: " + charSet;
-    return new XMLParseException(this.getName(), this.parserLineNr, msg);
+  protected XMLParseException expectedInputError(String charSet) {
+    String message = "Expected: " + charSet;
+    return new XMLParseException(this.getName(), this.parserLineNr, message);
   }
 
-  /**
-   * Creates a parse exception for when an entity could not be resolved.
-   *
-   * @param name The name of the entity.
-   *             <p>
-   *             </dl><dl><dt><b>Preconditions:</b></dt><dd>
-   *             <ul><li><code>name != null</code>
-   *                 <li><code>name.length() &gt; 0</code>
-   *             </ul></dd></dl>
-   */
-  protected XMLParseException unknownEntity(String name) {
-    String msg = "Unknown or invalid entity: &" + name + ";";
-    return new XMLParseException(this.getName(), this.parserLineNr, msg);
+  protected XMLParseException unknownEntityError(String name) {
+    String message = "Unknown or invalid entity: &" + name + ";";
+    return new XMLParseException(this.getName(), this.parserLineNr, message);
   }
 
 }

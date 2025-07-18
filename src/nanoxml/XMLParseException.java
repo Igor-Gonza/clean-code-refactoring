@@ -28,17 +28,7 @@
 
 package nanoxml;
 
-/**
- * An XMLParseException is thrown when an error occurs while parsing an XML
- * string.
- * <p>
- * $Revision: 1.4 $<BR>
- * $Date: 2002/03/24 10:27:59 $<P>
- *
- * @author Marc De Scheemaecker
- * @version $Name: RELEASE_2_2_1 $, $Revision: 1.4 $
- * @see nanoxml.XMLElement
- */
+@SuppressWarnings("unused")
 public class XMLParseException extends RuntimeException {
 
   /**
@@ -51,49 +41,54 @@ public class XMLParseException extends RuntimeException {
    * <code>NO_LINE</code> if the line number is unknown.
    *
    * <dl><dt><b>Invariants:</b></dt><dd>
-   * <ul><li><code>lineNr &gt 0 || lineNr == NO_LINE</code>
+   * <ul><li><code>lineNumber &gt 0 || lineNumber == NO_LINE</code>
    * </ul></dd></dl>
    */
-  private int lineNr;
+  private final int lineNumber;
 
   /**
    * Creates an exception.
    *
-   * @param name    The name of the element where the error is located.
-   * @param message A message describing what went wrong.
-   *                <p>
-   *                </dl><dl><dt><b>Preconditions:</b></dt><dd>
-   *                <ul><li><code>message != null</code>
-   *                </ul></dd></dl>
+   * @param elementName The name of the element where the error is located.
+   * @param message     A message describing what went wrong.
+   *                    <p>
+   *                    </dl><dl><dt><b>Preconditions:</b></dt><dd>
+   *                    <ul><li><code>message != null</code>
+   *                    </ul></dd></dl>
    *
-   *                <dl><dt><b>Postconditions:</b></dt><dd>
-   *                <ul><li>getLineNr() => NO_LINE
-   *                </ul></dd></dl><dl>
+   *                    <dl><dt><b>Postconditions:</b></dt><dd>
+   *                    <ul><li>getLineNumber() => NO_LINE
+   *                    </ul></dd></dl><dl>
    */
-  public XMLParseException(String name, String message) {
-    super("XML Parse Exception during parsing of " + ((name == null) ? "the XML definition" : ("a " + name + " element")) + ": " + message);
-    this.lineNr = XMLParseException.NO_LINE;
+  public XMLParseException(String elementName, String message) {
+    super(String.format("XML Parse Exception during parsing of %s: %s",
+            elementName == null ? "the XML definition" : ("a " + elementName + " element"),
+            message));
+    this.lineNumber = XMLParseException.NO_LINE;
   }
 
   /**
    * Creates an exception.
    *
-   * @param name    The name of the element where the error is located.
-   * @param lineNr  The number of the line in the input.
-   * @param message A message describing what went wrong.
-   *                <p>
-   *                </dl><dl><dt><b>Preconditions:</b></dt><dd>
-   *                <ul><li><code>message != null</code>
-   *                    <li><code>lineNr &gt; 0</code>
-   *                </ul></dd></dl>
+   * @param elementName The elementName of the element where the error is located.
+   * @param lineNumber  The number of the line in the input.
+   * @param message     A message describing what went wrong.
+   *                    <p>
+   *                    </dl><dl><dt><b>Preconditions:</b></dt><dd>
+   *                    <ul><li><code>message != null</code>
+   *                        <li><code>lineNumber &gt; 0</code>
+   *                    </ul></dd></dl>
    *
-   *                <dl><dt><b>Postconditions:</b></dt><dd>
-   *                <ul><li>getLineNr() => lineNr
-   *                </ul></dd></dl><dl>
+   *                    <dl><dt><b>Postconditions:</b></dt><dd>
+   *                    <ul><li>getLineNumber() => lineNumber
+   *                    </ul></dd></dl><dl>
    */
-  public XMLParseException(String name, int lineNr, String message) {
-    super("XML Parse Exception during parsing of " + ((name == null) ? "the XML definition" : ("a " + name + " element")) + " at line " + lineNr + ": " + message);
-    this.lineNr = lineNr;
+  public XMLParseException(String elementName, int lineNumber, String message) {
+    super(String.format("XML Parse Exception during parsing of %s at line %d: %s",
+            ((elementName == null) ? "the XML definition" : ("a " + elementName + " element")),
+            lineNumber,
+            message));
+    this.lineNumber = lineNumber;
   }
 
   /**
@@ -102,8 +97,8 @@ public class XMLParseException extends RuntimeException {
    *
    * @see nanoxml.XMLParseException#NO_LINE
    */
-  public int getLineNr() {
-    return this.lineNr;
+  public int getLineNumber() {
+    return this.lineNumber;
   }
 
 }
