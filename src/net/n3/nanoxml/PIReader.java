@@ -43,7 +43,7 @@ class PIReader extends Reader {
   /**
    * The encapsulated reader.
    */
-  private IXMLReader reader;
+  private final IXMLReader reader;
 
   /**
    * True if the end of the stream has been reached.

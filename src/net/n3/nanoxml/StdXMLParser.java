@@ -39,6 +39,7 @@ import java.util.Vector;
  * @author Marc De Scheemaecker
  * @version $Name: RELEASE_2_2_1 $, $Revision: 1.5 $
  */
+@SuppressWarnings("unused")
 public class StdXMLParser implements IXMLParser {
 
   /**
@@ -287,7 +288,7 @@ public class StdXMLParser implements IXMLParser {
    * @throws java.lang.Exception if something went wrong
    */
   protected void processCDATA() throws Exception {
-    if (!XMLUtil.checkLiteral(this.reader, "CDATA[")) {
+    if (XMLUtil.checkNonLiteral(this.reader, "CDATA[")) {
       XMLUtil.errorExpectedInput(reader.getSystemID(), reader.getLineNr(), "<![[CDATA[");
     }
 
@@ -303,14 +304,14 @@ public class StdXMLParser implements IXMLParser {
    * @throws java.lang.Exception if an error occurred reading or parsing the data
    */
   protected void processDocType() throws Exception {
-    if (!XMLUtil.checkLiteral(this.reader, "OCTYPE")) {
+    if (XMLUtil.checkNonLiteral(this.reader, "OCTYPE")) {
       XMLUtil.errorExpectedInput(reader.getSystemID(), reader.getLineNr(), "<!DOCTYPE");
       return;
     }
 
     XMLUtil.skipWhitespace(this.reader, null);
     String systemID = null;
-    StringBuffer publicID = new StringBuffer();
+    StringBuilder publicID = new StringBuilder();
     String rootElement = XMLUtil.scanIdentifier(this.reader);
     XMLUtil.skipWhitespace(this.reader, null);
     char ch = this.reader.read();
@@ -335,15 +336,15 @@ public class StdXMLParser implements IXMLParser {
       XMLUtil.errorExpectedInput(reader.getSystemID(), reader.getLineNr(), "`>'");
     }
 // TODO BEGIN PATCH W. Randelshofer Don't read DTD
-    if (false) {
-      if (systemID != null) {
-        Reader reader = this.reader.openStream(publicID.toString(), systemID);
-        this.reader.startNewStream(reader);
-        this.reader.setSystemID(systemID);
-        this.reader.setPublicID(publicID.toString());
-        this.validator.parseDTD(publicID.toString(), this.reader, this.entityResolver, true);
-      }
-    }
+//    if (false) {
+//      if (systemID != null) {
+//        Reader reader = this.reader.openStream(publicID.toString(), systemID);
+//        this.reader.startNewStream(reader);
+//        this.reader.setSystemID(systemID);
+//        this.reader.setPublicID(publicID.toString());
+//        this.validator.parseDTD(publicID.toString(), this.reader, this.entityResolver, true);
+//      }
+//    }
 // END PATCH W. Randelshofer Don't read DTD
   }
 
@@ -366,9 +367,9 @@ public class StdXMLParser implements IXMLParser {
       name = name.substring(colonIndex + 1);
     }
 
-    Vector attrNames = new Vector();
-    Vector attrValues = new Vector();
-    Vector attrTypes = new Vector();
+    Vector<String> attrNames = new Vector<>();
+    Vector<String> attrValues = new Vector<>();
+    Vector<String> attrTypes = new Vector<>();
 
     this.validator.elementStarted(fullName, this.reader.getSystemID(), this.reader.getLineNr());
     char ch;
@@ -387,7 +388,7 @@ public class StdXMLParser implements IXMLParser {
 
     Properties extraAttributes = new Properties();
     this.validator.elementAttributesProcessed(fullName, extraAttributes, this.reader.getSystemID(), this.reader.getLineNr());
-    Enumeration enm = extraAttributes.keys();
+    Enumeration<Object> enm = extraAttributes.keys();
 
     while (enm.hasMoreElements()) {
       String key = (String) enm.nextElement();
@@ -398,9 +399,9 @@ public class StdXMLParser implements IXMLParser {
     }
 
     for (int i = 0; i < attrNames.size(); i++) {
-      String key = (String) attrNames.elementAt(i);
-      String value = (String) attrValues.elementAt(i);
-      String type = (String) attrTypes.elementAt(i);
+      String key = attrNames.elementAt(i);
+      String value = attrValues.elementAt(i);
+      String type = attrTypes.elementAt(i);
 
       if (key.equals("xmlns")) {
         defaultNamespace = value;
@@ -416,14 +417,14 @@ public class StdXMLParser implements IXMLParser {
     }
 
     for (int i = 0; i < attrNames.size(); i++) {
-      String key = (String) attrNames.elementAt(i);
+      String key = attrNames.elementAt(i);
 
       if (key.startsWith("xmlns")) {
         continue;
       }
 
-      String value = (String) attrValues.elementAt(i);
-      String type = (String) attrTypes.elementAt(i);
+      String value = attrValues.elementAt(i);
+      String type = attrTypes.elementAt(i);
       colonIndex = key.indexOf(':');
 
       if (colonIndex > 0) {
@@ -526,7 +527,7 @@ public class StdXMLParser implements IXMLParser {
    * @param attrTypes  contains the types of the attributes.
    * @throws java.lang.Exception if something went wrong
    */
-  protected void processAttribute(Vector attrNames, Vector attrValues, Vector attrTypes) throws Exception {
+  protected void processAttribute(Vector<String> attrNames, Vector<String> attrValues, Vector<String> attrTypes) throws Exception {
     String key = XMLUtil.scanIdentifier(this.reader);
     XMLUtil.skipWhitespace(this.reader, null);
 

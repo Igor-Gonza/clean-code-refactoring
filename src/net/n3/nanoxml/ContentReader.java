@@ -43,12 +43,12 @@ class ContentReader extends Reader {
   /**
    * The encapsulated reader.
    */
-  private IXMLReader reader;
+  private final IXMLReader reader;
 
   /**
    * Buffer.
    */
-  private String buffer;
+  private final String buffer;
 
   /**
    * Pointer into the buffer.
@@ -58,7 +58,7 @@ class ContentReader extends Reader {
   /**
    * The entity resolver.
    */
-  private IXMLEntityResolver resolver;
+  private final IXMLEntityResolver resolver;
 
   /**
    * Creates the reader.
@@ -152,7 +152,7 @@ class ContentReader extends Reader {
           str = XMLUtil.read(this.reader, '&');
           ch = str.charAt(0);
         } else {
-          ch = this.buffer.charAt(this.bufferIndex);
+          char ignored = this.buffer.charAt(this.bufferIndex);
           this.bufferIndex++;
           continue; // don't interprete chars in the buffer
         }

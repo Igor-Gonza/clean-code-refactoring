@@ -40,22 +40,22 @@ public class XMLParseException extends XMLException {
   /**
    * Creates a new exception.
    *
-   * @param msg the message of the exception.
+   * @param message the message of the exception.
    */
-  public XMLParseException(String msg) {
-    super(msg);
+  public XMLParseException(String message) {
+    super(message);
   }
 
   /**
    * Creates a new exception.
    *
    * @param systemID the system ID from where the data came
-   * @param lineNr   the line number in the XML data where the exception
+   * @param lineNumber   the line number in the XML data where the exception
    *                 occurred.
-   * @param msg      the message of the exception.
+   * @param message      the message of the exception.
    */
-  public XMLParseException(String systemID, int lineNr, String msg) {
-    super(systemID, lineNr, null, msg, true);
+  public XMLParseException(String systemID, int lineNumber, String message) {
+    super(systemID, lineNumber, null, message, true);
   }
 
 }

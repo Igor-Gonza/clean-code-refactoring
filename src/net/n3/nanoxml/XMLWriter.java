@@ -48,7 +48,7 @@ public class XMLWriter {
   /**
    * Where to write the output to.
    */
-  private PrintWriter writer;
+  private final PrintWriter writer;
 
   /**
    * Creates a new XML writer.
@@ -131,7 +131,7 @@ public class XMLWriter {
     } else {
       this.writer.print('<');
       this.writer.print(xml.getFullName());
-      Vector nsPrefixes = new Vector();
+      Vector<String> nsPrefixes = new Vector<>();
 
       if (xml.getNamespace() != null) {
         if (xml.getName().equals(xml.getFullName())) {
@@ -145,10 +145,10 @@ public class XMLWriter {
         }
       }
 
-      Iterator enm = xml.iterateAttributeNames();
+      Iterator<String> enm = xml.iterateAttributeNames();
 
       while (enm.hasNext()) {
-        String key = (String) enm.next();
+        String key = enm.next();
         int index = key.indexOf(':');
 
         if (index >= 0) {
@@ -169,7 +169,7 @@ public class XMLWriter {
       enm = xml.iterateAttributeNames();
 
       while (enm.hasNext()) {
-        String key = (String) enm.next();
+        String key = enm.next();
         String value = xml.getAttribute(key, null);
         this.writer.print(" " + key + "=\"");
         this.writeEncoded(value);
@@ -191,10 +191,10 @@ public class XMLWriter {
           writer.println();
         }
 
-        enm = xml.iterateChildren();
+        Iterator<IXMLElement> enm2 = xml.iterateChildren();
 
-        while (enm.hasNext()) {
-          IXMLElement child = (IXMLElement) enm.next();
+        while (enm2.hasNext()) {
+          IXMLElement child = enm2.next();
           this.write(child, prettyPrint, indent + 4, collapseEmptyElements);
         }
 

@@ -38,35 +38,36 @@ import java.io.PrintWriter;
  * @author Marc De Scheemaecker
  * @version $Name: RELEASE_2_2_1 $, $Revision: 1.4 $
  */
+@SuppressWarnings({"unused", "CallToPrintStackTrace"})
 public class XMLException extends Exception {
 
   /**
    * The message of the exception.
    */
-  private String msg;
+  private final String message;
 
   /**
    * The system ID of the XML data where the exception occurred.
    */
-  private String systemID;
+  private final String systemID;
 
   /**
    * The line number in the XML data where the exception occurred.
    */
-  private int lineNr;
+  private final int lineNumber;
 
   /**
    * Encapsulated exception.
    */
-  private Exception encapsulatedException;
+  private final Exception encapsulatedException;
 
   /**
    * Creates a new exception.
    *
-   * @param msg the message of the exception.
+   * @param message the message of the exception.
    */
-  public XMLException(String msg) {
-    this(null, -1, null, msg, false);
+  public XMLException(String message) {
+    this(null, -1, null, message, false);
   }
 
   /**
@@ -83,12 +84,12 @@ public class XMLException extends Exception {
    *
    * @param systemID the system ID of the XML data where the exception
    *                 occurred
-   * @param lineNr   the line number in the XML data where the exception
+   * @param lineNumber   the line number in the XML data where the exception
    *                 occurred.
    * @param e        the encapsulated exception.
    */
-  public XMLException(String systemID, int lineNr, Exception e) {
-    this(systemID, lineNr, e, "Nested Exception", true);
+  public XMLException(String systemID, int lineNumber, Exception e) {
+    this(systemID, lineNumber, e, "Nested Exception", true);
   }
 
   /**
@@ -96,54 +97,54 @@ public class XMLException extends Exception {
    *
    * @param systemID the system ID of the XML data where the exception
    *                 occurred
-   * @param lineNr   the line number in the XML data where the exception
+   * @param lineNumber   the line number in the XML data where the exception
    *                 occurred.
-   * @param msg      the message of the exception.
+   * @param message      the message of the exception.
    */
-  public XMLException(String systemID, int lineNr, String msg) {
-    this(systemID, lineNr, null, msg, true);
+  public XMLException(String systemID, int lineNumber, String message) {
+    this(systemID, lineNumber, null, message, true);
   }
 
   /**
    * Creates a new exception.
    *
    * @param systemID     the system ID from where the data came
-   * @param lineNr       the line number in the XML data where the exception
+   * @param lineNumber       the line number in the XML data where the exception
    *                     occurred.
    * @param e            the encapsulated exception.
-   * @param msg          the message of the exception.
-   * @param reportParams true if the systemID, lineNr and e params need to be
+   * @param message          the message of the exception.
+   * @param reportParams true if the systemID, lineNumber and e params need to be
    *                     appended to the message
    */
-  public XMLException(String systemID, int lineNr, Exception e, String msg, boolean reportParams) {
-    super(XMLException.buildMessage(systemID, lineNr, e, msg, reportParams));
+  public XMLException(String systemID, int lineNumber, Exception e, String message, boolean reportParams) {
+    super(XMLException.buildMessage(systemID, lineNumber, e, message, reportParams));
     this.systemID = systemID;
-    this.lineNr = lineNr;
+    this.lineNumber = lineNumber;
     this.encapsulatedException = e;
-    this.msg = XMLException.buildMessage(systemID, lineNr, e, msg, reportParams);
+    this.message = XMLException.buildMessage(systemID, lineNumber, e, message, reportParams);
   }
 
   /**
    * Builds the exception message
    *
    * @param systemID     the system ID from where the data came
-   * @param lineNr       the line number in the XML data where the exception
+   * @param lineNumber       the line number in the XML data where the exception
    *                     occurred.
    * @param e            the encapsulated exception.
-   * @param msg          the message of the exception.
-   * @param reportParams true if the systemID, lineNr and e params need to be
+   * @param message          the message of the exception.
+   * @param reportParams true if the systemID, lineNumber and e params need to be
    *                     appended to the message
    */
-  private static String buildMessage(String systemID, int lineNr, Exception e, String msg, boolean reportParams) {
-    String str = msg;
+  private static String buildMessage(String systemID, int lineNumber, Exception e, String message, boolean reportParams) {
+    String str = message;
 
     if (reportParams) {
       if (systemID != null) {
         str += ", SystemID='" + systemID + "'";
       }
 
-      if (lineNr >= 0) {
-        str += ", Line=" + lineNr;
+      if (lineNumber >= 0) {
+        str += ", Line=" + lineNumber;
       }
 
       if (e != null) {
@@ -166,8 +167,8 @@ public class XMLException extends Exception {
    * Returns the line number in the XML data where the exception occurred.
    * If there is no line number known, -1 is returned.
    */
-  public int getLineNr() {
-    return this.lineNr;
+  public int getLineNumber() {
+    return this.lineNumber;
   }
 
   /**
@@ -222,7 +223,7 @@ public class XMLException extends Exception {
    * Returns a string representation of the exception.
    */
   public String toString() {
-    return this.msg;
+    return this.message;
   }
 
 }

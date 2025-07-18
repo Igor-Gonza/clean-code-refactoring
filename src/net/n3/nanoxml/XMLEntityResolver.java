@@ -28,6 +28,7 @@
 
 package net.n3.nanoxml;
 
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.io.Reader;
 import java.io.StringReader;
@@ -38,18 +39,19 @@ import java.io.StringReader;
  * @author Marc De Scheemaecker
  * @version $Name: RELEASE_2_2_1 $, $Revision: 1.4 $
  */
+@SuppressWarnings("unused")
 public class XMLEntityResolver implements IXMLEntityResolver {
 
   /**
    * The entities.
    */
-  private Hashtable entities;
+  private final Hashtable<String, String> entities;
 
   /**
    * Initializes the resolver.
    */
   public XMLEntityResolver() {
-    this.entities = new Hashtable();
+    this.entities = new Hashtable<>();
     this.entities.put("amp", "&#38;");
     this.entities.put("quot", "&#34;");
     this.entities.put("apos", "&#39;");
@@ -78,7 +80,7 @@ public class XMLEntityResolver implements IXMLEntityResolver {
    */
   public void addExternalEntity(String name, String publicID, String systemID) {
     if (!this.entities.containsKey(name)) {
-      this.entities.put(name, new String[]{publicID, systemID});
+      this.entities.put(name, Arrays.toString(new String[]{publicID, systemID}));
     }
   }
 
@@ -89,16 +91,13 @@ public class XMLEntityResolver implements IXMLEntityResolver {
    * @param name      the name of the entity.
    * @return the reader, or null if the entity could not be resolved.
    */
-  public Reader getEntity(IXMLReader xmlReader, String name) throws XMLParseException {
-    Object obj = this.entities.get(name);
+  public Reader getEntity(IXMLReader xmlReader, String name) {
+    String obj = this.entities.get(name);
 
     if (obj == null) {
       return null;
-    } else if (obj instanceof java.lang.String) {
-      return new StringReader((String) obj);
     } else {
-      String[] id = (String[]) obj;
-      return this.openExternalEntity(xmlReader, id[0], id[1]);
+      return new StringReader(obj);
     }
   }
 
@@ -108,8 +107,8 @@ public class XMLEntityResolver implements IXMLEntityResolver {
    * @param name the name of the entity.
    */
   public boolean isExternalEntity(String name) {
-    Object obj = this.entities.get(name);
-    return !(obj instanceof java.lang.String);
+    String obj = this.entities.get(name);
+    return obj == null;
   }
 
   /**

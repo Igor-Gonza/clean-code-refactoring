@@ -36,6 +36,7 @@ import java.security.AccessControlException;
  * @author Marc De Scheemaecker
  * @version $Name: RELEASE_2_2_1 $, $Revision: 1.3 $
  */
+@SuppressWarnings("unused")
 public class XMLParserFactory {
 
   /**
@@ -68,7 +69,7 @@ public class XMLParserFactory {
     try {
       className = System.getProperty(XMLParserFactory.CLASS_KEY,
               XMLParserFactory.DEFAULT_CLASS);
-    } catch (AccessControlException e) {
+    } catch (AccessControlException ignored) {
       // do nothing
     }
     // END PATCH W. Randelshofer catch AccessControlException
@@ -118,7 +119,7 @@ public class XMLParserFactory {
           throws ClassNotFoundException,
           InstantiationException,
           IllegalAccessException {
-    Class cls = Class.forName(className);
+    Class<?> cls = Class.forName(className);
     IXMLParser parser = (IXMLParser) cls.newInstance();
     parser.setBuilder(builder);
     parser.setValidator(new NonValidator());

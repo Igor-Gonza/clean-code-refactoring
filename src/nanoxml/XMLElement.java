@@ -244,7 +244,7 @@ public class XMLElement implements Serializable {
    *     <li>enumeratePropertyNames() =&gt; empty enumeration
    *     <li>getChildren() =&gt; empty vector
    *     <li>getContent() =&gt; ""
-   *     <li>getLineNr() =&gt; 0
+   *     <li>getLineNumber() =&gt; 0
    *     <li>getName() =&gt; null
    * </ul></dd></dl>
    *
@@ -276,7 +276,7 @@ public class XMLElement implements Serializable {
    *                     <li>enumeratePropertyNames() =&gt; empty enumeration
    *                     <li>getChildren() =&gt; empty vector
    *                     <li>getContent() =&gt; ""
-   *                     <li>getLineNr() =&gt; 0
+   *                     <li>getLineNumber() =&gt; 0
    *                     <li>getName() =&gt; null
    *                 </ul></dd></dl><dl>
    * @see #XMLElement()
@@ -303,7 +303,7 @@ public class XMLElement implements Serializable {
    *                                  <li>enumeratePropertyNames() =&gt; empty enumeration
    *                                  <li>getChildren() =&gt; empty vector
    *                                  <li>getContent() =&gt; ""
-   *                                  <li>getLineNr() =&gt; 0
+   *                                  <li>getLineNumber() =&gt; 0
    *                                  <li>getName() =&gt; null
    *                              </ul></dd></dl><dl>
    * @see #XMLElement()
@@ -336,7 +336,7 @@ public class XMLElement implements Serializable {
    *                                  <li>enumeratePropertyNames() =&gt; empty enumeration
    *                                  <li>getChildren() =&gt; empty vector
    *                                  <li>getContent() =&gt; ""
-   *                                  <li>getLineNr() =&gt; 0
+   *                                  <li>getLineNumber() =&gt; 0
    *                                  <li>getName() =&gt; null
    *                              </ul></dd></dl><dl>
    * @see #XMLElement()
@@ -367,7 +367,7 @@ public class XMLElement implements Serializable {
    *                                  <li>enumeratePropertyNames() =&gt; empty enumeration
    *                                  <li>getChildren() =&gt; empty vector
    *                                  <li>getContent() =&gt; ""
-   *                                  <li>getLineNr() =&gt; 0
+   *                                  <li>getLineNumber() =&gt; 0
    *                                  <li>getName() =&gt; null
    *                              </ul></dd></dl><dl>
    * @see #XMLElement()
@@ -410,7 +410,7 @@ public class XMLElement implements Serializable {
    *                                     <li>enumeratePropertyNames() =&gt; empty enumeration
    *                                     <li>getChildren() =&gt; empty vector
    *                                     <li>getContent() =&gt; ""
-   *                                     <li>getLineNr() =&gt; 0
+   *                                     <li>getLineNumber() =&gt; 0
    *                                     <li>getName() =&gt; null
    *                                 </ul></dd></dl><dl>
    * @see #createElement()

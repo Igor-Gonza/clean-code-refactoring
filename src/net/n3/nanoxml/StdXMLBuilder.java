@@ -45,7 +45,7 @@ public class StdXMLBuilder implements IXMLBuilder {
   /**
    * This stack contains the current element and its parents.
    */
-  private Stack stack;
+  private Stack<IXMLElement> stack;
 
   /**
    * The root element of the parsed XML tree.
@@ -55,7 +55,7 @@ public class StdXMLBuilder implements IXMLBuilder {
   /**
    * Prototype element for creating the tree.
    */
-  private IXMLElement prototype;
+  private final IXMLElement prototype;
 
   /**
    * Creates the builder.
@@ -82,7 +82,7 @@ public class StdXMLBuilder implements IXMLBuilder {
    * @param lineNr   the line on which the parsing starts.
    */
   public void startBuilding(String systemID, int lineNr) {
-    this.stack = new Stack();
+    this.stack = new Stack<>();
     this.root = null;
   }
 
@@ -122,7 +122,7 @@ public class StdXMLBuilder implements IXMLBuilder {
     if (this.stack.empty()) {
       this.root = elt;
     } else {
-      IXMLElement top = (IXMLElement) this.stack.peek();
+      IXMLElement top = this.stack.peek();
       top.addChild(elt);
     }
 
@@ -158,7 +158,7 @@ public class StdXMLBuilder implements IXMLBuilder {
    * @see #startElement
    */
   public void endElement(String name, String nsPrefix, String nsURI) {
-    IXMLElement elt = (IXMLElement) this.stack.pop();
+    IXMLElement elt = this.stack.pop();
 
     if (elt.getChildrenCount() == 1) {
       IXMLElement child = elt.getChildAtIndex(0);
@@ -192,7 +192,7 @@ public class StdXMLBuilder implements IXMLBuilder {
       fullName = nsPrefix + ':' + key;
     }
 
-    IXMLElement top = (IXMLElement) this.stack.peek();
+    IXMLElement top = this.stack.peek();
 
     if (top.hasAttribute(fullName)) {
       throw new XMLParseException(top.getSystemID(), top.getLineNr(), "Duplicate attribute: " + key);
@@ -249,7 +249,7 @@ public class StdXMLBuilder implements IXMLBuilder {
     elt.setContent(str.toString());
 
     if (!this.stack.empty()) {
-      IXMLElement top = (IXMLElement) this.stack.peek();
+      IXMLElement top = this.stack.peek();
       top.addChild(elt);
     }
   }

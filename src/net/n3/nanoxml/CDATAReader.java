@@ -43,7 +43,7 @@ class CDATAReader extends Reader {
   /**
    * The encapsulated reader.
    */
-  private IXMLReader reader;
+  private final IXMLReader reader;
 
   /**
    * Saved char.

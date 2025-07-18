@@ -104,8 +104,8 @@ class XMLUtil {
    * @return the system ID
    * @throws java.io.IOException if an error occurred reading the data
    */
-  static String scanPublicID(StringBuffer publicID, IXMLReader reader) throws IOException, XMLParseException {
-    if (!XMLUtil.checkLiteral(reader, "UBLIC")) {
+  static String scanPublicID(StringBuilder publicID, IXMLReader reader) throws IOException, XMLParseException {
+    if (XMLUtil.checkNonLiteral(reader, "UBLIC")) {
       return null;
     }
 
@@ -123,7 +123,7 @@ class XMLUtil {
    * @throws java.io.IOException if an error occurred reading the data
    */
   static String scanSystemID(IXMLReader reader) throws IOException, XMLParseException {
-    if (!XMLUtil.checkLiteral(reader, "YSTEM")) {
+    if (XMLUtil.checkNonLiteral(reader, "YSTEM")) {
       return null;
     }
 
@@ -323,14 +323,14 @@ class XMLUtil {
    * @param literal the literal to check
    * @throws java.io.IOException if an error occurred reading the data
    */
-  static boolean checkLiteral(IXMLReader reader, String literal) throws IOException {
+  static boolean checkNonLiteral(IXMLReader reader, String literal) throws IOException {
     for (int i = 0; i < literal.length(); i++) {
       if (reader.read() != literal.charAt(i)) {
-        return false;
+        return true;
       }
     }
 
-    return true;
+    return false;
   }
 
   /**

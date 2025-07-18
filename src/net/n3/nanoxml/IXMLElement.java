@@ -159,7 +159,7 @@ public interface IXMLElement {
    *
    * @return the non-null enumeration
    */
-  Iterator iterateChildren();
+  Iterator<IXMLElement> iterateChildren();
 
   /**
    * Returns whether the element is a leaf element.
@@ -187,7 +187,7 @@ public interface IXMLElement {
    *
    * @return the vector.
    */
-  ArrayList getChildren();
+  ArrayList<IXMLElement> getChildren();
 
   /**
    * Returns the child at a specific index.
@@ -221,7 +221,7 @@ public interface IXMLElement {
    * @param name the full name of the children to search for.
    * @return the non-null vector of child elements.
    */
-  ArrayList getChildrenNamed(String name);
+  ArrayList<IXMLElement> getChildrenNamed(String name);
 
   /**
    * Returns a vector of all child elements named <I>name</I>.
@@ -230,7 +230,7 @@ public interface IXMLElement {
    * @param namespace the namespace, which may be null.
    * @return the non-null vector of child elements.
    */
-  ArrayList getChildrenNamed(String name, String namespace);
+  ArrayList<IXMLElement> getChildrenNamed(String name, String namespace);
 
   /**
    * Returns the number of attributes.
@@ -346,7 +346,7 @@ public interface IXMLElement {
    *
    * @return the non-null enumeration.
    */
-  Iterator iterateAttributeNames();
+  Iterator<String> iterateAttributeNames();
 
   /**
    * Returns whether an attribute exists.

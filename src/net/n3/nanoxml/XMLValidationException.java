@@ -35,6 +35,7 @@ package net.n3.nanoxml;
  * @author Marc De Scheemaecker
  * @version $Name: RELEASE_2_2_1 $, $Revision: 1.3 $
  */
+@SuppressWarnings("unused")
 public class XMLValidationException extends XMLException {
 
   /**
@@ -85,17 +86,17 @@ public class XMLValidationException extends XMLException {
   /**
    * The name of the element where the exception occurred.
    */
-  private String elementName;
+  private final String elementName;
 
   /**
    * The name of the attribute where the exception occurred.
    */
-  private String attributeName;
+  private final String attributeName;
 
   /**
    * The value of the attribute where the exception occurred.
    */
-  private String attributeValue;
+  private final String attributeValue;
 
   /**
    * Creates a new exception.

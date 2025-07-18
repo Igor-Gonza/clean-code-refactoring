@@ -28,20 +28,13 @@
 
 package net.n3.nanoxml;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.LineNumberReader;
-import java.io.PushbackReader;
-import java.io.PushbackInputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.Stack;
 
 /**
@@ -74,7 +67,7 @@ public class StdXMLReader implements IXMLReader {
   /**
    * The stack of readers.
    */
-  private Stack readers;
+  private final Stack<StackedReader> readers;
 
   /**
    * The current push-back reader.
@@ -94,15 +87,14 @@ public class StdXMLReader implements IXMLReader {
    * Creates a new reader using a file as input.
    *
    * @param filename the name of the file containing the XML data
-   * @throws java.io.FileNotFoundException if the file could not be found
    * @throws java.io.IOException           if an I/O error occurred
    */
-  public static IXMLReader fileReader(String filename) throws FileNotFoundException, IOException {
-    StdXMLReader r = new StdXMLReader(new FileInputStream(filename));
+  public static IXMLReader fileReader(String filename) throws IOException {
+    StdXMLReader r = new StdXMLReader(Files.newInputStream(Paths.get(filename)));
     r.setSystemID(filename);
 
     for (int i = 0; i < r.readers.size(); i++) {
-      StackedReader sr = (StackedReader) r.readers.elementAt(i);
+      StackedReader sr = r.readers.elementAt(i);
       sr.systemId = r.currentReader.systemId;
     }
 
@@ -134,7 +126,7 @@ public class StdXMLReader implements IXMLReader {
     }
 
     this.currentReader = new StackedReader();
-    this.readers = new Stack();
+    this.readers = new Stack<>();
     Reader reader = this.openStream(publicID, systemIDasURL.toString());
     this.currentReader.lineReader = new LineNumberReader(reader);
     this.currentReader.pbReader = new PushbackReader(this.currentReader.lineReader, 2);
@@ -147,7 +139,7 @@ public class StdXMLReader implements IXMLReader {
    */
   public StdXMLReader(Reader reader) {
     this.currentReader = new StackedReader();
-    this.readers = new Stack();
+    this.readers = new Stack<>();
     this.currentReader.lineReader = new LineNumberReader(reader);
     this.currentReader.pbReader = new PushbackReader(this.currentReader.lineReader, 2);
     this.currentReader.publicId = "";
@@ -238,7 +230,7 @@ public class StdXMLReader implements IXMLReader {
 
       case 0xEF:
         for (int i = 0; i < 2; i++) {
-          pbStream.read();
+          int ignored = pbStream.read();
         }
 
         return new InputStreamReader(pbStream, StandardCharsets.UTF_8);
@@ -287,7 +279,7 @@ public class StdXMLReader implements IXMLReader {
     StringBuffer charsRead = new StringBuffer();
     Reader reader = this.stream2reader(stream, charsRead);
     this.currentReader = new StackedReader();
-    this.readers = new Stack();
+    this.readers = new Stack<>();
     this.currentReader.lineReader = new LineNumberReader(reader);
     this.currentReader.pbReader = new PushbackReader(this.currentReader.lineReader, 2);
     this.currentReader.publicId = "";
@@ -316,7 +308,7 @@ public class StdXMLReader implements IXMLReader {
       }
 
       this.currentReader.pbReader.close();
-      this.currentReader = (StackedReader) this.readers.pop();
+      this.currentReader = this.readers.pop();
       ch = this.currentReader.pbReader.read();
     }
 
@@ -354,7 +346,7 @@ public class StdXMLReader implements IXMLReader {
       }
 
       this.currentReader.pbReader.close();
-      this.currentReader = (StackedReader) this.readers.pop();
+      this.currentReader = this.readers.pop();
       ch = this.currentReader.pbReader.read();
     }
 
@@ -398,14 +390,17 @@ public class StdXMLReader implements IXMLReader {
     this.currentReader.publicId = publicID;
     this.currentReader.systemId = url;
     StringBuffer charsRead = new StringBuffer();
-    Reader reader = this.stream2reader(url.openStream(), charsRead);
+    Reader reader = null;
+    if (url != null) {
+      reader = this.stream2reader(url.openStream(), charsRead);
+    }
 
     if (charsRead.length() == 0) {
       return reader;
     }
 
     String charsReadStr = charsRead.toString();
-    PushbackReader pbReader = new PushbackReader(reader, charsReadStr.length());
+    PushbackReader pbReader = new PushbackReader(Objects.requireNonNull(reader), charsReadStr.length());
 
     for (int i = charsReadStr.length() - 1; i >= 0; i--) {
       pbReader.unread(charsReadStr.charAt(i));
@@ -463,7 +458,7 @@ public class StdXMLReader implements IXMLReader {
    */
   public int getLineNr() {
     if (this.currentReader.lineReader == null) {
-      StackedReader sr = (StackedReader) this.readers.peek();
+      StackedReader sr = this.readers.peek();
 
       if (sr.lineReader == null) {
         return 0;

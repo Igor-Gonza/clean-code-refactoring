@@ -43,6 +43,7 @@ import java.util.Stack;
  * @author Marc De Scheemaecker
  * @version $Name: RELEASE_2_2_1 $, $Revision: 1.4 $
  */
+@SuppressWarnings("unused")
 public class NonValidator implements IXMLValidator {
 
   /**
@@ -54,19 +55,19 @@ public class NonValidator implements IXMLValidator {
    * Contains the default values for attributes for the different element
    * types.
    */
-  protected Hashtable attributeDefaultValues;
+  protected Hashtable<String, Properties> attributeDefaultValues;
 
   /**
    * The stack of elements to be processed.
    */
-  protected Stack currentElements;
+  protected Stack<Properties> currentElements;
 
   /**
    * Creates the &quot;validator&quot;.
    */
   public NonValidator() {
-    this.attributeDefaultValues = new Hashtable();
-    this.currentElements = new Stack();
+    this.attributeDefaultValues = new Hashtable<>();
+    this.currentElements = new Stack<>();
     this.parameterEntityResolver = new XMLEntityResolver();
   }
 
@@ -205,7 +206,7 @@ public class NonValidator implements IXMLValidator {
         return;
     }
 
-    if (!XMLUtil.checkLiteral(reader, "CLUDE")) {
+    if (XMLUtil.checkNonLiteral(reader, "CLUDE")) {
       XMLUtil.skipTag(reader);
       return;
     }
@@ -245,7 +246,7 @@ public class NonValidator implements IXMLValidator {
    * @throws java.lang.Exception If something went wrong.
    */
   protected void processIgnoreSection(IXMLReader reader, IXMLEntityResolver entityResolver) throws Exception {
-    if (!XMLUtil.checkLiteral(reader, "NORE")) {
+    if (XMLUtil.checkNonLiteral(reader, "NORE")) {
       XMLUtil.skipTag(reader);
       return;
     }
@@ -272,7 +273,7 @@ public class NonValidator implements IXMLValidator {
    * @throws java.lang.Exception If something went wrong.
    */
   protected void processAttList(IXMLReader reader, IXMLEntityResolver entityResolver) throws Exception {
-    if (!XMLUtil.checkLiteral(reader, "TTLIST")) {
+    if (XMLUtil.checkNonLiteral(reader, "TTLIST")) {
       XMLUtil.skipTag(reader);
       return;
     }
@@ -382,7 +383,7 @@ public class NonValidator implements IXMLValidator {
    * @throws java.lang.Exception If something went wrong.
    */
   protected void processEntity(IXMLReader reader, IXMLEntityResolver entityResolver) throws Exception {
-    if (!XMLUtil.checkLiteral(reader, "NTITY")) {
+    if (XMLUtil.checkNonLiteral(reader, "NTITY")) {
       XMLUtil.skipTag(reader);
       return;
     }
@@ -405,7 +406,7 @@ public class NonValidator implements IXMLValidator {
 
     switch (ch) {
       case 'P':
-        if (!XMLUtil.checkLiteral(reader, "UBLIC")) {
+        if (XMLUtil.checkNonLiteral(reader, "UBLIC")) {
           XMLUtil.skipTag(reader);
           return;
         }
@@ -419,7 +420,7 @@ public class NonValidator implements IXMLValidator {
         break;
 
       case 'S':
-        if (!XMLUtil.checkLiteral(reader, "YSTEM")) {
+        if (XMLUtil.checkNonLiteral(reader, "YSTEM")) {
           XMLUtil.skipTag(reader);
           return;
         }
@@ -456,7 +457,7 @@ public class NonValidator implements IXMLValidator {
    * @param lineNr   the line number in the XML data of the element.
    */
   public void elementStarted(String name, String systemId, int lineNr) {
-    Properties attributes = (Properties) this.attributeDefaultValues.get(name);
+    Properties attributes = this.attributeDefaultValues.get(name);
 
     if (attributes == null) {
       attributes = new Properties();
@@ -490,8 +491,8 @@ public class NonValidator implements IXMLValidator {
    * @param lineNr          the line number in the XML data of the element.
    */
   public void elementAttributesProcessed(String name, Properties extraAttributes, String systemId, int lineNr) {
-    Properties props = (Properties) this.currentElements.pop();
-    Enumeration enm = props.keys();
+    Properties props = this.currentElements.pop();
+    Enumeration<Object> enm = props.keys();
 
     while (enm.hasMoreElements()) {
       String key = (String) enm.nextElement();
@@ -508,11 +509,8 @@ public class NonValidator implements IXMLValidator {
    * @param lineNr   the line number in the XML data of the element.
    */
   public void attributeAdded(String key, String value, String systemId, int lineNr) {
-    Properties props = (Properties) this.currentElements.peek();
-
-    if (props.containsKey(key)) {
-      props.remove(key);
-    }
+    Properties props = this.currentElements.peek();
+    props.remove(key);
   }
 
   /**
