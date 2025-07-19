@@ -31,9 +31,10 @@ import java.util.Objects;
  * @version 2.0 2006-05-05 Reworked.
  * <br>1.0  2005-06-10 Created.
  */
+@SuppressWarnings("unused")
 public class FocusAction extends AbstractAction {
   public final static String ID = "focus";
-  private Project project;
+  private final Project project;
 
   /**
    * Creates a new instance.
@@ -45,7 +46,7 @@ public class FocusAction extends AbstractAction {
     //setEnabled(false);
     setEnabled(project != null);
 
-    project.addPropertyChangeListener(evt -> {
+    Objects.requireNonNull(project).addPropertyChangeListener(evt -> {
       ResourceBundleUtil labels1 = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
       String name = evt.getPropertyName();
       if (name.equals("file")) {

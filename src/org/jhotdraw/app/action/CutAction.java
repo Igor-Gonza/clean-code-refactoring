@@ -43,7 +43,7 @@ public class CutAction extends DefaultEditorKit.CutAction {
   @Override
   public void actionPerformed(ActionEvent evt) {
     Component focusOwner = KeyboardFocusManager.getCurrentKeyboardFocusManager().getPermanentFocusOwner();
-    if (focusOwner != null && focusOwner instanceof EditableComponent) {
+    if (focusOwner instanceof EditableComponent) {
       ((EditableComponent) focusOwner).cut();
     } else {
       super.actionPerformed(evt);

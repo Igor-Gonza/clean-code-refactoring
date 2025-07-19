@@ -15,8 +15,6 @@
 package org.jhotdraw.app;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.util.Collections;
@@ -32,13 +30,14 @@ import java.util.Set;
  * @version 1.1 2006-06-11 Palettes can now be any subclass of java.awt.Window.
  * <br>1.0 October 9, 2005, Created.
  */
+@SuppressWarnings("unused")
 public class OSXPaletteHandler {
-  private HashSet<Window> palettes = new HashSet<>();
-  private HashMap<Window, Project> windows = new HashMap<>();
+  private final HashSet<Window> palettes = new HashSet<>();
+  private final HashMap<Window, Project> windows = new HashMap<>();
   private static OSXPaletteHandler instance;
-  private javax.swing.Timer timer;
-  private DefaultOSXApplication app;
-  private WindowFocusListener focusHandler = new WindowFocusListener() {
+  private final javax.swing.Timer timer;
+  private final DefaultOSXApplication app;
+  private final WindowFocusListener focusHandler = new WindowFocusListener() {
     /**
      * Invoked when the Window is set to be the focused Window, which means
      * that the Window, or one of its subcomponents, will receive keyboard
@@ -106,8 +105,8 @@ public class OSXPaletteHandler {
   private boolean isFocused(Window w) {
     if (w.isFocused()) return true;
     Window[] ownedWindows = w.getOwnedWindows();
-    for (int i = 0; i < ownedWindows.length; i++) {
-      if (isFocused(ownedWindows[i])) {
+    for (Window ownedWindow : ownedWindows) {
+      if (isFocused(ownedWindow)) {
         return true;
       }
     }

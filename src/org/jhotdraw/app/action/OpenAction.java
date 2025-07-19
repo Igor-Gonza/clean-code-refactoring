@@ -35,6 +35,7 @@ import java.io.File;
  * <br>1.0.1 2005-07-14 Make project explicitly visible after creating it.
  * <br>1.0  04 January 2005  Created.
  */
+@SuppressWarnings("CallToPrintStackTrace")
 public class OpenAction extends AbstractApplicationAction {
   public final static String ID = "open";
 

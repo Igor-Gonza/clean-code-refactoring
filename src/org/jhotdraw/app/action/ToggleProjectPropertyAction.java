@@ -29,14 +29,14 @@ import java.util.Objects;
  * @version 1.0 June 18, 2006, Created.
  */
 public class ToggleProjectPropertyAction extends AbstractProjectAction {
-  private String propertyName;
-  private Class[] parameterClass;
-  private Object selectedPropertyValue;
-  private Object deselectedPropertyValue;
-  private String setterName;
-  private String getterName;
+  private final String propertyName;
+  private final Class<?>[] parameterClass;
+  private final Object selectedPropertyValue;
+  private final Object deselectedPropertyValue;
+  private final String setterName;
+  private final String getterName;
 
-  private PropertyChangeListener projectListener = new PropertyChangeListener() {
+  private final PropertyChangeListener projectListener = new PropertyChangeListener() {
     public void propertyChange(PropertyChangeEvent evt) {
       if (Objects.equals(evt.getPropertyName(), propertyName)) { // Strings get interned
         updateSelectedState();
@@ -51,7 +51,7 @@ public class ToggleProjectPropertyAction extends AbstractProjectAction {
     this(app, propertyName, Boolean.TYPE, true, false);
   }
 
-  public ToggleProjectPropertyAction(Application app, String propertyName, Class propertyClass, Object selectedPropertyValue, Object deselectedPropertyValue) {
+  public ToggleProjectPropertyAction(Application app, String propertyName, Class<?> propertyClass, Object selectedPropertyValue, Object deselectedPropertyValue) {
     super(app);
     this.propertyName = propertyName;
     this.parameterClass = new Class[]{propertyClass};
@@ -65,7 +65,7 @@ public class ToggleProjectPropertyAction extends AbstractProjectAction {
   public void actionPerformed(ActionEvent evt) {
     Project p = getCurrentProject();
     Object value = getCurrentValue();
-    Object newValue = (value == selectedPropertyValue || value != null && selectedPropertyValue != null && value.equals(selectedPropertyValue)) ? deselectedPropertyValue : selectedPropertyValue;
+    Object newValue = (Objects.equals(value, selectedPropertyValue)) ? deselectedPropertyValue : selectedPropertyValue;
     try {
       p.getClass().getMethod(setterName, parameterClass).invoke(p, newValue);
     } catch (Throwable e) {
@@ -77,7 +77,7 @@ public class ToggleProjectPropertyAction extends AbstractProjectAction {
     Project p = getCurrentProject();
     if (p != null) {
       try {
-        return p.getClass().getMethod(getterName, (Class[]) null).invoke(p);
+        return p.getClass().getMethod(getterName, (Class<?>[]) null).invoke(p);
       } catch (Throwable e) {
         throw new InternalError("No " + getterName + " method on " + p, e);
       }
@@ -105,8 +105,8 @@ public class ToggleProjectPropertyAction extends AbstractProjectAction {
     Project p = getCurrentProject();
     if (p != null) {
       try {
-        Object value = p.getClass().getMethod(getterName, (Class[]) null).invoke(p);
-        isSelected = value == selectedPropertyValue || value != null && selectedPropertyValue != null && value.equals(selectedPropertyValue);
+        Object value = p.getClass().getMethod(getterName, (Class<?>[]) null).invoke(p);
+        isSelected = Objects.equals(value, selectedPropertyValue);
       } catch (Throwable e) {
         throw new InternalError("No " + getterName + " method on " + p, e);
       }

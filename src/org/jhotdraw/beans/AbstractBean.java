@@ -28,7 +28,7 @@ import java.io.Serializable;
  * <br>1.1 2004-01-18
  * <br>1.0 2001-08-04
  */
-public class AbstractBean extends Object implements Serializable, Cloneable {
+public class AbstractBean implements Serializable, Cloneable {
   protected PropertyChangeSupport propertySupport = new PropertyChangeSupport(this);
 
   public void addPropertyChangeListener(PropertyChangeListener listener) {

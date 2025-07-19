@@ -35,7 +35,7 @@ public abstract class AbstractProject extends JPanel implements Project {
   protected JFileChooser openChooser;
   protected File file;
   protected Executor executor;
-  private HashMap actions;
+  private HashMap<String, Action> actions;
   private boolean hasUnsavedChanges;
   private Preferences prefs;
   private int multipleOpenId = 1;
@@ -157,7 +157,7 @@ public abstract class AbstractProject extends JPanel implements Project {
    * Returns the action with the specified id.
    */
   public Action getAction(String id) {
-    return (actions == null) ? null : (Action) actions.get(id);
+    return (actions == null) ? null : actions.get(id);
   }
 
   /**
@@ -165,7 +165,7 @@ public abstract class AbstractProject extends JPanel implements Project {
    */
   public void putAction(String id, Action action) {
     if (actions == null) {
-      actions = new HashMap();
+      actions = new HashMap<>();
     }
     if (action == null) {
       actions.remove(id);

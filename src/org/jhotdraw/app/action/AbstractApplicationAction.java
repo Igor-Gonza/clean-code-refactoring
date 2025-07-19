@@ -29,8 +29,9 @@ import java.util.Objects;
  * @version 1.0 June 15, 2006, Created.
  * @see org.jhotdraw.app.Application
  */
+@SuppressWarnings("unused")
 public abstract class AbstractApplicationAction extends AbstractAction {
-  private Application app;
+  private final Application app;
 
   private PropertyChangeListener applicationListener;
 

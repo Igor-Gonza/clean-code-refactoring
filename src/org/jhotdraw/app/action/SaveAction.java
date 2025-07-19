@@ -14,16 +14,18 @@
 
 package org.jhotdraw.app.action;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.io.*;
+import org.jhotdraw.app.Application;
+import org.jhotdraw.app.Project;
+import org.jhotdraw.gui.JSheet;
+import org.jhotdraw.io.ExtensionFileFilter;
+import org.jhotdraw.util.ResourceBundleUtil;
+import org.jhotdraw.util.Worker;
 
-import org.jhotdraw.app.*;
-import org.jhotdraw.io.*;
-import org.jhotdraw.util.*;
-import org.jhotdraw.gui.*;
-import org.jhotdraw.gui.event.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * SaveAction.
@@ -34,9 +36,10 @@ import org.jhotdraw.gui.event.*;
  * <br>1.1 2006-02-23 Support multiple open id.
  * <br>1.0 28. September 2005 Created.
  */
+@SuppressWarnings("unused")
 public class SaveAction extends AbstractProjectAction {
   public final static String ID = "save";
-  private boolean saveAs;
+  private final boolean saveAs;
   private Component oldFocusOwner;
 
   /**

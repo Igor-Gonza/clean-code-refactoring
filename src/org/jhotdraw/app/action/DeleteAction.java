@@ -46,7 +46,7 @@ public class DeleteAction extends TextAction {
 
   public void actionPerformed(ActionEvent evt) {
     Component focusOwner = KeyboardFocusManager.getCurrentKeyboardFocusManager().getPermanentFocusOwner();
-    if (focusOwner != null && focusOwner instanceof EditableComponent) {
+    if (focusOwner instanceof EditableComponent) {
       ((EditableComponent) focusOwner).delete();
     } else {
       deleteNextChar(evt);
@@ -73,7 +73,7 @@ public class DeleteAction extends TextAction {
           doc.remove(dot, 1);
           beep = false;
         }
-      } catch (BadLocationException bl) {
+      } catch (BadLocationException ignored) {
       }
     }
     if (beep) {

@@ -22,6 +22,7 @@ import java.beans.*;
  * @author Werner Randelshofer
  * @version 1.0 7. February 2006 Created.
  */
+
 public interface Arrangeable {
   enum Arrangement {VERTICAL, HORIZONTAL, CASCADE}
 

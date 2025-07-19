@@ -27,7 +27,7 @@ import java.util.Objects;
  */
 public class ToggleToolBarAction extends AbstractAction {
   private JToolBar toolBar;
-  private PropertyChangeListener propertyHandler;
+  private final PropertyChangeListener propertyHandler;
 
   /**
    * Creates a new instance.

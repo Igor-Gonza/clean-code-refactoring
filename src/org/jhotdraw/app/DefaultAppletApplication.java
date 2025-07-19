@@ -26,7 +26,7 @@ import javax.swing.*;
  * @version 1.0 2006-06-10 Created.
  */
 public class DefaultAppletApplication extends AbstractApplication {
-  private JApplet applet;
+  private final JApplet applet;
   private Project project;
 
   /**

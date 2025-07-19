@@ -31,8 +31,8 @@ public class ArrangeAction extends AbstractAction {
   public final static String VERTICAL_ID = "arrangeVertical";
   public final static String HORIZONTAL_ID = "arrangeHorizontal";
   public final static String CASCADE_ID = "arrangeCascade";
-  private Arrangeable arrangeable;
-  private Arrangeable.Arrangement arrangement;
+  private final Arrangeable arrangeable;
+  private final Arrangeable.Arrangement arrangement;
 
   /**
    * Creates a new instance.

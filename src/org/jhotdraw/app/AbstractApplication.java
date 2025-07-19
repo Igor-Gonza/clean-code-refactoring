@@ -20,6 +20,7 @@ import org.jhotdraw.util.ResourceBundleUtil;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -32,14 +33,15 @@ import java.util.prefs.Preferences;
  * @version 1.1 2006-05-01 System.exit(0) explicitly in method stop().
  * <br>1.0 October 4, 2005, Created.
  */
+@SuppressWarnings("unused")
 public abstract class AbstractApplication extends AbstractBean implements Application {
-  private LinkedList projects = new LinkedList<>();
-  private Collection unmodifiableDocuments;
+  private final LinkedList<Project> projects = new LinkedList<>();
+  private Collection<Project> unmodifiableDocuments;
   private boolean isEnabled = true;
   protected ResourceBundleUtil labels;
   private ApplicationModel model;
-  private LinkedList<File> recentFiles = new LinkedList<>();
-  private final static int maxRecentFilesCount = 10;
+  private final LinkedList<File> recentFiles = new LinkedList<>();
+  private final static int MAX_RECENT_FILES_COUNT = 10;
   private Preferences prefs;
 
   /**
@@ -110,7 +112,7 @@ public abstract class AbstractApplication extends AbstractBean implements Applic
 
 
   public void stop() {
-    for (Project p : new LinkedList<Project>(projects())) {
+    for (Project p : new LinkedList<>(projects())) {
       dispose(p);
     }
     System.exit(0);
@@ -161,11 +163,9 @@ public abstract class AbstractApplication extends AbstractBean implements Applic
 
   public void launch(String[] args) {
     configure(args);
-    SwingUtilities.invokeLater(new Runnable() {
-      public void run() {
-        init();
-        start();
-      }
+    SwingUtilities.invokeLater(() -> {
+      init();
+      start();
     });
   }
 
@@ -181,19 +181,17 @@ public abstract class AbstractApplication extends AbstractBean implements Applic
   }
 
   public void clearRecentFiles() {
-    java.util.List<File> oldValue = (java.util.List<File>) recentFiles.clone();
+    java.util.List<File> oldValue = new ArrayList<>(recentFiles);
     recentFiles.clear();
-    prefs.putInt("recentFileCount", recentFiles.size());
+    prefs.putInt("recentFileCount", 0);
     firePropertyChange("recentFiles", Collections.unmodifiableList(oldValue), Collections.unmodifiableList(recentFiles));
   }
 
   public void addRecentFile(File file) {
-    java.util.List<File> oldValue = (java.util.List<File>) recentFiles.clone();
-    if (recentFiles.contains(file)) {
-      recentFiles.remove(file);
-    }
+    java.util.List<File> oldValue = new ArrayList<>(recentFiles);
+    recentFiles.remove(file);
     recentFiles.addFirst(file);
-    if (recentFiles.size() > maxRecentFilesCount) {
+    if (recentFiles.size() > MAX_RECENT_FILES_COUNT) {
       recentFiles.removeLast();
     }
 

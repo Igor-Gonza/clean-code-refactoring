@@ -17,8 +17,6 @@ package org.jhotdraw.app.action;
 import org.jhotdraw.app.Application;
 import org.jhotdraw.app.Project;
 import org.jhotdraw.gui.JSheet;
-import org.jhotdraw.gui.event.SheetEvent;
-import org.jhotdraw.gui.event.SheetListener;
 import org.jhotdraw.util.Worker;
 
 import javax.swing.*;
@@ -30,11 +28,12 @@ import java.io.File;
  * OpenRecentAction.
  *
  * @author Werner Randelshofer.
- * @version 1.0 June 15, 2006 Created.
+ * @version 1.0 June 15, 2006, Created.
  */
+@SuppressWarnings({"unused", "CallToPrintStackTrace"})
 public class OpenRecentAction extends AbstractApplicationAction {
   public final static String ID = "openRecent";
-  private File file;
+  private final File file;
 
   /**
    * Creates a new instance.

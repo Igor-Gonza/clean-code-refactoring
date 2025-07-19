@@ -28,7 +28,7 @@ import java.awt.event.ComponentEvent;
  * @version 1.0 June 17, 2006, Created.
  */
 public class ToggleVisibleAction extends AbstractAction {
-  private Component component;
+  private final Component component;
 
   /**
    * Creates a new instance.

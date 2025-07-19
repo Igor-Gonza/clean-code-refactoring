@@ -40,6 +40,7 @@ import java.io.File;
  * @author Werner Randelshofer
  * @version 1.0 2006-04-07 Created.
  */
+@SuppressWarnings("CallToPrintStackTrace")
 public class ExportAction extends AbstractProjectAction {
   public final static String ID = "export";
   private Component oldFocusOwner;
@@ -108,6 +109,7 @@ public class ExportAction extends AbstractProjectAction {
 
   protected void fileExported(Project project, File file, Object value) {
     if (value == null) {
+      // Evil commented code
             /*
             project.setFile(file);
             project.markChangesAsSaved();

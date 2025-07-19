@@ -27,13 +27,14 @@ import java.util.List;
  * @author Werner Randelshofer.
  * @version 1.0 June 10, 2006, Created.
  */
+@SuppressWarnings("unused")
 public class DefaultApplicationModel extends AbstractBean implements ApplicationModel {
 
   private HashMap<String, Action> actions;
   private String name;
   private String version;
   private String copyright;
-  private Class projectClass;
+  private Class<?> projectClass;
   private String projectClassName;
 
 
@@ -85,13 +86,13 @@ public class DefaultApplicationModel extends AbstractBean implements Application
   /**
    * Use this method only, if setProjectClassName() does not suit you.
    */
-  public void setProjectClass(Class newValue) {
-    Class oldValue = projectClass;
+  public void setProjectClass(Class<?> newValue) {
+    Class<?> oldValue = projectClass;
     projectClass = newValue;
     firePropertyChange("projectClass", oldValue, newValue);
   }
 
-  public Class getProjectClass() {
+  public Class<?> getProjectClass() {
     if (projectClass == null) {
       if (projectClassName != null) {
         try {

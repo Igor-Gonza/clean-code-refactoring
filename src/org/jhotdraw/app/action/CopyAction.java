@@ -43,7 +43,7 @@ public class CopyAction extends DefaultEditorKit.CopyAction {
   @Override
   public void actionPerformed(ActionEvent evt) {
     Component focusOwner = KeyboardFocusManager.getCurrentKeyboardFocusManager().getPermanentFocusOwner();
-    if (focusOwner != null && focusOwner instanceof EditableComponent) {
+    if (focusOwner instanceof EditableComponent) {
       ((EditableComponent) focusOwner).copy();
     } else {
       super.actionPerformed(evt);

@@ -29,13 +29,13 @@ import java.util.Objects;
  * @version 1.0 June 18, 2006, Created.
  */
 public class ProjectPropertyAction extends AbstractProjectAction {
-  private String propertyName;
-  private Class[] parameterClass;
-  private Object propertyValue;
-  private String setterName;
-  private String getterName;
+  private final String propertyName;
+  private final Class<?>[] parameterClass;
+  private final Object propertyValue;
+  private final String setterName;
+  private final String getterName;
 
-  private PropertyChangeListener projectListener = new PropertyChangeListener() {
+  private final PropertyChangeListener projectListener = new PropertyChangeListener() {
     public void propertyChange(PropertyChangeEvent evt) {
       if (Objects.equals(evt.getPropertyName(), propertyName)) { // Strings get interned
         updateSelectedState();
@@ -50,10 +50,10 @@ public class ProjectPropertyAction extends AbstractProjectAction {
     this(app, propertyName, propertyValue.getClass(), propertyValue);
   }
 
-  public ProjectPropertyAction(Application app, String propertyName, Class propertyClass, Object propertyValue) {
+  public ProjectPropertyAction(Application app, String propertyName, Class<?> propertyClass, Object propertyValue) {
     super(app);
     this.propertyName = propertyName;
-    this.parameterClass = new Class[]{propertyClass};
+    this.parameterClass = new Class<?>[]{propertyClass};
     this.propertyValue = propertyValue;
     setterName = "set" + Character.toUpperCase(propertyName.charAt(0)) + propertyName.substring(1);
     getterName = ((propertyClass == Boolean.TYPE || propertyClass == Boolean.class) ? "is" : "get") + Character.toUpperCase(propertyName.charAt(0)) + propertyName.substring(1);
@@ -88,8 +88,8 @@ public class ProjectPropertyAction extends AbstractProjectAction {
     Project p = getCurrentProject();
     if (p != null) {
       try {
-        Object value = p.getClass().getMethod(getterName, (Class[]) null).invoke(p);
-        isSelected = value == propertyValue || value != null && propertyValue != null && value.equals(propertyValue);
+        Object value = p.getClass().getMethod(getterName, (Class<?>[]) null).invoke(p);
+        isSelected = Objects.equals(value, propertyValue);
       } catch (Throwable e) {
         throw new InternalError("Method invocation failed", e);
       }

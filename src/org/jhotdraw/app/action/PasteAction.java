@@ -42,7 +42,7 @@ public class PasteAction extends DefaultEditorKit.PasteAction {
 
   public void actionPerformed(ActionEvent evt) {
     Component focusOwner = KeyboardFocusManager.getCurrentKeyboardFocusManager().getPermanentFocusOwner();
-    if (focusOwner != null && focusOwner instanceof EditableComponent) {
+    if (focusOwner instanceof EditableComponent) {
       ((EditableComponent) focusOwner).paste();
     } else {
       super.actionPerformed(evt);

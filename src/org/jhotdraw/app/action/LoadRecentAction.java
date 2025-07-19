@@ -29,9 +29,10 @@ import java.io.File;
  * @author Werner Randelshofer.
  * @version 1.0 June 15, 2006, Created.
  */
+@SuppressWarnings({"unused", "CallToPrintStackTrace"})
 public class LoadRecentAction extends SaveBeforeAction {
   public final static String ID = "loadRecent";
-  private File file;
+  private final File file;
 
   /**
    * Creates a new instance.

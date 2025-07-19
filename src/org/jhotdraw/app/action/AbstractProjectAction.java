@@ -33,14 +33,15 @@ import java.util.Objects;
  * @see org.jhotdraw.app.Application
  */
 public abstract class AbstractProjectAction extends AbstractAction {
-  private Application app;
+  private final Application app;
 
-  private PropertyChangeListener applicationListener = evt -> {
+  @SuppressWarnings("FieldCanBeLocal")
+  private final PropertyChangeListener applicationListener = evt -> {
     if (Objects.equals(evt.getPropertyName(), "currentProject")) { // Strings get interned
       updateProject((Project) evt.getOldValue(), (Project) evt.getNewValue());
     }
   };
-  private PropertyChangeListener projectListener = evt -> {
+  private final PropertyChangeListener projectListener = evt -> {
     if (Objects.equals(evt.getPropertyName(), "enabled")) { // Strings get interned
       updateEnabled((Boolean) evt.getOldValue(), (Boolean) evt.getNewValue());
     }

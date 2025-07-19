@@ -32,8 +32,8 @@ import java.util.Objects;
  */
 public class OSXTogglePaletteAction extends AbstractAction {
   private Window palette;
-  private DefaultOSXApplication app;
-  private WindowListener windowHandler;
+  private final DefaultOSXApplication app;
+  private final WindowListener windowHandler;
 
   /**
    * Creates a new instance.

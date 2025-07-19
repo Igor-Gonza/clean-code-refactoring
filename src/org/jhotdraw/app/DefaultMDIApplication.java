@@ -27,11 +27,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.io.File;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.prefs.Preferences;
@@ -45,6 +42,7 @@ import java.util.prefs.Preferences;
  * @author Werner Randelshofer.
  * @version 1.0 June 5, 2006, Created.
  */
+@SuppressWarnings({"unused", "FieldCanBeLocal", "CallToPrintStackTrace"})
 public class DefaultMDIApplication extends AbstractApplication {
   private JFrame parentFrame;
   private JScrollPane scrollPane;
@@ -80,10 +78,10 @@ public class DefaultMDIApplication extends AbstractApplication {
     mo.putAction(DeleteAction.ID, new DeleteAction());
     mo.putAction(DuplicateAction.ID, new DuplicateAction());
     mo.putAction(SelectAllAction.ID, new SelectAllAction());
-        /*
-        mo.putAction(MaximizeAction.ID, new MaximizeAction(this));
-        mo.putAction(MinimizeAction.ID, new MinimizeAction(this));
-         */
+
+//    mo.putAction(MaximizeAction.ID, new MaximizeAction(this));
+//    mo.putAction(MinimizeAction.ID, new MinimizeAction(this));
+
     mo.putAction(ArrangeAction.VERTICAL_ID, new ArrangeAction(desktopPane, Arrangeable.Arrangement.VERTICAL));
     mo.putAction(ArrangeAction.HORIZONTAL_ID, new ArrangeAction(desktopPane, Arrangeable.Arrangement.HORIZONTAL));
     mo.putAction(ArrangeAction.CASCADE_ID, new ArrangeAction(desktopPane, Arrangeable.Arrangement.CASCADE));
@@ -168,8 +166,7 @@ public class DefaultMDIApplication extends AbstractApplication {
       boolean moved;
       do {
         moved = false;
-        for (Iterator i = projects().iterator(); i.hasNext(); ) {
-          Project aProject = (Project) i.next();
+        for (Project aProject : projects()) {
           if (aProject != p && aProject.isShowing() && SwingUtilities.getRootPane(aProject.getComponent()).getParent().getLocation().equals(loc)) {
             loc.x += 22;
             loc.y += 22;
@@ -399,8 +396,7 @@ public class DefaultMDIApplication extends AbstractApplication {
         m1.add(mo1.getAction(ArrangeAction.HORIZONTAL_ID));
 
         m1.addSeparator();
-        for (Iterator i = projects().iterator(); i.hasNext(); ) {
-          Project pr = (Project) i.next();
+        for (Project pr : projects()) {
           if (pr.getAction(FocusAction.ID) != null) {
             m1.add(pr.getAction(FocusAction.ID));
           }

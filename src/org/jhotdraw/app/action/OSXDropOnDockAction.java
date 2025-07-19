@@ -32,6 +32,7 @@ import java.io.IOException;
  * @version 1.0.1 2005-07-14 Show frame of project after it has been created.
  * <br>1.0  04 January 2005  Created.
  */
+@SuppressWarnings("unused")
 public class OSXDropOnDockAction extends AbstractApplicationAction {
   public final static String ID = "osxdrop";
   private JFileChooser fileChooser;

@@ -60,6 +60,7 @@ import org.jhotdraw.app.action.UndoAction;
  * <br>1.1 2006-02-06 Revised.
  * <br>1.0 October 16, 2005, Created.
  */
+@SuppressWarnings({"unused", "CallToPrintStackTrace", "unchecked"})
 public class DefaultSDIApplication extends AbstractApplication {
   private Project currentProject;
   private Preferences prefs;
@@ -161,8 +162,7 @@ public class DefaultSDIApplication extends AbstractApplication {
       boolean moved;
       do {
         moved = false;
-        for (Iterator i = projects().iterator(); i.hasNext(); ) {
-          Project aProject = (Project) i.next();
+        for (Project aProject : projects()) {
           if (aProject != p && SwingUtilities.getWindowAncestor(aProject.getComponent()) != null && SwingUtilities.getWindowAncestor(aProject.getComponent()).getLocation().equals(loc)) {
             loc.x += 22;
             loc.y += 22;
@@ -212,7 +212,7 @@ public class DefaultSDIApplication extends AbstractApplication {
   protected Component wrapProjectComponent(Project p) {
     Component c = p.getComponent();
     if (getModel() != null) {
-      LinkedList<Action> toolBarActions = new LinkedList();
+      LinkedList<Action> toolBarActions = new LinkedList<>();
 
       int id = 0;
       for (JToolBar tb : new ReversedList<>(getModel().createToolBars(this, p))) {
@@ -370,8 +370,7 @@ public class DefaultSDIApplication extends AbstractApplication {
       public void propertyChange(PropertyChangeEvent evt) {
         String name = evt.getPropertyName();
         if (Objects.equals(name, "projectCount")) {
-          if (p == null || projects().contains(p)) {
-          } else {
+          if (p != null && !projects().contains(p)) {
             removePropertyChangeListener(this);
           }
         } else if (Objects.equals(name, "recentFiles")) {

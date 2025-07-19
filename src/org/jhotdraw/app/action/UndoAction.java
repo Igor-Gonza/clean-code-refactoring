@@ -20,7 +20,6 @@ import org.jhotdraw.util.ResourceBundleUtil;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Objects;
 
@@ -35,9 +34,11 @@ import java.util.Objects;
  */
 public class UndoAction extends AbstractProjectAction {
   public final static String ID = "undo";
-  private ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
 
-  private PropertyChangeListener redoActionPropertyListener = evt -> {
+  @SuppressWarnings("FieldCanBeLocal")
+  private final ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
+
+  private final PropertyChangeListener redoActionPropertyListener = evt -> {
     String name = evt.getPropertyName();
     if (Objects.equals(name, AbstractAction.NAME)) {
       putValue(AbstractAction.NAME, evt.getNewValue());

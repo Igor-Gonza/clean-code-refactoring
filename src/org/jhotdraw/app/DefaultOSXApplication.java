@@ -128,6 +128,7 @@ import org.jhotdraw.app.action.UndoAction;
  * @author Werner Randelshofer
  * @version 1.0 October 4, 2005, Created.
  */
+@SuppressWarnings("CallToPrintStackTrace")
 public class DefaultOSXApplication extends AbstractApplication {
   private OSXPaletteHandler paletteHandler;
   private Project currentProject;
@@ -230,8 +231,7 @@ public class DefaultOSXApplication extends AbstractApplication {
       boolean moved;
       do {
         moved = false;
-        for (Iterator i = projects().iterator(); i.hasNext(); ) {
-          Project aProject = (Project) i.next();
+        for (Project aProject : projects()) {
           if (aProject != p && aProject.isShowing() && SwingUtilities.getWindowAncestor(aProject.getComponent()).getLocation().equals(loc)) {
             loc.x += 22;
             loc.y += 22;
@@ -373,24 +373,22 @@ public class DefaultOSXApplication extends AbstractApplication {
         String name = evt.getPropertyName();
         if (Objects.equals(name, "projectCount")) {
           if (p == null || projects().contains(p)) {
-            JMenu m = windowMenu;
-            m.removeAll();
-            m.add(getModel().getAction(MinimizeAction.ID));
-            m.add(getModel().getAction(MaximizeAction.ID));
-            m.addSeparator();
-            for (Iterator i = projects().iterator(); i.hasNext(); ) {
-              Project pr = (Project) i.next();
+            windowMenu.removeAll();
+            windowMenu.add(getModel().getAction(MinimizeAction.ID));
+            windowMenu.add(getModel().getAction(MaximizeAction.ID));
+            windowMenu.addSeparator();
+            for (Project pr : projects()) {
               if (pr.getAction(FocusAction.ID) != null) {
-                m.add(pr.getAction(FocusAction.ID));
+                windowMenu.add(pr.getAction(FocusAction.ID));
               }
             }
             if (!paletteActions.isEmpty()) {
-              m.addSeparator();
+              windowMenu.addSeparator();
               for (Action a : paletteActions) {
                 JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(a);
                 Actions.configureJCheckBoxMenuItem(cbmi, a);
                 cbmi.setIcon(null);
-                m.add(cbmi);
+                windowMenu.add(cbmi);
               }
             }
           } else {
