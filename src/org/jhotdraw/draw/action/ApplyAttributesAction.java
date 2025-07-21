@@ -27,8 +27,9 @@ import java.util.Locale;
  * @author Werner Randelshofer
  * @version 1.0 25. November 2003  Created.
  */
+@SuppressWarnings({"FieldCanBeLocal", "unused"})
 public class ApplyAttributesAction extends AbstractSelectedAction {
-  private ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
+  private final ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
 
   /**
    * Creates a new instance.

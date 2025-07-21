@@ -32,12 +32,13 @@ import java.util.*;
  * <br>1.1 2006-03-15 Support for enabled state of view added.
  * <br>1.0 2003-12-01 Created.
  */
+@SuppressWarnings("unused")
 public abstract class AbstractViewAction extends AbstractAction {
   private DrawingEditor editor;
   private DrawingView view;
   protected final static ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
 
-  private PropertyChangeListener propertyChangeHandler = evt -> {
+  private final PropertyChangeListener propertyChangeHandler = evt -> {
     if (evt.getPropertyName().equals("enabled")) {
       updateEnabledState();
     }

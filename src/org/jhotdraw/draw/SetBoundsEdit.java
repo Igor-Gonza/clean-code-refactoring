@@ -10,9 +10,7 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
-
 
 package org.jhotdraw.draw;
 
@@ -30,13 +28,10 @@ import java.awt.geom.Point2D;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class SetBoundsEdit extends AbstractUndoableEdit {
-  private AbstractFigure owner;
+  private final AbstractFigure owner;
   private Point2D.Double oldAnchor, oldLead;
   private Point2D.Double newAnchor, newLead;
 
-  /**
-   * Creates a new instance.
-   */
   public SetBoundsEdit(AbstractFigure owner, Point2D.Double oldAnchor, Point2D.Double oldLead, Point2D.Double newAnchor, Point2D.Double newLead) {
     this.owner = owner;
     this.oldAnchor = oldAnchor;
@@ -45,6 +40,7 @@ public class SetBoundsEdit extends AbstractUndoableEdit {
     this.newLead = newLead;
   }
 
+  // FIXME German (holy moly!)
   public String getPresentationName() {
     return "Abmessungen ändern";
   }

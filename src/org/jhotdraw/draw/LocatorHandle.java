@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 
@@ -29,7 +28,7 @@ import java.awt.geom.*;
  * @see Locator
  */
 public abstract class LocatorHandle extends AbstractHandle {
-  private Locator locator;
+  private final Locator locator;
 
   /**
    * Initializes the LocatorHandle with the given Locator.

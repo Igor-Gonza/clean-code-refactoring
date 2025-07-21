@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 package org.jhotdraw.draw;
@@ -40,6 +39,7 @@ import java.util.Map;
  * <br>2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
+@SuppressWarnings("unused")
 public class ConnectionTool extends AbstractTool implements FigureListener {
   private Map<AttributeKey, Object> attributes;
   /**
@@ -266,7 +266,7 @@ public class ConnectionTool extends AbstractTool implements FigureListener {
    */
   protected ConnectionFigure findConnection(Point2D.Double p, Drawing drawing) {
     for (Figure f : drawing.getFiguresFrontToBack()) {
-      if (f != null && (f instanceof ConnectionFigure)) {
+      if ((f instanceof ConnectionFigure)) {
         return (ConnectionFigure) f;
       }
     }

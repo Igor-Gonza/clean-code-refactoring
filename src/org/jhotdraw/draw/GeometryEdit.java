@@ -14,7 +14,9 @@
 
 package org.jhotdraw.draw;
 
-import javax.swing.undo.*;
+import javax.swing.undo.AbstractUndoableEdit;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
 
 /**
  * GeometryEdit.
@@ -23,13 +25,10 @@ import javax.swing.undo.*;
  * @version 1.0 January 22, 2006, Created.
  */
 public class GeometryEdit extends AbstractUndoableEdit {
-  private Figure owner;
-  private Object oldGeometry;
-  private Object newGeometry;
+  private final Figure owner;
+  private final Object oldGeometry;
+  private final Object newGeometry;
 
-  /**
-   * Creates a new instance.
-   */
   public GeometryEdit(Figure owner, Object oldGeometry, Object newGeometry) {
     this.owner = owner;
     this.oldGeometry = oldGeometry;
@@ -53,5 +52,4 @@ public class GeometryEdit extends AbstractUndoableEdit {
     owner.restoreTo(newGeometry);
     owner.changed();
   }
-
 }

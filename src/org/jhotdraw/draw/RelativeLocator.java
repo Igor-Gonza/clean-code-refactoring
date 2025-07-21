@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 package org.jhotdraw.draw;
@@ -44,9 +43,6 @@ public class RelativeLocator extends AbstractLocator {
     relativeY = 0.0;
   }
 
-  /**
-   * Creates a new instance.
-   */
   public RelativeLocator(double relativeX, double relativeY) {
     this.relativeX = relativeX;
     this.relativeY = relativeY;
@@ -70,58 +66,34 @@ public class RelativeLocator extends AbstractLocator {
     return new RelativeLocator(1.0, 0.5);
   }
 
-  /**
-   * North.
-   */
   static public Locator north() {
     return new RelativeLocator(0.5, 0.0);
   }
 
-  /**
-   * West.
-   */
   static public Locator west() {
     return new RelativeLocator(0.0, 0.5);
   }
 
-  /**
-   * North-east.
-   */
   static public Locator northEast() {
     return new RelativeLocator(1.0, 0.0);
   }
 
-  /**
-   * North-west.
-   */
   static public Locator northWest() {
     return new RelativeLocator(0.0, 0.0);
   }
 
-  /**
-   * South.
-   */
   static public Locator south() {
     return new RelativeLocator(0.5, 1.0);
   }
 
-  /**
-   * South-east.
-   */
   static public Locator southEast() {
     return new RelativeLocator(1.0, 1.0);
   }
 
-  /**
-   * South-west.
-   */
   static public Locator southWest() {
     return new RelativeLocator(0.0, 1.0);
   }
 
-  /**
-   * Center.
-   */
   static public Locator center() {
     return new RelativeLocator(0.5, 0.5);
   }

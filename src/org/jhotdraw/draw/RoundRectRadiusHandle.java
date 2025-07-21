@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 package org.jhotdraw.draw;
@@ -33,9 +32,6 @@ public class RoundRectRadiusHandle extends AbstractHandle {
   private Point originalArc;
   CompositeEdit edit;
 
-  /**
-   * Creates a new instance.
-   */
   public RoundRectRadiusHandle(Figure owner) {
     super(owner);
   }

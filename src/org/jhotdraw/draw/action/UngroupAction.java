@@ -35,7 +35,7 @@ public class UngroupAction extends AbstractSelectedAction {
   /**
    * Creates a new instance.
    */
-  private CompositeFigure prototype;
+  private final CompositeFigure prototype;
 
   /**
    * Creates a new instance.

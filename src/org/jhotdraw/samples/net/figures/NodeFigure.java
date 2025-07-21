@@ -41,6 +41,7 @@ import static org.jhotdraw.draw.AttributeKeys.DECORATOR_INSETS;
  * @author Werner Randelshofer
  * @version 1.0 July 4, 2006, Created.
  */
+@SuppressWarnings("unused")
 public class NodeFigure extends TextFigure {
   private LinkedList<AbstractConnector> connectors;
   private static LocatorConnector north;
@@ -48,9 +49,6 @@ public class NodeFigure extends TextFigure {
   private static LocatorConnector east;
   private static LocatorConnector west;
 
-  /**
-   * Creates a new instance.
-   */
   public NodeFigure() {
     RectangleFigure rf = new RectangleFigure();
     setDecorator(rf);

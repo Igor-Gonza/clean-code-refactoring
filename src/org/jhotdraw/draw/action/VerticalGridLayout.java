@@ -24,6 +24,7 @@ import java.awt.*;
  * @author Werner Randelshofer
  * @version 1.0 27. November 2003  Created.
  */
+@SuppressWarnings("unused")
 public class VerticalGridLayout implements LayoutManager, java.io.Serializable {
 
   int hgap;

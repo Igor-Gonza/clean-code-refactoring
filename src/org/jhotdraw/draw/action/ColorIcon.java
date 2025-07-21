@@ -24,8 +24,8 @@ import java.awt.*;
  * <br>1.0 25. November 2003  Created.
  */
 public class ColorIcon implements javax.swing.Icon {
-  private Color fillColor;
-  private Color borderColor;
+  private final Color fillColor;
+  private final Color borderColor;
 
   /**
    * Creates a new instance.

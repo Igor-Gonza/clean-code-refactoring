@@ -16,7 +16,7 @@ import javax.swing.SwingUtilities;
  *
  * @author SUN Microsystems, Inc.
  */
-
+@SuppressWarnings("unused")
 public abstract class SwingWorker {
   private Object value;  // see getValue(), setValue()
   private Thread thread;

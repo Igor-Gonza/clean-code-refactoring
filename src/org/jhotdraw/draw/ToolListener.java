@@ -12,7 +12,6 @@
  * JHotDraw.org.
  */
 
-
 package org.jhotdraw.draw;
 
 import java.util.EventListener;
@@ -41,5 +40,4 @@ public interface ToolListener extends EventListener {
    * Sent when an area of the drawing view needs to be repainted.
    */
   void areaInvalidated(ToolEvent e);
-
 }

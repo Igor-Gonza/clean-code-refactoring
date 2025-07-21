@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 package org.jhotdraw.draw;
@@ -64,8 +63,9 @@ import static org.jhotdraw.draw.AttributeKeys.*;
  * Werner Randelshofer (this derived version)
  * @version 2.0.1 2006-02-27 Draw UNDERLINE_LOW_ONE_PIXEL instead of UNDERLINE_ON.
  * <br>2.0 2006-01-14 Changed to support double precision coordinates.
- * <br>1.0 5. M�rz 2004  Created.
+ * <br>1.0 5. Marz 2004  Created.
  */
+@SuppressWarnings("unused")
 public class TextAreaFigure extends AttributedFigure implements TextHolder {
   private Rectangle2D.Double bounds = new Rectangle2D.Double();
   private boolean editable = true;
@@ -223,7 +223,7 @@ public class TextAreaFigure extends AttributedFigure implements TextHolder {
 
       while (!lineComplete) {
         float wrappingWidth = rightMargin - horizontalPos;
-        TextLayout layout = null;
+        TextLayout layout;
         layout = measurer.nextLayout(wrappingWidth, tabLocations[currentTab] + 1, lineContainsText);
 
         // layout can be null if lineContainsText is true

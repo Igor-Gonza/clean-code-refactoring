@@ -10,13 +10,12 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 package org.jhotdraw.draw;
 
 import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.Point2D;
 
 /**
  * Interface to constrain a Point2D.Double. This can be used to implement

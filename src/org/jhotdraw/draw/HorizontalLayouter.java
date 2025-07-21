@@ -66,7 +66,6 @@ public class HorizontalLayouter extends AbstractLayouter {
         x += width + insets.left + insets.right;
       }
     }
-
     return layoutBounds;
   }
 }

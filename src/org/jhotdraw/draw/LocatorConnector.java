@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 package org.jhotdraw.draw;
@@ -34,6 +33,7 @@ import java.io.IOException;
  * @see Locator
  * @see Connector
  */
+@SuppressWarnings("unused")
 public class LocatorConnector extends AbstractConnector {
   /**
    * The standard size of the connector. The display box

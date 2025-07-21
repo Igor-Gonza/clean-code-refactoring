@@ -29,9 +29,10 @@ import java.awt.geom.Rectangle2D;
  * <br>1.0 2004-03-17  Created.
  */
 public class GridConstrainer implements Constrainer {
-  private double width, height;
-  private static Color minorColor = new Color(0xebebeb);
-  private static Color majorColor = new Color(0xcacaca);
+  private final double width;
+  private final double height;
+  private static final Color minorColor = new Color(0xebebeb);
+  private static final Color majorColor = new Color(0xcacaca);
 
   /**
    * Creates a new instance.

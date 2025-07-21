@@ -27,10 +27,11 @@ import org.jhotdraw.util.ResourceBundleUtil;
  * @version 1.1 2006-04-21 Constructor with DrawingEditor parameter added.
  * <br>1.0 January 16, 2006, Created.
  */
+@SuppressWarnings("unused")
 public class ToggleGridAction extends AbstractViewAction {
   public final static String ID = "alignGrid";
   private String label;
-  private Constrainer onConstrainer, offConstrainer;
+  private final Constrainer onConstrainer, offConstrainer;
 
   /**
    * Creates a new instance.

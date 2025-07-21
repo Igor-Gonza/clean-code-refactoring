@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 package org.jhotdraw.draw;
@@ -35,7 +34,8 @@ import java.io.IOException;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  * @see Connector
  */
-public class AbstractConnector implements Connector {
+@SuppressWarnings("unused")
+public abstract class AbstractConnector implements Connector {
   /**
    * The owner of the connector
    */
@@ -204,5 +204,4 @@ public class AbstractConnector implements Connector {
     out.writeObject(getOwner());
     out.closeElement();
   }
-
 }

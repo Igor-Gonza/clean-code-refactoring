@@ -24,7 +24,7 @@ import java.awt.geom.GeneralPath;
  * <br>1.0 4. February 2004  Created.
  */
 public class GeneralPathTip extends AbstractLineDecoration {
-  private GeneralPath path;
+  private final GeneralPath path;
   double decorationRadius;
 
   /**

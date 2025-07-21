@@ -10,9 +10,7 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
-
 
 package org.jhotdraw.draw;
 
@@ -29,6 +27,7 @@ import java.util.Collection;
  * @version 2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
+@SuppressWarnings("unused")
 public class MoveHandle extends LocatorHandle {
   /**
    * The previously handled x and y coordinates.

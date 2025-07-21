@@ -10,9 +10,7 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
-
 
 package org.jhotdraw.draw;
 
@@ -30,6 +28,7 @@ import java.awt.geom.Rectangle2D;
  * @author Werner Randelshofer
  * @version 1.0 2006-03-27 Created.
  */
+@SuppressWarnings("unused")
 public class DiamondFigure extends AttributedFigure {
   /**
    * If the attribute IS_QUADRATIC is set to true, all sides of the diamond have

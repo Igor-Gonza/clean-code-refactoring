@@ -23,7 +23,7 @@ import java.awt.*;
  * @version 1.0 25. November 2003  Created.
  */
 public class StrokeIcon implements javax.swing.Icon {
-  private Stroke stroke;
+  private final Stroke stroke;
 
   /**
    * Creates a new instance.

@@ -15,6 +15,7 @@ package org.jhotdraw.draw.action;
 
 import java.beans.*;
 
+@SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal"})
 public class JPopupButtonBeanInfo extends SimpleBeanInfo {
 
   // Bean descriptor information will be obtained from introspection.//GEN-FIRST:BeanDescriptor
@@ -33,7 +34,7 @@ public class JPopupButtonBeanInfo extends SimpleBeanInfo {
 
 
   // Properties information will be obtained from introspection.//GEN-FIRST:Properties
-  private static PropertyDescriptor[] properties = null;
+  private static final PropertyDescriptor[] properties = null;
 
   private static PropertyDescriptor[] getPDescriptor() {//GEN-HEADEREND:Properties
 
@@ -43,7 +44,7 @@ public class JPopupButtonBeanInfo extends SimpleBeanInfo {
   } //GEN-LAST:Properties
 
   // Event set information will be obtained from introspection.//GEN-FIRST:Events
-  private static EventSetDescriptor[] eventSets = null;
+  private static final EventSetDescriptor[] eventSets = null;
 
   private static EventSetDescriptor[] getEDescriptor() {//GEN-HEADEREND:Events
 
@@ -53,7 +54,7 @@ public class JPopupButtonBeanInfo extends SimpleBeanInfo {
   } //GEN-LAST:Events
 
   // Method information will be obtained from introspection.//GEN-FIRST:Methods
-  private static MethodDescriptor[] methods = null;
+  private static final MethodDescriptor[] methods = null;
 
   private static MethodDescriptor[] getMDescriptor() {//GEN-HEADEREND:Methods
 
@@ -71,8 +72,8 @@ public class JPopupButtonBeanInfo extends SimpleBeanInfo {
   private static String iconNameM16 = null;
   private static String iconNameM32 = null; //GEN-END:Icons
 
-  private static int defaultPropertyIndex = -1; //GEN-BEGIN:Idx
-  private static int defaultEventIndex = -1; //GEN-END:Idx
+  private static final int defaultPropertyIndex = -1; //GEN-BEGIN:Idx
+  private static final int defaultEventIndex = -1; //GEN-END:Idx
 
 
   //GEN-FIRST:Superclass

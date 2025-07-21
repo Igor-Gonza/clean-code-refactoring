@@ -25,9 +25,7 @@ import org.jhotdraw.geom.Insets2DDouble;
  * <br>1.0 30. January 2004  Created.
  */
 public class ListFigure extends GraphicalCompositeFigure {
-  /**
-   * Creates a new instance.
-   */
+
   public ListFigure() {
     this(null);
   }

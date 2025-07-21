@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 package org.jhotdraw.draw;
@@ -99,7 +98,7 @@ public class DragTracker extends AbstractTool {
     int y = evt.getY();
     updateCursor(editor.findView((Container) evt.getSource()), new Point(evt.getX(), evt.getY()));
     Point2D.Double p = getView().getConstrainer().constrainPoint(getView().viewToDrawing(new Point(x, y)));
-    Collection<Figure> draggedFigures = new LinkedList(getView().getSelectedFigures());
+    Collection<Figure> draggedFigures = new LinkedList<>(getView().getSelectedFigures());
     Figure dropTarget = getDrawing().findFigureExcept(p, draggedFigures);
 
     if (dropTarget != null) {

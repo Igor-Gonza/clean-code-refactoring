@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 package org.jhotdraw.draw;
@@ -39,7 +38,7 @@ public class DefaultDrawingEditor extends AbstractBean implements DrawingEditor,
   private boolean isEnabled = true;
   private DrawingView focusedView;
 
-  private FocusListener focusHandler = new FocusListener() {
+  private final FocusListener focusHandler = new FocusListener() {
     public void focusGained(FocusEvent e) {
       setFocusedView(findView((Container) e.getSource()));
     }

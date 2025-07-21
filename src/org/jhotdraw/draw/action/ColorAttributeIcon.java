@@ -28,10 +28,10 @@ import java.net.URL;
  * <br>1.0 25. November 2003  Created.
  */
 public class ColorAttributeIcon extends javax.swing.ImageIcon {
-  private DrawingEditor editor;
+  private final DrawingEditor editor;
   AttributeKey<Color> key;
   //private Rectangle colorRect = new Rectangle(0, 12, 16, 4);
-  private Rectangle colorRect = new Rectangle(1, 17, 20, 4);
+  private final Rectangle colorRect = new Rectangle(1, 17, 20, 4);
 
   /**
    * Creates a new instance.

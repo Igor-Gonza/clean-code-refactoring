@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 package org.jhotdraw.draw;
@@ -100,5 +99,4 @@ public class ArrowTip extends AbstractLineDecoration implements DOMStorable {
     out.addAttribute("isStroked", isStroked());
     out.addAttribute("isSolid", isSolid());
   }
-
 }

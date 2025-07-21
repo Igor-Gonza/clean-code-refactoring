@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 package org.jhotdraw.draw;
@@ -30,14 +29,10 @@ import java.awt.geom.Point2D;
  */
 public abstract class AbstractLocator implements Locator, DOMStorable {
 
-  /**
-   * Creates a new instance.
-   */
   public AbstractLocator() {
   }
 
   public Point2D.Double locate(Figure owner, Figure dependent) {
     return locate(owner);
   }
-
 }

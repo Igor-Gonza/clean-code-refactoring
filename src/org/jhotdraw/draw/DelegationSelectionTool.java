@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 package org.jhotdraw.draw;
@@ -37,6 +36,7 @@ import org.jhotdraw.app.action.Actions;
  * Popup timer added. Support for radio button menu items added.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
+@SuppressWarnings("unused")
 public class DelegationSelectionTool extends SelectionTool {
   /**
    * A set of actions which is applied to the drawing.
@@ -260,5 +260,4 @@ public class DelegationSelectionTool extends SelectionTool {
       }
     }
   }
-
 }

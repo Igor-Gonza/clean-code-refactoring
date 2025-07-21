@@ -29,9 +29,6 @@ public class BorderRectangleFigure extends RectangleFigure {
   protected Border border;
   protected final static JComponent borderComponent = new JPanel();
 
-  /**
-   * Creates a new instance.
-   */
   public BorderRectangleFigure(Border border) {
     this.border = border;
   }

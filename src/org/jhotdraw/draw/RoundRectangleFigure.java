@@ -83,6 +83,7 @@ public class RoundRectangleFigure extends AttributedFigure {
     roundrect.archeight = h;
     fireFigureChanged(getDrawBounds());
     fireUndoableEditHappened(new AbstractUndoableEdit() {
+      // FIXME German
       public String getPresentationName() {
         return "Rundung";
       }

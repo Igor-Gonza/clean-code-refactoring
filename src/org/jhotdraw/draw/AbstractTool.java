@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 package org.jhotdraw.draw;
@@ -31,6 +30,7 @@ import java.util.*;
  * <br>2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
+@SuppressWarnings("unused")
 public abstract class AbstractTool implements Tool {
   /**
    * This is set to true, if this is the active tool of the editor.
@@ -47,7 +47,6 @@ public abstract class AbstractTool implements Tool {
   protected DrawingEditor editor;
   protected Point anchor = new Point();
   protected EventListenerList listenerList = new EventListenerList();
-
 
   /**
    * Creates a new instance.
@@ -147,7 +146,6 @@ public abstract class AbstractTool implements Tool {
     fireToolDone();
   }
 
-
   public void keyTyped(KeyEvent evt) {
   }
 
@@ -224,7 +222,6 @@ public abstract class AbstractTool implements Tool {
 
   public void mouseClicked(MouseEvent evt) {
   }
-
 
   public void mouseEntered(MouseEvent evt) {
     if (!isWorking) {

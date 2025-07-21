@@ -30,9 +30,6 @@ public class RelativeDecoratorLocator extends RelativeLocator {
   public RelativeDecoratorLocator() {
   }
 
-  /**
-   * Creates a new instance.
-   */
   public RelativeDecoratorLocator(double relativeX, double relativeY) {
     super(relativeX, relativeY);
   }
@@ -62,58 +59,34 @@ public class RelativeDecoratorLocator extends RelativeLocator {
     return new RelativeDecoratorLocator(1.0, 0.5);
   }
 
-  /**
-   * North.
-   */
   static public Locator north() {
     return new RelativeDecoratorLocator(0.5, 0.0);
   }
 
-  /**
-   * West.
-   */
   static public Locator west() {
     return new RelativeDecoratorLocator(0.0, 0.5);
   }
 
-  /**
-   * North-east.
-   */
   static public Locator northEast() {
     return new RelativeDecoratorLocator(1.0, 0.0);
   }
 
-  /**
-   * North-west.
-   */
   static public Locator northWest() {
     return new RelativeDecoratorLocator(0.0, 0.0);
   }
 
-  /**
-   * South.
-   */
   static public Locator south() {
     return new RelativeDecoratorLocator(0.5, 1.0);
   }
 
-  /**
-   * South-east.
-   */
   static public Locator southEast() {
     return new RelativeDecoratorLocator(1.0, 1.0);
   }
 
-  /**
-   * South-west.
-   */
   static public Locator southWest() {
     return new RelativeDecoratorLocator(0.0, 1.0);
   }
 
-  /**
-   * Center.
-   */
   static public Locator center() {
     return new RelativeDecoratorLocator(0.5, 0.5);
   }

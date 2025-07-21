@@ -20,7 +20,8 @@ package org.jhotdraw.draw;
  * @author Werner Randelshofer
  * @version 1.0 2. February 2004  Created.
  */
-public class AbstractFigureListener implements FigureListener {
+// TODO Unimplemented class
+public abstract class AbstractFigureListener implements FigureListener {
 
   public void figureAreaInvalidated(FigureEvent e) {
   }
@@ -39,5 +40,4 @@ public class AbstractFigureListener implements FigureListener {
 
   public void figureRequestRemove(FigureEvent e) {
   }
-
 }

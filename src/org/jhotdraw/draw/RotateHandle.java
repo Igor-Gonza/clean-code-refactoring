@@ -27,6 +27,7 @@ import java.awt.geom.Rectangle2D;
  * @author Werner Randelshofer.
  * @version 1.0 12. July 2006 Created.
  */
+@SuppressWarnings("unused")
 public class RotateHandle extends AbstractHandle {
   private Point location;
   private Object restoreData;

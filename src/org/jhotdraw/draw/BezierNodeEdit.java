@@ -11,6 +11,7 @@
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
  */
+
 package org.jhotdraw.draw;
 
 import org.jhotdraw.geom.BezierPath;
@@ -20,7 +21,6 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoableEdit;
 
-
 /**
  * BezierNodeEdit.
  *
@@ -28,14 +28,11 @@ import javax.swing.undo.UndoableEdit;
  * @version 1.0 2006-06-24
  */
 class BezierNodeEdit extends AbstractUndoableEdit {
-  private BezierFigure owner;
-  private int index;
+  private final BezierFigure owner;
+  private final int index;
   private BezierPath.Node oldValue;
   private BezierPath.Node newValue;
 
-  /**
-   * Creates a new instance.
-   */
   public BezierNodeEdit(BezierFigure owner, int index, BezierPath.Node oldValue, BezierPath.Node newValue) {
     this.owner = owner;
     this.index = index;
@@ -43,6 +40,7 @@ class BezierNodeEdit extends AbstractUndoableEdit {
     this.newValue = newValue;
   }
 
+  // FIXME German (holy moly!)
   public String getPresentationName() {
     return "Punkt verschieben";
   }

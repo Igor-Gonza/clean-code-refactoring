@@ -27,23 +27,22 @@ import java.awt.geom.NoninvertibleTransformException;
  * @author Werner Randelshofer
  * @version 1.0 2006-01-21 Created.
  */
+@SuppressWarnings("CallToPrintStackTrace")
 public class CompositeTransformEdit extends AbstractUndoableEdit {
-  private AbstractFigure owner;
-  private AffineTransform tx;
+  private final AbstractFigure owner;
+  private final AffineTransform tx;
   /**
    * True if this edit has never received <code>end</code>.
    */
   boolean inProgress;
 
-  /**
-   * Creates a new instance.
-   */
   public CompositeTransformEdit(AbstractFigure owner, AffineTransform tx) {
     this.owner = owner;
     this.tx = (AffineTransform) tx.clone();
     inProgress = true;
   }
 
+  // FIXME German (holy moly!)
   public String getPresentationName() {
     return "Figur transformieren";
   }
@@ -63,15 +62,15 @@ public class CompositeTransformEdit extends AbstractUndoableEdit {
   }
 
   public boolean replaceEdit(UndoableEdit anEdit) {
-        /*
-        if (anEdit instanceof CompositeTransformEdit) {
-            CompositeTransformEdit that = (CompositeTransformEdit) anEdit;
-            if (that.owner == this.owner) {
-                this.tx.concatenate(that.tx);
-                that.die();
-                return true;
-            }
-        }*/
+    // TODO See how this might work (or not)
+//    if (anEdit instanceof CompositeTransformEdit) {
+//      CompositeTransformEdit that = (CompositeTransformEdit) anEdit;
+//      if (that.owner == this.owner) {
+//        this.tx.concatenate(that.tx);
+//        that.die();
+//        return true;
+//      }
+//    }
     return false;
   }
 

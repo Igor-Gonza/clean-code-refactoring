@@ -37,7 +37,7 @@ import java.util.LinkedList;
 public class LabeledLineConnectionFigure extends LineConnectionFigure implements CompositeFigure {
 
   private Layouter layouter;
-  private ArrayList<Figure> children = new ArrayList();
+  private ArrayList<Figure> children = new ArrayList<>();
   //private Rectangle2D.Double bounds;
   private Rectangle2D.Double drawBounds;
 
@@ -189,7 +189,7 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure implements
   // EDITING
   public Figure findFigureInside(Point2D.Double p) {
     if (getDrawBounds().contains(p)) {
-      Figure found = null;
+      Figure found;
       for (Figure child : getChildrenFrontToBack()) {
         if (child.isVisible()) {
           found = child.findFigureInside(p);

@@ -12,7 +12,6 @@
  * JHotDraw.org.
  */
 
-
 package org.jhotdraw.draw;
 
 import org.jhotdraw.util.ResourceBundleUtil;
@@ -20,7 +19,6 @@ import org.jhotdraw.util.ResourceBundleUtil;
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
-import javax.swing.undo.UndoableEdit;
 import java.util.Locale;
 
 /**
@@ -31,13 +29,10 @@ import java.util.Locale;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class RestoreDataEdit extends AbstractUndoableEdit {
-  private Figure figure;
-  private Object oldRestoreData;
-  private Object newRestoreData;
+  private final Figure figure;
+  private final Object oldRestoreData;
+  private final Object newRestoreData;
 
-  /**
-   * Creates a new instance.
-   */
   public RestoreDataEdit(Figure figure, Object oldRestoreData) {
     this.figure = figure;
     this.oldRestoreData = oldRestoreData;
@@ -47,14 +42,6 @@ public class RestoreDataEdit extends AbstractUndoableEdit {
   public String getPresentationName() {
     ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
     return labels.getString("transformFigure");
-  }
-
-  public boolean addEdit(UndoableEdit anEdit) {
-    return false;
-  }
-
-  public boolean replaceEdit(UndoableEdit anEdit) {
-    return false;
   }
 
   public void redo() throws CannotRedoException {

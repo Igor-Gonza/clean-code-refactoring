@@ -58,7 +58,7 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
     if (forbiddenAttributes == null || !forbiddenAttributes.contains(key)) {
 
       Object oldValue = attributes.get(key);
-      if (!attributes.containsKey(key) || oldValue != newValue || oldValue != null && newValue != null && !oldValue.equals(newValue)) {
+      if (!attributes.containsKey(key) || oldValue != null && !oldValue.equals(newValue)) {
         willChange();
 //System.out.println("AttributedFigure.setAttribute "+key+"="+newValue);
         basicSetAttribute(key, newValue);
@@ -155,10 +155,6 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
     }
   }
 
-  protected void drawConnectors(Graphics2D g) {
-  }
-
-
   public Stroke getStroke() {
     return AttributeKeys.getStroke(this);
   }
@@ -167,7 +163,6 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
     Number value = (Number) getAttribute(AttributeKeys.STROKE_MITER_LIMIT_FACTOR);
     return (value != null) ? value.doubleValue() : 10f;
   }
-
 
   public Rectangle2D.Double getFigureDrawBounds() {
     double width = AttributeKeys.getStrokeTotalWidth(this) / 2d;
@@ -217,7 +212,7 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
       if (forbiddenAttributes == null || !forbiddenAttributes.contains(key)) {
         Object prototypeValue = key.get(prototype);
         Object attributeValue = key.get(this);
-        if (prototypeValue != attributeValue || (prototypeValue != null && attributeValue != null && !prototypeValue.equals(attributeValue))) {
+        if (prototypeValue != null && !prototypeValue.equals(attributeValue)) {
           if (!isElementOpen) {
             out.openElement("a");
             isElementOpen = true;

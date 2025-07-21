@@ -18,9 +18,6 @@ import org.jhotdraw.draw.*;
 import org.jhotdraw.undo.CompositeEdit;
 
 import javax.swing.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.Iterator;
 
 /**
  * DefaultAttributeAction.
@@ -31,47 +28,48 @@ import java.util.Iterator;
  * @version 2.0 2006-06-07 Reworked.
  * <br>1.0 26. November 2003  Created.
  */
+@SuppressWarnings("unused")
 public class DefaultAttributeAction extends AbstractSelectedAction {
-  private AttributeKey[] keys;
+  private final AttributeKey<?>[] keys;
 
 
   /**
    * Creates a new instance.
    */
-  public DefaultAttributeAction(DrawingEditor editor, AttributeKey key) {
+  public DefaultAttributeAction(DrawingEditor editor, AttributeKey<?> key) {
     this(editor, key, null, null);
   }
 
-  public DefaultAttributeAction(DrawingEditor editor, AttributeKey[] keys) {
+  public DefaultAttributeAction(DrawingEditor editor, AttributeKey<?>[] keys) {
     this(editor, keys, null, null);
   }
 
   /**
    * Creates a new instance.
    */
-  public DefaultAttributeAction(DrawingEditor editor, AttributeKey key, Icon icon) {
+  public DefaultAttributeAction(DrawingEditor editor, AttributeKey<?> key, Icon icon) {
     this(editor, key, null, icon);
   }
 
   /**
    * Creates a new instance.
    */
-  public DefaultAttributeAction(DrawingEditor editor, AttributeKey key, String name) {
+  public DefaultAttributeAction(DrawingEditor editor, AttributeKey<?> key, String name) {
     this(editor, key, name, null);
   }
 
-  public DefaultAttributeAction(DrawingEditor editor, AttributeKey key, String name, Icon icon) {
+  public DefaultAttributeAction(DrawingEditor editor, AttributeKey<?> key, String name, Icon icon) {
     this(editor, new AttributeKey[]{key}, name, icon);
   }
 
-  public DefaultAttributeAction(DrawingEditor editor, AttributeKey[] keys, String name, Icon icon) {
+  public DefaultAttributeAction(DrawingEditor editor, AttributeKey<?>[] keys, String name, Icon icon) {
     super(editor);
     this.keys = keys;
     putValue(AbstractAction.NAME, name);
     putValue(AbstractAction.SMALL_ICON, icon);
     setEnabled(true);
     editor.addPropertyChangeListener(evt -> {
-      if (evt.getPropertyName().equals(DefaultAttributeAction.this.keys[0])) {
+      if (evt.getPropertyName().equals(DefaultAttributeAction.this.keys[0].getKey())) {
         putValue("attribute_" + DefaultAttributeAction.this.keys[0], evt.getNewValue());
       }
     });
@@ -88,11 +86,9 @@ public class DefaultAttributeAction extends AbstractSelectedAction {
 
   public void changeAttribute() {
     Drawing drawing = getDrawing();
-    Iterator i = getView().getSelectedFigures().iterator();
-    while (i.hasNext()) {
-      Figure figure = (Figure) i.next();
-      for (int j = 0; j < keys.length; j++) {
-        figure.setAttribute(keys[j], getEditor().getDefaultAttribute(keys[j]));
+    for (Figure figure : getView().getSelectedFigures()) {
+      for (AttributeKey<?> key : keys) {
+        figure.setAttribute(key, getEditor().getDefaultAttribute(key));
       }
     }
   }

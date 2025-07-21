@@ -10,17 +10,16 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
-
 
 package org.jhotdraw.draw;
 
 import org.jhotdraw.xml.DOMStorable;
 
 import java.awt.*;
-import java.awt.geom.*;
-import java.io.*;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
 
 /**
  * Connectors know how to locate a connection point on a figure.

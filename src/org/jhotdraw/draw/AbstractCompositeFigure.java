@@ -71,7 +71,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
   private ChildHandler childHandler = new ChildHandler(this);
 
   private static class ChildHandler implements FigureListener, UndoableEditListener {
-    private AbstractCompositeFigure owner;
+    private final AbstractCompositeFigure owner;
 
     private ChildHandler(AbstractCompositeFigure owner) {
       this.owner = owner;
@@ -126,9 +126,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
             }
             return handles;
         }*/
-
-    LinkedList<Handle> handles = new LinkedList<>();
-    return handles;
+    return new LinkedList<>();
   }
 
   public void add(Figure figure) {

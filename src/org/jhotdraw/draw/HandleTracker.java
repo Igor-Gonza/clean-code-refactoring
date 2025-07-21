@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 
@@ -28,18 +27,18 @@ import java.util.*;
  * @version 1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class HandleTracker extends AbstractTool {
-    private Handle masterHandle;
-    private HandleMultiCaster multicaster;
+    private final Handle masterHandle;
+    private final HandleMultiCaster multiCaster;
     private Point anchor;
     
     /** Creates a new instance. */
     public HandleTracker(Handle handle) {
         masterHandle = handle;
-        multicaster = new HandleMultiCaster(handle);
+        multiCaster = new HandleMultiCaster(handle);
     }
     public HandleTracker(Handle master, Collection<Handle> handles) {
         masterHandle = master;
-        multicaster = new HandleMultiCaster(handles);
+        multiCaster = new HandleMultiCaster(handles);
     }
 
     public void activate(DrawingEditor editor) {
@@ -54,26 +53,26 @@ public class HandleTracker extends AbstractTool {
     }
     
     public void keyPressed(KeyEvent evt) {
-        multicaster.keyPressed(evt);
+        multiCaster.keyPressed(evt);
     }
     
     public void keyReleased(KeyEvent evt) {
-        multicaster.keyReleased(evt);
+        multiCaster.keyReleased(evt);
     }
     
     public void keyTyped(KeyEvent evt) {
-        multicaster.keyTyped(evt);
+        multiCaster.keyTyped(evt);
     }
     
     public void mouseClicked(MouseEvent evt) {
         if (evt.getClickCount() == 2) {
-        multicaster.trackDoubleClick(new Point(evt.getX(), evt.getY()),
+        multiCaster.trackDoubleClick(new Point(evt.getX(), evt.getY()),
                 evt.getModifiersEx(), getView());
         }
     }
     
     public void mouseDragged(MouseEvent evt) {
-        multicaster.trackStep(anchor, new Point(evt.getX(), evt.getY()), 
+        multiCaster.trackStep(anchor, new Point(evt.getX(), evt.getY()),
                 evt.getModifiersEx(), getView());
     }
     
@@ -90,11 +89,11 @@ public class HandleTracker extends AbstractTool {
     public void mousePressed(MouseEvent evt) {
         //handle.mousePressed(evt);
         anchor = new Point(evt.getX(), evt.getY());
-        multicaster.trackStart(anchor, evt.getModifiersEx(), getView());
+        multiCaster.trackStart(anchor, evt.getModifiersEx(), getView());
     }
     
     public void mouseReleased(MouseEvent evt) {
-        multicaster.trackEnd(anchor, new Point(evt.getX(), evt.getY()),
+        multiCaster.trackEnd(anchor, new Point(evt.getX(), evt.getY()),
                 evt.getModifiersEx(), getView());
         fireToolDone();
     }    

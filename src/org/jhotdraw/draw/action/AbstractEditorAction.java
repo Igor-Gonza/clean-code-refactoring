@@ -34,7 +34,7 @@ import java.util.Locale;
 public abstract class AbstractEditorAction extends AbstractAction {
   protected DrawingEditor editor;
   protected final static ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
-  private PropertyChangeListener propertyChangeHandler = evt -> {
+  private final PropertyChangeListener propertyChangeHandler = evt -> {
     if (evt.getPropertyName().equals("enabled")) {
       updateEnabledState();
     }
@@ -81,5 +81,4 @@ public abstract class AbstractEditorAction extends AbstractAction {
   protected void fireUndoableEditHappened(UndoableEdit edit) {
     getDrawing().fireUndoableEditHappened(edit);
   }
-
 }

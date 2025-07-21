@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 
@@ -59,8 +58,7 @@ public class RectangleFigure extends AttributedFigure {
   // CLONING
   // EVENT HANDLING
   public Rectangle2D.Double getBounds() {
-    Rectangle2D.Double bounds = (Rectangle2D.Double) rectangle.clone();
-    return bounds;
+    return (Rectangle2D.Double) rectangle.clone();
   }
 
   protected void drawFill(Graphics2D g) {

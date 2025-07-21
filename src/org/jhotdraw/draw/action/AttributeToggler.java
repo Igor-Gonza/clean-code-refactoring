@@ -40,20 +40,20 @@ import java.util.Iterator;
  * <br>1.0 27. November 2003  Created.
  */
 public class AttributeToggler implements ActionListener {
-  private DrawingEditor editor;
-  private AttributeKey key;
-  private Object value1;
-  private Object value2;
-  private Action compatibleTextAction;
+  private final DrawingEditor editor;
+  private final AttributeKey<Boolean> key;
+  private final Object value1;
+  private final Object value2;
+  private final Action compatibleTextAction;
 
   /**
    * Creates a new instance.
    */
-  public AttributeToggler(DrawingEditor editor, AttributeKey key, Object value1, Object value2) {
+  public AttributeToggler(DrawingEditor editor, AttributeKey<Boolean> key, Object value1, Object value2) {
     this(editor, key, value1, value2, null);
   }
 
-  public AttributeToggler(DrawingEditor editor, AttributeKey key, Object value1, Object value2, Action compatibleTextAction) {
+  public AttributeToggler(DrawingEditor editor, AttributeKey<Boolean> key, Object value1, Object value2, Action compatibleTextAction) {
     this.editor = editor;
     this.key = key;
     this.value1 = value1;
@@ -72,18 +72,18 @@ public class AttributeToggler implements ActionListener {
   public void actionPerformed(ActionEvent evt) {
     if (compatibleTextAction != null) {
       Component focusOwner = KeyboardFocusManager.getCurrentKeyboardFocusManager().getPermanentFocusOwner();
-      if (focusOwner != null && focusOwner instanceof JTextComponent) {
+      if (focusOwner instanceof JTextComponent) {
         compatibleTextAction.actionPerformed(evt);
         return;
       }
     }
 
-    Iterator i = getView().getSelectedFigures().iterator();
+    Iterator<Figure> i = getView().getSelectedFigures().iterator();
     Object newValue = null;
     if (i.hasNext()) {
-      Figure f = (Figure) i.next();
+      Figure f = i.next();
       Object attr = f.getAttribute(key);
-      if (value1 == null && attr == null || (value1 != null && attr != null && attr.equals(value1))) {
+      if (value1 == null && attr == null || (attr != null && attr.equals(value1))) {
         newValue = value2;
       } else {
         newValue = value1;
@@ -92,7 +92,7 @@ public class AttributeToggler implements ActionListener {
       f.setAttribute(key, newValue);
     }
     while (i.hasNext()) {
-      Figure f = (Figure) i.next();
+      Figure f = i.next();
       f.setAttribute(key, newValue);
     }
   }

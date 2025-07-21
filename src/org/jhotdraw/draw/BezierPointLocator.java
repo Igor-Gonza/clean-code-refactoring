@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-� 
  */
 
 package org.jhotdraw.draw;
@@ -28,6 +27,7 @@ import java.awt.geom.Point2D;
  * <br>2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
+@SuppressWarnings("unused")
 public class BezierPointLocator extends AbstractLocator {
   private int index;
   private int coordinates;
@@ -59,6 +59,4 @@ public class BezierPointLocator extends AbstractLocator {
     index = in.getAttribute("index", 0);
     coordinates = in.getAttribute("coordinates", 0);
   }
-
-
 }

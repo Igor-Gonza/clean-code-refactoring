@@ -14,7 +14,7 @@
 
 package org.jhotdraw.draw;
 
-import java.awt.geom.*;
+import java.awt.geom.Point2D;
 
 /**
  * ChopTriangleConnector.

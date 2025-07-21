@@ -39,7 +39,7 @@ public class ConnectionHandle extends LocatorHandle {
   /**
    * the prototype of the connection to be created
    */
-  private ConnectionFigure prototype;
+  private final ConnectionFigure prototype;
 
   /**
    * the current target

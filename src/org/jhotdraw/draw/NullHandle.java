@@ -10,9 +10,7 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
-
 
 package org.jhotdraw.draw;
 
@@ -28,9 +26,6 @@ import java.util.*;
  */
 public class NullHandle extends LocatorHandle {
 
-  /**
-   * Creates a new instance.
-   */
   public NullHandle(Figure owner, Locator locator) {
     super(owner, locator);
   }

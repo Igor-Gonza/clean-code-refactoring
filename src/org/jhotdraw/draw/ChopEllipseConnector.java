@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 package org.jhotdraw.draw;
@@ -33,6 +32,7 @@ import static org.jhotdraw.draw.AttributeKeys.*;
  * <br>2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
+@SuppressWarnings("unused")
 public class ChopEllipseConnector extends ChopBoxConnector {
   /**
    * Only used for DOMStorable input.
@@ -53,6 +53,7 @@ public class ChopEllipseConnector extends ChopBoxConnector {
     return (w == null) ? 1f : w;
   }
 
+  // FIXME Deal with this odd switch
   protected Point2D.Double chop(Figure target, Point2D.Double from) {
     target = getConnectorTarget(target);
     Rectangle2D.Double r = target.getBounds();

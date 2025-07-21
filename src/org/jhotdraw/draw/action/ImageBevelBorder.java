@@ -47,27 +47,28 @@ import java.awt.image.BufferedImage;
  * <br>1.1 2002-05-29 Refactored.
  * <br>1.0 2001-10-16
  */
+@SuppressWarnings("unused")
 public class ImageBevelBorder implements Border {
   private final static boolean VERBOSE = false;
   /**
    * The image to be used for drawing.
    */
-  private BufferedImage image;
+  private final BufferedImage image;
 
   /**
    * The border insets
    */
-  private Insets borderInsets;
+  private final Insets borderInsets;
   /**
    * The insets of the image.
    */
-  private Insets imageInsets;
+  private final Insets imageInsets;
 
   /**
    * This attribute is set to true, when the image
    * is used to fill the content area too.
    */
-  private boolean fillContentArea;
+  private final boolean fillContentArea;
 
   /**
    * Creates a new instance with the given image and insets.

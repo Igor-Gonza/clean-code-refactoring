@@ -44,6 +44,7 @@ import static org.jhotdraw.draw.AttributeKeys.*;
  * <br>2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 March 14, 2004.
  */
+@SuppressWarnings("unused")
 public class BezierFigure extends AttributedFigure {
   public final static AttributeKey<Boolean> CLOSED = new AttributeKey<>("closed", false);
   /**
@@ -175,9 +176,7 @@ public class BezierFigure extends AttributedFigure {
         Point2D.Double p1 = path.get(path.size() - 1, 0);
         Point2D.Double p2 = cp.get(path.size() - 1, 0);
         // FIXME - Check here, if caps path contains the point
-        if (Geom.lineContainsPoint(p1.x, p1.y, p2.x, p2.y, p.x, p.y, tolerance)) {
-          return true;
-        }
+        return Geom.lineContainsPoint(p1.x, p1.y, p2.x, p2.y, p.x, p.y, tolerance);
       }
       return false;
     }
@@ -591,7 +590,7 @@ public class BezierFigure extends AttributedFigure {
    */
   public boolean basicJoinSegments(Point2D.Double join) {
     int i = findSegment(join);
-    if (i != -1 && i > 1) {
+    if (i > 1) {
       removeNode(i);
       return true;
     }
@@ -682,7 +681,7 @@ public class BezierFigure extends AttributedFigure {
    * Joins two segments into one if the given Point2D.Double hits a node
    * of the polyline.
    *
-   * @return true if the two segments were joined.
+   * @return Returns true if the two segments were joined.
    */
   public int basicJoinSegments(Point2D.Double join, float tolerance) {
     return path.joinSegments(join, tolerance);

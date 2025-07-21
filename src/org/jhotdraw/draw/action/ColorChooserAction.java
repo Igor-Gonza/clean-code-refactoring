@@ -18,7 +18,6 @@ import org.jhotdraw.draw.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Iterator;
 
 /**
  * ColorChooserAction.
@@ -27,32 +26,33 @@ import java.util.Iterator;
  * @version 2.0 2006-06-07 Reworked.
  * <br>1.0 2004-03-02  Created.
  */
+@SuppressWarnings("unused")
 public class ColorChooserAction extends AbstractSelectedAction {
-  private AttributeKey key;
+  private final AttributeKey<Color> key;
   private static JColorChooser colorChooser;
 
   /**
    * Creates a new instance.
    */
-  public ColorChooserAction(DrawingEditor editor, AttributeKey key) {
+  public ColorChooserAction(DrawingEditor editor, AttributeKey<Color> key) {
     this(editor, key, null, null);
   }
 
   /**
    * Creates a new instance.
    */
-  public ColorChooserAction(DrawingEditor editor, AttributeKey key, Icon icon) {
+  public ColorChooserAction(DrawingEditor editor, AttributeKey<Color> key, Icon icon) {
     this(editor, key, null, icon);
   }
 
   /**
    * Creates a new instance.
    */
-  public ColorChooserAction(DrawingEditor editor, AttributeKey key, String name) {
+  public ColorChooserAction(DrawingEditor editor, AttributeKey<Color> key, String name) {
     this(editor, key, name, null);
   }
 
-  public ColorChooserAction(DrawingEditor editor, final AttributeKey key, String name, Icon icon) {
+  public ColorChooserAction(DrawingEditor editor, final AttributeKey<Color> key, String name, Icon icon) {
     super(editor);
     this.key = key;
     putValue(AbstractAction.NAME, name);
@@ -69,7 +69,7 @@ public class ColorChooserAction extends AbstractSelectedAction {
     if (initialColor == null) {
       initialColor = Color.red;
     }
-    Color chosenColor = colorChooser.showDialog((Component) e.getSource(), labels.getString("drawColor"), initialColor);
+    Color chosenColor = JColorChooser.showDialog((Component) e.getSource(), labels.getString("drawColor"), initialColor);
     if (chosenColor != null) {
       changeAttribute(chosenColor);
     }
@@ -77,9 +77,7 @@ public class ColorChooserAction extends AbstractSelectedAction {
 
   public void changeAttribute(Color value) {
     Drawing drawing = getDrawing();
-    Iterator i = getView().getSelectedFigures().iterator();
-    while (i.hasNext()) {
-      Figure figure = (Figure) i.next();
+    for (Figure figure : getView().getSelectedFigures()) {
       figure.setAttribute(key, value);
     }
     getEditor().setDefaultAttribute(key, value);

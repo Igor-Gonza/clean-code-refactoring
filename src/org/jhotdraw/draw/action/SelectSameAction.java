@@ -43,7 +43,7 @@ public class SelectSameAction extends AbstractSelectedAction {
   }
 
   public void selectSame() {
-    HashSet<Class> selectedClasses = new HashSet<>();
+    HashSet<Class<?>> selectedClasses = new HashSet<>();
     for (Figure selected : getView().getSelectedFigures()) {
       selectedClasses.add(selected.getClass());
     }

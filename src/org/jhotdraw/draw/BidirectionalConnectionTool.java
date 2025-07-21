@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 package org.jhotdraw.draw;
@@ -35,6 +34,7 @@ import java.util.Map;
  * @version 2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
+@SuppressWarnings("unused")
 public class BidirectionalConnectionTool extends AbstractTool implements FigureListener {
   private Map<AttributeKey, Object> attributes;
   /**
@@ -221,7 +221,7 @@ public class BidirectionalConnectionTool extends AbstractTool implements FigureL
   protected ConnectionFigure findConnection(Point2D.Double p, Drawing drawing) {
     for (Figure f : drawing.getFiguresFrontToBack()) {
       Figure fInside = f.findFigureInside(p);
-      if (fInside != null && (fInside instanceof ConnectionFigure)) {
+      if ((fInside instanceof ConnectionFigure)) {
         return (ConnectionFigure) fInside;
       }
     }
@@ -241,7 +241,7 @@ public class BidirectionalConnectionTool extends AbstractTool implements FigureL
 
   protected void trackConnectors(MouseEvent e) {
     Point2D.Double p = viewToDrawing(new Point(e.getX(), e.getY()));
-    Figure c = null;
+    Figure c;
 
     if (getStartConnector() == null) {
       c = findSource(p, getDrawing());
@@ -365,5 +365,4 @@ public class BidirectionalConnectionTool extends AbstractTool implements FigureL
 
   public void figureAttributeChanged(FigureEvent e) {
   }
-
 }

@@ -28,6 +28,7 @@ import javax.swing.SwingUtilities;
  * @author Werner Randelshofer
  * @version 1.0 2002-05-18 Created.
  */
+@SuppressWarnings({"CallToPrintStackTrace", "unused"})
 public abstract class RunnableWorker implements Runnable {
   private Object value;  // see getValue(), setValue()
 

@@ -58,6 +58,7 @@ public class AttributeKey<T> {
   }
 
   public T get(Figure f) {
+    // FIXME Whataheck is even this????
     T value = (T) f.getAttribute(this);
     return (value == null && !isNullValueAllowed) ? defaultValue : value;
   }
@@ -97,7 +98,7 @@ public class AttributeKey<T> {
   }
 
   public static void main(String[] args) {
-    TypeVariable v = new AttributeKey<Double>("hey").getClass().getTypeParameters()[0];
+    TypeVariable<Class<AttributeKey>> v = AttributeKey.class.getTypeParameters()[0];
   }
 
   public boolean isAssignable(Object value) {

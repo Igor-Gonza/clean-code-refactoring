@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 package org.jhotdraw.draw;
@@ -83,6 +82,7 @@ public class ChopBoxConnector extends AbstractConnector {
     return chop(endFigure, from);
   }
 
+  // FIXME Deal with this odd switch
   protected Point2D.Double chop(Figure target, Point2D.Double from) {
     target = getConnectorTarget(target);
     Rectangle2D.Double r = target.getBounds();

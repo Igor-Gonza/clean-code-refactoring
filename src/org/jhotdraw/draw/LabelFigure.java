@@ -24,6 +24,7 @@ import java.util.HashMap;
  * @version 2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 8. March 2004  Created.
  */
+@SuppressWarnings("unused")
 public class LabelFigure extends TextFigure implements FigureListener {
   private TextHolder target;
 

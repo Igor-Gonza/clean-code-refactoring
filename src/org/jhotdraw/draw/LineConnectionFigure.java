@@ -37,6 +37,7 @@ import java.util.Map;
  * @version 1.0.1 2006-02-06 Fixed redo bug.
  * <br>1.0 23. January 2006 Created.
  */
+@SuppressWarnings("unused")
 public class LineConnectionFigure extends LineFigure implements ConnectionFigure {
   private Connector startConnector;
   private Connector endConnector;
@@ -49,7 +50,7 @@ public class LineConnectionFigure extends LineFigure implements ConnectionFigure
   private ConnectionHandler connectionHandler = new ConnectionHandler(this);
 
   private static class ConnectionHandler implements FigureListener {
-    private LineConnectionFigure owner;
+    private final LineConnectionFigure owner;
 
     private ConnectionHandler(LineConnectionFigure owner) {
       this.owner = owner;

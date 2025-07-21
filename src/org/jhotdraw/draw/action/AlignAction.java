@@ -22,7 +22,6 @@ import org.jhotdraw.undo.CompositeEdit;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * Aligns the selected figures.
@@ -31,7 +30,7 @@ import java.util.Iterator;
  *
  * @author Werner Randelshofer
  * @version 2.0 2006-01-15 Changed to support double precision coordinates.
- * <br>1.0 17. M�rz 2004  Created.
+ * <br>1.0 17. Marz 2004  Created.
  */
 public abstract class AlignAction extends AbstractSelectedAction {
 
@@ -57,15 +56,14 @@ public abstract class AlignAction extends AbstractSelectedAction {
     fireUndoableEditHappened(edit);
   }
 
-  protected abstract void alignFigures(Collection selectedFigures, Rectangle2D.Double selectionBounds);
+  protected abstract void alignFigures(Collection<Figure> selectedFigures, Rectangle2D.Double selectionBounds);
 
   /**
    * Returns the bounds of the selected figures.
    */
   protected Rectangle2D.Double getSelectionBounds() {
     Rectangle2D.Double bounds = null;
-    for (Iterator i = getView().getSelectedFigures().iterator(); i.hasNext(); ) {
-      Figure f = (Figure) i.next();
+    for (Figure f : getView().getSelectedFigures()) {
       if (bounds == null) {
         bounds = f.getBounds();
       } else {
@@ -81,10 +79,9 @@ public abstract class AlignAction extends AbstractSelectedAction {
       labels.configureAction(this, "alignNorth");
     }
 
-    protected void alignFigures(Collection selectedFigures, Rectangle2D.Double selectionBounds) {
+    protected void alignFigures(Collection<Figure> selectedFigures, Rectangle2D.Double selectionBounds) {
       double y = selectionBounds.y;
-      for (Iterator i = getView().getSelectedFigures().iterator(); i.hasNext(); ) {
-        Figure f = (Figure) i.next();
+      for (Figure f : getView().getSelectedFigures()) {
         f.willChange();
         Rectangle2D.Double b = f.getBounds();
         AffineTransform tx = new AffineTransform();
@@ -102,10 +99,9 @@ public abstract class AlignAction extends AbstractSelectedAction {
       labels.configureAction(this, "alignEast");
     }
 
-    protected void alignFigures(Collection selectedFigures, Rectangle2D.Double selectionBounds) {
+    protected void alignFigures(Collection<Figure> selectedFigures, Rectangle2D.Double selectionBounds) {
       double x = selectionBounds.x + selectionBounds.width;
-      for (Iterator i = getView().getSelectedFigures().iterator(); i.hasNext(); ) {
-        Figure f = (Figure) i.next();
+      for (Figure f : getView().getSelectedFigures()) {
         f.willChange();
         Rectangle2D.Double b = f.getBounds();
         AffineTransform tx = new AffineTransform();
@@ -123,10 +119,9 @@ public abstract class AlignAction extends AbstractSelectedAction {
       labels.configureAction(this, "alignWest");
     }
 
-    protected void alignFigures(Collection selectedFigures, Rectangle2D.Double selectionBounds) {
+    protected void alignFigures(Collection<Figure> selectedFigures, Rectangle2D.Double selectionBounds) {
       double x = selectionBounds.x;
-      for (Iterator i = getView().getSelectedFigures().iterator(); i.hasNext(); ) {
-        Figure f = (Figure) i.next();
+      for (Figure f : getView().getSelectedFigures()) {
         f.willChange();
         Rectangle2D.Double b = f.getBounds();
         AffineTransform tx = new AffineTransform();
@@ -144,10 +139,9 @@ public abstract class AlignAction extends AbstractSelectedAction {
       labels.configureAction(this, "alignSouth");
     }
 
-    protected void alignFigures(Collection selectedFigures, Rectangle2D.Double selectionBounds) {
+    protected void alignFigures(Collection<Figure> selectedFigures, Rectangle2D.Double selectionBounds) {
       double y = selectionBounds.y + selectionBounds.height;
-      for (Iterator i = getView().getSelectedFigures().iterator(); i.hasNext(); ) {
-        Figure f = (Figure) i.next();
+      for (Figure f : getView().getSelectedFigures()) {
         f.willChange();
         Rectangle2D.Double b = f.getBounds();
         AffineTransform tx = new AffineTransform();
@@ -165,10 +159,9 @@ public abstract class AlignAction extends AbstractSelectedAction {
       labels.configureAction(this, "alignVertical");
     }
 
-    protected void alignFigures(Collection selectedFigures, Rectangle2D.Double selectionBounds) {
+    protected void alignFigures(Collection<Figure> selectedFigures, Rectangle2D.Double selectionBounds) {
       double y = selectionBounds.y + selectionBounds.height / 2;
-      for (Iterator i = getView().getSelectedFigures().iterator(); i.hasNext(); ) {
-        Figure f = (Figure) i.next();
+      for (Figure f : getView().getSelectedFigures()) {
         f.willChange();
         Rectangle2D.Double b = f.getBounds();
         AffineTransform tx = new AffineTransform();
@@ -186,10 +179,9 @@ public abstract class AlignAction extends AbstractSelectedAction {
       labels.configureAction(this, "alignHorizontal");
     }
 
-    protected void alignFigures(Collection selectedFigures, Rectangle2D.Double selectionBounds) {
+    protected void alignFigures(Collection<Figure> selectedFigures, Rectangle2D.Double selectionBounds) {
       double x = selectionBounds.x + selectionBounds.width / 2;
-      for (Iterator i = getView().getSelectedFigures().iterator(); i.hasNext(); ) {
-        Figure f = (Figure) i.next();
+      for (Figure f : getView().getSelectedFigures()) {
         f.willChange();
         Rectangle2D.Double b = f.getBounds();
         AffineTransform tx = new AffineTransform();

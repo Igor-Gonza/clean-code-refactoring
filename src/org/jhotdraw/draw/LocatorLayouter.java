@@ -61,7 +61,6 @@ public class LocatorLayouter implements Layouter {
         }
       }
     }
-
     return (bounds == null) ? new Rectangle2D.Double() : bounds;
   }
 
@@ -90,7 +89,6 @@ public class LocatorLayouter implements Layouter {
         }
       }
     }
-
     return (bounds == null) ? new Rectangle2D.Double() : bounds;
   }
 

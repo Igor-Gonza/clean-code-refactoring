@@ -17,8 +17,6 @@ package org.jhotdraw.draw.action;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 /**
  * JPopupButton provides a popup menu.
@@ -26,6 +24,7 @@ import java.beans.PropertyChangeListener;
  * @author wrandels
  * @version 1.1 2006-06-25 Added more "add" methods.
  */
+@SuppressWarnings("unused")
 public class JPopupButton extends javax.swing.JButton {
   private JPopupMenu popupMenu;
   private int columnCount = 1;

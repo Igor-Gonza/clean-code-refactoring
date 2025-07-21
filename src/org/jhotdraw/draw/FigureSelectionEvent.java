@@ -14,13 +14,15 @@
 
 package org.jhotdraw.draw;
 
+import java.util.EventObject;
+
 /**
  * FigureSelectionEvent.
  *
  * @author Werner Randelshofer
  * @version 1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
-public class FigureSelectionEvent extends java.util.EventObject {
+public class FigureSelectionEvent extends EventObject {
 
   /**
    * Creates a new instance.

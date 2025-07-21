@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 package org.jhotdraw.draw;
@@ -807,5 +806,4 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.ButtonGroup buttonGroup1;
   // End of variables declaration//GEN-END:variables
-
 }

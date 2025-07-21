@@ -20,39 +20,44 @@ import org.jhotdraw.util.ResourceBundleUtil;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
+
 /**
  * PickAttributesAction.
- * 
+ *
  * @author Werner Randelshofer
  * @version 1.0 25. November 2003  Created.
  */
+@SuppressWarnings({"FieldCanBeLocal", "unused"})
 public class PickAttributesAction extends AbstractSelectedAction {
-       private ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
-    
-    /** Creates a new instance. */
-    public PickAttributesAction(DrawingEditor editor) {
-        super(editor);
-        labels.configureAction(this, "attributesPick");
-        setEnabled(true);
-    }
-    
-    public void actionPerformed(java.awt.event.ActionEvent e) {
-        pickAttributes();
-    }
-    
-    public void pickAttributes() {
-        DrawingEditor editor = getEditor();
-        Collection<Figure> selection = getView().getSelectedFigures();
-        if (!selection.isEmpty()) {
-            Figure figure = selection.iterator().next();
-            for (Map.Entry<AttributeKey, Object> entry : figure.getAttributes().entrySet()) {
-                if (entry.getKey() != AttributeKeys.TEXT) {
-               editor.setDefaultAttribute(entry.getKey(), entry.getValue());
-               }
-            }
+  private final ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
+
+  /**
+   * Creates a new instance.
+   */
+  public PickAttributesAction(DrawingEditor editor) {
+    super(editor);
+    labels.configureAction(this, "attributesPick");
+    setEnabled(true);
+  }
+
+  public void actionPerformed(java.awt.event.ActionEvent e) {
+    pickAttributes();
+  }
+
+  public void pickAttributes() {
+    DrawingEditor editor = getEditor();
+    Collection<Figure> selection = getView().getSelectedFigures();
+    if (!selection.isEmpty()) {
+      Figure figure = selection.iterator().next();
+      for (Map.Entry<AttributeKey, Object> entry : figure.getAttributes().entrySet()) {
+        if (entry.getKey() != AttributeKeys.TEXT) {
+          editor.setDefaultAttribute(entry.getKey(), entry.getValue());
         }
+      }
     }
-    public void selectionChanged(FigureSelectionEvent evt) {
-        setEnabled(getView().getSelectionCount() == 1);
-    }
+  }
+
+  public void selectionChanged(FigureSelectionEvent evt) {
+    setEnabled(getView().getSelectionCount() == 1);
+  }
 }

@@ -101,7 +101,6 @@ public class SlantedLiner implements Liner, DOMStorable {
       path.get(2).moveTo(ep.x, ep.y - slantSize);
     }
     path.invalidatePath();
-
   }
 
   public void read(DOMInput in) {

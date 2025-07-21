@@ -10,9 +10,7 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
-
 
 package org.jhotdraw.draw;
 
@@ -49,13 +47,9 @@ public class TextFigure extends AttributedFigure implements TextHolder {
   protected Point2D.Double origin = new Point2D.Double();
   private boolean editable = true;
 
-
   // cache of the TextFigure's layout
   transient private TextLayout textLayout;
 
-  /**
-   * Creates a new instance.
-   */
   public TextFigure() {
     this("Text");
   }

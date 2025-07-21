@@ -24,7 +24,6 @@ import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Locale;
 
@@ -35,7 +34,7 @@ import java.util.Locale;
  * @version 1.0 24. November 2003  Created.
  */
 public class MoveToBackAction extends AbstractSelectedAction {
-  private ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
+  private final ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
 
   /**
    * Creates a new instance.
@@ -66,11 +65,9 @@ public class MoveToBackAction extends AbstractSelectedAction {
     });
   }
 
-  public static void sendToBack(DrawingView view, Collection figures) {
-    Iterator i = figures.iterator();
+  public static void sendToBack(DrawingView view, Collection<Figure> figures) {
     Drawing drawing = view.getDrawing();
-    while (i.hasNext()) {
-      Figure figure = (Figure) i.next();
+    for (Figure figure : figures) {
       drawing.sendToBack(figure);
     }
   }

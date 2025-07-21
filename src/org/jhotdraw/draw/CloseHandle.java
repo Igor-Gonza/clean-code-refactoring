@@ -21,7 +21,7 @@ import java.awt.*;
  *
  * @author Werner Randelshofer
  * @version 2.0 2006-01-14 Changed to support double precision coordinates.
- * <br>1.0 31. M�rz 2004  Created.
+ * <br>1.0 31. Marz 2004  Created.
  */
 public class CloseHandle extends LocatorHandle {
   private boolean pressed;

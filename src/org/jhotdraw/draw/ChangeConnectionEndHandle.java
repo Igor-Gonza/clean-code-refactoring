@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 package org.jhotdraw.draw;
@@ -73,5 +72,4 @@ public class ChangeConnectionEndHandle extends ChangeConnectionHandle {
   protected boolean canConnect(Figure existingEnd, Figure targetEnd) {
     return getConnection().canConnect(existingEnd, targetEnd);
   }
-
 }

@@ -10,7 +10,6 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
 
 package org.jhotdraw.draw;
@@ -47,6 +46,7 @@ public class LineFigure extends BezierFigure {
   // SHAPE AND BOUNDS
   // ATTRIBUTES
   // EDITING
+  // TODO Wonder why this exists
   public Collection<Handle> createHandles(int detailLevel) {
     LinkedList<Handle> handles = new LinkedList<>();
     switch (detailLevel) {

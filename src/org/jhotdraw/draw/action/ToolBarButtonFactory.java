@@ -38,6 +38,7 @@ import static org.jhotdraw.draw.AttributeKeys.*;
  * <br>1.1 2006-03-27 Font exclusion list updated.
  * <br>1.0 13. February 2006 Created.
  */
+@SuppressWarnings("unused")
 public class ToolBarButtonFactory {
   public final static Map<String, Color> DEFAULT_COLORS;
 
@@ -107,8 +108,8 @@ public class ToolBarButtonFactory {
 
 
   private static class ToolButtonListener implements ItemListener {
-    private Tool tool;
-    private DrawingEditor editor;
+    private final Tool tool;
+    private final DrawingEditor editor;
 
     public ToolButtonListener(Tool t, DrawingEditor editor) {
       this.tool = t;
@@ -252,8 +253,8 @@ public class ToolBarButtonFactory {
     });
 
     double[] factors = {16, 8, 5, 4, 3, 2, 1.5, 1.25, 1, 0.75, 0.5, 0.25, 0.10};
-    for (int i = 0; i < factors.length; i++) {
-      zoomPopupButton.add(new ZoomEditorAction(editor, factors[i], zoomPopupButton) {
+    for (double factor : factors) {
+      zoomPopupButton.add(new ZoomEditorAction(editor, factor, zoomPopupButton) {
         public void actionPerformed(java.awt.event.ActionEvent e) {
           super.actionPerformed(e);
           zoomPopupButton.setText((int) (editor.getView().getScaleFactor() * 100) + " %");
@@ -282,8 +283,8 @@ public class ToolBarButtonFactory {
     });
 
     double[] factors = {5, 4, 3, 2, 1.5, 1.25, 1, 0.75, 0.5, 0.25, 0.10};
-    for (int i = 0; i < factors.length; i++) {
-      zoomPopupButton.add(new ZoomAction(view, factors[i], zoomPopupButton) {
+    for (double factor : factors) {
+      zoomPopupButton.add(new ZoomAction(view, factor, zoomPopupButton) {
         public void actionPerformed(java.awt.event.ActionEvent e) {
           super.actionPerformed(e);
           zoomPopupButton.setText((int) (view.getScaleFactor() * 100) + " %");
@@ -326,7 +327,7 @@ public class ToolBarButtonFactory {
    * @param colorMap a Map with named colors. This is usually a LinkedHashMap
    *                 so that the colors are in a specific order.
    */
-  public static void addColorButtonTo(JToolBar bar, DrawingEditor editor, AttributeKey attributeKey, Map<String, Color> colorMap, int columnCount, String labelKey, ResourceBundleUtil labels) {
+  public static void addColorButtonTo(JToolBar bar, DrawingEditor editor, AttributeKey<Color> attributeKey, Map<String, Color> colorMap, int columnCount, String labelKey, ResourceBundleUtil labels) {
     final JPopupButton popupButton = new JPopupButton();
 
     popupButton.setAction(new DefaultAttributeAction(editor, attributeKey), new Rectangle(0, 0, 22, 22));
@@ -337,7 +338,7 @@ public class ToolBarButtonFactory {
       a.putValue(Action.SHORT_DESCRIPTION, entry.getKey());
     }
 
-    ImageIcon chooserIcon = new ImageIcon(ToolBarButtonFactory.class.getResource("/org/jhotdraw/draw/action/images/showColorChooser.png"));
+    ImageIcon chooserIcon = new ImageIcon(Objects.requireNonNull(ToolBarButtonFactory.class.getResource("/org/jhotdraw/draw/action/images/showColorChooser.png")));
 
     popupButton.add(new ColorChooserAction(editor, attributeKey, chooserIcon));
     labels.configureToolBarButton(popupButton, labelKey);
@@ -372,9 +373,9 @@ public class ToolBarButtonFactory {
       formatter.setMaximumFractionDigits(1);
       formatter.setMinimumFractionDigits(0);
     }
-    for (int i = 0; i < widths.length; i++) {
-      String label = Double.toString(widths[i]);
-      strokeWidthPopupButton.add(new AttributeAction(editor, STROKE_WIDTH, widths[i], label, new StrokeIcon(new BasicStroke((float) widths[i], BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL))));
+    for (double width : widths) {
+      String label = Double.toString(width);
+      strokeWidthPopupButton.add(new AttributeAction(editor, STROKE_WIDTH, width, label, new StrokeIcon(new BasicStroke((float) width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL))));
     }
     bar.add(strokeWidthPopupButton);
   }
@@ -387,9 +388,9 @@ public class ToolBarButtonFactory {
     strokeDecorationPopupButton.setFocusable(false);
     strokeDecorationPopupButton.setColumnCount(2, false);
     LineDecoration[] decorations = {new ArrowTip(0.35, 12, 11.3), new ArrowTip(0.35, 13, 7), null};
-    for (int i = 0; i < decorations.length; i++) {
-      strokeDecorationPopupButton.add(new AttributeAction(editor, START_DECORATION, decorations[i], null, new LineDecorationIcon(decorations[i], true)));
-      strokeDecorationPopupButton.add(new AttributeAction(editor, END_DECORATION, decorations[i], null, new LineDecorationIcon(decorations[i], false)));
+    for (LineDecoration decoration : decorations) {
+      strokeDecorationPopupButton.add(new AttributeAction(editor, START_DECORATION, decoration, null, new LineDecorationIcon(decoration, true)));
+      strokeDecorationPopupButton.add(new AttributeAction(editor, END_DECORATION, decoration, null, new LineDecorationIcon(decoration, false)));
     }
 
     bar.add(strokeDecorationPopupButton);
@@ -403,18 +404,18 @@ public class ToolBarButtonFactory {
     strokeDashesPopupButton.setFocusable(false);
     double[][] dashes = {null, {4d, 4d}, {2d, 2d}, {4d, 2d}, {2d, 4d}, {8d, 2d}, {6d, 2d, 2d, 2d}};
     //strokeDashesPopupButton.setColumnCount(2, false);
-    for (int i = 0; i < dashes.length; i++) {
+    for (double[] dash : dashes) {
 
       float[] fDashes;
-      if (dashes[i] == null) {
+      if (dash == null) {
         fDashes = null;
       } else {
-        fDashes = new float[dashes[i].length];
-        for (int j = 0; j < dashes[i].length; j++) {
-          fDashes[j] = (float) dashes[i][j];
+        fDashes = new float[dash.length];
+        for (int j = 0; j < dash.length; j++) {
+          fDashes[j] = (float) dash[j];
         }
       }
-      strokeDashesPopupButton.add(new AttributeAction(editor, STROKE_DASHES, dashes[i], null, new StrokeIcon(new BasicStroke(2f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10f, fDashes, 0))));
+      strokeDashesPopupButton.add(new AttributeAction(editor, STROKE_DASHES, dash, null, new StrokeIcon(new BasicStroke(2f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10f, fDashes, 0))));
     }
     bar.add(strokeDashesPopupButton);
   }
@@ -427,7 +428,7 @@ public class ToolBarButtonFactory {
     strokeTypePopupButton.setFocusable(false);
 
     strokeTypePopupButton.add(new AttributeAction(editor, STROKE_TYPE, AttributeKeys.StrokeType.BASIC, labels.getString("attributeStrokeTypeBasic"), new StrokeIcon(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL))));
-    HashMap<AttributeKey, Object> attr = new HashMap<>();
+    HashMap<AttributeKey<?>, Object> attr = new HashMap<>();
     attr.put(STROKE_TYPE, AttributeKeys.StrokeType.DOUBLE);
     attr.put(STROKE_INNER_WIDTH_FACTOR, 2d);
     strokeTypePopupButton.add(new AttributeAction(editor, attr, labels.getString("attributeStrokeTypeDouble"), new StrokeIcon(new DoubleStroke(2, 1))));
@@ -451,7 +452,7 @@ public class ToolBarButtonFactory {
     labels.configureToolBarButton(strokePlacementPopupButton, "attributeStrokePlacement");
     strokePlacementPopupButton.setFocusable(false);
 
-    HashMap<AttributeKey, Object> attr;
+    HashMap<AttributeKey<?>, Object> attr;
     attr = new HashMap<>();
     attr.put(STROKE_PLACEMENT, AttributeKeys.StrokePlacement.CENTER);
     attr.put(FILL_UNDER_STROKE, AttributeKeys.Underfill.CENTER);
@@ -507,28 +508,8 @@ public class ToolBarButtonFactory {
 
     labels.configureToolBarButton(fontPopupButton, "attributeFont");
     fontPopupButton.setFocusable(false);
-
-    Font[] allFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
-    HashSet<String> fontExclusionList = new HashSet<>(Arrays.asList(// Mac OS X 10.3 Font Exclusion List
-            "#GungSeo", "#HeadLineA", "#PCMyungjo", "#PilGi", "Al Bayan", "Apple LiGothic", "Apple LiSung", "AppleMyungjo", "Arial Hebrew", "Ayuthaya", "Baghdad", "BiauKai", "Charcoal CY", "Corsiva Hebrew", "DecoType Naskh", "Devanagari MT", "Fang Song", "GB18030 Bitmap", "Geeza Pro", "Geezah", "Geneva CY", "Gujarati MT", "Gurmukhi MT", "Hei", "Helvetica CY", "Hiragino Kaku Gothic Std", "Hiragino Maru Gothic Pro", "Hiragino Mincho Pro", "Hiragino Kaku Gothic Pro", "InaiMathi", "Kai", "Krungthep", "KufiStandardGK", "LiHei Pro", "LiSong Pro", "Mshtakan", "Monaco CY", "Nadeem", "New Peninim MT", "Osaka", "Plantagenet Cherokee", "Raanana", "STFangsong", "STHeiti", "STKaiti", "STSong", "Sathu", "Silom", "Thonburi", "Times CY",
-
-            // Windows XP Professional Font Exclusion List
-            "Arial Unicode MS", "Batang", "Estrangelo Edessa", "Gautami", "Kartika", "Latha", "Lucida Sans Unicode", "Mangal", "Marlett", "MS Mincho", "MS Outlook", "MV Boli", "OCR-B-10 BT", "Raavi", "Shruti", "SimSun", "Sylfaen", "Symbol", "Tunga", "Vrinda", "Wingdings", "Wingdings 2", "Wingdings 3", "ZWAdobeF"));
-    LinkedList<Font> fontList = new LinkedList<>();
-    for (int i = 0; i < allFonts.length; i++) {
-      if (!fontExclusionList.contains(allFonts[i].getFamily())) {
-        fontList.add(allFonts[i]);
-      }
-    }
-    allFonts = new Font[fontList.size()];
-    allFonts = fontList.toArray(allFonts);
-    Arrays.sort(allFonts, (f1, f2) -> {
-      int result = f1.getFamily().compareTo(f2.getFamily());
-      if (result == 0) {
-        result = f1.getFontName().compareTo(f2.getFontName());
-      }
-      return result;
-    });
+    Font[] allFonts = getFonts();
+    Arrays.sort(allFonts, Comparator.comparing((Font f) -> f.getFamily()).thenComparing(f -> f.getFontName()));
     LinkedList<Font> fontFamilies = new LinkedList<>();
     JMenu submenu = null;
     for (int i = 0; i < allFonts.length; i++) {
@@ -575,6 +556,29 @@ public class ToolBarButtonFactory {
     bar.add(boldToggleButton).setFocusable(false);
     bar.add(italicToggleButton).setFocusable(false);
     bar.add(underlineToggleButton).setFocusable(false);
+  }
+
+  private static Font[] getFonts() {
+    Font[] allFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
+    Set<String> fontExclusionList = new HashSet<>(Arrays.asList(
+            // Mac OS X 10.3 Font Exclusion List
+            "#GungSeo", "#HeadLineA", "#PCMyungjo", "#PilGi", "Al Bayan", "Apple LiGothic", "Apple LiSung",
+            "AppleMyungjo", "Arial Hebrew", "Ayuthaya", "Baghdad", "BiauKai", "Charcoal CY", "Corsiva Hebrew",
+            "DecoType Naskh", "Devanagari MT", "Fang Song", "GB18030 Bitmap", "Geeza Pro", "Geezah", "Geneva CY",
+            "Gujarati MT", "Gurmukhi MT", "Hei", "Helvetica CY", "Hiragino Kaku Gothic Std", "Hiragino Maru Gothic Pro",
+            "Hiragino Mincho Pro", "Hiragino Kaku Gothic Pro", "InaiMathi", "Kai", "Krungthep", "KufiStandardGK",
+            "LiHei Pro", "LiSong Pro", "Mshtakan", "Monaco CY", "Nadeem", "New Peninim MT", "Osaka",
+            "Plantagenet Cherokee", "Raanana", "STFangsong", "STHeiti", "STKaiti", "STSong", "Sathu", "Silom",
+            "Thonburi", "Times CY",
+
+            // Windows XP Professional Font Exclusion List
+            "Arial Unicode MS", "Batang", "Estrangelo Edessa", "Gautami", "Kartika", "Latha", "Lucida Sans Unicode",
+            "Mangal", "Marlett", "MS Mincho", "MS Outlook", "MV Boli", "OCR-B-10 BT", "Raavi", "Shruti", "SimSun",
+            "Sylfaen", "Symbol", "Tunga", "Vrinda", "Wingdings", "Wingdings 2", "Wingdings 3", "ZWAdobeF"));
+
+    return Arrays.stream(allFonts)
+            .filter(font -> !fontExclusionList.contains(font.getFamily()))
+            .toArray(Font[]::new);
   }
 
   /**

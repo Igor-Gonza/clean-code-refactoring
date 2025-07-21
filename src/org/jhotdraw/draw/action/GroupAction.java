@@ -33,7 +33,7 @@ import java.util.LinkedList;
  */
 public class GroupAction extends AbstractSelectedAction {
   public final static String ID = "selectionGroup";
-  private CompositeFigure prototype;
+  private final CompositeFigure prototype;
 
   /**
    * Creates a new instance.

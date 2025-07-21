@@ -11,6 +11,7 @@
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
  */
+
 package org.jhotdraw.draw;
 
 import java.beans.*;
@@ -207,6 +208,5 @@ public class DefaultDrawingViewBeanInfo extends SimpleBeanInfo {
         return null;
     }
   }
-
 }
 

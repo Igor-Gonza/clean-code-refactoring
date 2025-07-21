@@ -37,7 +37,7 @@ import java.util.Locale;
 public abstract class AbstractSelectedAction extends AbstractAction {
   private DrawingEditor editor;
   protected ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
-  private PropertyChangeListener propertyChangeHandler = evt -> {
+  private final PropertyChangeListener propertyChangeHandler = evt -> {
     if (evt.getPropertyName().equals("enabled")) {
       updateEnabledState();
     }
@@ -66,7 +66,7 @@ public abstract class AbstractSelectedAction extends AbstractAction {
     }
   }
 
-  private EventHandler eventHandler = new EventHandler();
+  private final EventHandler eventHandler = new EventHandler();
 
   /**
    * Creates an action which acts on the selected figures on the current view

@@ -12,7 +12,6 @@
  * JHotDraw.org.
  */
 
-
 package org.jhotdraw.draw;
 
 import org.jhotdraw.geom.BezierPath;
@@ -97,8 +96,7 @@ public class TriangleFigure extends AttributedFigure {
   // CLONING
   // EVENT HANDLING
   public Rectangle2D.Double getBounds() {
-    Rectangle2D.Double bounds = (Rectangle2D.Double) rectangle.clone();
-    return bounds;
+    return (Rectangle2D.Double) rectangle.clone();
   }
 
   protected void drawFill(Graphics2D g) {
