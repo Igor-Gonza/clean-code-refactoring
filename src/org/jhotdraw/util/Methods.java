@@ -82,7 +82,7 @@ public class Methods {
    * @return The return value of the method or METHOD_NOT_FOUND.
    * @throws NoSuchMethodException if the method does not exist or is not accessible.
    */
-  public static Object invokeStatic(Class clazz, String methodName) throws NoSuchMethodException {
+  public static Object invokeStatic(Class<?> clazz, String methodName) throws NoSuchMethodException {
     try {
       Method method = clazz.getMethod(methodName);
       return method.invoke(null);
@@ -120,7 +120,7 @@ public class Methods {
    * @return The return value of the method.
    * @throws NoSuchMethodException if the method does not exist or is not accessible.
    */
-  public static Object invokeStatic(Class clazz, String methodName, Class[] types, Object[] values) throws NoSuchMethodException {
+  public static Object invokeStatic(Class<?> clazz, String methodName, Class<?>[] types, Object[] values) throws NoSuchMethodException {
     try {
       Method method = clazz.getMethod(methodName, types);
       return method.invoke(null, values);
@@ -142,7 +142,7 @@ public class Methods {
    * @return The return value of the method.
    * @throws NoSuchMethodException if the method does not exist or is not accessible.
    */
-  public static Object invokeStatic(String clazz, String methodName, Class[] types, Object[] values) throws NoSuchMethodException {
+  public static Object invokeStatic(String clazz, String methodName, Class<?>[] types, Object[] values) throws NoSuchMethodException {
     try {
       return invokeStatic(Class.forName(clazz), methodName, types, values);
     } catch (ClassNotFoundException e) {
@@ -161,7 +161,7 @@ public class Methods {
    * @return The return value of the method or the default value if the method
    * does not exist or is not accessible.
    */
-  public static Object invokeStatic(String clazz, String methodName, Class[] types, Object[] values, Object defaultValue) {
+  public static Object invokeStatic(String clazz, String methodName, Class<?>[] types, Object[] values, Object defaultValue) {
     try {
       return invokeStatic(Class.forName(clazz), methodName, types, values);
     } catch (ClassNotFoundException | NoSuchMethodException e) {
@@ -248,7 +248,7 @@ public class Methods {
    * @param defaultValue This value is returned, if the method does not exist.
    * @return The value returned by the getter method or the default value.
    */
-  public static boolean invokeStaticGetter(Class clazz, String methodName, boolean defaultValue) {
+  public static boolean invokeStaticGetter(Class<?> clazz, String methodName, boolean defaultValue) {
     try {
       Method method = clazz.getMethod(methodName);
       Object result = method.invoke(null);
@@ -318,7 +318,7 @@ public class Methods {
    * @param obj        The object on which to invoke the method.
    * @param methodName The name of the method.
    */
-  public static Object invoke(Object obj, String methodName, Class clazz, Object newValue) throws NoSuchMethodException {
+  public static Object invoke(Object obj, String methodName, Class<?> clazz, Object newValue) throws NoSuchMethodException {
     try {
       Method method = obj.getClass().getMethod(methodName, clazz);
       return method.invoke(obj, newValue);
@@ -336,7 +336,7 @@ public class Methods {
    * @param obj        The object on which to invoke the method.
    * @param methodName The name of the method.
    */
-  public static Object invoke(Object obj, String methodName, Class[] clazz, Object... newValue) throws NoSuchMethodException {
+  public static Object invoke(Object obj, String methodName, Class<?>[] clazz, Object... newValue) throws NoSuchMethodException {
     try {
       Method method = obj.getClass().getMethod(methodName, clazz);
       return method.invoke(obj, newValue);
@@ -396,7 +396,7 @@ public class Methods {
    * @param obj        The object on which to invoke the method.
    * @param methodName The name of the method.
    */
-  public static void invokeIfExists(Object obj, String methodName, Class clazz, Object newValue) {
+  public static void invokeIfExists(Object obj, String methodName, Class<?> clazz, Object newValue) {
     try {
       invoke(obj, methodName, clazz, newValue);
     } catch (NoSuchMethodException e) {

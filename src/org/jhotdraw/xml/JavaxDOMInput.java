@@ -45,12 +45,12 @@ public class JavaxDOMInput implements DOMInput {
    * the XML DOM. A key in this map is a String representing a marshalled
    * reference. A value in this map is an unmarshalled Object.
    */
-  private HashMap<String, Object> idObjects = new HashMap<>();
+  private final HashMap<String, Object> idObjects = new HashMap<>();
 
   /**
    * The document used for input.
    */
-  private Document document;
+  private final Document document;
   /**
    * The current node used for input.
    */
@@ -59,7 +59,7 @@ public class JavaxDOMInput implements DOMInput {
   /**
    * The factory used to create objects from XML tag names.
    */
-  private DOMFactory factory;
+  private final DOMFactory factory;
 
   public JavaxDOMInput(DOMFactory factory, InputStream in) throws IOException {
     this.factory = factory;
@@ -208,12 +208,11 @@ public class JavaxDOMInput implements DOMInput {
     int len = list.getLength();
     for (int i = 0; i < len; i++) {
       Node node = list.item(i);
-      if ((node instanceof Element)) {
-        if (count++ == index) {
-          current = node;
-          return;
-        }
+      if ((node instanceof Element) && count++ == index) {
+        current = node;
+        return;
       }
+
     }
   }
 
@@ -221,7 +220,6 @@ public class JavaxDOMInput implements DOMInput {
    * Opens the last element with the specified name and makes it the current node.
    */
   public void openElement(String tagName) {
-    int count = 0;
     NodeList list = current.getChildNodes();
     int len = list.getLength();
     for (int i = 0; i < len; i++) {
@@ -244,12 +242,11 @@ public class JavaxDOMInput implements DOMInput {
     int len = list.getLength();
     for (int i = 0; i < len; i++) {
       Node node = list.item(i);
-      if ((node instanceof Element) && ((Element) node).getTagName().equals(tagName)) {
-        if (count++ == index) {
-          current = node;
-          return;
-        }
+      if ((node instanceof Element) && ((Element) node).getTagName().equals(tagName) && count++ == index) {
+        current = node;
+        return;
       }
+
     }
     throw new IllegalArgumentException("no such child " + tagName + "[" + index + "]");
   }
@@ -262,10 +259,9 @@ public class JavaxDOMInput implements DOMInput {
    *                                  not match the tag name of the element.
    */
   public void closeElement() {
-        /*
-        if (! ((Element) current).getTagName().equals(tagName)) {
-            throw new IllegalArgumentException("Attempt to close wrong element:"+tagName +"!="+((Element) current).getTagName());
-        }*/
+//    if (!((Element) current).getTagName().equals(tagName)) {
+//      throw new IllegalArgumentException("Attempt to close wrong element:" + tagName + "!=" + ((Element) current).getTagName());
+//    }
     current = current.getParentNode();
   }
 
@@ -335,11 +331,10 @@ public class JavaxDOMInput implements DOMInput {
         o = factory.create(getTagName());
         idObjects.put(id, o);
       }
-      if (ref == null) {
-        if (o instanceof DOMStorable) {
+      if (ref == null && o instanceof DOMStorable) {
           ((DOMStorable) o).read(this);
         }
-      }
+
     }
 
     closeElement();

@@ -24,12 +24,12 @@ import java.util.*;
  * <br>1.0 June 10, 2006, Created.
  */
 public class DefaultDOMFactory implements DOMFactory {
-  private final static HashMap<Class, String> classToNameMap = new HashMap<>();
-  private final static HashMap<String, Object> nameToPrototypeMap = new HashMap<>();
-  private final static HashMap<Class, String> enumClassToNameMap = new HashMap<>();
-  private final static HashMap<String, Class> nameToEnumClassMap = new HashMap<>();
-  private final static HashMap<Enum, String> enumToValueMap = new HashMap<>();
-  private final static HashMap<String, Set<Enum>> valueToEnumMap = new HashMap<>();
+  private static final HashMap<Class, String> classToNameMap = new HashMap<>();
+  private static final HashMap<String, Object> nameToPrototypeMap = new HashMap<>();
+  private static final HashMap<Class, String> enumClassToNameMap = new HashMap<>();
+  private static final HashMap<String, Class> nameToEnumClassMap = new HashMap<>();
+  private static final HashMap<Enum, String> enumToValueMap = new HashMap<>();
+  private static final HashMap<String, Set<Enum>> valueToEnumMap = new HashMap<>();
 
   /**
    * Creates a new instance.

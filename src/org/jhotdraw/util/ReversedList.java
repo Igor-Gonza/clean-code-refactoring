@@ -22,7 +22,7 @@ import java.util.*;
  * @author wrandels
  */
 public class ReversedList<T> extends AbstractList<T> {
-  private List<T> target;
+  private final List<T> target;
 
   /**
    * Creates a new instance of ReversedList

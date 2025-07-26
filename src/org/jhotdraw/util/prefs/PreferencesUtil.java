@@ -16,6 +16,7 @@ package org.jhotdraw.util.prefs;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Rectangle2D;
 import java.util.prefs.*;
 import javax.swing.*;
 
@@ -62,16 +63,18 @@ public class PreferencesUtil {
     if (!screenBounds.contains(bounds)) {
       bounds.x = screenBounds.x + (screenBounds.width - bounds.width) / 2;
       bounds.y = screenBounds.y + (screenBounds.height - bounds.height) / 2;
-      Rectangle.intersect(screenBounds, bounds, bounds);
+      Rectangle2D.intersect(screenBounds, bounds, bounds);
     }
     window.setBounds(bounds);
 
     window.addComponentListener(new ComponentAdapter() {
+      @Override
       public void componentMoved(ComponentEvent evt) {
         prefs.putInt(name + ".x", evt.getComponent().getX());
         prefs.putInt(name + ".y", evt.getComponent().getY());
       }
 
+      @Override
       public void componentResized(ComponentEvent evt) {
         prefs.putInt(name + ".width", evt.getComponent().getWidth());
         prefs.putInt(name + ".height", evt.getComponent().getHeight());
@@ -107,7 +110,7 @@ public class PreferencesUtil {
 
     Dimension preferredSize = window.getPreferredSize();
 
-    Rectangle bounds = new Rectangle(prefs.getInt(name + ".x", x + screenBounds.x), prefs.getInt(name + ".y", 0 + screenBounds.y), preferredSize.width, preferredSize.height);
+    Rectangle bounds = new Rectangle(prefs.getInt(name + ".x", x + screenBounds.x), prefs.getInt(name + ".y", screenBounds.y), preferredSize.width, preferredSize.height);
 
     if (!screenBounds.contains(bounds)) {
       bounds.x = screenBounds.x;
@@ -116,15 +119,17 @@ public class PreferencesUtil {
     window.setBounds(bounds);
 
     window.addComponentListener(new ComponentAdapter() {
+      @Override
       public void componentMoved(ComponentEvent evt) {
         prefs.putInt(name + ".x", evt.getComponent().getX());
         prefs.putInt(name + ".y", evt.getComponent().getY());
       }
-            /*
-            public void componentResized(ComponentEvent evt) {
-                prefs.putInt(name+".width", evt.getComponent().getWidth());
-                prefs.putInt(name+".height", evt.getComponent().getHeight());
-            }*/
+
+//      @Override
+//      public void componentResized(ComponentEvent evt) {
+//        prefs.putInt(name + ".width", evt.getComponent().getWidth());
+//        prefs.putInt(name + ".height", evt.getComponent().getHeight());
+//      }
     });
 
   }
@@ -157,16 +162,18 @@ public class PreferencesUtil {
     if (!screenBounds.contains(bounds)) {
       bounds.x = screenBounds.x + (screenBounds.width - bounds.width) / 2;
       bounds.y = screenBounds.y + (screenBounds.height - bounds.height) / 2;
-      Rectangle.intersect(screenBounds, bounds, bounds);
+      Rectangle2D.intersect(screenBounds, bounds, bounds);
     }
     window.setBounds(bounds);
 
     window.addComponentListener(new ComponentAdapter() {
+      @Override
       public void componentMoved(ComponentEvent evt) {
         prefs.putInt(name + ".x", evt.getComponent().getX());
         prefs.putInt(name + ".y", evt.getComponent().getY());
       }
 
+      @Override
       public void componentResized(ComponentEvent evt) {
         prefs.putInt(name + ".width", evt.getComponent().getWidth());
         prefs.putInt(name + ".height", evt.getComponent().getHeight());

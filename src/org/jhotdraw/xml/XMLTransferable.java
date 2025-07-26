@@ -25,8 +25,8 @@ import java.io.*;
  * @version 1.0 2001 Created.
  */
 public class XMLTransferable implements java.awt.datatransfer.Transferable, java.awt.datatransfer.ClipboardOwner {
-  private byte[] data;
-  private DataFlavor flavor;
+  private final byte[] data;
+  private final DataFlavor flavor;
 
   /**
    * Creates new XMLTransferable

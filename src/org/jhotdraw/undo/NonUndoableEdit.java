@@ -30,10 +30,12 @@ public class NonUndoableEdit extends AbstractUndoableEdit {
   public NonUndoableEdit() {
   }
 
+  @Override
   public boolean canUndo() {
     return false;
   }
 
+  @Override
   public boolean canRedo() {
     return false;
   }

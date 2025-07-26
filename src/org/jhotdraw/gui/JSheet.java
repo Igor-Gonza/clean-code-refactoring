@@ -23,8 +23,6 @@ import javax.swing.event.EventListenerList;
 import javax.swing.plaf.OptionPaneUI;
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 /**
  * JSheet is a document modal dialog which is displayed below the title bar
@@ -123,6 +121,7 @@ public class JSheet extends JDialog {
     // and don't shift the owner back to the place it was, when we opened
     // the sheet.
     ownerMovementHandler = new ComponentAdapter() {
+      @Override
       public void componentMoved(ComponentEvent evt) {
         Window owner = getOwner();
         Point newLocation = owner.getLocation();
@@ -219,6 +218,7 @@ public class JSheet extends JDialog {
     }
   }
 
+  @Override
   public void addNotify() {
     super.addNotify();
     if (UIManager.getBoolean("Sheet.showAsSheet")) {
@@ -245,6 +245,7 @@ public class JSheet extends JDialog {
     return isAnimated;
   }
 
+  @Override
   public void dispose() {
     super.dispose();
     uninstallSheet();
@@ -258,6 +259,7 @@ public class JSheet extends JDialog {
     super.show();
   }
 
+  @Override
   public void hide() {
     if (isAnimated() && isShowAsSheet()) {
       getContentPane().setVisible(false);
@@ -297,6 +299,7 @@ public class JSheet extends JDialog {
     }
   }
 
+  @Override
   public void show() {
     if (isAnimated() && isShowAsSheet()) {
       installSheet();
@@ -820,16 +823,19 @@ public class JSheet extends JDialog {
       private boolean gotFocus = false;
       int count;
 
+      @Override
       public void windowClosing(WindowEvent we) {
         pane.setValue(null);
       }
 
+      @Override
       public void windowClosed(WindowEvent we) {
         if (pane.getValue() == JOptionPane.UNINITIALIZED_VALUE) {
           sheet.fireOptionSelected(pane);
         }
       }
 
+      @Override
       public void windowGainedFocus(WindowEvent we) {
         // Once window gets focus, set initial focus
         if (!gotFocus) {
@@ -846,6 +852,7 @@ public class JSheet extends JDialog {
       }
     });
     sheet.addComponentListener(new ComponentAdapter() {
+      @Override
       public void componentShown(ComponentEvent ce) {
         // reset value to ensure closing works properly
         pane.setValue(JOptionPane.UNINITIALIZED_VALUE);
@@ -953,6 +960,7 @@ public class JSheet extends JDialog {
     };
     chooser.addActionListener(actionListener);
     sheet.addWindowListener(new WindowAdapter() {
+      @Override
       public void windowClosing(WindowEvent e) {
         sheet.fireOptionSelected(chooser, JFileChooser.CANCEL_OPTION);
         chooser.removeActionListener(actionListener);

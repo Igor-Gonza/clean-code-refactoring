@@ -44,7 +44,7 @@ public class NanoXMLLiteDOMOutput implements DOMOutput {
    * the XML DOM. A key in this map is a Java Object, a value in this map
    * is String representing a marshalled reference to that object.
    */
-  private HashMap<Object, String> objectIds;
+  private final HashMap<Object, String> objectIds;
   /**
    * This map is used to cache prototype objects.
    */
@@ -53,7 +53,7 @@ public class NanoXMLLiteDOMOutput implements DOMOutput {
   /**
    * The document used for output.
    */
-  private XMLElement document;
+  private final XMLElement document;
   /**
    * The current node used for output.
    */
@@ -61,11 +61,11 @@ public class NanoXMLLiteDOMOutput implements DOMOutput {
   /**
    * The factory used to create objects.
    */
-  private DOMFactory factory;
+  private final DOMFactory factory;
   /**
    * The stack.
    */
-  private Stack<XMLElement> stack;
+  private final Stack<XMLElement> stack;
 
   /**
    * Creates a new instance.
@@ -97,14 +97,14 @@ public class NanoXMLLiteDOMOutput implements DOMOutput {
       out.write(doctype);
       out.write(">\n");
     }
-    ((XMLElement) document.getChildren().get(0)).write(out);
+    (document.getChildren().get(0)).write(out);
   }
 
   /**
    * Prints the contents of the DOMOutput into the specified print writer.
    */
   public void print(PrintWriter out) {
-    ((XMLElement) document.getChildren().get(0)).print(out);
+    (document.getChildren().get(0)).print(out);
   }
 
   /**
@@ -239,22 +239,22 @@ public class NanoXMLLiteDOMOutput implements DOMOutput {
     } else if (o instanceof int[]) {
       openElement("intArray");
       int[] a = (int[]) o;
-      for (int i = 0; i < a.length; i++) {
-        writeObject(a[i]);
+      for (int j : a) {
+        writeObject(j);
       }
       closeElement();
     } else if (o instanceof float[]) {
       openElement("floatArray");
       float[] a = (float[]) o;
-      for (int i = 0; i < a.length; i++) {
-        writeObject(a[i]);
+      for (float v : a) {
+        writeObject(v);
       }
       closeElement();
     } else if (o instanceof double[]) {
       openElement("doubleArray");
       double[] a = (double[]) o;
-      for (int i = 0; i < a.length; i++) {
-        writeObject(a[i]);
+      for (double v : a) {
+        writeObject(v);
       }
       closeElement();
     } else if (o instanceof Font) {

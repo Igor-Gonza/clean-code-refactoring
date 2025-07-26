@@ -48,7 +48,7 @@ public class JavaxDOMOutput implements DOMOutput {
    * the XML DOM. A key in this map is a Java Object, a value in this map
    * is String representing a marshalled reference to that object.
    */
-  private HashMap<Object, String> objectIds;
+  private final HashMap<Object, String> objectIds;
 
   /**
    * This map is used to cache prototype objects.
@@ -58,7 +58,7 @@ public class JavaxDOMOutput implements DOMOutput {
   /**
    * The document used for output.
    */
-  private Document document;
+  private final Document document;
   /**
    * The current node used for output.
    */
@@ -66,7 +66,7 @@ public class JavaxDOMOutput implements DOMOutput {
   /**
    * The factory used to create objects.
    */
-  private DOMFactory factory;
+  private final DOMFactory factory;
 
   /**
    * Creates a new instance.
@@ -138,10 +138,9 @@ public class JavaxDOMOutput implements DOMOutput {
    *                                  not match the tag name of the element.
    */
   public void closeElement() {
-        /*
-        if (! ((Element) current).getName().equals(tagName)) {
-            throw new IllegalArgumentException("Attempt to close wrong element:"+tagName +"!="+((Element) current).getName());
-        }*/
+//    if (!((Element) current).getName().equals(tagName)) {
+//      throw new IllegalArgumentException("Attempt to close wrong element:" + tagName + "!=" + ((Element) current).getName());
+//    }
     current = current.getParentNode();
   }
 
@@ -241,22 +240,22 @@ public class JavaxDOMOutput implements DOMOutput {
     } else if (o instanceof int[]) {
       openElement("intArray");
       int[] a = (int[]) o;
-      for (int i = 0; i < a.length; i++) {
-        writeObject(a[i]);
+      for (int j : a) {
+        writeObject(j);
       }
       closeElement();
     } else if (o instanceof float[]) {
       openElement("floatArray");
       float[] a = (float[]) o;
-      for (int i = 0; i < a.length; i++) {
-        writeObject(a[i]);
+      for (float v : a) {
+        writeObject(v);
       }
       closeElement();
     } else if (o instanceof double[]) {
       openElement("doubleArray");
       double[] a = (double[]) o;
-      for (int i = 0; i < a.length; i++) {
-        writeObject(a[i]);
+      for (double v : a) {
+        writeObject(v);
       }
       closeElement();
     } else if (o instanceof Font) {

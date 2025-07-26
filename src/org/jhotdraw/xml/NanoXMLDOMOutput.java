@@ -44,7 +44,7 @@ public class NanoXMLDOMOutput implements DOMOutput {
    * the XML DOM. A key in this map is a Java Object, a value in this map
    * is String representing a marshalled reference to that object.
    */
-  private HashMap<Object, String> objectIds;
+  private final HashMap<Object, String> objectIds;
   /**
    * This map is used to cache prototype objects.
    */
@@ -53,7 +53,7 @@ public class NanoXMLDOMOutput implements DOMOutput {
   /**
    * The document used for output.
    */
-  private XMLElement document;
+  private final XMLElement document;
   /**
    * The current node used for output.
    */
@@ -61,11 +61,11 @@ public class NanoXMLDOMOutput implements DOMOutput {
   /**
    * The factory used to create objects.
    */
-  private DOMFactory factory;
+  private final DOMFactory factory;
   /**
    * The stack.
    */
-  private Stack<XMLElement> stack;
+  private final Stack<XMLElement> stack;
 
   /**
    * Creates a new instance.
@@ -73,9 +73,9 @@ public class NanoXMLDOMOutput implements DOMOutput {
   public NanoXMLDOMOutput(DOMFactory factory) {
     this.factory = factory;
     objectIds = new HashMap<>();
-    document = new XMLElement();//new HashMap(), false, false);
+    document = new XMLElement();
     current = document;
-    stack = new Stack<XMLElement>();
+    stack = new Stack<>();
     stack.push(current);
   }
 
@@ -98,7 +98,7 @@ public class NanoXMLDOMOutput implements DOMOutput {
       out.write(">\n");
     }
     XMLWriter writer = new XMLWriter(out);
-    writer.write((XMLElement) document.getChildren().get(0));
+    writer.write(document.getChildren().get(0));
   }
 
   /**
@@ -108,12 +108,10 @@ public class NanoXMLDOMOutput implements DOMOutput {
     XMLWriter writer = new XMLWriter(out);
 
     try {
-      // writer.write(document);
-      writer.write((XMLElement) document.getChildren().get(0), true);
+      writer.write(document.getChildren().get(0), true);
     } catch (IOException e) {
       throw new InternalError(e);
     }
-    //((XMLElement) document.getChildren().get(0)).print(out);
   }
 
   /**
@@ -123,7 +121,7 @@ public class NanoXMLDOMOutput implements DOMOutput {
    * The element must be closed using closeElement.
    */
   public void openElement(String tagName) {
-    XMLElement newElement = new XMLElement();//new HashMap(), false, false);
+    XMLElement newElement = new XMLElement();
     newElement.setName(tagName);
     current.addChild(newElement);
     stack.push(current);
@@ -138,7 +136,7 @@ public class NanoXMLDOMOutput implements DOMOutput {
    *                                  not match the tag name of the element.
    */
   public void closeElement() {
-    current = (XMLElement) stack.pop();
+    current = stack.pop();
   }
 
   /**
@@ -248,22 +246,22 @@ public class NanoXMLDOMOutput implements DOMOutput {
     } else if (o instanceof int[]) {
       openElement("intArray");
       int[] a = (int[]) o;
-      for (int i = 0; i < a.length; i++) {
-        writeObject(a[i]);
+      for (int j : a) {
+        writeObject(j);
       }
       closeElement();
     } else if (o instanceof float[]) {
       openElement("floatArray");
       float[] a = (float[]) o;
-      for (int i = 0; i < a.length; i++) {
-        writeObject(a[i]);
+      for (float v : a) {
+        writeObject(v);
       }
       closeElement();
     } else if (o instanceof double[]) {
       openElement("doubleArray");
       double[] a = (double[]) o;
-      for (int i = 0; i < a.length; i++) {
-        writeObject(a[i]);
+      for (double v : a) {
+        writeObject(v);
       }
       closeElement();
     } else if (o instanceof Font) {

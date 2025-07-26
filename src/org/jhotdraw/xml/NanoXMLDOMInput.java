@@ -35,12 +35,8 @@ public class NanoXMLDOMInput implements DOMInput {
    * the XML DOM. A key in this map is a String representing a marshalled
    * reference. A value in this map is an unmarshalled Object.
    */
-  private HashMap<String, Object> idObjects = new HashMap<>();
+  private final HashMap<String, Object> idObjects = new HashMap<>();
 
-  /**
-   * The document used for input.
-   */
-  private XMLElement document;
   /**
    * The current node used for input.
    */
@@ -54,7 +50,7 @@ public class NanoXMLDOMInput implements DOMInput {
   /**
    * The stack.
    */
-  private Stack<XMLElement> stack = new Stack<>();
+  private final Stack<XMLElement> stack = new Stack<>();
 
   public NanoXMLDOMInput(DOMFactory factory, InputStream in) throws IOException {
     this(factory, new InputStreamReader(in, StandardCharsets.UTF_8));
@@ -68,7 +64,10 @@ public class NanoXMLDOMInput implements DOMInput {
       IXMLParser parser = XMLParserFactory.createDefaultXMLParser();
       IXMLReader reader = new StdXMLReader(in);
       parser.setReader(reader);
-      document = new XMLElement();
+      /*
+       * The document used for input.
+       */
+      XMLElement document = new XMLElement();
       current = (XMLElement) parser.parse();
       document.addChild(current);
       current = document;
@@ -160,8 +159,8 @@ public class NanoXMLDOMInput implements DOMInput {
   public int getElementCount(String tagName) {
     int count = 0;
     ArrayList list = current.getChildren();
-    for (int i = 0; i < list.size(); i++) {
-      XMLElement node = (XMLElement) list.get(i);
+    for (Object o : list) {
+      XMLElement node = (XMLElement) o;
       if (node.getName().equals(tagName)) {
         count++;
       }
@@ -183,8 +182,8 @@ public class NanoXMLDOMInput implements DOMInput {
    */
   public void openElement(String tagName) throws IOException {
     ArrayList list = current.getChildren();
-    for (int i = 0; i < list.size(); i++) {
-      XMLElement node = (XMLElement) list.get(i);
+    for (Object o : list) {
+      XMLElement node = (XMLElement) o;
       if (node.getName().equals(tagName)) {
         stack.push(current);
         current = node;
@@ -201,15 +200,14 @@ public class NanoXMLDOMInput implements DOMInput {
   public void openElement(String tagName, int index) throws IOException {
     int count = 0;
     ArrayList list = current.getChildren();
-    for (int i = 0; i < list.size(); i++) {
-      XMLElement node = (XMLElement) list.get(i);
-      if (node.getName().equals(tagName)) {
-        if (count++ == index) {
-          stack.push(current);
-          current = node;
-          return;
-        }
+    for (Object o : list) {
+      XMLElement node = (XMLElement) o;
+      if (node.getName().equals(tagName) && count++ == index) {
+        stack.push(current);
+        current = node;
+        return;
       }
+
     }
     throw new IOException("no such element:" + tagName + " at index:" + index);
   }
@@ -292,11 +290,10 @@ public class NanoXMLDOMInput implements DOMInput {
         idObjects.put(id, o);
       }
 
-      if (ref == null) {
-        if (o instanceof DOMStorable) {
-          ((DOMStorable) o).read(this);
-        }
+      if (ref == null && o instanceof DOMStorable) {
+        ((DOMStorable) o).read(this);
       }
+
     }
 
     closeElement();
