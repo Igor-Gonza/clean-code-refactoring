@@ -16,7 +16,7 @@
 package org.jhotdraw.draw.handlers;
 
 import org.jhotdraw.draw.views.DrawingView;
-import org.jhotdraw.draw.HandleListener;
+import org.jhotdraw.draw.listeners.HandleListener;
 import org.jhotdraw.draw.figures.Figure;
 
 import java.awt.*;

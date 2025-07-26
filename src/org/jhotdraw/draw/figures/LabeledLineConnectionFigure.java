@@ -17,7 +17,7 @@ package org.jhotdraw.draw.figures;
 import org.jhotdraw.draw.AttributeKey;
 import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.events.FigureEvent;
-import org.jhotdraw.draw.FigureListener;
+import org.jhotdraw.draw.listeners.FigureListener;
 import org.jhotdraw.draw.layouters.Layouter;
 import org.jhotdraw.util.ReversedList;
 

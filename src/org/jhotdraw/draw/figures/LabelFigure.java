@@ -15,7 +15,7 @@
 package org.jhotdraw.draw.figures;
 
 import org.jhotdraw.draw.events.FigureEvent;
-import org.jhotdraw.draw.FigureListener;
+import org.jhotdraw.draw.listeners.FigureListener;
 import org.jhotdraw.draw.tools.TextTool;
 import org.jhotdraw.draw.tools.Tool;
 

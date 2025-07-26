@@ -15,9 +15,9 @@
 package org.jhotdraw.draw.views;
 
 import org.jhotdraw.app.EditableComponent;
-import org.jhotdraw.draw.DrawingListener;
-import org.jhotdraw.draw.FigureSelectionListener;
-import org.jhotdraw.draw.HandleListener;
+import org.jhotdraw.draw.listeners.DrawingListener;
+import org.jhotdraw.draw.listeners.FigureSelectionListener;
+import org.jhotdraw.draw.listeners.HandleListener;
 import org.jhotdraw.draw.Options;
 import org.jhotdraw.draw.constrainers.Constrainer;
 import org.jhotdraw.draw.constrainers.GridConstrainer;

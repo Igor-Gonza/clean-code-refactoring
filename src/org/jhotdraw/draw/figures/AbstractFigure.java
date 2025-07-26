@@ -23,6 +23,7 @@ import org.jhotdraw.draw.edits.SetBoundsEdit;
 import org.jhotdraw.draw.edits.TransformEdit;
 import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.listeners.FigureListener;
 import org.jhotdraw.draw.tools.Tool;
 import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.geom.Dimension2DDouble;
@@ -80,12 +81,12 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
   // COMPOSITE FIGURES
   // CLONING
   // EVENT HANDLING
-  public void addFigureListener(FigureListener l) {
-    listenerList.add(FigureListener.class, l);
+  public void addFigureListener(org.jhotdraw.draw.listeners.FigureListener l) {
+    listenerList.add(org.jhotdraw.draw.listeners.FigureListener.class, l);
   }
 
-  public void removeFigureListener(FigureListener l) {
-    listenerList.remove(FigureListener.class, l);
+  public void removeFigureListener(org.jhotdraw.draw.listeners.FigureListener l) {
+    listenerList.remove(org.jhotdraw.draw.listeners.FigureListener.class, l);
   }
 
   public void addUndoableEditListener(UndoableEditListener l) {
@@ -143,10 +144,10 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
       // Process the listeners last to first, notifying
       // those that are interested in this event
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
-        if (listeners[i] == FigureListener.class) {
+        if (listeners[i] == org.jhotdraw.draw.listeners.FigureListener.class) {
           // Lazily create the event:
           if (event == null) event = new org.jhotdraw.draw.events.FigureEvent(this, invalidatedArea);
-          ((FigureListener) listeners[i + 1]).figureAreaInvalidated(event);
+          ((org.jhotdraw.draw.listeners.FigureListener) listeners[i + 1]).figureAreaInvalidated(event);
         }
       }
     }
@@ -165,7 +166,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
       // Process the listeners last to first, notifying
       // those that are interested in this event
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
-        if (listeners[i] == FigureListener.class) {
+        if (listeners[i] == org.jhotdraw.draw.listeners.FigureListener.class) {
           // Lazily create the event:
           if (event == null) event = new org.jhotdraw.draw.events.FigureEvent(this, getBounds());
           ((FigureListener) listeners[i + 1]).figureRequestRemove(event);
@@ -187,10 +188,10 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
       // Process the listeners last to first, notifying
       // those that are interested in this event
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
-        if (listeners[i] == FigureListener.class) {
+        if (listeners[i] == org.jhotdraw.draw.listeners.FigureListener.class) {
           // Lazily create the event:
           if (event == null) event = new org.jhotdraw.draw.events.FigureEvent(this, getBounds());
-          ((FigureListener) listeners[i + 1]).figureAdded(event);
+          ((org.jhotdraw.draw.listeners.FigureListener) listeners[i + 1]).figureAdded(event);
         }
       }
     }
@@ -209,10 +210,10 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
       // Process the listeners last to first, notifying
       // those that are interested in this event
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
-        if (listeners[i] == FigureListener.class) {
+        if (listeners[i] == org.jhotdraw.draw.listeners.FigureListener.class) {
           // Lazily create the event:
           if (event == null) event = new org.jhotdraw.draw.events.FigureEvent(this, getBounds());
-          ((FigureListener) listeners[i + 1]).figureRemoved(event);
+          ((org.jhotdraw.draw.listeners.FigureListener) listeners[i + 1]).figureRemoved(event);
         }
       }
     }
@@ -235,10 +236,10 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
       // Process the listeners last to first, notifying
       // those that are interested in this event
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
-        if (listeners[i] == FigureListener.class) {
+        if (listeners[i] == org.jhotdraw.draw.listeners.FigureListener.class) {
           // Lazily create the event:
           if (event == null) event = new org.jhotdraw.draw.events.FigureEvent(this, changedArea);
-          ((FigureListener) listeners[i + 1]).figureChanged(event);
+          ((org.jhotdraw.draw.listeners.FigureListener) listeners[i + 1]).figureChanged(event);
         }
       }
     }
@@ -252,9 +253,9 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
       // Process the listeners last to first, notifying
       // those that are interested in this event
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
-        if (listeners[i] == FigureListener.class) {
+        if (listeners[i] == org.jhotdraw.draw.listeners.FigureListener.class) {
           // Lazily create the event:
-          ((FigureListener) listeners[i + 1]).figureChanged(event);
+          ((org.jhotdraw.draw.listeners.FigureListener) listeners[i + 1]).figureChanged(event);
         }
       }
     }
@@ -273,10 +274,10 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
       // Process the listeners last to first, notifying
       // those that are interested in this event
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
-        if (listeners[i] == FigureListener.class) {
+        if (listeners[i] == org.jhotdraw.draw.listeners.FigureListener.class) {
           // Lazily create the event:
           if (event == null) event = new org.jhotdraw.draw.events.FigureEvent(this, attribute, oldValue, newValue);
-          ((FigureListener) listeners[i + 1]).figureAttributeChanged(event);
+          ((org.jhotdraw.draw.listeners.FigureListener) listeners[i + 1]).figureAttributeChanged(event);
         }
       }
     }

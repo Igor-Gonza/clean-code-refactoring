@@ -19,6 +19,7 @@ import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.draw.layouters.Layouter;
+import org.jhotdraw.draw.listeners.FigureListener;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.util.ReversedList;
 import org.jhotdraw.xml.DOMInput;

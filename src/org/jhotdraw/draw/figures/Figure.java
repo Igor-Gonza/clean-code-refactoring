@@ -18,6 +18,7 @@ import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.listeners.FigureListener;
 import org.jhotdraw.draw.tools.Tool;
 import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.geom.Dimension2DDouble;
@@ -418,7 +419,7 @@ public interface Figure extends Cloneable, Serializable, DOMStorable {
   /**
    * Removes a listener for FigureEvent's.
    */
-  void removeFigureListener(FigureListener l);
+  void removeFigureListener(org.jhotdraw.draw.listeners.FigureListener l);
 
   /**
    * Adds a listener for UndoableEdit events.

@@ -15,7 +15,7 @@
 package org.jhotdraw.draw.tools;
 
 import org.jhotdraw.draw.editors.DrawingEditor;
-import org.jhotdraw.draw.ToolListener;
+import org.jhotdraw.draw.listeners.ToolListener;
 
 import java.awt.*;
 import java.awt.event.KeyListener;

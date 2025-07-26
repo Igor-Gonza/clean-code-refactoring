@@ -14,7 +14,7 @@
 
 package org.jhotdraw.draw.drawings;
 
-import org.jhotdraw.draw.DrawingListener;
+import org.jhotdraw.draw.listeners.DrawingListener;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.xml.DOMStorable;
 

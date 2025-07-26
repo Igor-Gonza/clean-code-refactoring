@@ -1,5 +1,5 @@
 /*
- * @(#)DrawingListener.java  1.0  11. November 2003
+ * @(#)HandleListener.java  1.0  18. November 2003
  *
  * Copyright (c) 1996-2006 by the original authors of JHotDraw
  * and all its contributors ("JHotDraw.org")
@@ -12,32 +12,31 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.listeners;
 
-import org.jhotdraw.draw.events.DrawingEvent;
+import org.jhotdraw.draw.events.HandleEvent;
 
 import java.util.EventListener;
 
 /**
- * Listener interested in Drawing changes.
+ * HandleListener.
  *
  * @author Werner Randelshofer
  * @version 1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
-public interface DrawingListener extends EventListener {
+public interface HandleListener extends EventListener {
+  /**
+   * Sent when an area of the drawing view needs to be repainted.
+   */
+  void areaInvalidated(org.jhotdraw.draw.events.HandleEvent e);
 
   /**
-   * Sent when an area of the drawing needs to be repainted.
+   * Sent when requesting to remove a handle.
    */
-  void areaInvalidated(org.jhotdraw.draw.events.DrawingEvent e);
+  void handleRequestRemove(HandleEvent e);
 
   /**
-   * Sent when a figure was added.
+   * Sent when requesting to add secondary handles.
    */
-  void figureAdded(org.jhotdraw.draw.events.DrawingEvent e);
-
-  /**
-   * Sent when a figure was removed.
-   */
-  void figureRemoved(DrawingEvent e);
+  void handleRequestSecondaryHandles(org.jhotdraw.draw.events.HandleEvent e);
 }

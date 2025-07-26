@@ -15,7 +15,7 @@
 package org.jhotdraw.draw.drawings;
 
 import org.jhotdraw.draw.FigureLayerComparator;
-import org.jhotdraw.draw.FigureListener;
+import org.jhotdraw.draw.listeners.FigureListener;
 import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.util.ReversedList;

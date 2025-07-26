@@ -24,6 +24,7 @@ import org.jhotdraw.draw.figures.TextFigure;
 import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.draw.handlers.MoveHandle;
 import org.jhotdraw.draw.layouters.VerticalLayouter;
+import org.jhotdraw.draw.listeners.AbstractFigureListener;
 import org.jhotdraw.draw.locators.RelativeLocator;
 import org.jhotdraw.geom.Insets2DDouble;
 import org.jhotdraw.util.ResourceBundleUtil;
@@ -68,7 +69,7 @@ public class TaskFigure extends GraphicalCompositeFigure {
     }
   }
 
-  private static class DurationAdapter extends AbstractFigureListener {
+  private static class DurationAdapter extends org.jhotdraw.draw.listeners.AbstractFigureListener {
     private TaskFigure target;
 
     public DurationAdapter(TaskFigure target) {

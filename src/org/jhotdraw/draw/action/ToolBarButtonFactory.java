@@ -19,6 +19,7 @@ import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.constrainers.Constrainer;
 import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.events.ToolEvent;
+import org.jhotdraw.draw.listeners.ToolListener;
 import org.jhotdraw.draw.tools.DelegationSelectionTool;
 import org.jhotdraw.draw.tools.Tool;
 import org.jhotdraw.draw.views.DrawingView;
@@ -186,11 +187,11 @@ public class ToolBarButtonFactory {
     t = new JToggleButton();
     final JToggleButton defaultToolButton = t;
 
-    ToolListener toolHandler;
-    if (tb.getClientProperty("toolHandler") instanceof ToolListener) {
-      toolHandler = (ToolListener) tb.getClientProperty("toolHandler");
+    org.jhotdraw.draw.listeners.ToolListener toolHandler;
+    if (tb.getClientProperty("toolHandler") instanceof org.jhotdraw.draw.listeners.ToolListener) {
+      toolHandler = (org.jhotdraw.draw.listeners.ToolListener) tb.getClientProperty("toolHandler");
     } else {
-      toolHandler = new ToolListener() {
+      toolHandler = new org.jhotdraw.draw.listeners.ToolListener() {
         public void toolStarted(ToolEvent event) {
         }
 
@@ -219,7 +220,7 @@ public class ToolBarButtonFactory {
   public static void addToolTo(JToolBar tb, org.jhotdraw.draw.editors.DrawingEditor editor, Tool tool, String labelKey, ResourceBundleUtil labels) {
 
     ButtonGroup group = (ButtonGroup) tb.getClientProperty("toolButtonGroup");
-    ToolListener toolHandler = (ToolListener) tb.getClientProperty("toolHandler");
+    ToolListener toolHandler = (org.jhotdraw.draw.listeners.ToolListener) tb.getClientProperty("toolHandler");
 
     JToggleButton t = new JToggleButton();
     labels.configureToolBarButton(t, labelKey);

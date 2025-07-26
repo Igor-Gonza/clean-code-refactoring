@@ -21,6 +21,7 @@ import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.draw.handlers.MoveHandle;
 import org.jhotdraw.draw.layouters.Layouter;
+import org.jhotdraw.draw.listeners.FigureListener;
 import org.jhotdraw.geom.Geom;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;

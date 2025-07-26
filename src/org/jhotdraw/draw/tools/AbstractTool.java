@@ -17,7 +17,7 @@ package org.jhotdraw.draw.tools;
 import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.views.DrawingView;
-import org.jhotdraw.draw.ToolListener;
+import org.jhotdraw.draw.listeners.ToolListener;
 import org.jhotdraw.draw.edits.TransformEdit;
 import org.jhotdraw.draw.events.ToolEvent;
 import org.jhotdraw.draw.figures.Figure;
