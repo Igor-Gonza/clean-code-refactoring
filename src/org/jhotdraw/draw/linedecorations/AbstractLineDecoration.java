@@ -13,8 +13,9 @@
  *
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.linedecorations;
 
+import org.jhotdraw.draw.AttributeKeys;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.geom.Geom;
 

@@ -18,6 +18,7 @@ import java.awt.*;
 import java.util.*;
 
 import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.linedecorations.LineDecoration;
 import org.jhotdraw.draw.liners.Liner;
 import org.jhotdraw.geom.*;
 
@@ -219,7 +220,7 @@ public class AttributeKeys {
 
   public static final AttributeKey<LineDecoration> END_DECORATION = new AttributeKey<>("endDecoration", null);
 
-  public static final AttributeKey<LineDecoration> START_DECORATION = new AttributeKey<>("startDecoration", null);
+  public static final AttributeKey<org.jhotdraw.draw.linedecorations.LineDecoration> START_DECORATION = new AttributeKey<>("startDecoration", null);
 
   /**
    * The value of this attribute is a Insets2DDouble object.

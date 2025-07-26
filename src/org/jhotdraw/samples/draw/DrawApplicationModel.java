@@ -20,6 +20,7 @@ import org.jhotdraw.draw.figures.ConnectionFigure;
 import org.jhotdraw.draw.figures.LineConnectionFigure;
 import org.jhotdraw.draw.figures.RectangleFigure;
 import org.jhotdraw.draw.figures.RoundRectangleFigure;
+import org.jhotdraw.draw.linedecorations.ArrowTip;
 import org.jhotdraw.draw.liners.ElbowLiner;
 import org.jhotdraw.draw.tools.ConnectionTool;
 import org.jhotdraw.util.*;

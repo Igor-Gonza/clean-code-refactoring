@@ -12,7 +12,7 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.linedecorations;
 
 import org.jhotdraw.draw.figures.Figure;
 

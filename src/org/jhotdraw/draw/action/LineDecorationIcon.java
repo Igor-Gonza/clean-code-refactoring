@@ -18,8 +18,8 @@ import java.awt.*;
 import java.awt.geom.*;
 import javax.swing.*;
 
-import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.figures.LineFigure;
+import org.jhotdraw.draw.linedecorations.LineDecoration;
 
 import static org.jhotdraw.draw.AttributeKeys.*;
 

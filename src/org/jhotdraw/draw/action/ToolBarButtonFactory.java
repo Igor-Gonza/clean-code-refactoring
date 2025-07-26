@@ -19,6 +19,7 @@ import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.constrainers.Constrainer;
 import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.events.ToolEvent;
+import org.jhotdraw.draw.linedecorations.LineDecoration;
 import org.jhotdraw.draw.listeners.ToolListener;
 import org.jhotdraw.draw.tools.DelegationSelectionTool;
 import org.jhotdraw.draw.tools.Tool;
@@ -394,8 +395,8 @@ public class ToolBarButtonFactory {
     labels.configureToolBarButton(strokeDecorationPopupButton, "attributeStrokeDecoration");
     strokeDecorationPopupButton.setFocusable(false);
     strokeDecorationPopupButton.setColumnCount(2, false);
-    LineDecoration[] decorations = {new ArrowTip(0.35, 12, 11.3), new ArrowTip(0.35, 13, 7), null};
-    for (LineDecoration decoration : decorations) {
+    LineDecoration[] decorations = {new org.jhotdraw.draw.linedecorations.ArrowTip(0.35, 12, 11.3), new org.jhotdraw.draw.linedecorations.ArrowTip(0.35, 13, 7), null};
+    for (org.jhotdraw.draw.linedecorations.LineDecoration decoration : decorations) {
       strokeDecorationPopupButton.add(new AttributeAction(editor, START_DECORATION, decoration, null, new LineDecorationIcon(decoration, true)));
       strokeDecorationPopupButton.add(new AttributeAction(editor, END_DECORATION, decoration, null, new LineDecorationIcon(decoration, false)));
     }
