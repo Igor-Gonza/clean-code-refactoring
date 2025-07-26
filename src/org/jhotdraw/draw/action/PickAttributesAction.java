@@ -15,6 +15,7 @@
 package org.jhotdraw.draw.action;
 
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.events.FigureSelectionEvent;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.util.ResourceBundleUtil;
@@ -36,7 +37,7 @@ public class PickAttributesAction extends AbstractSelectedAction {
   /**
    * Creates a new instance.
    */
-  public PickAttributesAction(DrawingEditor editor) {
+  public PickAttributesAction(org.jhotdraw.draw.editors.DrawingEditor editor) {
     super(editor);
     labels.configureAction(this, "attributesPick");
     setEnabled(true);

@@ -15,6 +15,7 @@
 package org.jhotdraw.draw.action;
 
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.figures.CompositeFigure;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.figures.GroupFigure;
@@ -41,7 +42,7 @@ public class GroupAction extends AbstractSelectedAction {
   /**
    * Creates a new instance.
    */
-  public GroupAction(DrawingEditor editor) {
+  public GroupAction(org.jhotdraw.draw.editors.DrawingEditor editor) {
     this(editor, new GroupFigure());
   }
 

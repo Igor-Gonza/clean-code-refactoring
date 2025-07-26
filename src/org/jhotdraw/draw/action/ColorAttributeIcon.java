@@ -15,7 +15,7 @@
 package org.jhotdraw.draw.action;
 
 import org.jhotdraw.draw.AttributeKey;
-import org.jhotdraw.draw.DrawingEditor;
+import org.jhotdraw.draw.editors.DrawingEditor;
 
 import java.awt.*;
 import java.net.URL;

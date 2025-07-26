@@ -16,6 +16,7 @@ package org.jhotdraw.draw.action;
 
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.drawings.Drawing;
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.events.FigureSelectionEvent;
 import org.jhotdraw.draw.figures.Figure;
 
@@ -44,18 +45,18 @@ public class ColorChooserAction extends AbstractSelectedAction {
   /**
    * Creates a new instance.
    */
-  public ColorChooserAction(DrawingEditor editor, AttributeKey<Color> key, Icon icon) {
+  public ColorChooserAction(org.jhotdraw.draw.editors.DrawingEditor editor, AttributeKey<Color> key, Icon icon) {
     this(editor, key, null, icon);
   }
 
   /**
    * Creates a new instance.
    */
-  public ColorChooserAction(DrawingEditor editor, AttributeKey<Color> key, String name) {
+  public ColorChooserAction(org.jhotdraw.draw.editors.DrawingEditor editor, AttributeKey<Color> key, String name) {
     this(editor, key, name, null);
   }
 
-  public ColorChooserAction(DrawingEditor editor, final AttributeKey<Color> key, String name, Icon icon) {
+  public ColorChooserAction(org.jhotdraw.draw.editors.DrawingEditor editor, final AttributeKey<Color> key, String name, Icon icon) {
     super(editor);
     this.key = key;
     putValue(AbstractAction.NAME, name);

@@ -18,6 +18,7 @@ import org.jhotdraw.app.action.*;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.*;
 import org.jhotdraw.draw.drawings.DefaultDrawing;
+import org.jhotdraw.draw.editors.DefaultDrawingEditor;
 import org.jhotdraw.draw.figures.LineConnectionFigure;
 import org.jhotdraw.draw.tools.TextTool;
 import org.jhotdraw.samples.net.figures.NodeFigure;
@@ -37,7 +38,7 @@ import java.util.HashMap;
 public class NetPanel extends JPanel {
   private UndoRedoManager undoManager;
   private org.jhotdraw.draw.drawings.Drawing drawing;
-  private DrawingEditor editor;
+  private org.jhotdraw.draw.editors.DrawingEditor editor;
 
   /**
    * Creates new instance.
@@ -124,7 +125,7 @@ public class NetPanel extends JPanel {
     return view;
   }
 
-  public DrawingEditor getEditor() {
+  public org.jhotdraw.draw.editors.DrawingEditor getEditor() {
     return editor;
   }
 
@@ -171,7 +172,7 @@ public class NetPanel extends JPanel {
 
   }// </editor-fold>//GEN-END:initComponents
 
-  private void addCreationButtonsTo(JToolBar tb, final DrawingEditor editor) {
+  private void addCreationButtonsTo(JToolBar tb, final org.jhotdraw.draw.editors.DrawingEditor editor) {
     // AttributeKeys for the entity sets
     HashMap<AttributeKey, Object> attributes;
 

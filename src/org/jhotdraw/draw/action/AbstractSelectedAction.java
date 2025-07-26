@@ -16,6 +16,7 @@ package org.jhotdraw.draw.action;
 
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.drawings.Drawing;
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.events.FigureSelectionEvent;
 import org.jhotdraw.util.ResourceBundleUtil;
 
@@ -74,7 +75,7 @@ public abstract class AbstractSelectedAction extends AbstractAction {
    * Creates an action which acts on the selected figures on the current view
    * of the specified editor.
    */
-  public AbstractSelectedAction(DrawingEditor editor) {
+  public AbstractSelectedAction(org.jhotdraw.draw.editors.DrawingEditor editor) {
     setEditor(editor);
     updateEnabledState();
   }
@@ -97,7 +98,7 @@ public abstract class AbstractSelectedAction extends AbstractAction {
     this.editor = null;
   }
 
-  public void setEditor(DrawingEditor editor) {
+  public void setEditor(org.jhotdraw.draw.editors.DrawingEditor editor) {
     if (this.editor != null) {
       this.editor.removePropertyChangeListener(eventHandler);
       if (getView() != null) {
@@ -110,7 +111,7 @@ public abstract class AbstractSelectedAction extends AbstractAction {
     }
   }
 
-  public DrawingEditor getEditor() {
+  public org.jhotdraw.draw.editors.DrawingEditor getEditor() {
     return editor;
   }
 

@@ -23,6 +23,7 @@ import org.jhotdraw.app.action.ProjectPropertyAction;
 import org.jhotdraw.app.action.ToggleProjectPropertyAction;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.ToolBarButtonFactory;
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.figures.TextAreaFigure;
 import org.jhotdraw.draw.tools.TextAreaTool;
 import org.jhotdraw.draw.tools.Tool;
@@ -48,9 +49,9 @@ public class PertApplicationModel extends DefaultApplicationModel {
 
   private static class ToolButtonListener implements ItemListener {
     private Tool tool;
-    private DrawingEditor editor;
+    private org.jhotdraw.draw.editors.DrawingEditor editor;
 
-    public ToolButtonListener(org.jhotdraw.draw.tools.Tool t, DrawingEditor editor) {
+    public ToolButtonListener(org.jhotdraw.draw.tools.Tool t, org.jhotdraw.draw.editors.DrawingEditor editor) {
       this.tool = t;
       this.editor = editor;
     }
@@ -65,7 +66,7 @@ public class PertApplicationModel extends DefaultApplicationModel {
   /**
    * This editor is shared by all projects.
    */
-  private DefaultDrawingEditor sharedEditor;
+  private org.jhotdraw.draw.editors.DefaultDrawingEditor sharedEditor;
 
   private HashMap<String, Action> actions;
 
@@ -90,9 +91,9 @@ public class PertApplicationModel extends DefaultApplicationModel {
     }
   }
 
-  public DefaultDrawingEditor getSharedEditor() {
+  public org.jhotdraw.draw.editors.DefaultDrawingEditor getSharedEditor() {
     if (sharedEditor == null) {
-      sharedEditor = new DefaultDrawingEditor();
+      sharedEditor = new org.jhotdraw.draw.editors.DefaultDrawingEditor();
     }
     return sharedEditor;
   }
@@ -137,7 +138,7 @@ public class PertApplicationModel extends DefaultApplicationModel {
     ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.samples.pert.Labels");
     PertProject p = (PertProject) pr;
 
-    DrawingEditor editor;
+    org.jhotdraw.draw.editors.DrawingEditor editor;
     if (p == null) {
       editor = getSharedEditor();
     } else {

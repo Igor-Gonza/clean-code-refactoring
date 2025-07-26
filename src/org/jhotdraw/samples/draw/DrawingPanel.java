@@ -18,6 +18,7 @@ import org.jhotdraw.app.action.*;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.*;
 import org.jhotdraw.draw.drawings.Drawing;
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.figures.AttributedFigure;
 import org.jhotdraw.draw.figures.BezierFigure;
 import org.jhotdraw.draw.figures.ConnectionFigure;
@@ -41,7 +42,7 @@ import static org.jhotdraw.draw.AttributeKeys.END_DECORATION;
 public class DrawingPanel extends JPanel {
   private final UndoRedoManager undoManager;
   private org.jhotdraw.draw.drawings.Drawing drawing;
-  private final DrawingEditor editor;
+  private final org.jhotdraw.draw.editors.DrawingEditor editor;
 
   /**
    * Creates new instance.
@@ -50,7 +51,7 @@ public class DrawingPanel extends JPanel {
     ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
     initComponents();
     undoManager = new UndoRedoManager();
-    editor = new DefaultDrawingEditor();
+    editor = new org.jhotdraw.draw.editors.DefaultDrawingEditor();
     editor.add(view);
 
     addCreationButtonsTo(creationToolbar, editor);
@@ -128,7 +129,7 @@ public class DrawingPanel extends JPanel {
     return view;
   }
 
-  public DrawingEditor getEditor() {
+  public org.jhotdraw.draw.editors.DrawingEditor getEditor() {
     return editor;
   }
 
@@ -179,7 +180,7 @@ public class DrawingPanel extends JPanel {
     addDefaultCreationButtonsTo(tb, editor, ToolBarButtonFactory.createDrawingActions(editor), ToolBarButtonFactory.createSelectionActions(editor));
   }
 
-  public void addDefaultCreationButtonsTo(JToolBar tb, final DrawingEditor editor, Collection<Action> drawingActions, Collection<Action> selectionActions) {
+  public void addDefaultCreationButtonsTo(JToolBar tb, final org.jhotdraw.draw.editors.DrawingEditor editor, Collection<Action> drawingActions, Collection<Action> selectionActions) {
     ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
     ToolBarButtonFactory.addSelectionToolTo(tb, editor, drawingActions, selectionActions);

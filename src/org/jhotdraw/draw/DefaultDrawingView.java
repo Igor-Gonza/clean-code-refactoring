@@ -18,6 +18,7 @@ import org.jhotdraw.app.EditableComponent;
 import org.jhotdraw.draw.constrainers.Constrainer;
 import org.jhotdraw.draw.constrainers.GridConstrainer;
 import org.jhotdraw.draw.drawings.Drawing;
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.events.DrawingEvent;
 import org.jhotdraw.draw.events.FigureSelectionEvent;
 import org.jhotdraw.draw.events.HandleEvent;
@@ -73,7 +74,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
   private Point2D.Double translate = new Point2D.Double(0, 0);
   private int detailLevel;
   private DOMFactory domFactory;
-  private DrawingEditor editor;
+  private org.jhotdraw.draw.editors.DrawingEditor editor;
   private org.jhotdraw.draw.constrainers.Constrainer constrainer = new GridConstrainer(1, 1);
   private JLabel emptyDrawingLabel;
   //private boolean hasPermanentFocus;
@@ -801,7 +802,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
     addToSelection(duplicates);
   }
 
-  public void removeNotify(DrawingEditor editor) {
+  public void removeNotify(org.jhotdraw.draw.editors.DrawingEditor editor) {
     this.editor = null;
     repaint();
   }

@@ -16,7 +16,7 @@ package org.jhotdraw.draw.tools;
 
 import org.jhotdraw.draw.AttributeKey;
 import org.jhotdraw.draw.drawings.Drawing;
-import org.jhotdraw.draw.DrawingEditor;
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.FigureListener;
 import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.draw.events.FigureEvent;

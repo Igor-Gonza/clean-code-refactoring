@@ -18,6 +18,7 @@ import org.jhotdraw.app.action.*;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.*;
 import org.jhotdraw.draw.drawings.Drawing;
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.figures.BezierFigure;
 import org.jhotdraw.draw.tools.CreationTool;
 import org.jhotdraw.samples.svg.action.CombineAction;
@@ -41,7 +42,7 @@ import java.util.LinkedList;
 public class SVGPanel extends JPanel {
   private UndoRedoManager undoManager;
   private org.jhotdraw.draw.drawings.Drawing drawing;
-  private DrawingEditor editor;
+  private org.jhotdraw.draw.editors.DrawingEditor editor;
 
   /**
    * Creates new instance.
@@ -50,7 +51,7 @@ public class SVGPanel extends JPanel {
     ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
     initComponents();
     undoManager = new UndoRedoManager();
-    editor = new DefaultDrawingEditor();
+    editor = new org.jhotdraw.draw.editors.DefaultDrawingEditor();
     editor.add(view);
 
     addCreationButtonsTo(creationToolbar, editor);
@@ -128,7 +129,7 @@ public class SVGPanel extends JPanel {
     return view;
   }
 
-  public DrawingEditor getEditor() {
+  public org.jhotdraw.draw.editors.DrawingEditor getEditor() {
     return editor;
   }
 
@@ -149,7 +150,7 @@ public class SVGPanel extends JPanel {
     return a;
   }
 
-  private void addCreationButtonsTo(JToolBar tb, final DrawingEditor editor) {
+  private void addCreationButtonsTo(JToolBar tb, final org.jhotdraw.draw.editors.DrawingEditor editor) {
     // AttributeKeys for the entity sets
     HashMap<AttributeKey, Object> attributes;
 

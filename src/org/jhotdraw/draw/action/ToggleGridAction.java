@@ -15,7 +15,7 @@
 package org.jhotdraw.draw.action;
 
 import org.jhotdraw.draw.constrainers.Constrainer;
-import org.jhotdraw.draw.DrawingEditor;
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.DrawingView;
 import org.jhotdraw.draw.constrainers.GridConstrainer;
 import org.jhotdraw.util.ResourceBundleUtil;

@@ -16,6 +16,7 @@ package org.jhotdraw.draw.action;
 
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.drawings.Drawing;
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.events.FigureSelectionEvent;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.undo.CompositeEdit;
@@ -39,29 +40,29 @@ public class DefaultAttributeAction extends AbstractSelectedAction {
   /**
    * Creates a new instance.
    */
-  public DefaultAttributeAction(DrawingEditor editor, AttributeKey<?> key) {
+  public DefaultAttributeAction(org.jhotdraw.draw.editors.DrawingEditor editor, AttributeKey<?> key) {
     this(editor, key, null, null);
   }
 
-  public DefaultAttributeAction(DrawingEditor editor, AttributeKey<?>[] keys) {
+  public DefaultAttributeAction(org.jhotdraw.draw.editors.DrawingEditor editor, AttributeKey<?>[] keys) {
     this(editor, keys, null, null);
   }
 
   /**
    * Creates a new instance.
    */
-  public DefaultAttributeAction(DrawingEditor editor, AttributeKey<?> key, Icon icon) {
+  public DefaultAttributeAction(org.jhotdraw.draw.editors.DrawingEditor editor, AttributeKey<?> key, Icon icon) {
     this(editor, key, null, icon);
   }
 
   /**
    * Creates a new instance.
    */
-  public DefaultAttributeAction(DrawingEditor editor, AttributeKey<?> key, String name) {
+  public DefaultAttributeAction(org.jhotdraw.draw.editors.DrawingEditor editor, AttributeKey<?> key, String name) {
     this(editor, key, name, null);
   }
 
-  public DefaultAttributeAction(DrawingEditor editor, AttributeKey<?> key, String name, Icon icon) {
+  public DefaultAttributeAction(org.jhotdraw.draw.editors.DrawingEditor editor, AttributeKey<?> key, String name, Icon icon) {
     this(editor, new AttributeKey[]{key}, name, icon);
   }
 

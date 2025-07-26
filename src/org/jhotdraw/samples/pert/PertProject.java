@@ -17,10 +17,10 @@ package org.jhotdraw.samples.pert;
 import org.jhotdraw.app.AbstractProject;
 import org.jhotdraw.app.action.RedoAction;
 import org.jhotdraw.app.action.UndoAction;
-import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.ToolBarButtonFactory;
 import org.jhotdraw.draw.constrainers.GridConstrainer;
 import org.jhotdraw.draw.drawings.DefaultDrawing;
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.gui.PlacardScrollPaneLayout;
 import org.jhotdraw.io.ExtensionFileFilter;
 import org.jhotdraw.undo.UndoRedoManager;
@@ -55,7 +55,7 @@ public class PertProject extends AbstractProject {
    * Depending on the type of an application, there may be one editor per
    * project, or a single shared editor for all projects.
    */
-  private DrawingEditor editor;
+  private org.jhotdraw.draw.editors.DrawingEditor editor;
 
   private org.jhotdraw.draw.constrainers.GridConstrainer visibleConstrainer = new org.jhotdraw.draw.constrainers.GridConstrainer(10, 10);
   private GridConstrainer invisibleConstrainer = new org.jhotdraw.draw.constrainers.GridConstrainer(1, 1);
@@ -79,7 +79,7 @@ public class PertProject extends AbstractProject {
     scrollPane.setLayout(new PlacardScrollPaneLayout());
     scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 
-    setEditor(new DefaultDrawingEditor());
+    setEditor(new org.jhotdraw.draw.editors.DefaultDrawingEditor());
     view.setDOMFactory(new PertFactory());
     undo = new UndoRedoManager();
     view.setDrawing(new org.jhotdraw.draw.drawings.DefaultDrawing());
@@ -109,12 +109,12 @@ public class PertProject extends AbstractProject {
     setScaleFactor(prefs.getDouble("project.scaleFactor", 1d));
   }
 
-  public DrawingEditor getEditor() {
+  public org.jhotdraw.draw.editors.DrawingEditor getEditor() {
     return editor;
   }
 
   public void setEditor(DrawingEditor newValue) {
-    DrawingEditor oldValue = editor;
+    org.jhotdraw.draw.editors.DrawingEditor oldValue = editor;
     if (oldValue != null) {
       oldValue.remove(view);
     }
@@ -215,7 +215,7 @@ public class PertProject extends AbstractProject {
   /**
    * Sets a drawing editor for the project.
    */
-  public void setDrawingEditor(DrawingEditor newValue) {
+  public void setDrawingEditor(org.jhotdraw.draw.editors.DrawingEditor newValue) {
     if (editor != null) {
       editor.remove(view);
     }
@@ -228,7 +228,7 @@ public class PertProject extends AbstractProject {
   /**
    * Gets the drawing editor of the project.
    */
-  public DrawingEditor getDrawingEditor() {
+  public org.jhotdraw.draw.editors.DrawingEditor getDrawingEditor() {
     return editor;
   }
 

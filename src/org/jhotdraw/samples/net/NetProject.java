@@ -17,10 +17,10 @@ package org.jhotdraw.samples.net;
 import org.jhotdraw.app.AbstractProject;
 import org.jhotdraw.app.action.RedoAction;
 import org.jhotdraw.app.action.UndoAction;
-import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.ToolBarButtonFactory;
 import org.jhotdraw.draw.constrainers.GridConstrainer;
 import org.jhotdraw.draw.drawings.DefaultDrawing;
+import org.jhotdraw.draw.editors.DefaultDrawingEditor;
 import org.jhotdraw.gui.PlacardScrollPaneLayout;
 import org.jhotdraw.io.ExtensionFileFilter;
 import org.jhotdraw.undo.UndoRedoManager;
@@ -55,7 +55,7 @@ public class NetProject extends AbstractProject {
    * Depending on the type of an application, there may be one editor per
    * project, or a single shared editor for all projects.
    */
-  private DrawingEditor editor;
+  private org.jhotdraw.draw.editors.DrawingEditor editor;
 
   private org.jhotdraw.draw.constrainers.GridConstrainer visibleConstrainer = new GridConstrainer(10, 10);
   private org.jhotdraw.draw.constrainers.GridConstrainer invisibleConstrainer = new org.jhotdraw.draw.constrainers.GridConstrainer(1, 1);
@@ -121,12 +121,12 @@ public class NetProject extends AbstractProject {
     });
   }
 
-  public DrawingEditor getEditor() {
+  public org.jhotdraw.draw.editors.DrawingEditor getEditor() {
     return editor;
   }
 
-  public void setEditor(DrawingEditor newValue) {
-    DrawingEditor oldValue = editor;
+  public void setEditor(org.jhotdraw.draw.editors.DrawingEditor newValue) {
+    org.jhotdraw.draw.editors.DrawingEditor oldValue = editor;
     if (oldValue != null) {
       oldValue.remove(view);
     }
@@ -215,7 +215,7 @@ public class NetProject extends AbstractProject {
   /**
    * Sets a drawing editor for the project.
    */
-  public void setDrawingEditor(DrawingEditor newValue) {
+  public void setDrawingEditor(org.jhotdraw.draw.editors.DrawingEditor newValue) {
     if (editor != null) {
       editor.remove(view);
     }
@@ -228,7 +228,7 @@ public class NetProject extends AbstractProject {
   /**
    * Gets the drawing editor of the project.
    */
-  public DrawingEditor getDrawingEditor() {
+  public org.jhotdraw.draw.editors.DrawingEditor getDrawingEditor() {
     return editor;
   }
 

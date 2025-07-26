@@ -15,7 +15,7 @@
 package org.jhotdraw.draw.action;
 
 import org.jhotdraw.draw.drawings.Drawing;
-import org.jhotdraw.draw.DrawingEditor;
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.DrawingView;
 import org.jhotdraw.util.ResourceBundleUtil;
 

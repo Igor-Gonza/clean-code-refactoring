@@ -14,6 +14,7 @@
 
 package org.jhotdraw.samples.draw;
 
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.figures.AttributedFigure;
 import org.jhotdraw.draw.figures.ConnectionFigure;
 import org.jhotdraw.draw.figures.LineConnectionFigure;
@@ -41,7 +42,7 @@ public class DrawApplicationModel extends DefaultApplicationModel {
   /**
    * This editor is shared by all projects.
    */
-  private DefaultDrawingEditor sharedEditor;
+  private org.jhotdraw.draw.editors.DefaultDrawingEditor sharedEditor;
 
   /**
    * Creates a new instance.
@@ -49,9 +50,9 @@ public class DrawApplicationModel extends DefaultApplicationModel {
   public DrawApplicationModel() {
   }
 
-  public DefaultDrawingEditor getSharedEditor() {
+  public org.jhotdraw.draw.editors.DefaultDrawingEditor getSharedEditor() {
     if (sharedEditor == null) {
-      sharedEditor = new DefaultDrawingEditor();
+      sharedEditor = new org.jhotdraw.draw.editors.DefaultDrawingEditor();
     }
     return sharedEditor;
   }
@@ -73,7 +74,7 @@ public class DrawApplicationModel extends DefaultApplicationModel {
     ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
     DrawProject p = (DrawProject) pr;
 
-    DrawingEditor editor;
+    org.jhotdraw.draw.editors.DrawingEditor editor;
     if (p == null) {
       editor = getSharedEditor();
     } else {
@@ -101,7 +102,7 @@ public class DrawApplicationModel extends DefaultApplicationModel {
     addDefaultCreationButtonsTo(tb, editor, ToolBarButtonFactory.createDrawingActions(editor), ToolBarButtonFactory.createSelectionActions(editor));
   }
 
-  public void addDefaultCreationButtonsTo(JToolBar tb, final DrawingEditor editor, Collection<Action> drawingActions, Collection<Action> selectionActions) {
+  public void addDefaultCreationButtonsTo(JToolBar tb, final org.jhotdraw.draw.editors.DrawingEditor editor, Collection<Action> drawingActions, Collection<Action> selectionActions) {
     ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
     ToolBarButtonFactory.addSelectionToolTo(tb, editor, drawingActions, selectionActions);

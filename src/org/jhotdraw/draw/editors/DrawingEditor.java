@@ -12,8 +12,10 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.editors;
 
+import org.jhotdraw.draw.AttributeKey;
+import org.jhotdraw.draw.DrawingView;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.tools.Tool;
 

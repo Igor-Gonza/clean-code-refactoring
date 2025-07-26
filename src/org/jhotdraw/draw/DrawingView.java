@@ -16,6 +16,7 @@ package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.constrainers.Constrainer;
 import org.jhotdraw.draw.drawings.Drawing;
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.draw.tools.Tool;
@@ -148,7 +149,7 @@ public interface DrawingView {
    * The view must draw the tool of the editor, if getActiveView() of the
    * editor returns the view.
    */
-  void addNotify(DrawingEditor editor);
+  void addNotify(org.jhotdraw.draw.editors.DrawingEditor editor);
 
   /**
    * Informs the view that it has been removed from the specified editor.

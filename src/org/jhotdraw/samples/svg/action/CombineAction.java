@@ -16,6 +16,7 @@ package org.jhotdraw.samples.svg.action;
 
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.GroupAction;
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.figures.CompositeFigure;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.samples.svg.figures.SVGPath;

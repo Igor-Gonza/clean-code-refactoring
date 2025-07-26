@@ -17,6 +17,7 @@ package org.jhotdraw.samples.svg;
 import java.awt.*;
 
 import org.jhotdraw.app.action.*;
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.figures.BezierFigure;
 import org.jhotdraw.draw.tools.CreationTool;
 import org.jhotdraw.samples.svg.action.*;
@@ -42,7 +43,7 @@ public class SVGApplicationModel extends DefaultApplicationModel {
   /**
    * This editor is shared by all projects.
    */
-  private DefaultDrawingEditor sharedEditor;
+  private org.jhotdraw.draw.editors.DefaultDrawingEditor sharedEditor;
 
   /**
    * Creates a new instance.
@@ -50,9 +51,9 @@ public class SVGApplicationModel extends DefaultApplicationModel {
   public SVGApplicationModel() {
   }
 
-  public DefaultDrawingEditor getSharedEditor() {
+  public org.jhotdraw.draw.editors.DefaultDrawingEditor getSharedEditor() {
     if (sharedEditor == null) {
-      sharedEditor = new DefaultDrawingEditor();
+      sharedEditor = new org.jhotdraw.draw.editors.DefaultDrawingEditor();
     }
     return sharedEditor;
   }
@@ -96,7 +97,7 @@ public class SVGApplicationModel extends DefaultApplicationModel {
     return list;
   }
 
-  public static Collection<Action> createDrawingActions(DrawingEditor editor) {
+  public static Collection<Action> createDrawingActions(org.jhotdraw.draw.editors.DrawingEditor editor) {
     LinkedList<Action> a = new LinkedList<>();
     a.add(new CutAction());
     a.add(new CopyAction());
@@ -107,7 +108,7 @@ public class SVGApplicationModel extends DefaultApplicationModel {
     return a;
   }
 
-  public static Collection<Action> createSelectionActions(DrawingEditor editor) {
+  public static Collection<Action> createSelectionActions(org.jhotdraw.draw.editors.DrawingEditor editor) {
     LinkedList<Action> a = new LinkedList<>();
     a.add(new DuplicateAction());
 
@@ -124,7 +125,7 @@ public class SVGApplicationModel extends DefaultApplicationModel {
     return a;
   }
 
-  private void addCreationButtonsTo(JToolBar tb, final DrawingEditor editor) {
+  private void addCreationButtonsTo(JToolBar tb, final org.jhotdraw.draw.editors.DrawingEditor editor) {
     // AttributeKeys for the entity sets
     HashMap<AttributeKey, Object> attributes;
 
@@ -154,7 +155,7 @@ public class SVGApplicationModel extends DefaultApplicationModel {
   /**
    * Creates toolbar buttons and adds them to the specified JToolBar
    */
-  private void addAttributesButtonsTo(JToolBar bar, DrawingEditor editor) {
+  private void addAttributesButtonsTo(JToolBar bar, org.jhotdraw.draw.editors.DrawingEditor editor) {
     ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
     JButton b;
 
@@ -171,13 +172,13 @@ public class SVGApplicationModel extends DefaultApplicationModel {
     ToolBarButtonFactory.addFontButtonsTo(bar, editor);
   }
 
-  private void addColorButtonsTo(JToolBar bar, DrawingEditor editor) {
+  private void addColorButtonsTo(JToolBar bar, org.jhotdraw.draw.editors.DrawingEditor editor) {
     ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
     ToolBarButtonFactory.addColorButtonTo(bar, editor, STROKE_COLOR, ToolBarButtonFactory.DEFAULT_COLORS, 8, "attributeStrokeColor", labels);
     ToolBarButtonFactory.addColorButtonTo(bar, editor, FILL_COLOR, ToolBarButtonFactory.DEFAULT_COLORS, 8, "attributeFillColor", labels);
   }
 
-  private void addStrokeButtonsTo(JToolBar bar, DrawingEditor editor) {
+  private void addStrokeButtonsTo(JToolBar bar, org.jhotdraw.draw.editors.DrawingEditor editor) {
     ToolBarButtonFactory.addStrokeWidthButtonTo(bar, editor);
     ToolBarButtonFactory.addStrokeDashesButtonTo(bar, editor);
   }

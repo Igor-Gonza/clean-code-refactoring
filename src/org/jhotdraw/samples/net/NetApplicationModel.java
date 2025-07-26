@@ -23,6 +23,7 @@ import org.jhotdraw.app.action.ProjectPropertyAction;
 import org.jhotdraw.app.action.ToggleProjectPropertyAction;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.ToolBarButtonFactory;
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.figures.LineConnectionFigure;
 import org.jhotdraw.draw.tools.ConnectionTool;
 import org.jhotdraw.draw.tools.Tool;
@@ -47,7 +48,7 @@ public class NetApplicationModel extends DefaultApplicationModel {
 
   private static class ToolButtonListener implements ItemListener {
     private org.jhotdraw.draw.tools.Tool tool;
-    private DrawingEditor editor;
+    private org.jhotdraw.draw.editors.DrawingEditor editor;
 
     public ToolButtonListener(Tool t, DrawingEditor editor) {
       this.tool = t;
@@ -64,7 +65,7 @@ public class NetApplicationModel extends DefaultApplicationModel {
   /**
    * This editor is shared by all projects.
    */
-  private DefaultDrawingEditor sharedEditor;
+  private org.jhotdraw.draw.editors.DefaultDrawingEditor sharedEditor;
 
   private HashMap<String, Action> actions;
 
@@ -89,9 +90,9 @@ public class NetApplicationModel extends DefaultApplicationModel {
     }
   }
 
-  public DefaultDrawingEditor getSharedEditor() {
+  public org.jhotdraw.draw.editors.DefaultDrawingEditor getSharedEditor() {
     if (sharedEditor == null) {
-      sharedEditor = new DefaultDrawingEditor();
+      sharedEditor = new org.jhotdraw.draw.editors.DefaultDrawingEditor();
     }
     return sharedEditor;
   }
@@ -102,7 +103,7 @@ public class NetApplicationModel extends DefaultApplicationModel {
     }
   }
 
-  private void addCreationButtonsTo(JToolBar tb, final DrawingEditor editor) {
+  private void addCreationButtonsTo(JToolBar tb, final org.jhotdraw.draw.editors.DrawingEditor editor) {
     // AttributeKeys for the entity sets
     HashMap<AttributeKey, Object> attributes;
 
@@ -133,7 +134,7 @@ public class NetApplicationModel extends DefaultApplicationModel {
     ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.samples.net.Labels");
     NetProject p = (NetProject) pr;
 
-    DrawingEditor editor;
+    org.jhotdraw.draw.editors.DrawingEditor editor;
     if (p == null) {
       editor = getSharedEditor();
     } else {

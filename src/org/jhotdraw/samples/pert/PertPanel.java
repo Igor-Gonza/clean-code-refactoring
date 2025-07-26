@@ -18,6 +18,7 @@ import org.jhotdraw.app.action.*;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.*;
 import org.jhotdraw.draw.drawings.DefaultDrawing;
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.figures.TextAreaFigure;
 import org.jhotdraw.draw.tools.CreationTool;
 import org.jhotdraw.samples.pert.figures.DependencyFigure;
@@ -38,7 +39,7 @@ import java.util.HashMap;
 public class PertPanel extends JPanel {
   private UndoRedoManager undoManager;
   private org.jhotdraw.draw.drawings.Drawing drawing;
-  private DrawingEditor editor;
+  private org.jhotdraw.draw.editors.DrawingEditor editor;
 
   /**
    * Creates new instance.
@@ -47,7 +48,7 @@ public class PertPanel extends JPanel {
     ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
     initComponents();
     undoManager = new UndoRedoManager();
-    editor = new DefaultDrawingEditor();
+    editor = new org.jhotdraw.draw.editors.DefaultDrawingEditor();
     editor.add(view);
 
     addCreationButtonsTo(creationToolbar, editor);
@@ -125,7 +126,7 @@ public class PertPanel extends JPanel {
     return view;
   }
 
-  public DrawingEditor getEditor() {
+  public org.jhotdraw.draw.editors.DrawingEditor getEditor() {
     return editor;
   }
 
