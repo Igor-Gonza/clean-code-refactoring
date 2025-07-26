@@ -15,6 +15,8 @@
 package org.jhotdraw.draw.figures;
 
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.handlers.FontSizeHandle;
+import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.geom.Insets2DDouble;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;
@@ -288,7 +290,7 @@ public class TextAreaFigure extends AttributedFigure implements org.jhotdraw.dra
   }
 
   public Collection<Handle> createHandles(int detailLevel) {
-    LinkedList<Handle> handles = (LinkedList<Handle>) super.createHandles(detailLevel);
+    LinkedList<org.jhotdraw.draw.handlers.Handle> handles = (LinkedList<org.jhotdraw.draw.handlers.Handle>) super.createHandles(detailLevel);
     if (detailLevel == 0) {
       handles.add(new FontSizeHandle(this));
     }

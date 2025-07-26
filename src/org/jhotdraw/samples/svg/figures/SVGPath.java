@@ -18,6 +18,8 @@ import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.figures.AbstractAttributedCompositeFigure;
 import org.jhotdraw.draw.figures.BezierFigure;
 import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.handlers.RotateHandle;
 import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.samples.svg.SVGUtil;
 import org.jhotdraw.util.ResourceBundleUtil;
@@ -211,8 +213,8 @@ public class SVGPath extends AbstractAttributedCompositeFigure implements SVGFig
   }
 
   @Override
-  public LinkedList<Handle> createHandles(int detailLevel) {
-    LinkedList<Handle> handles;
+  public LinkedList<org.jhotdraw.draw.handlers.Handle> createHandles(int detailLevel) {
+    LinkedList<org.jhotdraw.draw.handlers.Handle> handles;
     if (detailLevel == 0) {
       handles = (LinkedList<Handle>) super.createHandles(detailLevel);
       handles.add(new RotateHandle(this));

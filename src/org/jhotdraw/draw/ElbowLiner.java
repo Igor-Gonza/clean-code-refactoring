@@ -17,6 +17,7 @@ package org.jhotdraw.draw;
 import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.draw.figures.ConnectionFigure;
 import org.jhotdraw.draw.figures.LineConnectionFigure;
+import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.geom.Geom;
 import org.jhotdraw.xml.DOMInput;

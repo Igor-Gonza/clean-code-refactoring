@@ -15,6 +15,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.util.*;
 import org.jhotdraw.undo.*;
 
@@ -28,13 +29,13 @@ import java.util.*;
  * @version 1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class HandleMultiCaster {
-  LinkedList<Handle> handles;
+  LinkedList<org.jhotdraw.draw.handlers.Handle> handles;
   CompositeEdit edit;
 
   /**
    * Creates a new instance.
    */
-  public HandleMultiCaster(Handle handle) {
+  public HandleMultiCaster(org.jhotdraw.draw.handlers.Handle handle) {
     this.handles = new LinkedList<>();
     this.handles.add(handle);
   }
@@ -42,12 +43,12 @@ public class HandleMultiCaster {
   /**
    * Creates a new instance.
    */
-  public HandleMultiCaster(Collection<Handle> handles) {
+  public HandleMultiCaster(Collection<org.jhotdraw.draw.handlers.Handle> handles) {
     this.handles = new LinkedList<>(handles);
   }
 
   public void draw(java.awt.Graphics2D g) {
-    for (Handle h : handles) {
+    for (org.jhotdraw.draw.handlers.Handle h : handles) {
       h.draw(g);
     }
   }
@@ -59,19 +60,19 @@ public class HandleMultiCaster {
   }
 
   public void keyReleased(java.awt.event.KeyEvent e) {
-    for (Handle h : handles) {
+    for (org.jhotdraw.draw.handlers.Handle h : handles) {
       h.keyReleased(e);
     }
   }
 
   public void keyTyped(java.awt.event.KeyEvent e) {
-    for (Handle h : handles) {
+    for (org.jhotdraw.draw.handlers.Handle h : handles) {
       h.keyTyped(e);
     }
   }
 
   public void trackEnd(Point current, Point anchor, int modifiersEx, DrawingView view) {
-    for (Handle h : new ReversedList<>(handles)) {
+    for (org.jhotdraw.draw.handlers.Handle h : new ReversedList<>(handles)) {
       h.trackEnd(current, anchor, modifiersEx);
     }
     view.getDrawing().fireUndoableEditHappened(edit);
@@ -80,19 +81,19 @@ public class HandleMultiCaster {
   public void trackStart(Point anchor, int modifiersEx, DrawingView view) {
     view.getDrawing().fireUndoableEditHappened(edit = new CompositeEdit());
 
-    for (Handle h : handles) {
+    for (org.jhotdraw.draw.handlers.Handle h : handles) {
       h.trackStart(anchor, modifiersEx);
     }
   }
 
   public void trackDoubleClick(Point p, int modifiersEx, DrawingView view) {
-    for (Handle h : handles) {
+    for (org.jhotdraw.draw.handlers.Handle h : handles) {
       h.trackDoubleClick(p, modifiersEx);
     }
   }
 
   public void trackStep(Point anchor, Point lead, int modifiersEx, DrawingView view) {
-    for (Handle h : handles) {
+    for (org.jhotdraw.draw.handlers.Handle h : handles) {
       h.trackStep(anchor, lead, modifiersEx);
     }
   }

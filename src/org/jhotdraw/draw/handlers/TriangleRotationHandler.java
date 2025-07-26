@@ -12,13 +12,14 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.handlers;
 
 import java.awt.*;
 import java.awt.geom.*;
 
 import static org.jhotdraw.draw.AttributeKeys.*;
 
+import org.jhotdraw.draw.AttributeKeys;
 import org.jhotdraw.draw.edits.AttributeChangeEdit;
 import org.jhotdraw.draw.figures.TriangleFigure;
 import org.jhotdraw.geom.*;
@@ -33,8 +34,8 @@ import org.jhotdraw.geom.*;
  */
 public class TriangleRotationHandler extends AbstractHandle {
   private Rectangle centerBox;
-  private AttributeKeys.Orientation oldValue;
-  private AttributeKeys.Orientation newValue;
+  private Orientation oldValue;
+  private Orientation newValue;
 
   /**
    * Creates a new instance.

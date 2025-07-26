@@ -14,7 +14,7 @@
 
 package org.jhotdraw.draw.events;
 
-import org.jhotdraw.draw.Handle;
+import org.jhotdraw.draw.handlers.Handle;
 
 import java.awt.*;
 import java.util.*;

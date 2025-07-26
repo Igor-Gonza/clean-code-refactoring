@@ -21,6 +21,7 @@ import org.jhotdraw.draw.events.DrawingEvent;
 import org.jhotdraw.draw.events.FigureSelectionEvent;
 import org.jhotdraw.draw.events.HandleEvent;
 import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.gui.datatransfer.CompositeTransferable;
 import org.jhotdraw.undo.CompositeEdit;
@@ -61,10 +62,10 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
   private Set<org.jhotdraw.draw.figures.Figure> dirtyFigures = new HashSet<>();
   private Set<org.jhotdraw.draw.figures.Figure> selectedFigures = new HashSet<>();
   private int rainbow = 0;
-  private LinkedList<Handle> selectionHandles = new LinkedList<>();
+  private LinkedList<org.jhotdraw.draw.handlers.Handle> selectionHandles = new LinkedList<>();
 
-  private Handle secondaryHandleOwner;
-  private LinkedList<Handle> secondaryHandles = new LinkedList<>();
+  private org.jhotdraw.draw.handlers.Handle secondaryHandleOwner;
+  private LinkedList<org.jhotdraw.draw.handlers.Handle> secondaryHandles = new LinkedList<>();
   private boolean handlesAreValid = true;
   private Dimension preferredSize;
   private double scaleFactor = 1;
@@ -210,10 +211,10 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
   protected void drawHandles(java.awt.Graphics2D g) {
     if (editor != null && editor.getFocusedView() == this) {
       validateHandles();
-      for (Handle h : getSelectionHandles()) {
+      for (org.jhotdraw.draw.handlers.Handle h : getSelectionHandles()) {
         h.draw(g);
       }
-      for (Handle h : getSecondaryHandles()) {
+      for (org.jhotdraw.draw.handlers.Handle h : getSecondaryHandles()) {
         h.draw(g);
       }
     }
@@ -376,7 +377,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
   /**
    * Gets the currently active selection handles.
    */
-  private java.util.List<Handle> getSelectionHandles() {
+  private java.util.List<org.jhotdraw.draw.handlers.Handle> getSelectionHandles() {
     validateHandles();
     return Collections.unmodifiableList(selectionHandles);
   }
@@ -384,7 +385,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
   /**
    * Gets the currently active secondary handles.
    */
-  private java.util.List<Handle> getSecondaryHandles() {
+  private java.util.List<org.jhotdraw.draw.handlers.Handle> getSecondaryHandles() {
     validateHandles();
     return Collections.unmodifiableList(secondaryHandles);
   }
@@ -397,7 +398,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
       handlesAreValid = false;
 
       Rectangle invalidatedArea = null;
-      for (Handle handle : selectionHandles) {
+      for (org.jhotdraw.draw.handlers.Handle handle : selectionHandles) {
         handle.removeHandleListener(this);
         if (invalidatedArea == null) {
           invalidatedArea = handle.getDrawBounds();
@@ -439,7 +440,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
       int level = detailLevel;
       do {
         for (org.jhotdraw.draw.figures.Figure figure : getSelectedFigures()) {
-          for (Handle handle : figure.createHandles(level)) {
+          for (org.jhotdraw.draw.handlers.Handle handle : figure.createHandles(level)) {
             handle.setView(this);
             selectionHandles.add(handle);
             handle.addHandleListener(this);
@@ -465,10 +466,10 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
    *
    * @return A handle, null if no handle is found.
    */
-  public Handle findHandle(Point p) {
+  public org.jhotdraw.draw.handlers.Handle findHandle(Point p) {
     validateHandles();
 
-    for (Handle handle : new ReversedList<>(getSecondaryHandles())) {
+    for (org.jhotdraw.draw.handlers.Handle handle : new ReversedList<>(getSecondaryHandles())) {
       if (handle.contains(p)) {
         return handle;
       }
@@ -486,15 +487,15 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
    *
    * @return A collection containing the handle and all compatible handles.
    */
-  public Collection<Handle> getCompatibleHandles(Handle master) {
+  public Collection<org.jhotdraw.draw.handlers.Handle> getCompatibleHandles(org.jhotdraw.draw.handlers.Handle master) {
     validateHandles();
 
     HashSet<org.jhotdraw.draw.figures.Figure> owners = new HashSet<>();
-    LinkedList<Handle> compatibleHandles = new LinkedList<>();
+    LinkedList<org.jhotdraw.draw.handlers.Handle> compatibleHandles = new LinkedList<>();
     owners.add(master.getOwner());
     compatibleHandles.add(master);
 
-    for (Handle handle : getSelectionHandles()) {
+    for (org.jhotdraw.draw.handlers.Handle handle : getSelectionHandles()) {
       if (!owners.contains(handle.getOwner()) && handle.isCombinableWith(master)) {
         owners.add(handle.getOwner());
         compatibleHandles.add(handle);
@@ -645,10 +646,10 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
   }
 
   protected void fireViewTransformChanged() {
-    for (Handle handle : selectionHandles) {
+    for (org.jhotdraw.draw.handlers.Handle handle : selectionHandles) {
       handle.viewTransformChanged();
     }
-    for (Handle handle : secondaryHandles) {
+    for (org.jhotdraw.draw.handlers.Handle handle : secondaryHandles) {
       handle.viewTransformChanged();
     }
   }
@@ -668,7 +669,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
     secondaryHandleOwner = e.getHandle();
     secondaryHandles.clear();
     secondaryHandles.addAll(secondaryHandleOwner.createSecondaryHandles());
-    for (Handle h : secondaryHandles) {
+    for (org.jhotdraw.draw.handlers.Handle h : secondaryHandles) {
       h.setView(this);
       h.addHandleListener(this);
     }

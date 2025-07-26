@@ -19,6 +19,8 @@ import org.jhotdraw.draw.connectors.ChopBezierConnector;
 import org.jhotdraw.draw.connectors.ChopDiamondConnector;
 import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.draw.edits.BezierNodeEdit;
+import org.jhotdraw.draw.handlers.BezierNodeHandle;
+import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.geom.Geom;
 import org.jhotdraw.geom.GrowStroke;
@@ -195,12 +197,12 @@ public class BezierFigure extends AttributedFigure {
     return isClosed();
   }
 
-  public Collection<Handle> createHandles(int detailLevel) {
+  public Collection<org.jhotdraw.draw.handlers.Handle> createHandles(int detailLevel) {
     LinkedList<Handle> handles = new LinkedList<>();
     switch (detailLevel) {
       case 0:
         BoxHandleKit.addBoxHandles(this, handles);
-        handles.add(new BezierScaleHandle(this));
+        handles.add(new org.jhotdraw.draw.handlers.BezierScaleHandle(this));
         break;
       case 1:
         for (int i = 0, n = path.size(); i < n; i++) {

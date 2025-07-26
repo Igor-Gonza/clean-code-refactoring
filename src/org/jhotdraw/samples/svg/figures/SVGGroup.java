@@ -18,9 +18,10 @@ import java.awt.geom.*;
 import java.io.*;
 import java.util.*;
 
-import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.figures.GroupFigure;
+import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.handlers.RotateHandle;
 import org.jhotdraw.samples.svg.*;
 import org.jhotdraw.xml.*;
 
@@ -41,9 +42,9 @@ public class SVGGroup extends GroupFigure implements SVGFigure {
 
   @Override
   public LinkedList<Handle> createHandles(int detailLevel) {
-    LinkedList<Handle> handles;
+    LinkedList<org.jhotdraw.draw.handlers.Handle> handles;
     if (detailLevel == 0) {
-      handles = (LinkedList<Handle>) super.createHandles(detailLevel);
+      handles = (LinkedList<org.jhotdraw.draw.handlers.Handle>) super.createHandles(detailLevel);
       handles.add(new RotateHandle(this));
     } else {
       handles = new LinkedList<>();

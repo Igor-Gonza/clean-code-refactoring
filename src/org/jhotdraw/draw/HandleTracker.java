@@ -15,6 +15,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.handlers.Handle;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -27,16 +29,16 @@ import java.util.*;
  * @version 1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class HandleTracker extends AbstractTool {
-    private final Handle masterHandle;
+    private final org.jhotdraw.draw.handlers.Handle masterHandle;
     private final HandleMultiCaster multiCaster;
     private Point anchor;
     
     /** Creates a new instance. */
-    public HandleTracker(Handle handle) {
+    public HandleTracker(org.jhotdraw.draw.handlers.Handle handle) {
         masterHandle = handle;
         multiCaster = new HandleMultiCaster(handle);
     }
-    public HandleTracker(Handle master, Collection<Handle> handles) {
+    public HandleTracker(org.jhotdraw.draw.handlers.Handle master, Collection<Handle> handles) {
         masterHandle = master;
         multiCaster = new HandleMultiCaster(handles);
     }

@@ -16,6 +16,8 @@ package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.edits.GeometryEdit;
 import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.handlers.LocatorHandle;
 import org.jhotdraw.draw.locators.Locator;
 import org.jhotdraw.draw.locators.RelativeLocator;
 
@@ -45,7 +47,7 @@ public class BoxHandleKit {
    * Creates handles for each lead of a
    * figure and adds them to the provided collection.
    */
-  static public void addLeadHandles(org.jhotdraw.draw.figures.Figure f, Collection<Handle> handles) {
+  static public void addLeadHandles(org.jhotdraw.draw.figures.Figure f, Collection<org.jhotdraw.draw.handlers.Handle> handles) {
     handles.add(southEast(f));
     handles.add(southWest(f));
     handles.add(northEast(f));
@@ -56,7 +58,7 @@ public class BoxHandleKit {
    * Fills the given Vector with handles at each
    * the north, south, east, and west of the figure.
    */
-  static public void addEdgeHandles(org.jhotdraw.draw.figures.Figure f, Collection<Handle> handles) {
+  static public void addEdgeHandles(org.jhotdraw.draw.figures.Figure f, Collection<org.jhotdraw.draw.handlers.Handle> handles) {
     handles.add(south(f));
     handles.add(north(f));
     handles.add(east(f));
@@ -67,20 +69,20 @@ public class BoxHandleKit {
    * Fills the given Vector with handles at each
    * the north, south, east, and west of the figure.
    */
-  static public void addBoxHandles(org.jhotdraw.draw.figures.Figure f, Collection<Handle> handles) {
+  static public void addBoxHandles(org.jhotdraw.draw.figures.Figure f, Collection<org.jhotdraw.draw.handlers.Handle> handles) {
     addLeadHandles(f, handles);
     addEdgeHandles(f, handles);
   }
 
-  static public Handle south(org.jhotdraw.draw.figures.Figure owner) {
+  static public org.jhotdraw.draw.handlers.Handle south(org.jhotdraw.draw.figures.Figure owner) {
     return new SouthHandle(owner);
   }
 
-  static public Handle southEast(org.jhotdraw.draw.figures.Figure owner) {
+  static public org.jhotdraw.draw.handlers.Handle southEast(org.jhotdraw.draw.figures.Figure owner) {
     return new SouthEastHandle(owner);
   }
 
-  static public Handle southWest(org.jhotdraw.draw.figures.Figure owner) {
+  static public org.jhotdraw.draw.handlers.Handle southWest(org.jhotdraw.draw.figures.Figure owner) {
     return new SouthWestHandle(owner);
   }
 
@@ -88,19 +90,19 @@ public class BoxHandleKit {
     return new NorthHandle(owner);
   }
 
-  static public Handle northEast(org.jhotdraw.draw.figures.Figure owner) {
+  static public org.jhotdraw.draw.handlers.Handle northEast(org.jhotdraw.draw.figures.Figure owner) {
     return new NorthEastHandle(owner);
   }
 
-  static public Handle northWest(org.jhotdraw.draw.figures.Figure owner) {
+  static public org.jhotdraw.draw.handlers.Handle northWest(org.jhotdraw.draw.figures.Figure owner) {
     return new NorthWestHandle(owner);
   }
 
-  static public Handle east(org.jhotdraw.draw.figures.Figure owner) {
+  static public org.jhotdraw.draw.handlers.Handle east(org.jhotdraw.draw.figures.Figure owner) {
     return new EastHandle(owner);
   }
 
-  static public Handle west(org.jhotdraw.draw.figures.Figure owner) {
+  static public org.jhotdraw.draw.handlers.Handle west(org.jhotdraw.draw.figures.Figure owner) {
     return new WestHandle(owner);
   }
 

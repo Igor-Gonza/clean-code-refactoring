@@ -15,6 +15,8 @@
 package org.jhotdraw.draw.figures;
 
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.handlers.MoveHandle;
 import org.jhotdraw.draw.locators.RelativeLocator;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.geom.Geom;
@@ -156,13 +158,13 @@ public class TextFigure extends AttributedFigure implements TextHolder {
     }
   }
 
-  public Collection<Handle> createHandles(int detailLevel) {
+  public Collection<org.jhotdraw.draw.handlers.Handle> createHandles(int detailLevel) {
     LinkedList<Handle> handles = new LinkedList<>();
     if (detailLevel == 0) {
       handles.add(new MoveHandle(this, RelativeLocator.northWest()));
-      handles.add(new MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.northEast()));
-      handles.add(new MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.southEast()));
-      handles.add(new FontSizeHandle(this));
+      handles.add(new org.jhotdraw.draw.handlers.MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.northEast()));
+      handles.add(new org.jhotdraw.draw.handlers.MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.southEast()));
+      handles.add(new org.jhotdraw.draw.handlers.FontSizeHandle(this));
     }
     return handles;
   }

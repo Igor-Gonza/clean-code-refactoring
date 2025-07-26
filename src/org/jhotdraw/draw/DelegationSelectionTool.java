@@ -22,6 +22,7 @@ import java.util.*;
 
 import org.jhotdraw.app.action.Actions;
 import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.handlers.Handle;
 
 /**
  * A SelectionTool, which recognizes double clicks and popup menu triggers.

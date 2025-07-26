@@ -12,7 +12,7 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.handlers;
 
 import org.jhotdraw.draw.edits.BezierNodeEdit;
 import org.jhotdraw.draw.figures.BezierFigure;
@@ -133,7 +133,7 @@ public class BezierNodeHandle extends AbstractHandle {
   }
 
   @Override
-  public boolean isCombinableWith(Handle h) {
+  public boolean isCombinableWith(org.jhotdraw.draw.handlers.Handle h) {
        /*
         if (super.isCombinableWith(h)) {
             BezierNodeHandle that = (BezierNodeHandle) h;
@@ -159,7 +159,7 @@ public class BezierNodeHandle extends AbstractHandle {
 
   public Collection<Handle> createSecondaryHandles() {
     BezierFigure f = getBezierFigure();
-    LinkedList<Handle> list = new LinkedList<>();
+    LinkedList<org.jhotdraw.draw.handlers.Handle> list = new LinkedList<>();
     BezierPath.Node v = f.getNode(index);
     if ((v.mask & BezierPath.C1_MASK) != 0 && (index != 0 || f.isClosed())) {
       list.add(new BezierControlPointHandle(f, index, 1));

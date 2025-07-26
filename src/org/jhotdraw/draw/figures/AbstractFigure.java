@@ -21,6 +21,7 @@ import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.draw.edits.SetBoundsEdit;
 import org.jhotdraw.draw.edits.TransformEdit;
 import org.jhotdraw.draw.events.FigureEvent;
+import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.geom.Insets2DDouble;
 
@@ -328,7 +329,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
   }
 
   public Collection<Handle> createHandles(int detailLevel) {
-    LinkedList<Handle> handles = new LinkedList<>();
+    LinkedList<org.jhotdraw.draw.handlers.Handle> handles = new LinkedList<>();
     if (detailLevel == 0) {
       BoxHandleKit.addBoxHandles(this, handles);
     }

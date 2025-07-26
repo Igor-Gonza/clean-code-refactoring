@@ -1,5 +1,5 @@
 /*
- * @(#)ChangeConnectionStartHandle.java  2.0  2006-01-14
+ * @(#)ChangeConnectionEndHandle.java  2.0  2006-01-14
  *
  * Copyright (c) 1996-2006 by the original authors of JHotDraw
  * and all its contributors ("JHotDraw.org")
@@ -12,7 +12,7 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.handlers;
 
 import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.draw.figures.Figure;
@@ -21,18 +21,18 @@ import java.awt.geom.Point2D;
 
 /**
  * Handle to reconnect the
- * start of a connection to another figure.
+ * end of a connection to another figure.
  *
  * @author Werner Randelshofer
- * @version 2006-01-14 Changed to support double precision coordinates.
+ * @version 2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
-public class ChangeConnectionStartHandle extends ChangeConnectionHandle {
+public class ChangeConnectionEndHandle extends ChangeConnectionHandle {
 
   /**
    * Constructs the connection handle for the given start figure.
    */
-  public ChangeConnectionStartHandle(Figure owner) {
+  public ChangeConnectionEndHandle(org.jhotdraw.draw.figures.Figure owner) {
     super(owner);
   }
 
@@ -40,27 +40,28 @@ public class ChangeConnectionStartHandle extends ChangeConnectionHandle {
    * Sets the start of the connection.
    */
   protected void connect(Connector c) {
-    getConnection().setStartConnector(c);
+    getConnection().setEndConnector(c);
   }
 
   /**
    * Disconnects the start figure.
    */
   protected void disconnect() {
-    getConnection().setStartConnector(null);
+    getConnection().setEndConnector(null);
   }
 
 
   protected org.jhotdraw.draw.connectors.Connector getTarget() {
-    return getConnection().getStartConnector();
+    return getConnection().getEndConnector();
   }
 
   /**
    * Sets the start point of the connection.
    */
   protected void setLocation(Point2D.Double p) {
+    // XXX - Fire UndoableEdit
     getConnection().willChange();
-    getConnection().setStartPoint(p);
+    getConnection().setEndPoint(p);
     getConnection().changed();
   }
 
@@ -68,10 +69,10 @@ public class ChangeConnectionStartHandle extends ChangeConnectionHandle {
    * Returns the start point of the connection.
    */
   protected Point2D.Double getLocation() {
-    return getConnection().getStartPoint();
+    return getConnection().getEndPoint();
   }
 
-  protected boolean canConnect(org.jhotdraw.draw.figures.Figure existingEnd, org.jhotdraw.draw.figures.Figure targetEnd) {
-    return getConnection().canConnect(targetEnd, existingEnd);
+  protected boolean canConnect(Figure existingEnd, org.jhotdraw.draw.figures.Figure targetEnd) {
+    return getConnection().canConnect(existingEnd, targetEnd);
   }
 }

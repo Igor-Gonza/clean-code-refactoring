@@ -17,6 +17,7 @@ package org.jhotdraw.draw;
 import org.jhotdraw.draw.edits.TransformEdit;
 import org.jhotdraw.draw.events.ToolEvent;
 import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.undo.CompositeEdit;
 
 import java.awt.*;

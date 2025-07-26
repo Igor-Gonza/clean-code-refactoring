@@ -13,7 +13,7 @@
  */
 
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.handlers;
 
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.locators.Locator;

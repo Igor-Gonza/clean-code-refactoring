@@ -16,6 +16,7 @@ package org.jhotdraw.draw.figures;
 
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.events.FigureEvent;
+import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.draw.layouters.Layouter;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.util.ReversedList;

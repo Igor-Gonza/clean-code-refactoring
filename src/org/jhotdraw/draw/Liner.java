@@ -15,6 +15,7 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.figures.ConnectionFigure;
+import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.geom.BezierPath;
 
 import java.io.Serializable;

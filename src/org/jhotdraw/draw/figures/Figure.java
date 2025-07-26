@@ -16,6 +16,7 @@ package org.jhotdraw.draw.figures;
 
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.connectors.Connector;
+import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.xml.DOMStorable;
 
@@ -237,7 +238,7 @@ public interface Figure extends Cloneable, Serializable, DOMStorable {
    * @return a Collection of handles
    * @see Handle
    */
-  Collection<Handle> createHandles(int detailLevel);
+  Collection<org.jhotdraw.draw.handlers.Handle> createHandles(int detailLevel);
 
   /**
    * Returns a cursor for the specified location.

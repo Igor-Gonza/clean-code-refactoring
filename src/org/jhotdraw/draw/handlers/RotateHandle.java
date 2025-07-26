@@ -12,7 +12,7 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.handlers;
 
 import org.jhotdraw.draw.edits.RestoreDataEdit;
 import org.jhotdraw.draw.figures.Figure;

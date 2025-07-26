@@ -15,8 +15,8 @@
 package org.jhotdraw.draw.figures;
 
 import org.jhotdraw.draw.AttributeKeys;
-import org.jhotdraw.draw.Handle;
-import org.jhotdraw.draw.TriangleRotationHandler;
+import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.handlers.TriangleRotationHandler;
 import org.jhotdraw.draw.connectors.ChopDiamondConnector;
 import org.jhotdraw.draw.connectors.ChopTriangleConnector;
 import org.jhotdraw.draw.connectors.Connector;

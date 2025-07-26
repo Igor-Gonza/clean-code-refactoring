@@ -16,6 +16,7 @@ package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.events.ToolEvent;
 import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.handlers.Handle;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -139,7 +140,7 @@ public class SelectionTool extends AbstractTool implements ToolListener {
   /**
    * Factory method to create a Handle tracker. It is used to track a handle.
    */
-  protected Tool createHandleTracker(Handle handle) {
+  protected Tool createHandleTracker(org.jhotdraw.draw.handlers.Handle handle) {
     return new HandleTracker(handle, getView().getCompatibleHandles(handle));
   }
 

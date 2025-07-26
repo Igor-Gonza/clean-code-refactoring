@@ -30,6 +30,8 @@ import org.jhotdraw.draw.figures.ConnectionFigure;
 import org.jhotdraw.draw.figures.LineConnectionFigure;
 import org.jhotdraw.draw.figures.RectangleFigure;
 import org.jhotdraw.draw.figures.TextFigure;
+import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.handlers.MoveHandle;
 import org.jhotdraw.draw.locators.RelativeLocator;
 import org.jhotdraw.geom.Geom;
 import org.jhotdraw.geom.Insets2DDouble;
@@ -80,17 +82,17 @@ public class NodeFigure extends TextFigure {
   }
 
   @Override
-  public Collection<Handle> createHandles(int detailLevel) {
+  public Collection<org.jhotdraw.draw.handlers.Handle> createHandles(int detailLevel) {
     java.util.List<Handle> handles = new LinkedList<>();
     if (detailLevel == 0) {
-      handles.add(new MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.northWest()));
-      handles.add(new MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.northEast()));
+      handles.add(new org.jhotdraw.draw.handlers.MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.northWest()));
+      handles.add(new org.jhotdraw.draw.handlers.MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.northEast()));
       handles.add(new MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.southWest()));
-      handles.add(new MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.southEast()));
-      handles.add(new ConnectionHandle(this, org.jhotdraw.draw.locators.RelativeLocator.north(), new org.jhotdraw.draw.figures.LineConnectionFigure()));
-      handles.add(new ConnectionHandle(this, org.jhotdraw.draw.locators.RelativeLocator.east(), new LineConnectionFigure()));
-      handles.add(new ConnectionHandle(this, RelativeLocator.south(), new org.jhotdraw.draw.figures.LineConnectionFigure()));
-      handles.add(new ConnectionHandle(this, org.jhotdraw.draw.locators.RelativeLocator.west(), new org.jhotdraw.draw.figures.LineConnectionFigure()));
+      handles.add(new org.jhotdraw.draw.handlers.MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.southEast()));
+      handles.add(new org.jhotdraw.draw.handlers.ConnectionHandle(this, org.jhotdraw.draw.locators.RelativeLocator.north(), new org.jhotdraw.draw.figures.LineConnectionFigure()));
+      handles.add(new org.jhotdraw.draw.handlers.ConnectionHandle(this, org.jhotdraw.draw.locators.RelativeLocator.east(), new LineConnectionFigure()));
+      handles.add(new org.jhotdraw.draw.handlers.ConnectionHandle(this, RelativeLocator.south(), new org.jhotdraw.draw.figures.LineConnectionFigure()));
+      handles.add(new org.jhotdraw.draw.handlers.ConnectionHandle(this, org.jhotdraw.draw.locators.RelativeLocator.west(), new org.jhotdraw.draw.figures.LineConnectionFigure()));
     }
     return handles;
   }

@@ -21,6 +21,8 @@ import org.jhotdraw.draw.figures.GraphicalCompositeFigure;
 import org.jhotdraw.draw.figures.ListFigure;
 import org.jhotdraw.draw.figures.RectangleFigure;
 import org.jhotdraw.draw.figures.TextFigure;
+import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.handlers.MoveHandle;
 import org.jhotdraw.draw.layouters.VerticalLayouter;
 import org.jhotdraw.draw.locators.RelativeLocator;
 import org.jhotdraw.geom.Insets2DDouble;
@@ -142,14 +144,14 @@ public class TaskFigure extends GraphicalCompositeFigure {
   }
 
 
-  public Collection<Handle> createHandles(int detailLevel) {
+  public Collection<org.jhotdraw.draw.handlers.Handle> createHandles(int detailLevel) {
     List<Handle> handles = new LinkedList<>();
     if (detailLevel == 0) {
-      handles.add(new MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.northWest()));
-      handles.add(new MoveHandle(this, RelativeLocator.northEast()));
+      handles.add(new org.jhotdraw.draw.handlers.MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.northWest()));
+      handles.add(new org.jhotdraw.draw.handlers.MoveHandle(this, RelativeLocator.northEast()));
       handles.add(new MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.southWest()));
-      handles.add(new MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.southEast()));
-      handles.add(new ConnectionHandle(this, org.jhotdraw.draw.locators.RelativeLocator.east(), new DependencyFigure()));
+      handles.add(new org.jhotdraw.draw.handlers.MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.southEast()));
+      handles.add(new org.jhotdraw.draw.handlers.ConnectionHandle(this, org.jhotdraw.draw.locators.RelativeLocator.east(), new DependencyFigure()));
     }
     return handles;
   }

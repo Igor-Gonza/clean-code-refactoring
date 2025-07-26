@@ -16,6 +16,7 @@ package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.constrainers.Constrainer;
 import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.handlers.Handle;
 
 import java.awt.*;
 import java.awt.event.KeyListener;
@@ -112,14 +113,14 @@ public interface DrawingView {
    *
    * @return A handle, null if no handle is found.
    */
-  Handle findHandle(Point p);
+  org.jhotdraw.draw.handlers.Handle findHandle(Point p);
 
   /**
    * Gets compatible handles.
    *
    * @return A collection containing the handle and all compatible handles.
    */
-  Collection<Handle> getCompatibleHandles(Handle handle);
+  Collection<Handle> getCompatibleHandles(org.jhotdraw.draw.handlers.Handle handle);
 
   /**
    * Finds a figure at the given point.

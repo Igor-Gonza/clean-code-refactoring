@@ -17,6 +17,8 @@ package org.jhotdraw.draw.figures;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.edits.AttributeChangeEdit;
 import org.jhotdraw.draw.events.FigureEvent;
+import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.handlers.MoveHandle;
 import org.jhotdraw.draw.layouters.Layouter;
 import org.jhotdraw.geom.Geom;
 import org.jhotdraw.xml.DOMInput;
@@ -239,7 +241,7 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
    * Return default handles from the presentation figure.
    */
   public Collection<Handle> createHandles(int detailLevel) {
-    LinkedList<Handle> handles = new LinkedList<>();
+    LinkedList<org.jhotdraw.draw.handlers.Handle> handles = new LinkedList<>();
     if (detailLevel == 0) {
       MoveHandle.addMoveHandles(this, handles);
     }

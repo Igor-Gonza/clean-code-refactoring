@@ -17,6 +17,9 @@ package org.jhotdraw.draw.figures;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.draw.events.FigureEvent;
+import org.jhotdraw.draw.handlers.BezierNodeHandle;
+import org.jhotdraw.draw.handlers.ChangeConnectionStartHandle;
+import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;
@@ -119,7 +122,7 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
    * start and end.
    */
   public Collection<Handle> createHandles(int detailLevel) {
-    ArrayList<Handle> handles = new ArrayList<>(getNodeCount());
+    ArrayList<org.jhotdraw.draw.handlers.Handle> handles = new ArrayList<>(getNodeCount());
 
     switch (detailLevel) {
       case 0:
@@ -129,7 +132,7 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
           }
         }
         handles.add(new ChangeConnectionStartHandle(this));
-        handles.add(new ChangeConnectionEndHandle(this));
+        handles.add(new org.jhotdraw.draw.handlers.ChangeConnectionEndHandle(this));
         break;
     }
     return handles;
