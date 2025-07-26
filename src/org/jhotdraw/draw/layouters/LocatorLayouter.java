@@ -17,7 +17,7 @@ package org.jhotdraw.draw.layouters;
 import org.jhotdraw.draw.AttributeKey;
 import org.jhotdraw.draw.CompositeFigure;
 import org.jhotdraw.draw.Figure;
-import org.jhotdraw.draw.Locator;
+import org.jhotdraw.draw.locators.Locator;
 import org.jhotdraw.geom.Dimension2DDouble;
 
 import java.awt.geom.Point2D;

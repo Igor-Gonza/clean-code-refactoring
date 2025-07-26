@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.locators.FontSizeLocator;
+import org.jhotdraw.draw.locators.Locator;
 import org.jhotdraw.undo.CompositeEdit;
 
 import java.awt.*;

@@ -16,6 +16,7 @@ package org.jhotdraw.samples.pert.figures;
 
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.layouters.VerticalLayouter;
+import org.jhotdraw.draw.locators.RelativeLocator;
 import org.jhotdraw.geom.Insets2DDouble;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
@@ -138,11 +139,11 @@ public class TaskFigure extends GraphicalCompositeFigure {
   public Collection<Handle> createHandles(int detailLevel) {
     List<Handle> handles = new LinkedList<>();
     if (detailLevel == 0) {
-      handles.add(new MoveHandle(this, RelativeLocator.northWest()));
+      handles.add(new MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.northWest()));
       handles.add(new MoveHandle(this, RelativeLocator.northEast()));
-      handles.add(new MoveHandle(this, RelativeLocator.southWest()));
-      handles.add(new MoveHandle(this, RelativeLocator.southEast()));
-      handles.add(new ConnectionHandle(this, RelativeLocator.east(), new DependencyFigure()));
+      handles.add(new MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.southWest()));
+      handles.add(new MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.southEast()));
+      handles.add(new ConnectionHandle(this, org.jhotdraw.draw.locators.RelativeLocator.east(), new DependencyFigure()));
     }
     return handles;
   }

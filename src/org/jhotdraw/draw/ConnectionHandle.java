@@ -15,6 +15,7 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.connectors.Connector;
+import org.jhotdraw.draw.locators.Locator;
 import org.jhotdraw.undo.*;
 import org.jhotdraw.util.*;
 

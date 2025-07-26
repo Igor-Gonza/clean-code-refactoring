@@ -14,6 +14,9 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.locators.Locator;
+import org.jhotdraw.draw.locators.RelativeLocator;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -86,15 +89,15 @@ public class MoveHandle extends LocatorHandle {
   }
 
   static public Handle south(Figure owner) {
-    return new MoveHandle(owner, RelativeLocator.south());
+    return new MoveHandle(owner, org.jhotdraw.draw.locators.RelativeLocator.south());
   }
 
   static public Handle southEast(Figure owner) {
-    return new MoveHandle(owner, RelativeLocator.southEast());
+    return new MoveHandle(owner, org.jhotdraw.draw.locators.RelativeLocator.southEast());
   }
 
   static public Handle southWest(Figure owner) {
-    return new MoveHandle(owner, RelativeLocator.southWest());
+    return new MoveHandle(owner, org.jhotdraw.draw.locators.RelativeLocator.southWest());
   }
 
   static public Handle north(Figure owner) {
@@ -102,18 +105,18 @@ public class MoveHandle extends LocatorHandle {
   }
 
   static public Handle northEast(Figure owner) {
-    return new MoveHandle(owner, RelativeLocator.northEast());
+    return new MoveHandle(owner, org.jhotdraw.draw.locators.RelativeLocator.northEast());
   }
 
   static public Handle northWest(Figure owner) {
-    return new MoveHandle(owner, RelativeLocator.northWest());
+    return new MoveHandle(owner, org.jhotdraw.draw.locators.RelativeLocator.northWest());
   }
 
   static public Handle east(Figure owner) {
-    return new MoveHandle(owner, RelativeLocator.east());
+    return new MoveHandle(owner, org.jhotdraw.draw.locators.RelativeLocator.east());
   }
 
   static public Handle west(Figure owner) {
-    return new MoveHandle(owner, RelativeLocator.west());
+    return new MoveHandle(owner, org.jhotdraw.draw.locators.RelativeLocator.west());
   }
 }

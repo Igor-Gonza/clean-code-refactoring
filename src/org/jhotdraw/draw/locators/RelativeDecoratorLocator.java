@@ -12,7 +12,9 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.locators;
+
+import org.jhotdraw.draw.Figure;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -55,15 +57,15 @@ public class RelativeDecoratorLocator extends RelativeLocator {
     return new Point2D.Double(r.x + r.width * relativeX, r.y + r.height * relativeY);
   }
 
-  static public Locator east() {
+  static public org.jhotdraw.draw.locators.Locator east() {
     return new RelativeDecoratorLocator(1.0, 0.5);
   }
 
-  static public Locator north() {
+  static public org.jhotdraw.draw.locators.Locator north() {
     return new RelativeDecoratorLocator(0.5, 0.0);
   }
 
-  static public Locator west() {
+  static public org.jhotdraw.draw.locators.Locator west() {
     return new RelativeDecoratorLocator(0.0, 0.5);
   }
 
@@ -71,23 +73,23 @@ public class RelativeDecoratorLocator extends RelativeLocator {
     return new RelativeDecoratorLocator(1.0, 0.0);
   }
 
-  static public Locator northWest() {
+  static public org.jhotdraw.draw.locators.Locator northWest() {
     return new RelativeDecoratorLocator(0.0, 0.0);
   }
 
-  static public Locator south() {
+  static public org.jhotdraw.draw.locators.Locator south() {
     return new RelativeDecoratorLocator(0.5, 1.0);
   }
 
-  static public Locator southEast() {
+  static public org.jhotdraw.draw.locators.Locator southEast() {
     return new RelativeDecoratorLocator(1.0, 1.0);
   }
 
-  static public Locator southWest() {
+  static public org.jhotdraw.draw.locators.Locator southWest() {
     return new RelativeDecoratorLocator(0.0, 1.0);
   }
 
-  static public Locator center() {
+  static public org.jhotdraw.draw.locators.Locator center() {
     return new RelativeDecoratorLocator(0.5, 0.5);
   }
 }

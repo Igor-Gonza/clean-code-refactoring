@@ -12,8 +12,9 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.locators;
 
+import org.jhotdraw.draw.Figure;
 import org.jhotdraw.geom.Insets2DDouble;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;
@@ -35,8 +36,8 @@ import static org.jhotdraw.draw.AttributeKeys.DECORATOR_INSETS;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class RelativeLocator extends AbstractLocator {
-  double relativeX;
-  double relativeY;
+  public double relativeX;
+  public double relativeY;
 
   public RelativeLocator() {
     relativeX = 0.0;
@@ -62,15 +63,15 @@ public class RelativeLocator extends AbstractLocator {
     return new Point2D.Double(bounds.x + bounds.width * relativeX, bounds.y + bounds.height * relativeY);
   }
 
-  static public Locator east() {
+  static public org.jhotdraw.draw.locators.Locator east() {
     return new RelativeLocator(1.0, 0.5);
   }
 
-  static public Locator north() {
+  static public org.jhotdraw.draw.locators.Locator north() {
     return new RelativeLocator(0.5, 0.0);
   }
 
-  static public Locator west() {
+  static public org.jhotdraw.draw.locators.Locator west() {
     return new RelativeLocator(0.0, 0.5);
   }
 
@@ -78,23 +79,23 @@ public class RelativeLocator extends AbstractLocator {
     return new RelativeLocator(1.0, 0.0);
   }
 
-  static public Locator northWest() {
+  static public org.jhotdraw.draw.locators.Locator northWest() {
     return new RelativeLocator(0.0, 0.0);
   }
 
-  static public Locator south() {
+  static public org.jhotdraw.draw.locators.Locator south() {
     return new RelativeLocator(0.5, 1.0);
   }
 
-  static public Locator southEast() {
+  static public org.jhotdraw.draw.locators.Locator southEast() {
     return new RelativeLocator(1.0, 1.0);
   }
 
-  static public Locator southWest() {
+  static public org.jhotdraw.draw.locators.Locator southWest() {
     return new RelativeLocator(0.0, 1.0);
   }
 
-  static public Locator center() {
+  static public org.jhotdraw.draw.locators.Locator center() {
     return new RelativeLocator(0.5, 0.5);
   }
 

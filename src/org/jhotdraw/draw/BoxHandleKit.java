@@ -14,6 +14,9 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.locators.Locator;
+import org.jhotdraw.draw.locators.RelativeLocator;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -172,7 +175,7 @@ public class BoxHandleKit {
 
   private static class EastHandle extends ResizeHandle {
     EastHandle(Figure owner) {
-      super(owner, RelativeLocator.east());
+      super(owner, org.jhotdraw.draw.locators.RelativeLocator.east());
     }
 
     protected void trackStepNormalized(Point2D.Double p) {
@@ -187,7 +190,7 @@ public class BoxHandleKit {
 
   private static class NorthHandle extends ResizeHandle {
     NorthHandle(Figure owner) {
-      super(owner, RelativeLocator.north());
+      super(owner, org.jhotdraw.draw.locators.RelativeLocator.north());
     }
 
     protected void trackStepNormalized(Point2D.Double p) {
@@ -202,7 +205,7 @@ public class BoxHandleKit {
 
   private static class NorthWestHandle extends ResizeHandle {
     NorthWestHandle(Figure owner) {
-      super(owner, RelativeLocator.northWest());
+      super(owner, org.jhotdraw.draw.locators.RelativeLocator.northWest());
     }
 
     protected void trackStepNormalized(Point2D.Double p) {
@@ -217,7 +220,7 @@ public class BoxHandleKit {
 
   private static class SouthEastHandle extends ResizeHandle {
     SouthEastHandle(Figure owner) {
-      super(owner, RelativeLocator.southEast());
+      super(owner, org.jhotdraw.draw.locators.RelativeLocator.southEast());
     }
 
 
@@ -233,7 +236,7 @@ public class BoxHandleKit {
 
   private static class SouthHandle extends ResizeHandle {
     SouthHandle(Figure owner) {
-      super(owner, RelativeLocator.south());
+      super(owner, org.jhotdraw.draw.locators.RelativeLocator.south());
     }
 
     protected void trackStepNormalized(Point2D.Double p) {
@@ -248,7 +251,7 @@ public class BoxHandleKit {
 
   private static class SouthWestHandle extends ResizeHandle {
     SouthWestHandle(Figure owner) {
-      super(owner, RelativeLocator.southWest());
+      super(owner, org.jhotdraw.draw.locators.RelativeLocator.southWest());
     }
 
     protected void trackStepNormalized(Point2D.Double p) {
@@ -263,7 +266,7 @@ public class BoxHandleKit {
 
   private static class WestHandle extends ResizeHandle {
     WestHandle(Figure owner) {
-      super(owner, RelativeLocator.west());
+      super(owner, org.jhotdraw.draw.locators.RelativeLocator.west());
     }
 
     protected void trackStepNormalized(Point2D.Double p) {

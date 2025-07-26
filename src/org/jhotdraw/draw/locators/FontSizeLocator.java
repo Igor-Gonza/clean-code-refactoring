@@ -12,7 +12,10 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.locators;
+
+import org.jhotdraw.draw.Figure;
+import org.jhotdraw.draw.TextHolder;
 
 import java.awt.geom.Point2D;
 
