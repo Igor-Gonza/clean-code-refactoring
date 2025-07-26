@@ -38,14 +38,15 @@ import java.net.URL;
  * <br>1.0 Created on 10. Marz 2004, 13:22.
  */
 public class DrawApplet extends JApplet {
-  private final static String VERSION = "0.5";
-  private final static String NAME = "JHotDraw PlasmaDraw";
+  private static final String VERSION = "0.5";
+  private static final String NAME = "JHotDraw PlasmaDraw";
   private DrawingPanel drawingPanel;
 
   /**
    * We override getParameter() to make it work even if we have no Applet
    * context.
    */
+  @Override
   public String getParameter(String name) {
     try {
       return super.getParameter(name);
@@ -57,12 +58,13 @@ public class DrawApplet extends JApplet {
   /**
    * Initializes the applet DrawApplet
    */
+  @Override
   public void init() {
     // Set look and feel
     // -----------------
     try {
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    } catch (Throwable e) {
+    } catch (Exception e) {
       // Do nothing.
       // If we can't set the desired look and feel, UIManager does
       // automatically the right thing for us.
@@ -72,9 +74,9 @@ public class DrawApplet extends JApplet {
     // ----------------------------------------------------
     Container c = getContentPane();
     c.setLayout(new BoxLayout(c, BoxLayout.Y_AXIS));
-    String[] labels = getAppletInfo().split("\n");//Strings.split(getAppletInfo(), '\n');
-    for (int i = 0; i < labels.length; i++) {
-      c.add(new JLabel((labels[i].isEmpty()) ? " " : labels[i]));
+    String[] labels = getAppletInfo().split("\n");
+    for (String label : labels) {
+      c.add(new JLabel((label.isEmpty()) ? " " : label));
     }
 
     // We load the data using a worker thread
@@ -102,12 +104,13 @@ public class DrawApplet extends JApplet {
           } else {
             result = null;
           }
-        } catch (Throwable t) {
+        } catch (Exception t) {
           result = t;
         }
         return result;
       }
 
+      @Override
       public void finished() {
         if (get() instanceof Throwable) {
           ((Throwable) getValue()).printStackTrace();
@@ -115,7 +118,8 @@ public class DrawApplet extends JApplet {
         Container c = getContentPane();
         c.setLayout(new BorderLayout());
         c.removeAll();
-        c.add(drawingPanel = new DrawingPanel());
+        drawingPanel = new DrawingPanel();
+        c.add(drawingPanel);
 
         Object result = getValue();
         initComponents();
@@ -150,7 +154,7 @@ public class DrawApplet extends JApplet {
         domInput.openElement("PlasmaDraw");
 
         setDrawing((Drawing) domInput.readObject(0));
-      } catch (Throwable e) {
+      } catch (Exception e) {
         getDrawing().clear();
         TextFigure tf = new TextFigure();
         tf.setText(e.getMessage());
@@ -181,10 +185,12 @@ public class DrawApplet extends JApplet {
     return out.toString();
   }
 
+  @Override
   public String[][] getParameterInfo() {
     return new String[][]{{"data", "String", "the data to be displayed by this applet."}, {"datafile", "URL", "an URL to a file containing the data to be displayed by this applet."},};
   }
 
+  @Override
   public String getAppletInfo() {
     return NAME + "\nVersion " + VERSION + "\n\nCopyright © 2004-2006, © Werner Randelshofer" + "\nAlle Rights Reserved." + "\n\nThis software is based on" + "\nJHotDraw © 1996-1997, IFA Informatik und Erich Gamma" + "\nNanoXML © 2000-2002 Marc De Scheemaecker" + "\n" + "\nJavaScript code can access the drawing data using the setData() and getData() methods."
 

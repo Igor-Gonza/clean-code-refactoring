@@ -66,6 +66,7 @@ public class DrawProject extends AbstractProject {
   /**
    * Initializes the project.
    */
+  @Override
   public void init() {
     super.init();
 
@@ -124,6 +125,7 @@ public class DrawProject extends AbstractProject {
     putAction(RedoAction.ID, undo.getRedoAction());
   }
 
+  @Override
   protected void setHasUnsavedChanges(boolean newValue) {
     super.setHasUnsavedChanges(newValue);
     undo.setHasSignificantEdits(newValue);

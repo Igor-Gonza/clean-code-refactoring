@@ -32,9 +32,9 @@ import static org.jhotdraw.draw.AttributeKeys.END_DECORATION;
  * @version 1.0 11. M�rz 2004  Created.
  */
 public class DrawingPanel extends JPanel {
-  private UndoRedoManager undoManager;
+  private final UndoRedoManager undoManager;
   private Drawing drawing;
-  private DrawingEditor editor;
+  private final DrawingEditor editor;
 
   /**
    * Creates new instance.

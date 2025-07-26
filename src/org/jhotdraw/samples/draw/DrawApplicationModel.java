@@ -50,6 +50,7 @@ public class DrawApplicationModel extends DefaultApplicationModel {
     return sharedEditor;
   }
 
+  @Override
   public void initProject(Application a, Project p) {
     if (a.isSharingToolsAmongProjects()) {
       ((DrawProject) p).setEditor(getSharedEditor());
@@ -61,6 +62,7 @@ public class DrawApplicationModel extends DefaultApplicationModel {
    * This class always returns an empty list. Subclasses may return other
    * values.
    */
+  @Override
   public List<JToolBar> createToolBars(Application a, Project pr) {
     ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
     DrawProject p = (DrawProject) pr;

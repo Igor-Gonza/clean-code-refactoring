@@ -39,18 +39,19 @@ import java.net.URL;
  * <br>1.0 Created on 10. M�rz 2004, 13:22.
  */
 public class DrawLiveConnectApplet extends JApplet {
-  private final static String VERSION = "0.44";
-  private final static String NAME = "PlasmaDraw";
+  private static final String VERSION = "0.44";
+  private static final String NAME = "PlasmaDraw";
 
   /**
    * Initializes the applet DrawApplet
    */
+  @Override
   public void init() {
     // Set look and feel
     // -----------------
     try {
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    } catch (Throwable e) {
+    } catch (Exception e) {
       // Do nothing.
       // If we can't set the desired look and feel, UIManager does
       // automatically the right thing for us.
@@ -60,9 +61,9 @@ public class DrawLiveConnectApplet extends JApplet {
     // ----------------------------------------------------
     Container c = getContentPane();
     c.setLayout(new BoxLayout(c, BoxLayout.Y_AXIS));
-    String[] lines = getAppletInfo().split("\n");//Strings.split(getAppletInfo(), '\n');
-    for (int i = 0; i < lines.length; i++) {
-      c.add(new JLabel(lines[i]));
+    String[] lines = getAppletInfo().split("\n");
+    for (String line : lines) {
+      c.add(new JLabel(line));
     }
 
     // We load the data using a worker thread
@@ -89,12 +90,13 @@ public class DrawLiveConnectApplet extends JApplet {
           } else {
             result = null;
           }
-        } catch (Throwable t) {
+        } catch (Exception t) {
           result = t;
         }
         return result;
       }
 
+      @Override
       public void finished() {
         Container c = getContentPane();
         c.setLayout(new BorderLayout());
@@ -115,7 +117,7 @@ public class DrawLiveConnectApplet extends JApplet {
         try {
           Class.forName("netscape.javascript.JSObject");
           isLiveConnect = true;
-        } catch (Throwable t) {
+        } catch (Exception t) {
           isLiveConnect = false;
         }
         loadButton.setEnabled(isLiveConnect && getParameter("dataread") != null);
@@ -154,7 +156,7 @@ public class DrawLiveConnectApplet extends JApplet {
         domInput.openElement("PlasmaDraw");
 
         setDrawing((Drawing) domInput.readObject(0));
-      } catch (Throwable e) {
+      } catch (Exception e) {
         getDrawing().clear();
         TextFigure tf = new TextFigure();
         tf.setText(e.getMessage());
@@ -185,6 +187,7 @@ public class DrawLiveConnectApplet extends JApplet {
     return out.toString();
   }
 
+  @Override
   public String[][] getParameterInfo() {
     return new String[][]{
             {"data", "String", "the data to be displayed by this applet."},
@@ -194,6 +197,7 @@ public class DrawLiveConnectApplet extends JApplet {
     };
   }
 
+  @Override
   public String getAppletInfo() {
     return NAME + "\nVersion " + VERSION
             + "\n\nCopyright 2004 © Werner Randelshofer"
@@ -255,7 +259,7 @@ public class DrawLiveConnectApplet extends JApplet {
       }
       JSObject win = JSObject.getWindow(this);
       Object result = win.call(methodName, getData());
-    } catch (Throwable t) {
+    } catch (Exception t) {
       TextFigure tf = new TextFigure("Fehler: " + t);
       AffineTransform tx = new AffineTransform();
       tx.translate(10, 20);
@@ -275,7 +279,7 @@ public class DrawLiveConnectApplet extends JApplet {
       if (result instanceof String) {
         setData((String) result);
       }
-    } catch (Throwable t) {
+    } catch (Exception t) {
       TextFigure tf = new TextFigure("Fehler: " + t);
       AffineTransform tx = new AffineTransform();
       tx.translate(10, 20);
