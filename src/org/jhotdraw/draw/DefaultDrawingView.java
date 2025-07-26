@@ -17,6 +17,7 @@ package org.jhotdraw.draw;
 import org.jhotdraw.app.EditableComponent;
 import org.jhotdraw.draw.constrainers.Constrainer;
 import org.jhotdraw.draw.constrainers.GridConstrainer;
+import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.events.DrawingEvent;
 import org.jhotdraw.draw.events.FigureSelectionEvent;
 import org.jhotdraw.draw.events.HandleEvent;
@@ -108,7 +109,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
     setBackground(new java.awt.Color(255, 255, 255));
   }//GEN-END:initComponents
 
-  public Drawing getDrawing() {
+  public org.jhotdraw.draw.drawings.Drawing getDrawing() {
     return drawing;
   }
 
@@ -226,7 +227,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
     }
   }
 
-  public void setDrawing(Drawing d) {
+  public void setDrawing(org.jhotdraw.draw.drawings.Drawing d) {
     if (this.drawing != null) {
       this.drawing.removeDrawingListener(this);
       clearSelection();
@@ -783,7 +784,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
     HashMap<org.jhotdraw.draw.figures.Figure, org.jhotdraw.draw.figures.Figure> originalToDuplicateMap = new HashMap<>(sorted.size());
 
     clearSelection();
-    Drawing drawing = getDrawing();
+    org.jhotdraw.draw.drawings.Drawing drawing = getDrawing();
     ArrayList<org.jhotdraw.draw.figures.Figure> duplicates = new ArrayList<>(sorted.size());
     AffineTransform tx = new AffineTransform();
     tx.translate(5, 5);

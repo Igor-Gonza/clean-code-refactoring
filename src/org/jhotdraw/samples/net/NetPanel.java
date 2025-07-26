@@ -17,6 +17,7 @@ package org.jhotdraw.samples.net;
 import org.jhotdraw.app.action.*;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.*;
+import org.jhotdraw.draw.drawings.DefaultDrawing;
 import org.jhotdraw.draw.figures.LineConnectionFigure;
 import org.jhotdraw.draw.tools.TextTool;
 import org.jhotdraw.samples.net.figures.NodeFigure;
@@ -35,7 +36,7 @@ import java.util.HashMap;
  */
 public class NetPanel extends JPanel {
   private UndoRedoManager undoManager;
-  private Drawing drawing;
+  private org.jhotdraw.draw.drawings.Drawing drawing;
   private DrawingEditor editor;
 
   /**
@@ -103,19 +104,19 @@ public class NetPanel extends JPanel {
     creationToolbar.add(pb);
 
 
-    DefaultDrawing drawing = new DefaultDrawing();
+    DefaultDrawing drawing = new org.jhotdraw.draw.drawings.DefaultDrawing();
     view.setDrawing(drawing);
     drawing.addUndoableEditListener(undoManager);
   }
 
-  public void setDrawing(Drawing d) {
+  public void setDrawing(org.jhotdraw.draw.drawings.Drawing d) {
     undoManager.discardAllEdits();
     view.getDrawing().removeUndoableEditListener(undoManager);
     view.setDrawing(d);
     d.addUndoableEditListener(undoManager);
   }
 
-  public Drawing getDrawing() {
+  public org.jhotdraw.draw.drawings.Drawing getDrawing() {
     return view.getDrawing();
   }
 

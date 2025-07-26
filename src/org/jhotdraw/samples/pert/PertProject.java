@@ -20,6 +20,7 @@ import org.jhotdraw.app.action.UndoAction;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.ToolBarButtonFactory;
 import org.jhotdraw.draw.constrainers.GridConstrainer;
+import org.jhotdraw.draw.drawings.DefaultDrawing;
 import org.jhotdraw.gui.PlacardScrollPaneLayout;
 import org.jhotdraw.io.ExtensionFileFilter;
 import org.jhotdraw.undo.UndoRedoManager;
@@ -81,7 +82,7 @@ public class PertProject extends AbstractProject {
     setEditor(new DefaultDrawingEditor());
     view.setDOMFactory(new PertFactory());
     undo = new UndoRedoManager();
-    view.setDrawing(new DefaultDrawing());
+    view.setDrawing(new org.jhotdraw.draw.drawings.DefaultDrawing());
     view.getDrawing().addUndoableEditListener(undo);
     initActions();
     undo.addPropertyChangeListener(evt -> setHasUnsavedChanges(undo.hasSignificantEdits()));
@@ -191,7 +192,7 @@ public class PertProject extends AbstractProject {
       in = new BufferedInputStream(Files.newInputStream(f.toPath()));
       NanoXMLLiteDOMInput domInput = new NanoXMLLiteDOMInput(view.getDOMFactory(), in);
       domInput.openElement("PertDiagram");
-      final Drawing drawing = (Drawing) domInput.readObject();
+      final org.jhotdraw.draw.drawings.Drawing drawing = (org.jhotdraw.draw.drawings.Drawing) domInput.readObject();
       domInput.closeElement();
       SwingUtilities.invokeAndWait(() -> {
         view.getDrawing().removeUndoableEditListener(undo);

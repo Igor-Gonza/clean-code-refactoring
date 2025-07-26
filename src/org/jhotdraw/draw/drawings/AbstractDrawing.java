@@ -12,9 +12,10 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.drawings;
 
 import org.jhotdraw.beans.AbstractBean;
+import org.jhotdraw.draw.DrawingListener;
 import org.jhotdraw.draw.events.DrawingEvent;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.undo.CompositeEdit;

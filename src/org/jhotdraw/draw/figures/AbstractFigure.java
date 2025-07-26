@@ -18,6 +18,7 @@ package org.jhotdraw.draw.figures;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.connectors.ChopBoxConnector;
 import org.jhotdraw.draw.connectors.Connector;
+import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.edits.SetBoundsEdit;
 import org.jhotdraw.draw.edits.TransformEdit;
 import org.jhotdraw.draw.events.FigureEvent;
@@ -53,7 +54,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
   protected EventListenerList listenerList = new EventListenerList();
   private boolean isConnectorsVisible;
   private ConnectionFigure courtingConnection;
-  private Drawing drawing;
+  private org.jhotdraw.draw.drawings.Drawing drawing;
   private boolean isInteractive;
   private boolean isVisible = true;
   protected org.jhotdraw.draw.figures.Figure decorator;
@@ -94,12 +95,12 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
     listenerList.remove(UndoableEditListener.class, l);
   }
 
-  public void addNotify(Drawing d) {
+  public void addNotify(org.jhotdraw.draw.drawings.Drawing d) {
     this.drawing = d;
     fireFigureAdded();
   }
 
-  public void removeNotify(Drawing d) {
+  public void removeNotify(org.jhotdraw.draw.drawings.Drawing d) {
     fireFigureRemoved();
     this.drawing = null;
   }

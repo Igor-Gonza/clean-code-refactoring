@@ -15,7 +15,8 @@
 package org.jhotdraw.samples.svg;
 
 import java.io.IOException;
-import org.jhotdraw.draw.*;
+
+import org.jhotdraw.draw.drawings.DefaultDrawing;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.samples.svg.figures.*;
 import org.jhotdraw.xml.*;

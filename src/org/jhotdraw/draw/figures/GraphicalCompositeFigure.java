@@ -15,6 +15,7 @@
 package org.jhotdraw.draw.figures;
 
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.edits.AttributeChangeEdit;
 import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.handlers.Handle;
@@ -152,7 +153,7 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
     }
   }
 
-  public void addNotify(Drawing drawing) {
+  public void addNotify(org.jhotdraw.draw.drawings.Drawing drawing) {
     super.addNotify(drawing);
     if (getPresentationFigure() != null) {
       getPresentationFigure().addNotify(drawing);

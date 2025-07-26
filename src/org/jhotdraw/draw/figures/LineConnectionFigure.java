@@ -16,6 +16,7 @@ package org.jhotdraw.draw.figures;
 
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.connectors.Connector;
+import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.handlers.BezierNodeHandle;
 import org.jhotdraw.draw.handlers.ChangeConnectionStartHandle;
@@ -347,7 +348,7 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
         }*/
   }
 
-  public void removeNotify(Drawing drawing) {
+  public void removeNotify(org.jhotdraw.draw.drawings.Drawing drawing) {
         /*
         setStartConnector(null);
         setEndConnector(null);

@@ -14,7 +14,7 @@
 
 package org.jhotdraw.draw.handlers;
 
-import org.jhotdraw.draw.Drawing;
+import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.Liner;
 import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.draw.figures.ConnectionFigure;

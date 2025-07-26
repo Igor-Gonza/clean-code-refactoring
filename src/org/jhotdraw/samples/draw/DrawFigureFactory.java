@@ -21,6 +21,7 @@ import org.jhotdraw.draw.connectors.ChopDiamondConnector;
 import org.jhotdraw.draw.connectors.ChopEllipseConnector;
 import org.jhotdraw.draw.connectors.ChopRoundRectConnector;
 import org.jhotdraw.draw.connectors.ChopTriangleConnector;
+import org.jhotdraw.draw.drawings.DefaultDrawing;
 import org.jhotdraw.draw.figures.BezierFigure;
 import org.jhotdraw.draw.figures.DiamondFigure;
 import org.jhotdraw.draw.figures.GroupFigure;
@@ -36,7 +37,7 @@ import org.jhotdraw.xml.DefaultDOMFactory;
 public class DrawFigureFactory extends DefaultDOMFactory {
   private static final Object[][] classTagArray = {
           {DefaultDrawing.class, "drawing"},
-          {QuadTreeDrawing.class, "drawing"},
+          {org.jhotdraw.draw.drawings.QuadTreeDrawing.class, "drawing"},
           {DiamondFigure.class, "diamond"},
           {org.jhotdraw.draw.figures.TriangleFigure.class, "triangle"},
           {org.jhotdraw.draw.figures.BezierFigure.class, "bezier"},

@@ -17,6 +17,7 @@ package org.jhotdraw.samples.svg;
 import org.jhotdraw.app.action.*;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.*;
+import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.figures.BezierFigure;
 import org.jhotdraw.draw.tools.CreationTool;
 import org.jhotdraw.samples.svg.action.CombineAction;
@@ -39,7 +40,7 @@ import java.util.LinkedList;
  */
 public class SVGPanel extends JPanel {
   private UndoRedoManager undoManager;
-  private Drawing drawing;
+  private org.jhotdraw.draw.drawings.Drawing drawing;
   private DrawingEditor editor;
 
   /**
@@ -107,12 +108,12 @@ public class SVGPanel extends JPanel {
     creationToolbar.add(pb);
 
 
-    DefaultDrawing drawing = new DefaultDrawing();
+    org.jhotdraw.draw.drawings.DefaultDrawing drawing = new org.jhotdraw.draw.drawings.DefaultDrawing();
     view.setDrawing(drawing);
     drawing.addUndoableEditListener(undoManager);
   }
 
-  public void setDrawing(Drawing d) {
+  public void setDrawing(org.jhotdraw.draw.drawings.Drawing d) {
     undoManager.discardAllEdits();
     view.getDrawing().removeUndoableEditListener(undoManager);
     view.setDrawing(d);

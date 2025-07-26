@@ -16,6 +16,7 @@ package org.jhotdraw.samples.pert;
 
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.connectors.ChopBoxConnector;
+import org.jhotdraw.draw.drawings.DefaultDrawing;
 import org.jhotdraw.draw.figures.ListFigure;
 import org.jhotdraw.draw.figures.TextFigure;
 import org.jhotdraw.samples.pert.figures.DependencyFigure;

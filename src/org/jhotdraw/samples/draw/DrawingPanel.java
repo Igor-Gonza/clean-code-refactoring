@@ -17,6 +17,7 @@ package org.jhotdraw.samples.draw;
 import org.jhotdraw.app.action.*;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.*;
+import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.figures.AttributedFigure;
 import org.jhotdraw.draw.figures.BezierFigure;
 import org.jhotdraw.draw.figures.ConnectionFigure;
@@ -39,7 +40,7 @@ import static org.jhotdraw.draw.AttributeKeys.END_DECORATION;
  */
 public class DrawingPanel extends JPanel {
   private final UndoRedoManager undoManager;
-  private Drawing drawing;
+  private org.jhotdraw.draw.drawings.Drawing drawing;
   private final DrawingEditor editor;
 
   /**
@@ -107,7 +108,7 @@ public class DrawingPanel extends JPanel {
     creationToolbar.add(pb);
 
 
-    DefaultDrawing drawing = new DefaultDrawing();
+    org.jhotdraw.draw.drawings.DefaultDrawing drawing = new org.jhotdraw.draw.drawings.DefaultDrawing();
     view.setDrawing(drawing);
     drawing.addUndoableEditListener(undoManager);
   }
@@ -119,7 +120,7 @@ public class DrawingPanel extends JPanel {
     d.addUndoableEditListener(undoManager);
   }
 
-  public Drawing getDrawing() {
+  public org.jhotdraw.draw.drawings.Drawing getDrawing() {
     return view.getDrawing();
   }
 

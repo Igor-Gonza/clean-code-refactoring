@@ -15,6 +15,7 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.constrainers.Constrainer;
+import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.draw.tools.Tool;
@@ -55,7 +56,7 @@ public interface DrawingView {
   /**
    * Sets and installs another drawing in the view.
    */
-  void setDrawing(Drawing d);
+  void setDrawing(org.jhotdraw.draw.drawings.Drawing d);
 
   /**
    * Sets the cursor of the DrawingView

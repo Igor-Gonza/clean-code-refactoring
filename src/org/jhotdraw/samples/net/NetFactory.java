@@ -17,6 +17,7 @@ package org.jhotdraw.samples.net;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.connectors.ChopBoxConnector;
 import org.jhotdraw.draw.connectors.LocatorConnector;
+import org.jhotdraw.draw.drawings.DefaultDrawing;
 import org.jhotdraw.draw.figures.GroupFigure;
 import org.jhotdraw.draw.figures.LineConnectionFigure;
 import org.jhotdraw.draw.figures.TextAreaFigure;

@@ -16,6 +16,7 @@ package org.jhotdraw.draw.figures;
 
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.connectors.Connector;
+import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.draw.tools.Tool;
 import org.jhotdraw.geom.Dimension2DDouble;
@@ -355,7 +356,7 @@ public interface Figure extends Cloneable, Serializable, DOMStorable {
    * Informs a figure, that it has been removed from the specified drawing.
    * The figure must inform all FigureListeners that it has been removed.
    */
-  void removeNotify(Drawing d);
+  void removeNotify(org.jhotdraw.draw.drawings.Drawing d);
 
   /**
    * Informs that a Figure is about to change its shape.
