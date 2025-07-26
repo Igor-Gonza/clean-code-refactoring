@@ -15,6 +15,7 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.beans.AbstractBean;
+import org.jhotdraw.draw.events.DrawingEvent;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.undo.CompositeEdit;
 import org.jhotdraw.xml.DOMInput;
@@ -192,7 +193,7 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
    * notification on this event type.
    */
   protected void fireAreaInvalidated(Rectangle2D.Double dirtyRegion) {
-    DrawingEvent event = null;
+    org.jhotdraw.draw.events.DrawingEvent event = null;
     // Notify all listeners that have registered interest for
     // Guaranteed to return a non-null array
     Object[] listeners = listenerList.getListenerList();
@@ -201,7 +202,7 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
     for (int i = listeners.length - 2; i >= 0; i -= 2) {
       if (listeners[i] == DrawingListener.class) {
         // Lazily create the event:
-        if (event == null) event = new DrawingEvent(this, null, dirtyRegion);
+        if (event == null) event = new org.jhotdraw.draw.events.DrawingEvent(this, null, dirtyRegion);
         ((DrawingListener) listeners[i + 1]).areaInvalidated(event);
       }
     }
@@ -242,7 +243,7 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
     for (int i = listeners.length - 2; i >= 0; i -= 2) {
       if (listeners[i] == DrawingListener.class) {
         // Lazily create the event:
-        if (event == null) event = new DrawingEvent(this, f, f.getDrawBounds());
+        if (event == null) event = new org.jhotdraw.draw.events.DrawingEvent(this, f, f.getDrawBounds());
         ((DrawingListener) listeners[i + 1]).figureAdded(event);
       }
     }
@@ -253,7 +254,7 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
    * notification on this event type.
    */
   protected void fireFigureRemoved(org.jhotdraw.draw.figures.Figure f) {
-    DrawingEvent event = null;
+    org.jhotdraw.draw.events.DrawingEvent event = null;
     // Notify all listeners that have registered interest for
     // Guaranteed to return a non-null array
     Object[] listeners = listenerList.getListenerList();
@@ -262,7 +263,7 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
     for (int i = listeners.length - 2; i >= 0; i -= 2) {
       if (listeners[i] == DrawingListener.class) {
         // Lazily create the event:
-        if (event == null) event = new DrawingEvent(this, f, f.getDrawBounds());
+        if (event == null) event = new org.jhotdraw.draw.events.DrawingEvent(this, f, f.getDrawBounds());
         ((DrawingListener) listeners[i + 1]).figureRemoved(event);
       }
     }

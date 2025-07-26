@@ -16,6 +16,7 @@ package org.jhotdraw.draw.figures;
 
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.edits.AttributeChangeEdit;
+import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.layouters.Layouter;
 import org.jhotdraw.geom.Geom;
 import org.jhotdraw.xml.DOMInput;
@@ -81,11 +82,11 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
       this.owner = owner;
     }
 
-    public void figureRequestRemove(FigureEvent e) {
+    public void figureRequestRemove(org.jhotdraw.draw.events.FigureEvent e) {
       owner.remove(e.getFigure());
     }
 
-    public void figureRemoved(FigureEvent evt) {
+    public void figureRemoved(org.jhotdraw.draw.events.FigureEvent evt) {
     }
 
     public void figureChanged(FigureEvent e) {
@@ -96,13 +97,13 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
       }
     }
 
-    public void figureAdded(FigureEvent e) {
+    public void figureAdded(org.jhotdraw.draw.events.FigureEvent e) {
     }
 
-    public void figureAttributeChanged(FigureEvent e) {
+    public void figureAttributeChanged(org.jhotdraw.draw.events.FigureEvent e) {
     }
 
-    public void figureAreaInvalidated(FigureEvent e) {
+    public void figureAreaInvalidated(org.jhotdraw.draw.events.FigureEvent e) {
       if (!owner.isChanging()) {
         owner.fireAreaInvalidated(e.getInvalidatedArea());
       }

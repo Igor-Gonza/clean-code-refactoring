@@ -15,6 +15,7 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.edits.TransformEdit;
+import org.jhotdraw.draw.events.ToolEvent;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.undo.CompositeEdit;
 
@@ -262,7 +263,7 @@ public abstract class AbstractTool implements Tool {
    * notification on this event type.
    */
   protected void fireToolStarted(DrawingView view) {
-    ToolEvent event = null;
+    org.jhotdraw.draw.events.ToolEvent event = null;
     // Notify all listeners that have registered interest for
     // Guaranteed to return a non-null array
     Object[] listeners = listenerList.getListenerList();
@@ -272,7 +273,7 @@ public abstract class AbstractTool implements Tool {
       if (listeners[i] == ToolListener.class) {
         // Lazily create the event:
         if (event == null)
-          event = new ToolEvent(this, view, new Rectangle(0, 0, -1, -1));
+          event = new org.jhotdraw.draw.events.ToolEvent(this, view, new Rectangle(0, 0, -1, -1));
         ((ToolListener) listeners[i + 1]).toolStarted(event);
       }
     }
@@ -283,7 +284,7 @@ public abstract class AbstractTool implements Tool {
    * notification on this event type.
    */
   protected void fireToolDone() {
-    ToolEvent event = null;
+    org.jhotdraw.draw.events.ToolEvent event = null;
     // Notify all listeners that have registered interest for
     // Guaranteed to return a non-null array
     Object[] listeners = listenerList.getListenerList();
@@ -293,7 +294,7 @@ public abstract class AbstractTool implements Tool {
       if (listeners[i] == ToolListener.class) {
         // Lazily create the event:
         if (event == null)
-          event = new ToolEvent(this, getView(), new Rectangle(0, 0, -1, -1));
+          event = new org.jhotdraw.draw.events.ToolEvent(this, getView(), new Rectangle(0, 0, -1, -1));
         ((ToolListener) listeners[i + 1]).toolDone(event);
       }
     }
@@ -316,7 +317,7 @@ public abstract class AbstractTool implements Tool {
    * notification on this event type.
    */
   protected void fireAreaInvalidated(Rectangle invalidatedArea) {
-    ToolEvent event = null;
+    org.jhotdraw.draw.events.ToolEvent event = null;
     // Notify all listeners that have registered interest for
     // Guaranteed to return a non-null array
     Object[] listeners = listenerList.getListenerList();

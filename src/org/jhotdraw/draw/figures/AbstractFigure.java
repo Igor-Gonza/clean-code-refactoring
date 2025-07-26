@@ -20,6 +20,7 @@ import org.jhotdraw.draw.connectors.ChopBoxConnector;
 import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.draw.edits.SetBoundsEdit;
 import org.jhotdraw.draw.edits.TransformEdit;
+import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.geom.Insets2DDouble;
 
@@ -131,7 +132,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
    */
   public void fireAreaInvalidated(Rectangle2D.Double invalidatedArea) {
     if (listenerList.getListenerCount() > 0) {
-      FigureEvent event = null;
+      org.jhotdraw.draw.events.FigureEvent event = null;
       // Notify all listeners that have registered interest for
       // Guaranteed to return a non-null array
       Object[] listeners = listenerList.getListenerList();
@@ -140,7 +141,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
         if (listeners[i] == FigureListener.class) {
           // Lazily create the event:
-          if (event == null) event = new FigureEvent(this, invalidatedArea);
+          if (event == null) event = new org.jhotdraw.draw.events.FigureEvent(this, invalidatedArea);
           ((FigureListener) listeners[i + 1]).figureAreaInvalidated(event);
         }
       }
@@ -153,7 +154,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
    */
   public void fireFigureRequestRemove() {
     if (listenerList.getListenerCount() > 0) {
-      FigureEvent event = null;
+      org.jhotdraw.draw.events.FigureEvent event = null;
       // Notify all listeners that have registered interest for
       // Guaranteed to return a non-null array
       Object[] listeners = listenerList.getListenerList();
@@ -162,7 +163,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
         if (listeners[i] == FigureListener.class) {
           // Lazily create the event:
-          if (event == null) event = new FigureEvent(this, getBounds());
+          if (event == null) event = new org.jhotdraw.draw.events.FigureEvent(this, getBounds());
           ((FigureListener) listeners[i + 1]).figureRequestRemove(event);
         }
       }
@@ -175,7 +176,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
    */
   protected void fireFigureAdded() {
     if (listenerList.getListenerCount() > 0) {
-      FigureEvent event = null;
+      org.jhotdraw.draw.events.FigureEvent event = null;
       // Notify all listeners that have registered interest for
       // Guaranteed to return a non-null array
       Object[] listeners = listenerList.getListenerList();
@@ -184,7 +185,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
         if (listeners[i] == FigureListener.class) {
           // Lazily create the event:
-          if (event == null) event = new FigureEvent(this, getBounds());
+          if (event == null) event = new org.jhotdraw.draw.events.FigureEvent(this, getBounds());
           ((FigureListener) listeners[i + 1]).figureAdded(event);
         }
       }
@@ -206,7 +207,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
         if (listeners[i] == FigureListener.class) {
           // Lazily create the event:
-          if (event == null) event = new FigureEvent(this, getBounds());
+          if (event == null) event = new org.jhotdraw.draw.events.FigureEvent(this, getBounds());
           ((FigureListener) listeners[i + 1]).figureRemoved(event);
         }
       }
@@ -223,7 +224,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
    */
   protected void fireFigureChanged(Rectangle2D.Double changedArea) {
     if (listenerList.getListenerCount() > 0) {
-      FigureEvent event = null;
+      org.jhotdraw.draw.events.FigureEvent event = null;
       // Notify all listeners that have registered interest for
       // Guaranteed to return a non-null array
       Object[] listeners = listenerList.getListenerList();
@@ -232,14 +233,14 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
         if (listeners[i] == FigureListener.class) {
           // Lazily create the event:
-          if (event == null) event = new FigureEvent(this, changedArea);
+          if (event == null) event = new org.jhotdraw.draw.events.FigureEvent(this, changedArea);
           ((FigureListener) listeners[i + 1]).figureChanged(event);
         }
       }
     }
   }
 
-  public void fireFigureChanged(FigureEvent event) {
+  public void fireFigureChanged(org.jhotdraw.draw.events.FigureEvent event) {
     if (listenerList.getListenerCount() > 0) {
       // Notify all listeners that have registered interest for
       // Guaranteed to return a non-null array
@@ -261,7 +262,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
    */
   protected void fireAttributeChanged(AttributeKey attribute, Object oldValue, Object newValue) {
     if (listenerList.getListenerCount() > 0) {
-      FigureEvent event = null;
+      org.jhotdraw.draw.events.FigureEvent event = null;
       // Notify all listeners that have registered interest for
       // Guaranteed to return a non-null array
       Object[] listeners = listenerList.getListenerList();
@@ -270,7 +271,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
         if (listeners[i] == FigureListener.class) {
           // Lazily create the event:
-          if (event == null) event = new FigureEvent(this, attribute, oldValue, newValue);
+          if (event == null) event = new org.jhotdraw.draw.events.FigureEvent(this, attribute, oldValue, newValue);
           ((FigureListener) listeners[i + 1]).figureAttributeChanged(event);
         }
       }

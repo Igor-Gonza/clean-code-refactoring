@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.events.ToolEvent;
+
 import java.util.EventListener;
 
 /**
@@ -34,10 +36,10 @@ public interface ToolListener extends EventListener {
    * Informs the listener that a tool has done its interaction.
    * This method can be used to switch back to the default tool.
    */
-  void toolDone(ToolEvent event);
+  void toolDone(org.jhotdraw.draw.events.ToolEvent event);
 
   /**
    * Sent when an area of the drawing view needs to be repainted.
    */
-  void areaInvalidated(ToolEvent e);
+  void areaInvalidated(org.jhotdraw.draw.events.ToolEvent e);
 }

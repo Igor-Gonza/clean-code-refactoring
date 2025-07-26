@@ -12,7 +12,10 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.events;
+
+import org.jhotdraw.draw.DrawingView;
+import org.jhotdraw.draw.Tool;
 
 import java.awt.*;
 import java.util.EventObject;

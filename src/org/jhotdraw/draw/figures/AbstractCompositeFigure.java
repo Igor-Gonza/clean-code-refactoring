@@ -15,6 +15,7 @@
 package org.jhotdraw.draw.figures;
 
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.layouters.Layouter;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.util.ReversedList;
@@ -79,15 +80,15 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
       this.owner = owner;
     }
 
-    public void figureRequestRemove(FigureEvent e) {
+    public void figureRequestRemove(org.jhotdraw.draw.events.FigureEvent e) {
       owner.remove(e.getFigure());
     }
 
-    public void figureRemoved(FigureEvent evt) {
+    public void figureRemoved(org.jhotdraw.draw.events.FigureEvent evt) {
       //  owner.remove(evt.getFigure());
     }
 
-    public void figureChanged(FigureEvent e) {
+    public void figureChanged(org.jhotdraw.draw.events.FigureEvent e) {
       if (!owner.isChanging()) {
         owner.willChange();
         owner.fireFigureChanged(e);
@@ -98,10 +99,10 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
     public void figureAdded(FigureEvent e) {
     }
 
-    public void figureAttributeChanged(FigureEvent e) {
+    public void figureAttributeChanged(org.jhotdraw.draw.events.FigureEvent e) {
     }
 
-    public void figureAreaInvalidated(FigureEvent e) {
+    public void figureAreaInvalidated(org.jhotdraw.draw.events.FigureEvent e) {
       if (!owner.isChanging()) {
         owner.fireAreaInvalidated(e.getInvalidatedArea());
       }

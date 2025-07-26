@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.util.ReversedList;
 
@@ -107,18 +108,18 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     fireAreaInvalidated(e.getInvalidatedArea());
   }
 
-  public void figureChanged(FigureEvent e) {
+  public void figureChanged(org.jhotdraw.draw.events.FigureEvent e) {
     invalidateSortOrder();
     fireAreaInvalidated(e.getInvalidatedArea());
   }
 
-  public void figureAdded(FigureEvent e) {
+  public void figureAdded(org.jhotdraw.draw.events.FigureEvent e) {
   }
 
-  public void figureRemoved(FigureEvent e) {
+  public void figureRemoved(org.jhotdraw.draw.events.FigureEvent e) {
   }
 
-  public void figureRequestRemove(FigureEvent e) {
+  public void figureRequestRemove(org.jhotdraw.draw.events.FigureEvent e) {
     remove(e.getFigure());
   }
 
@@ -211,7 +212,7 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     fireUndoableEditHappened(e.getEdit());
   }
 
-  public void figureAttributeChanged(FigureEvent e) {
+  public void figureAttributeChanged(org.jhotdraw.draw.events.FigureEvent e) {
   }
 
   public boolean contains(org.jhotdraw.draw.figures.Figure f) {

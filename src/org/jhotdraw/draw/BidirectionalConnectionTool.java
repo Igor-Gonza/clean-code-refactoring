@@ -15,6 +15,7 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.connectors.Connector;
+import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.figures.ConnectionFigure;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.undo.CompositeEdit;
@@ -350,22 +351,22 @@ public class BidirectionalConnectionTool extends AbstractTool implements FigureL
     createdFigure = newCreatedFigure;
   }
 
-  public void figureAreaInvalidated(FigureEvent evt) {
+  public void figureAreaInvalidated(org.jhotdraw.draw.events.FigureEvent evt) {
     fireAreaInvalidated(evt.getInvalidatedArea());
   }
 
-  public void figureAdded(FigureEvent e) {
+  public void figureAdded(org.jhotdraw.draw.events.FigureEvent e) {
   }
 
-  public void figureChanged(FigureEvent e) {
+  public void figureChanged(org.jhotdraw.draw.events.FigureEvent e) {
   }
 
-  public void figureRemoved(FigureEvent e) {
+  public void figureRemoved(org.jhotdraw.draw.events.FigureEvent e) {
   }
 
   public void figureRequestRemove(FigureEvent e) {
   }
 
-  public void figureAttributeChanged(FigureEvent e) {
+  public void figureAttributeChanged(org.jhotdraw.draw.events.FigureEvent e) {
   }
 }

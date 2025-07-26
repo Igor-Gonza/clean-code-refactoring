@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.events.ToolEvent;
 import org.jhotdraw.draw.figures.Figure;
 
 import java.awt.*;
@@ -157,7 +158,7 @@ public class SelectionTool extends AbstractTool implements ToolListener {
     return new SelectAreaTracker();
   }
 
-  public void toolStarted(ToolEvent event) {
+  public void toolStarted(org.jhotdraw.draw.events.ToolEvent event) {
 
   }
 
@@ -180,7 +181,7 @@ public class SelectionTool extends AbstractTool implements ToolListener {
   /**
    * Sent when an area of the drawing view needs to be repainted.
    */
-  public void areaInvalidated(ToolEvent e) {
+  public void areaInvalidated(org.jhotdraw.draw.events.ToolEvent e) {
     fireAreaInvalidated(e.getInvalidatedArea());
   }
 }

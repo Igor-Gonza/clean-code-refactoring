@@ -15,6 +15,7 @@
 package org.jhotdraw.samples.pert.figures;
 
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.figures.GraphicalCompositeFigure;
 import org.jhotdraw.draw.figures.ListFigure;
@@ -58,7 +59,7 @@ public class TaskFigure extends GraphicalCompositeFigure {
       this.target = target;
     }
 
-    public void figureAttributeChanged(FigureEvent e) {
+    public void figureAttributeChanged(org.jhotdraw.draw.events.FigureEvent e) {
       // We could fire a property change event here, in case
       // some other object would like to observe us.
       //target.firePropertyChange("name", e.getOldValue(), e.getNewValue());

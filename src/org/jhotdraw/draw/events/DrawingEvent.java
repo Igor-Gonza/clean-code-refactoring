@@ -12,8 +12,9 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.events;
 
+import org.jhotdraw.draw.Drawing;
 import org.jhotdraw.draw.figures.Figure;
 
 import java.awt.geom.Rectangle2D;

@@ -16,6 +16,7 @@ package org.jhotdraw.draw.action;
 
 import org.jhotdraw.app.action.*;
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.events.ToolEvent;
 import org.jhotdraw.geom.DoubleStroke;
 import org.jhotdraw.util.ResourceBundleUtil;
 
@@ -188,11 +189,11 @@ public class ToolBarButtonFactory {
         public void toolStarted(ToolEvent event) {
         }
 
-        public void toolDone(ToolEvent event) {
+        public void toolDone(org.jhotdraw.draw.events.ToolEvent event) {
           defaultToolButton.setSelected(true);
         }
 
-        public void areaInvalidated(ToolEvent e) {
+        public void areaInvalidated(org.jhotdraw.draw.events.ToolEvent e) {
         }
       };
       tb.putClientProperty("toolHandler", toolHandler);

@@ -15,6 +15,9 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.app.EditableComponent;
+import org.jhotdraw.draw.events.DrawingEvent;
+import org.jhotdraw.draw.events.FigureSelectionEvent;
+import org.jhotdraw.draw.events.HandleEvent;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.gui.datatransfer.CompositeTransferable;
@@ -241,7 +244,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
     repaint(vr);
   }
 
-  public void areaInvalidated(DrawingEvent evt) {
+  public void areaInvalidated(org.jhotdraw.draw.events.DrawingEvent evt) {
     repaint(evt.getInvalidatedArea());
     invalidateDimension();
   }
@@ -261,7 +264,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
     invalidateDimension();
   }
 
-  public void figureRemoved(DrawingEvent evt) {
+  public void figureRemoved(org.jhotdraw.draw.events.DrawingEvent evt) {
     // Repaint the whole drawing to draw the message label
     if (evt.getDrawing().getFigureCount() == 0) {
       repaint();
@@ -531,7 +534,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
    */
   protected void fireSelectionChanged() {
     if (listenerList.getListenerCount() > 0) {
-      FigureSelectionEvent event = null;
+      org.jhotdraw.draw.events.FigureSelectionEvent event = null;
       // Notify all listeners that have registered interest for
       // Guaranteed to return a non-null array
       Object[] listeners = listenerList.getListenerList();
@@ -547,7 +550,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
     }
   }
 
-  public void handleRequestRemove(HandleEvent e) {
+  public void handleRequestRemove(org.jhotdraw.draw.events.HandleEvent e) {
     selectionHandles.remove(e.getHandle());
     e.getHandle().dispose();
     invalidateHandles();
@@ -658,7 +661,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
     return detailLevel;
   }
 
-  public void handleRequestSecondaryHandles(HandleEvent e) {
+  public void handleRequestSecondaryHandles(org.jhotdraw.draw.events.HandleEvent e) {
     //if (e.getHandle() != secondaryHandleOwner) {
     secondaryHandleOwner = e.getHandle();
     secondaryHandles.clear();

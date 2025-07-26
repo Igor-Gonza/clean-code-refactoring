@@ -16,6 +16,7 @@ package org.jhotdraw.draw.figures;
 
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.connectors.Connector;
+import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;
@@ -58,10 +59,10 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
       this.owner = owner;
     }
 
-    public void figureRequestRemove(FigureEvent e) {
+    public void figureRequestRemove(org.jhotdraw.draw.events.FigureEvent e) {
     }
 
-    public void figureRemoved(FigureEvent evt) {
+    public void figureRemoved(org.jhotdraw.draw.events.FigureEvent evt) {
       // The commented lines below must stay commented out.
       // This is because, we must not set our connectors to null,
       // in order to support reconnection using redo.
@@ -82,13 +83,13 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
       }
     }
 
-    public void figureAdded(FigureEvent e) {
+    public void figureAdded(org.jhotdraw.draw.events.FigureEvent e) {
     }
 
-    public void figureAttributeChanged(FigureEvent e) {
+    public void figureAttributeChanged(org.jhotdraw.draw.events.FigureEvent e) {
     }
 
-    public void figureAreaInvalidated(FigureEvent e) {
+    public void figureAreaInvalidated(org.jhotdraw.draw.events.FigureEvent e) {
     }
 
   }

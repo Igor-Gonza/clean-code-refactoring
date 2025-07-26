@@ -16,7 +16,7 @@ package org.jhotdraw.draw.action;
 
 import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.figures.Figure;
-import org.jhotdraw.draw.FigureSelectionEvent;
+import org.jhotdraw.draw.events.FigureSelectionEvent;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 import java.util.Locale;

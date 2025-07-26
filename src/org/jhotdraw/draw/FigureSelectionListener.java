@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.events.FigureSelectionEvent;
+
 import java.util.EventListener;
 
 /**

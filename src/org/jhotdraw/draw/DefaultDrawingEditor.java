@@ -15,6 +15,7 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.beans.AbstractBean;
+import org.jhotdraw.draw.events.ToolEvent;
 import org.jhotdraw.draw.figures.Figure;
 
 import java.awt.*;
@@ -90,7 +91,7 @@ public class DefaultDrawingEditor extends AbstractBean implements DrawingEditor,
     evt.getView().getContainer().repaint(r.x, r.y, r.width, r.height);
   }
 
-  public void toolStarted(ToolEvent evt) {
+  public void toolStarted(org.jhotdraw.draw.events.ToolEvent evt) {
     setView(evt.getView());
   }
 
@@ -103,7 +104,7 @@ public class DefaultDrawingEditor extends AbstractBean implements DrawingEditor,
     }
   }
 
-  public void toolDone(ToolEvent evt) {
+  public void toolDone(org.jhotdraw.draw.events.ToolEvent evt) {
     // FIXME - Maybe we should do this with all views of the editor??
     DrawingView v = getView();
     if (v != null) {
