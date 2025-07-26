@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.edits.AttributeChangeEdit;
 import org.jhotdraw.draw.layouters.Layouter;
 import org.jhotdraw.geom.Geom;
 import org.jhotdraw.xml.DOMInput;

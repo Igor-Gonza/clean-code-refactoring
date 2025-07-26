@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.edits.TransformEdit;
+
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.event.*;
@@ -115,7 +117,7 @@ public class DragTracker extends AbstractTool {
         AffineTransform tx = new AffineTransform();
         tx.translate(-anchorPoint.x + oldPoint.x, -anchorPoint.y + oldPoint.y);
         if (!tx.isIdentity()) {
-          getDrawing().fireUndoableEditHappened(new TransformEdit(draggedFigures, tx));
+          getDrawing().fireUndoableEditHappened(new org.jhotdraw.draw.edits.TransformEdit(draggedFigures, tx));
         }
       }
     } else {

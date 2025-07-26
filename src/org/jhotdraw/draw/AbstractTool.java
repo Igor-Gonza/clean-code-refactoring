@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.edits.TransformEdit;
 import org.jhotdraw.undo.CompositeEdit;
 
 import java.awt.*;
@@ -177,7 +178,7 @@ public abstract class AbstractTool implements Tool {
           f.basicTransform(tx);
           f.changed();
         }
-        getDrawing().fireUndoableEditHappened(new TransformEdit(figures, tx));
+        getDrawing().fireUndoableEditHappened(new org.jhotdraw.draw.edits.TransformEdit(figures, tx));
         break;
       }
       case KeyEvent.VK_RIGHT: {
@@ -189,7 +190,7 @@ public abstract class AbstractTool implements Tool {
           f.basicTransform(tx);
           f.changed();
         }
-        getDrawing().fireUndoableEditHappened(new TransformEdit(figures, tx));
+        getDrawing().fireUndoableEditHappened(new org.jhotdraw.draw.edits.TransformEdit(figures, tx));
         break;
       }
       case KeyEvent.VK_UP: {
@@ -214,7 +215,7 @@ public abstract class AbstractTool implements Tool {
           f.basicTransform(tx);
           f.changed();
         }
-        getDrawing().fireUndoableEditHappened(new TransformEdit(figures, tx));
+        getDrawing().fireUndoableEditHappened(new org.jhotdraw.draw.edits.TransformEdit(figures, tx));
         break;
       }
     }

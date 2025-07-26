@@ -17,6 +17,7 @@ package org.jhotdraw.draw;
 import org.jhotdraw.draw.connectors.ChopBezierConnector;
 import org.jhotdraw.draw.connectors.ChopDiamondConnector;
 import org.jhotdraw.draw.connectors.Connector;
+import org.jhotdraw.draw.edits.BezierNodeEdit;
 import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.geom.Geom;
 import org.jhotdraw.geom.GrowStroke;

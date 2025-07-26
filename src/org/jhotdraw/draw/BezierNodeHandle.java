@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.edits.BezierNodeEdit;
 import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.undo.CompositeEdit;
 

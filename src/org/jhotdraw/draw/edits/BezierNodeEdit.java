@@ -12,8 +12,9 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.edits;
 
+import org.jhotdraw.draw.BezierFigure;
 import org.jhotdraw.geom.BezierPath;
 
 import javax.swing.undo.AbstractUndoableEdit;
@@ -27,7 +28,7 @@ import javax.swing.undo.UndoableEdit;
  * @author Werner Randelshofer
  * @version 1.0 2006-06-24
  */
-class BezierNodeEdit extends AbstractUndoableEdit {
+public class BezierNodeEdit extends AbstractUndoableEdit {
   private final BezierFigure owner;
   private final int index;
   private BezierPath.Node oldValue;

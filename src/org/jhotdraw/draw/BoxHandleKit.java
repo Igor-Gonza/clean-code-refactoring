@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.edits.GeometryEdit;
 import org.jhotdraw.draw.locators.Locator;
 import org.jhotdraw.draw.locators.RelativeLocator;
 

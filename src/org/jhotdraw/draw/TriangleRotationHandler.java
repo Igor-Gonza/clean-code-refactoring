@@ -19,6 +19,7 @@ import java.awt.geom.*;
 
 import static org.jhotdraw.draw.AttributeKeys.*;
 
+import org.jhotdraw.draw.edits.AttributeChangeEdit;
 import org.jhotdraw.geom.*;
 
 /**

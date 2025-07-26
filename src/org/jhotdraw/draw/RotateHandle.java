@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.edits.RestoreDataEdit;
 import org.jhotdraw.geom.Geom;
 
 import java.awt.*;

@@ -12,7 +12,10 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.edits;
+
+import org.jhotdraw.draw.AttributeKey;
+import org.jhotdraw.draw.Figure;
 
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;

@@ -17,6 +17,8 @@ package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.connectors.ChopBoxConnector;
 import org.jhotdraw.draw.connectors.Connector;
+import org.jhotdraw.draw.edits.SetBoundsEdit;
+import org.jhotdraw.draw.edits.TransformEdit;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.geom.Insets2DDouble;
 
