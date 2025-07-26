@@ -22,6 +22,7 @@ package org.jhotdraw.app;
  * @version 2.0 2001-07-18
  */
 public interface EditableComponent {
+
   /**
    * Copies the selected region and place its contents into the system clipboard.
    */

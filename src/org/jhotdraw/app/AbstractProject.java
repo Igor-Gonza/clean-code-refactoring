@@ -15,6 +15,7 @@
 package org.jhotdraw.app;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.util.HashMap;
 import java.util.concurrent.Executor;
@@ -30,6 +31,7 @@ import java.util.prefs.Preferences;
  * <br>1.0 January 3, 2006, Created.
  */
 public abstract class AbstractProject extends JPanel implements Project {
+  private static final String PROJECT_FILE = "projectFile";
   private Application application;
   protected JFileChooser saveChooser;
   protected JFileChooser openChooser;
@@ -60,7 +62,7 @@ public abstract class AbstractProject extends JPanel implements Project {
    */
   private void initComponents() {//GEN-BEGIN:initComponents
 
-    setLayout(new java.awt.BorderLayout());
+    setLayout(new BorderLayout());
 
   }//GEN-END:initComponents
 
@@ -89,7 +91,7 @@ public abstract class AbstractProject extends JPanel implements Project {
     File oldValue = file;
     file = newValue;
     if (prefs != null && newValue != null) {
-      prefs.put("projectFile", newValue.getPath());
+      prefs.put(PROJECT_FILE, newValue.getPath());
     }
     firePropertyChange("file", oldValue, newValue);
   }
@@ -107,7 +109,7 @@ public abstract class AbstractProject extends JPanel implements Project {
   protected JFileChooser createOpenChooser() {
     JFileChooser c = new JFileChooser();
     if (prefs != null) {
-      c.setSelectedFile(new File(prefs.get("projectFile", System.getProperty("user.home"))));
+      c.setSelectedFile(new File(prefs.get(PROJECT_FILE, System.getProperty("user.home"))));
     }
     return c;
   }
@@ -125,7 +127,7 @@ public abstract class AbstractProject extends JPanel implements Project {
   protected JFileChooser createSaveChooser() {
     JFileChooser c = new JFileChooser();
     if (prefs != null) {
-      c.setCurrentDirectory(new File(prefs.get("projectFile", System.getProperty("user.home"))));
+      c.setCurrentDirectory(new File(prefs.get(PROJECT_FILE, System.getProperty("user.home"))));
     }
     return c;
   }
@@ -201,6 +203,7 @@ public abstract class AbstractProject extends JPanel implements Project {
     firePropertyChange("showing", oldValue, newValue);
   }
 
+  @Override
   public boolean isShowing() {
     return isShowing;
   }

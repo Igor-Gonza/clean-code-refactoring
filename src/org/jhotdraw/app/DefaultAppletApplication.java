@@ -60,6 +60,6 @@ public class DefaultAppletApplication extends AbstractApplication {
   }
 
   protected void initProjectActions(Project p) {
+    // TODO document why this method is empty
   }
-
 }

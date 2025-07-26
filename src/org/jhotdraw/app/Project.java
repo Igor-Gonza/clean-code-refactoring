@@ -26,6 +26,7 @@ import javax.swing.*;
  * @version 1.0 October 4, 2005, Created.
  */
 public interface Project {
+
   /**
    * Gets the application to which this project belongs.
    */
@@ -182,5 +183,4 @@ public interface Project {
    * This is used by Application to keep track if a project is showing.
    */
   void setShowing(boolean newValue);
-
 }

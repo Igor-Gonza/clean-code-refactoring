@@ -41,6 +41,7 @@ public class DefaultApplicationModel extends AbstractBean implements Application
    * Creates a new instance.
    */
   public DefaultApplicationModel() {
+    // TODO document why this constructor is empty
   }
 
   public void setName(String newValue) {
@@ -92,15 +93,14 @@ public class DefaultApplicationModel extends AbstractBean implements Application
   }
 
   public Class<?> getProjectClass() {
-    if (projectClass == null) {
-      if (projectClassName != null) {
-        try {
-          projectClass = Class.forName(projectClassName);
-        } catch (Exception e) {
-          throw new InternalError("unable to get project class", e);
-        }
+    if (projectClass == null && projectClassName != null) {
+      try {
+        projectClass = Class.forName(projectClassName);
+      } catch (Exception e) {
+        throw new InternalError("unable to get project class", e);
       }
     }
+
     return projectClass;
   }
 
@@ -129,9 +129,11 @@ public class DefaultApplicationModel extends AbstractBean implements Application
   }
 
   public void initProject(Application a, Project p) {
+    // TODO document why this method is empty
   }
 
   public void initApplication(Application a) {
+    // TODO document why this method is empty
   }
 
   /**

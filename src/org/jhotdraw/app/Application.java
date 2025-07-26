@@ -18,6 +18,7 @@ import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * An Application handles the lifecycle of Projects and provides windows
@@ -48,6 +49,7 @@ import java.util.Collection;
  * @version 1.0 October 4, 2005, Created.
  */
 public interface Application {
+
   /**
    * Launches the application from the main method.
    * This method is typically invoked on the main Thread.
@@ -206,7 +208,7 @@ public interface Application {
    * Returns the recently opened files.
    * By convention, this is an immutable list.
    */
-  java.util.List<File> recentFiles();
+  List<File> recentFiles();
 
   /**
    * Appends a file to the list of recent files.

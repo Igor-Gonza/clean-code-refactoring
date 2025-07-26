@@ -14,6 +14,7 @@
 
 package org.jhotdraw.app;
 
+import com.sun.istack.internal.logging.Logger;
 import org.jhotdraw.app.action.*;
 import org.jhotdraw.gui.MDIDesktopPane;
 import org.jhotdraw.util.ResourceBundleUtil;
@@ -42,8 +43,11 @@ import java.util.prefs.Preferences;
  * @author Werner Randelshofer.
  * @version 1.0 June 5, 2006, Created.
  */
-@SuppressWarnings({"unused", "FieldCanBeLocal", "CallToPrintStackTrace"})
+@SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class DefaultMDIApplication extends AbstractApplication {
+
+  static final Logger logger = Logger.getLogger(DefaultMDIApplication.class);
+
   private JFrame parentFrame;
   private JScrollPane scrollPane;
   private MDIDesktopPane desktopPane;
@@ -55,6 +59,7 @@ public class DefaultMDIApplication extends AbstractApplication {
    * Creates a new instance.
    */
   public DefaultMDIApplication() {
+    // TODO document why this constructor is empty
   }
 
   protected void initApplicationActions() {
@@ -91,11 +96,13 @@ public class DefaultMDIApplication extends AbstractApplication {
     p.putAction(FocusAction.ID, new FocusAction(p));
   }
 
+  @Override
   public void launch(String[] args) {
     System.setProperty("apple.awt.graphics.UseQuartz", "false");
     super.launch(args);
   }
 
+  @Override
   public void init() {
     super.init();
     prefs = Preferences.userNodeForPackage((getModel() == null) ? getClass() : getModel().getClass());
@@ -103,7 +110,7 @@ public class DefaultMDIApplication extends AbstractApplication {
     initLabels();
 
     parentFrame = new JFrame(getName());
-    parentFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+    parentFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
     desktopPane = new MDIDesktopPane();
 
@@ -115,6 +122,7 @@ public class DefaultMDIApplication extends AbstractApplication {
     parentFrame.getContentPane().add(wrapDesktopPane(scrollPane, toolBarActions));
 
     parentFrame.addWindowListener(new WindowAdapter() {
+      @Override
       public void windowClosing(final WindowEvent evt) {
         getModel().getAction(ExitAction.ID).actionPerformed(new ActionEvent(parentFrame, ActionEvent.ACTION_PERFORMED, "windowClosing"));
       }
@@ -135,7 +143,7 @@ public class DefaultMDIApplication extends AbstractApplication {
       String lafName = UIManager.getSystemLookAndFeelClassName();
       UIManager.setLookAndFeel(lafName);
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.info("DefaultMDIApplication - initLookAndFeel: " + e.getMessage());
     }
     if (UIManager.getString("OptionPane.css") == null) {
       UIManager.put("OptionPane.css", "");
@@ -154,7 +162,7 @@ public class DefaultMDIApplication extends AbstractApplication {
         title = file.getName();
       }
       f.setTitle(labels.getFormatted("internalFrameTitle", title, getName(), p.getMultipleOpenId()));
-      f.setDefaultCloseOperation(JInternalFrame.DO_NOTHING_ON_CLOSE);
+      f.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
       f.setClosable(true);
       f.setMaximizable(true);
       f.setResizable(true);

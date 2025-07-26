@@ -35,13 +35,15 @@ import java.util.prefs.Preferences;
  */
 @SuppressWarnings("unused")
 public abstract class AbstractApplication extends AbstractBean implements Application {
+  private static final String RECENT_FILES = "recentFiles";
+  private static final String RECENT_FILE_COUNT = "recentFileCount";
   private final LinkedList<Project> projects = new LinkedList<>();
   private Collection<Project> unmodifiableDocuments;
   private boolean isEnabled = true;
   protected ResourceBundleUtil labels;
   private ApplicationModel model;
   private final LinkedList<File> recentFiles = new LinkedList<>();
-  private final static int MAX_RECENT_FILES_COUNT = 10;
+  private static final int MAX_RECENT_FILES_COUNT = 10;
   private Preferences prefs;
 
   /**
@@ -53,7 +55,7 @@ public abstract class AbstractApplication extends AbstractBean implements Applic
   public void init() {
     prefs = Preferences.userNodeForPackage((getModel() == null) ? getClass() : getModel().getClass());
 
-    int count = prefs.getInt("recentFileCount", 0);
+    int count = prefs.getInt(RECENT_FILE_COUNT, 0);
     for (int i = 0; i < count; i++) {
       String path = prefs.get("recentFile." + i, null);
       if (path != null) {
@@ -182,8 +184,8 @@ public abstract class AbstractApplication extends AbstractBean implements Applic
   public void clearRecentFiles() {
     java.util.List<File> oldValue = new ArrayList<>(recentFiles);
     recentFiles.clear();
-    prefs.putInt("recentFileCount", 0);
-    firePropertyChange("recentFiles", Collections.unmodifiableList(oldValue), Collections.unmodifiableList(recentFiles));
+    prefs.putInt(RECENT_FILE_COUNT, 0);
+    firePropertyChange(RECENT_FILES, Collections.unmodifiableList(oldValue), Collections.unmodifiableList(recentFiles));
   }
 
   public void addRecentFile(File file) {
@@ -194,14 +196,14 @@ public abstract class AbstractApplication extends AbstractBean implements Applic
       recentFiles.removeLast();
     }
 
-    prefs.putInt("recentFileCount", recentFiles.size());
+    prefs.putInt(RECENT_FILE_COUNT, recentFiles.size());
     int i = 0;
     for (File f : recentFiles) {
       prefs.put("recentFile." + i, f.getPath());
       i++;
     }
 
-    firePropertyChange("recentFiles", oldValue, 0);
-    firePropertyChange("recentFiles", Collections.unmodifiableList(oldValue), Collections.unmodifiableList(recentFiles));
+    firePropertyChange(RECENT_FILES, oldValue, 0);
+    firePropertyChange(RECENT_FILES, Collections.unmodifiableList(oldValue), Collections.unmodifiableList(recentFiles));
   }
 }

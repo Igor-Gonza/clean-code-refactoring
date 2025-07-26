@@ -51,6 +51,14 @@ public class OSXPaletteHandler {
       }
     }
 
+    private void showPalettes() {
+      for (Window palette : palettes) {
+        if (!palette.isVisible()) {
+          palette.setVisible(true);
+        }
+      }
+    }
+
     /**
      * Invoked when the Window is no longer the focused Window, which means
      * that keyboard events will no longer be delivered to the Window or any of

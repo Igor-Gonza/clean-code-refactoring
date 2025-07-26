@@ -14,8 +14,8 @@
 
 package org.jhotdraw.app;
 
-import java.util.*;
 import javax.swing.*;
+import java.util.List;
 
 /**
  * ApplicationModel.
@@ -24,38 +24,21 @@ import javax.swing.*;
  * @version 1.0 June 10, 2006, Created.
  */
 public interface ApplicationModel {
-  /**
-   * Returns the name of the application.
-   */
+
   String getName();
 
-  /**
-   * Returns the version of the application.
-   */
   String getVersion();
 
-  /**
-   * Returns the copyright of the application.
-   */
   String getCopyright();
 
-  /**
-   * Creates a new project for the application.
-   */
   Project createProject();
 
   void initProject(Application a, Project p);
 
   void initApplication(Application a);
 
-  /**
-   * Puts an action with the specified id.
-   */
   void putAction(String id, Action action);
 
-  /**
-   * Returns the action with the specified id.
-   */
   Action getAction(String id);
 
   /**

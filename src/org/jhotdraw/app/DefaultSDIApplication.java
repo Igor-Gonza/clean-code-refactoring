@@ -14,38 +14,23 @@
 
 package org.jhotdraw.app;
 
-import org.jhotdraw.util.*;
-import org.jhotdraw.util.prefs.*;
+import com.sun.istack.internal.logging.Logger;
+import org.jhotdraw.app.action.*;
+import org.jhotdraw.util.ResourceBundleUtil;
+import org.jhotdraw.util.ReversedList;
+import org.jhotdraw.util.prefs.PreferencesUtil;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
-import java.io.*;
-import java.util.*;
-import java.util.prefs.*;
 import javax.swing.*;
-
-import org.jhotdraw.app.action.AboutAction;
-import org.jhotdraw.app.action.Actions;
-import org.jhotdraw.app.action.ClearAction;
-import org.jhotdraw.app.action.ClearRecentFilesAction;
-import org.jhotdraw.app.action.CloseAction;
-import org.jhotdraw.app.action.CopyAction;
-import org.jhotdraw.app.action.CutAction;
-import org.jhotdraw.app.action.DeleteAction;
-import org.jhotdraw.app.action.DuplicateAction;
-import org.jhotdraw.app.action.ExitAction;
-import org.jhotdraw.app.action.ExportAction;
-import org.jhotdraw.app.action.LoadAction;
-import org.jhotdraw.app.action.LoadRecentAction;
-import org.jhotdraw.app.action.NewAction;
-import org.jhotdraw.app.action.PasteAction;
-import org.jhotdraw.app.action.RedoAction;
-import org.jhotdraw.app.action.SaveAction;
-import org.jhotdraw.app.action.SaveAsAction;
-import org.jhotdraw.app.action.SelectAllAction;
-import org.jhotdraw.app.action.ToggleVisibleAction;
-import org.jhotdraw.app.action.UndoAction;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.util.LinkedList;
+import java.util.Objects;
+import java.util.prefs.Preferences;
 
 /**
  * A DefaultSDIApplication can handle the life cycle of a single document window being
@@ -60,8 +45,11 @@ import org.jhotdraw.app.action.UndoAction;
  * <br>1.1 2006-02-06 Revised.
  * <br>1.0 October 16, 2005, Created.
  */
-@SuppressWarnings({"unused", "CallToPrintStackTrace", "unchecked"})
+@SuppressWarnings({"unused", "unchecked"})
 public class DefaultSDIApplication extends AbstractApplication {
+
+  static final Logger logger = Logger.getLogger(DefaultSDIApplication.class);
+
   private Project currentProject;
   private Preferences prefs;
 
@@ -69,13 +57,16 @@ public class DefaultSDIApplication extends AbstractApplication {
    * Creates a new instance.
    */
   public DefaultSDIApplication() {
+    // TODO document why this constructor is empty
   }
 
+  @Override
   public void launch(String[] args) {
     System.setProperty("apple.awt.graphics.UseQuartz", "false");
     super.launch(args);
   }
 
+  @Override
   public void init() {
     super.init();
     prefs = Preferences.userNodeForPackage((getModel() == null) ? getClass() : getModel().getClass());
@@ -84,6 +75,7 @@ public class DefaultSDIApplication extends AbstractApplication {
     initApplicationActions();
   }
 
+  @Override
   public void remove(Project p) {
     super.remove(p);
     if (projects().isEmpty()) {
@@ -99,7 +91,7 @@ public class DefaultSDIApplication extends AbstractApplication {
       String lafName = UIManager.getSystemLookAndFeelClassName();
       UIManager.setLookAndFeel(lafName);
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.info("DefaultSDIApplication - initLookAndFeel: " + e.getMessage());
     }
     if (UIManager.getString("OptionPane.css") == null) {
       UIManager.put("OptionPane.css", "");
@@ -132,6 +124,7 @@ public class DefaultSDIApplication extends AbstractApplication {
   }
 
   protected void initProjectActions(Project p) {
+    // TODO document why this method is empty
   }
 
   public void show(final Project p) {
@@ -149,7 +142,7 @@ public class DefaultSDIApplication extends AbstractApplication {
         title += "*";
       }
       f.setTitle(labels.getFormatted("frameTitle", title, getName(), p.getMultipleOpenId()));
-      f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+      f.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
       JPanel panel = (JPanel) wrapProjectComponent(p);
       f.add(panel);
       f.setMinimumSize(new Dimension(200, 200));
@@ -174,11 +167,13 @@ public class DefaultSDIApplication extends AbstractApplication {
       f.setLocation(loc);
 
       f.addWindowListener(new WindowAdapter() {
+        @Override
         public void windowClosing(final WindowEvent evt) {
           setCurrentProject(p);
           getModel().getAction(CloseAction.ID).actionPerformed(new ActionEvent(f, ActionEvent.ACTION_PERFORMED, "windowClosing"));
         }
 
+        @Override
         public void windowActivated(WindowEvent e) {
           setCurrentProject(p);
         }
@@ -272,6 +267,7 @@ public class DefaultSDIApplication extends AbstractApplication {
     }
   }
 
+  @Override
   public void dispose(Project p) {
     super.dispose(p);
     if (projects().isEmpty()) {

@@ -14,42 +14,23 @@
 
 package org.jhotdraw.app;
 
-import org.jhotdraw.app.action.OSXDropOnDockAction;
-import ch.randelshofer.quaqua.*;
-import org.jhotdraw.util.*;
-import org.jhotdraw.util.prefs.*;
+import ch.randelshofer.quaqua.QuaquaManager;
+import com.sun.istack.internal.logging.Logger;
+import org.jhotdraw.app.action.*;
+import org.jhotdraw.util.ResourceBundleUtil;
+import org.jhotdraw.util.prefs.PreferencesUtil;
 
-import java.util.*;
-import java.util.prefs.*;
-import java.awt.event.*;
-import java.beans.*;
-import java.awt.*;
 import javax.swing.*;
-import java.io.*;
-
-import org.jhotdraw.app.action.AboutAction;
-import org.jhotdraw.app.action.Actions;
-import org.jhotdraw.app.action.ClearRecentFilesAction;
-import org.jhotdraw.app.action.CloseAction;
-import org.jhotdraw.app.action.CopyAction;
-import org.jhotdraw.app.action.CutAction;
-import org.jhotdraw.app.action.DeleteAction;
-import org.jhotdraw.app.action.DuplicateAction;
-import org.jhotdraw.app.action.ExitAction;
-import org.jhotdraw.app.action.ExportAction;
-import org.jhotdraw.app.action.FocusAction;
-import org.jhotdraw.app.action.MaximizeAction;
-import org.jhotdraw.app.action.MinimizeAction;
-import org.jhotdraw.app.action.NewAction;
-import org.jhotdraw.app.action.OSXTogglePaletteAction;
-import org.jhotdraw.app.action.OpenAction;
-import org.jhotdraw.app.action.OpenRecentAction;
-import org.jhotdraw.app.action.PasteAction;
-import org.jhotdraw.app.action.RedoAction;
-import org.jhotdraw.app.action.SaveAction;
-import org.jhotdraw.app.action.SaveAsAction;
-import org.jhotdraw.app.action.SelectAllAction;
-import org.jhotdraw.app.action.UndoAction;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.util.LinkedList;
+import java.util.Objects;
+import java.util.prefs.Preferences;
 
 /**
  * A DefaultOSXApplication can handle the life cycle of multiple document windows each
@@ -128,8 +109,10 @@ import org.jhotdraw.app.action.UndoAction;
  * @author Werner Randelshofer
  * @version 1.0 October 4, 2005, Created.
  */
-@SuppressWarnings("CallToPrintStackTrace")
 public class DefaultOSXApplication extends AbstractApplication {
+
+  static final Logger logger = Logger.getLogger(DefaultOSXApplication.class);
+
   private OSXPaletteHandler paletteHandler;
   private Project currentProject;
   private Preferences prefs;
@@ -139,8 +122,10 @@ public class DefaultOSXApplication extends AbstractApplication {
    * Creates a new instance.
    */
   public DefaultOSXApplication() {
+    // TODO document why this constructor is empty
   }
 
+  @Override
   public void init() {
     super.init();
     prefs = Preferences.userNodeForPackage((getModel() == null) ? getClass() : getModel().getClass());
@@ -153,6 +138,7 @@ public class DefaultOSXApplication extends AbstractApplication {
     initScreenMenuBar();
   }
 
+  @Override
   public void launch(String[] args) {
     System.setProperty("apple.awt.graphics.UseQuartz", "false");
     super.launch(args);
@@ -165,7 +151,7 @@ public class DefaultOSXApplication extends AbstractApplication {
     try {
       UIManager.setLookAndFeel(QuaquaManager.getLookAndFeelClassName());
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.info("DefaultOSXApplication - initLookAndFeel: " + e.getMessage());
     }
   }
 
@@ -219,7 +205,7 @@ public class DefaultOSXApplication extends AbstractApplication {
         title = file.getName();
       }
       f.setTitle(labels.getFormatted("frameTitle", title, getName(), p.getMultipleOpenId()));
-      f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+      f.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
       f.setPreferredSize(new Dimension(400, 400));
 
       PreferencesUtil.installFramePrefsHandler(prefs, "project", f);
@@ -241,6 +227,7 @@ public class DefaultOSXApplication extends AbstractApplication {
       paletteHandler.add(f, p);
 
       f.addWindowListener(new WindowAdapter() {
+        @Override
         public void windowClosing(final WindowEvent evt) {
           setCurrentProject(p);
           getModel().getAction(CloseAction.ID).actionPerformed(new ActionEvent(f, ActionEvent.ACTION_PERFORMED, "windowClosing"));
@@ -445,7 +432,7 @@ public class DefaultOSXApplication extends AbstractApplication {
     for (JToolBar tb : toolBars) {
       i++;
       tb.setFloatable(false);
-      tb.setOrientation(JToolBar.VERTICAL);
+      tb.setOrientation(SwingConstants.VERTICAL);
       tb.setFocusable(false);
 
       JFrame d = new JFrame();
