@@ -12,8 +12,9 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.views;
 
+import org.jhotdraw.draw.FigureSelectionListener;
 import org.jhotdraw.draw.constrainers.Constrainer;
 import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.editors.DrawingEditor;

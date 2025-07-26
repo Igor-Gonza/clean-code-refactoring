@@ -21,6 +21,7 @@ import org.jhotdraw.draw.editors.DefaultDrawingEditor;
 import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.action.ToolBarButtonFactory;
+import org.jhotdraw.draw.views.DefaultDrawingView;
 import org.jhotdraw.gui.PlacardScrollPaneLayout;
 import org.jhotdraw.io.ExtensionFileFilter;
 import org.jhotdraw.undo.UndoRedoManager;
@@ -228,7 +229,7 @@ public class SVGProject extends AbstractProject {
   // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
   private void initComponents() {
     scrollPane = new javax.swing.JScrollPane();
-    view = new org.jhotdraw.draw.DefaultDrawingView();
+    view = new DefaultDrawingView();
 
     setLayout(new java.awt.BorderLayout());
 
@@ -243,7 +244,7 @@ public class SVGProject extends AbstractProject {
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JScrollPane scrollPane;
-  private org.jhotdraw.draw.DefaultDrawingView view;
+  private DefaultDrawingView view;
   // End of variables declaration//GEN-END:variables
 
 }

@@ -19,6 +19,7 @@ import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.draw.tools.Tool;
+import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.xml.DOMStorable;
 
@@ -407,7 +408,7 @@ public interface Figure extends Cloneable, Serializable, DOMStorable {
    * @param view The drawing view which is the source of the mouse event.
    * @return Returns true, if the figure consumed the mouse click.
    */
-  boolean handleMouseClick(Point2D.Double p, MouseEvent evt, DrawingView view);
+  boolean handleMouseClick(Point2D.Double p, MouseEvent evt, org.jhotdraw.draw.views.DrawingView view);
 
   /**
    * Adds a listener for FigureEvent's.

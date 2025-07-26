@@ -21,6 +21,7 @@ import org.jhotdraw.draw.drawings.DefaultDrawing;
 import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.figures.TextAreaFigure;
 import org.jhotdraw.draw.tools.CreationTool;
+import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.samples.pert.figures.DependencyFigure;
 import org.jhotdraw.samples.pert.figures.TaskFigure;
 import org.jhotdraw.undo.UndoRedoManager;
@@ -142,7 +143,7 @@ public class PertPanel extends JPanel {
 
     toolButtonGroup = new javax.swing.ButtonGroup();
     scrollPane = new javax.swing.JScrollPane();
-    view = new org.jhotdraw.draw.DefaultDrawingView();
+    view = new org.jhotdraw.draw.views.DefaultDrawingView();
     jPanel1 = new javax.swing.JPanel();
     creationToolbar = new javax.swing.JToolBar();
     attributesToolbar = new javax.swing.JToolBar();
@@ -203,7 +204,7 @@ public class PertPanel extends JPanel {
   private javax.swing.JPanel jPanel1;
   private javax.swing.JScrollPane scrollPane;
   private javax.swing.ButtonGroup toolButtonGroup;
-  private org.jhotdraw.draw.DefaultDrawingView view;
+  private org.jhotdraw.draw.views.DefaultDrawingView view;
   // End of variables declaration//GEN-END:variables
 
 }

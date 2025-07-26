@@ -16,7 +16,7 @@ package org.jhotdraw.draw.editors;
 
 import org.jhotdraw.beans.AbstractBean;
 import org.jhotdraw.draw.AttributeKey;
-import org.jhotdraw.draw.DrawingView;
+import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.draw.ToolListener;
 import org.jhotdraw.draw.events.ToolEvent;
 import org.jhotdraw.draw.figures.Figure;

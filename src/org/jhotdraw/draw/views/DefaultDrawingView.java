@@ -12,9 +12,13 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.views;
 
 import org.jhotdraw.app.EditableComponent;
+import org.jhotdraw.draw.DrawingListener;
+import org.jhotdraw.draw.FigureSelectionListener;
+import org.jhotdraw.draw.HandleListener;
+import org.jhotdraw.draw.Options;
 import org.jhotdraw.draw.constrainers.Constrainer;
 import org.jhotdraw.draw.constrainers.GridConstrainer;
 import org.jhotdraw.draw.drawings.Drawing;

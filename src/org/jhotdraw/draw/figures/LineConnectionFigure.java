@@ -21,6 +21,7 @@ import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.handlers.BezierNodeHandle;
 import org.jhotdraw.draw.handlers.ChangeConnectionStartHandle;
 import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;

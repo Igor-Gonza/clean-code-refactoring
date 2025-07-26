@@ -19,6 +19,7 @@ import org.jhotdraw.draw.action.GroupAction;
 import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.figures.CompositeFigure;
 import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.samples.svg.figures.SVGPath;
 import org.jhotdraw.util.ResourceBundleUtil;
 
@@ -63,7 +64,7 @@ public class CombineAction extends GroupAction {
     return canCombine;
   }
 
-  public Collection<Figure> ungroupFigures(DrawingView view, org.jhotdraw.draw.figures.CompositeFigure group) {
+  public Collection<Figure> ungroupFigures(org.jhotdraw.draw.views.DrawingView view, org.jhotdraw.draw.figures.CompositeFigure group) {
     LinkedList<org.jhotdraw.draw.figures.Figure> figures = new LinkedList<>(group.getChildren());
     view.clearSelection();
     group.basicRemoveAllChildren();

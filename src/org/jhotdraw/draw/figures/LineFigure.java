@@ -15,7 +15,7 @@
 package org.jhotdraw.draw.figures;
 
 import org.jhotdraw.draw.handlers.BezierNodeHandle;
-import org.jhotdraw.draw.DrawingView;
+import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.geom.BezierPath;
 

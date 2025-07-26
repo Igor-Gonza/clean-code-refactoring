@@ -18,6 +18,7 @@ import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.events.FigureSelectionEvent;
+import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 import javax.swing.*;
@@ -50,12 +51,12 @@ public abstract class AbstractSelectedAction extends AbstractAction {
     public void propertyChange(PropertyChangeEvent evt) {
       if (evt.getPropertyName().equals("focusedView")) {
         if (evt.getOldValue() != null) {
-          DrawingView view = ((DrawingView) evt.getOldValue());
+          org.jhotdraw.draw.views.DrawingView view = ((DrawingView) evt.getOldValue());
           view.removeFigureSelectionListener(this);
           view.removePropertyChangeListener(propertyChangeHandler);
         }
         if (evt.getNewValue() != null) {
-          DrawingView view = ((DrawingView) evt.getNewValue());
+          org.jhotdraw.draw.views.DrawingView view = ((org.jhotdraw.draw.views.DrawingView) evt.getNewValue());
           view.addFigureSelectionListener(this);
           view.addPropertyChangeListener(propertyChangeHandler);
         }
@@ -115,7 +116,7 @@ public abstract class AbstractSelectedAction extends AbstractAction {
     return editor;
   }
 
-  protected DrawingView getView() {
+  protected org.jhotdraw.draw.views.DrawingView getView() {
     return (editor == null) ? null : editor.getFocusedView();
   }
 

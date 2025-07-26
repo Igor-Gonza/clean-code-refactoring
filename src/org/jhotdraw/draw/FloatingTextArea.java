@@ -21,6 +21,7 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.figures.TextHolder;
+import org.jhotdraw.draw.views.DrawingView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,7 +42,7 @@ public class FloatingTextArea {
   /**
    * The drawing view.
    */
-  protected DrawingView view;
+  protected org.jhotdraw.draw.views.DrawingView view;
 
 
   /**
@@ -77,7 +78,7 @@ public class FloatingTextArea {
    * @param view   the DrawingView
    * @param figure the figure holding the text
    */
-  public void createOverlay(DrawingView view, TextHolder figure) {
+  public void createOverlay(org.jhotdraw.draw.views.DrawingView view, TextHolder figure) {
     view.getContainer().add(editScrollContainer, 0);
     if (figure != null) {
       Font f = figure.getFont();

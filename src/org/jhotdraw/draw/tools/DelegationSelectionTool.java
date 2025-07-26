@@ -21,7 +21,7 @@ import javax.swing.*;
 import java.util.*;
 
 import org.jhotdraw.app.action.Actions;
-import org.jhotdraw.draw.DrawingView;
+import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.handlers.Handle;
 

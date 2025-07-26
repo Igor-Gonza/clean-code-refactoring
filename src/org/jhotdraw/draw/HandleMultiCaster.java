@@ -16,6 +16,7 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.util.*;
 import org.jhotdraw.undo.*;
 
@@ -78,7 +79,7 @@ public class HandleMultiCaster {
     view.getDrawing().fireUndoableEditHappened(edit);
   }
 
-  public void trackStart(Point anchor, int modifiersEx, DrawingView view) {
+  public void trackStart(Point anchor, int modifiersEx, org.jhotdraw.draw.views.DrawingView view) {
     view.getDrawing().fireUndoableEditHappened(edit = new CompositeEdit());
 
     for (org.jhotdraw.draw.handlers.Handle h : handles) {
@@ -86,13 +87,13 @@ public class HandleMultiCaster {
     }
   }
 
-  public void trackDoubleClick(Point p, int modifiersEx, DrawingView view) {
+  public void trackDoubleClick(Point p, int modifiersEx, org.jhotdraw.draw.views.DrawingView view) {
     for (org.jhotdraw.draw.handlers.Handle h : handles) {
       h.trackDoubleClick(p, modifiersEx);
     }
   }
 
-  public void trackStep(Point anchor, Point lead, int modifiersEx, DrawingView view) {
+  public void trackStep(Point anchor, Point lead, int modifiersEx, org.jhotdraw.draw.views.DrawingView view) {
     for (org.jhotdraw.draw.handlers.Handle h : handles) {
       h.trackStep(anchor, lead, modifiersEx);
     }

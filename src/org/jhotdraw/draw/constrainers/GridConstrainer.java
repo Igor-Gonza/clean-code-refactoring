@@ -14,7 +14,7 @@
 
 package org.jhotdraw.draw.constrainers;
 
-import org.jhotdraw.draw.DrawingView;
+import org.jhotdraw.draw.views.DrawingView;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;

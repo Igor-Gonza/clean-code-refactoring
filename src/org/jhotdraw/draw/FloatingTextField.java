@@ -16,6 +16,7 @@ package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.figures.TextFigure;
 import org.jhotdraw.draw.figures.TextHolder;
+import org.jhotdraw.draw.views.DrawingView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +36,7 @@ import java.awt.event.ActionListener;
 public class FloatingTextField {
 
   private JTextField editWidget;
-  private DrawingView view;
+  private org.jhotdraw.draw.views.DrawingView view;
 
   public FloatingTextField() {
     editWidget = new JTextField(20);
@@ -44,7 +45,7 @@ public class FloatingTextField {
   /**
    * Creates the overlay for the given Component.
    */
-  public void createOverlay(DrawingView view) {
+  public void createOverlay(org.jhotdraw.draw.views.DrawingView view) {
     createOverlay(view, null);
   }
 

@@ -14,11 +14,11 @@
 
 package org.jhotdraw.draw.action;
 
-import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.figures.CompositeFigure;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.figures.GroupFigure;
+import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.undo.CompositeEdit;
 
 import javax.swing.undo.CannotRedoException;
@@ -69,7 +69,7 @@ public class UngroupAction extends AbstractSelectedAction {
 
   public void actionPerformed(java.awt.event.ActionEvent e) {
     if (canUngroup()) {
-      final DrawingView view = getView();
+      final org.jhotdraw.draw.views.DrawingView view = getView();
       final org.jhotdraw.draw.figures.CompositeFigure group = (org.jhotdraw.draw.figures.CompositeFigure) getView().getSelectedFigures().iterator().next();
       final LinkedList<org.jhotdraw.draw.figures.Figure> ungroupedFigures = new LinkedList<>();
       CompositeEdit edit = new CompositeEdit(labels.getString("selectionUngroup")) {
@@ -99,7 +99,7 @@ public class UngroupAction extends AbstractSelectedAction {
     return figures;
   }
 
-  public void groupFigures(DrawingView view, org.jhotdraw.draw.figures.CompositeFigure group, Collection<org.jhotdraw.draw.figures.Figure> figures) {
+  public void groupFigures(org.jhotdraw.draw.views.DrawingView view, org.jhotdraw.draw.figures.CompositeFigure group, Collection<org.jhotdraw.draw.figures.Figure> figures) {
 // XXX - This code is redundant with GroupAction
     Collection<Figure> sorted = view.getDrawing().sort(figures);
     view.getDrawing().basicRemoveAll(figures);

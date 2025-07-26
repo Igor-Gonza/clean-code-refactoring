@@ -14,7 +14,7 @@
 
 package org.jhotdraw.draw.events;
 
-import org.jhotdraw.draw.DrawingView;
+import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.draw.tools.Tool;
 
 import java.awt.*;

@@ -24,7 +24,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="org.jhotdraw.draw.DefaultDrawingView" name="view">
+        <Component class="org.jhotdraw.draw.views.DefaultDrawingView" name="view">
         </Component>
       </SubComponents>
     </Container>

@@ -21,6 +21,7 @@ import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.events.ToolEvent;
 import org.jhotdraw.draw.tools.DelegationSelectionTool;
 import org.jhotdraw.draw.tools.Tool;
+import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.geom.DoubleStroke;
 import org.jhotdraw.util.ResourceBundleUtil;
 
@@ -626,7 +627,7 @@ public class ToolBarButtonFactory {
       } else {
         c = new org.jhotdraw.draw.constrainers.GridConstrainer(1, 1);
       }
-      for (DrawingView v : editor.getDrawingViews()) {
+      for (org.jhotdraw.draw.views.DrawingView v : editor.getDrawingViews()) {
         v.setConstrainer(c);
         v.getContainer().repaint();
       }
@@ -638,7 +639,7 @@ public class ToolBarButtonFactory {
   /**
    * Creates toolbar buttons and adds them to the specified JToolBar
    */
-  public static AbstractButton createToggleGridButton(final DrawingView view) {
+  public static AbstractButton createToggleGridButton(final org.jhotdraw.draw.views.DrawingView view) {
     ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
     final JToggleButton toggleGridButton;
 

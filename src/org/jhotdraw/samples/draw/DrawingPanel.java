@@ -25,6 +25,7 @@ import org.jhotdraw.draw.figures.ConnectionFigure;
 import org.jhotdraw.draw.figures.RectangleFigure;
 import org.jhotdraw.draw.figures.RoundRectangleFigure;
 import org.jhotdraw.draw.tools.BezierTool;
+import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.undo.UndoRedoManager;
 import org.jhotdraw.util.ResourceBundleUtil;
 
@@ -145,7 +146,7 @@ public class DrawingPanel extends JPanel {
 
     toolButtonGroup = new javax.swing.ButtonGroup();
     scrollPane = new javax.swing.JScrollPane();
-    view = new org.jhotdraw.draw.DefaultDrawingView();
+    view = new org.jhotdraw.draw.views.DefaultDrawingView();
     jPanel1 = new javax.swing.JPanel();
     creationToolbar = new javax.swing.JToolBar();
     attributesToolbar = new javax.swing.JToolBar();
@@ -217,7 +218,7 @@ public class DrawingPanel extends JPanel {
   private javax.swing.JPanel jPanel1;
   private javax.swing.JScrollPane scrollPane;
   private javax.swing.ButtonGroup toolButtonGroup;
-  private org.jhotdraw.draw.DefaultDrawingView view;
+  private org.jhotdraw.draw.views.DefaultDrawingView view;
   // End of variables declaration//GEN-END:variables
 
 }

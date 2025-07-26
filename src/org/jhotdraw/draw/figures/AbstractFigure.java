@@ -24,6 +24,7 @@ import org.jhotdraw.draw.edits.TransformEdit;
 import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.draw.tools.Tool;
+import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.geom.Insets2DDouble;
 
@@ -477,7 +478,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
     return false;
   }
 
-  public boolean handleDrop(Point2D.Double p, Collection<Figure> droppedFigures, DrawingView view) {
+  public boolean handleDrop(Point2D.Double p, Collection<Figure> droppedFigures, org.jhotdraw.draw.views.DrawingView view) {
     return false;
   }
 

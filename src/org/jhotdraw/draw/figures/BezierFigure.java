@@ -21,6 +21,7 @@ import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.draw.edits.BezierNodeEdit;
 import org.jhotdraw.draw.handlers.BezierNodeHandle;
 import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.geom.Geom;
 import org.jhotdraw.geom.GrowStroke;

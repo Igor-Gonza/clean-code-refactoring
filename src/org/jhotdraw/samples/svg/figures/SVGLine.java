@@ -19,8 +19,8 @@ import java.awt.geom.*;
 import java.io.IOException;
 
 import org.jhotdraw.draw.figures.LineFigure;
+import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.samples.svg.*;
-import org.jhotdraw.draw.*;
 import org.jhotdraw.xml.*;
 
 /**
