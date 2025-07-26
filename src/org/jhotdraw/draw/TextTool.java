@@ -14,6 +14,9 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.figures.TextHolder;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +33,7 @@ import java.util.Map;
  * @author Werner Randelshofer
  * @version 2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
- * @see TextHolder
+ * @see org.jhotdraw.draw.figures.TextHolder
  * @see FloatingTextField
  */
 public class TextTool extends CreationTool implements ActionListener {
@@ -40,14 +43,14 @@ public class TextTool extends CreationTool implements ActionListener {
   /**
    * Creates a new instance.
    */
-  public TextTool(TextHolder prototype) {
+  public TextTool(org.jhotdraw.draw.figures.TextHolder prototype) {
     super(prototype);
   }
 
   /**
    * Creates a new instance.
    */
-  public TextTool(Figure prototype, Map attributes) {
+  public TextTool(org.jhotdraw.draw.figures.Figure prototype, Map attributes) {
     super(prototype, attributes);
   }
 
@@ -61,10 +64,10 @@ public class TextTool extends CreationTool implements ActionListener {
    * a new text figure is created.
    */
   public void mousePressed(MouseEvent e) {
-    TextHolder textHolder = null;
+    org.jhotdraw.draw.figures.TextHolder textHolder = null;
     Figure pressedFigure = getDrawing().findFigureInside(getView().viewToDrawing(new Point(e.getX(), e.getY())));
-    if (pressedFigure instanceof TextHolder) {
-      textHolder = ((TextHolder) pressedFigure).getLabelFor();
+    if (pressedFigure instanceof org.jhotdraw.draw.figures.TextHolder) {
+      textHolder = ((org.jhotdraw.draw.figures.TextHolder) pressedFigure).getLabelFor();
       if (!textHolder.isEditable()) textHolder = null;
     }
     if (textHolder != null) {
@@ -80,7 +83,7 @@ public class TextTool extends CreationTool implements ActionListener {
       // figure is overlaid. (Note, fDamage should be null in StandardDrawingView
       // when the overlay figure is drawn because a JTextField cannot be scrolled)
       //view().checkDamage();
-      textHolder = (TextHolder) getCreatedFigure();
+      textHolder = (org.jhotdraw.draw.figures.TextHolder) getCreatedFigure();
       beginEdit(textHolder);
     }
   }
@@ -88,7 +91,7 @@ public class TextTool extends CreationTool implements ActionListener {
   public void mouseDragged(java.awt.event.MouseEvent e) {
   }
 
-  protected void beginEdit(TextHolder textHolder) {
+  protected void beginEdit(org.jhotdraw.draw.figures.TextHolder textHolder) {
     if (textField == null) {
       textField = new FloatingTextField();
       textField.addActionListener(this);
@@ -104,7 +107,7 @@ public class TextTool extends CreationTool implements ActionListener {
   }
 
 
-  private Rectangle getFieldBounds(TextHolder figure) {
+  private Rectangle getFieldBounds(org.jhotdraw.draw.figures.TextHolder figure) {
         /*
         Rectangle box = getView().drawingToView(figure.getBounds());
         int nChars = figure.getTextColumns();

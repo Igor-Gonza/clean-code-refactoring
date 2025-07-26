@@ -12,7 +12,7 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.figures;
 
 import java.awt.geom.*;
 

@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.Figure;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -143,7 +145,7 @@ public class SelectionTool extends AbstractTool implements ToolListener {
   /**
    * Factory method to create a Drag tracker. It is used to drag a figure.
    */
-  protected Tool createDragTracker(Figure f) {
+  protected Tool createDragTracker(org.jhotdraw.draw.figures.Figure f) {
     return new DragTracker(f);
   }
 

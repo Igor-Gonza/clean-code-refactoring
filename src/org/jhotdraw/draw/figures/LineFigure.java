@@ -12,8 +12,11 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.figures;
 
+import org.jhotdraw.draw.BezierNodeHandle;
+import org.jhotdraw.draw.DrawingView;
+import org.jhotdraw.draw.Handle;
 import org.jhotdraw.geom.BezierPath;
 
 import javax.swing.undo.AbstractUndoableEdit;

@@ -14,7 +14,7 @@
 
 package org.jhotdraw.draw.edits;
 
-import org.jhotdraw.draw.BezierFigure;
+import org.jhotdraw.draw.figures.BezierFigure;
 import org.jhotdraw.geom.BezierPath;
 
 import javax.swing.undo.AbstractUndoableEdit;

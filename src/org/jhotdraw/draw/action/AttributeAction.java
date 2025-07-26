@@ -17,7 +17,7 @@ package org.jhotdraw.draw.action;
 import org.jhotdraw.draw.AttributeKey;
 import org.jhotdraw.draw.Drawing;
 import org.jhotdraw.draw.DrawingEditor;
-import org.jhotdraw.draw.Figure;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.undo.CompositeEdit;
 
 import javax.swing.*;

@@ -14,7 +14,7 @@
 
 package org.jhotdraw.draw.layouters;
 
-import org.jhotdraw.draw.CompositeFigure;
+import org.jhotdraw.draw.figures.CompositeFigure;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;

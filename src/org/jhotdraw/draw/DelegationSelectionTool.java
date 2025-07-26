@@ -21,6 +21,7 @@ import javax.swing.*;
 import java.util.*;
 
 import org.jhotdraw.app.action.Actions;
+import org.jhotdraw.draw.figures.Figure;
 
 /**
  * A SelectionTool, which recognizes double clicks and popup menu triggers.
@@ -148,7 +149,7 @@ public class DelegationSelectionTool extends SelectionTool {
    */
   protected void handlePopupMenu(MouseEvent evt) {
     Point p = new Point(evt.getX(), evt.getY());
-    Figure figure = getView().findFigure(p);
+    org.jhotdraw.draw.figures.Figure figure = getView().findFigure(p);
     if (figure != null || !drawingActions.isEmpty()) {
       showPopupMenu(figure, p, evt.getComponent());
     } else {
@@ -156,7 +157,7 @@ public class DelegationSelectionTool extends SelectionTool {
     }
   }
 
-  protected void showPopupMenu(Figure figure, Point p, Component c) {
+  protected void showPopupMenu(org.jhotdraw.draw.figures.Figure figure, Point p, Component c) {
     JPopupMenu menu = new JPopupMenu();
     popupMenu = menu;
     JMenu submenu = null;
@@ -233,7 +234,7 @@ public class DelegationSelectionTool extends SelectionTool {
       handle.trackDoubleClick(pos, evt.getModifiersEx());
     } else {
       Point2D.Double p = viewToDrawing(pos);
-      Figure outerFigure = getView().findFigure(pos);
+      org.jhotdraw.draw.figures.Figure outerFigure = getView().findFigure(pos);
       Figure figure = outerFigure;
       if (figure != null) {
         Tool figureTool = figure.getTool(p);

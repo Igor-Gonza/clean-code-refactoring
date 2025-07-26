@@ -14,7 +14,7 @@
 
 package org.jhotdraw.draw.locators;
 
-import org.jhotdraw.draw.Figure;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.geom.Insets2DDouble;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;

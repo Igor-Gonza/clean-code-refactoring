@@ -12,8 +12,10 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.figures;
 
+import org.jhotdraw.draw.AttributeKey;
+import org.jhotdraw.draw.AttributeKeys;
 import org.jhotdraw.draw.edits.AttributeChangeEdit;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.geom.Geom;
@@ -206,7 +208,7 @@ public abstract class AttributedFigure extends AbstractFigure {
   }
 
   protected void writeAttributes(DOMOutput out) throws IOException {
-    Figure prototype = (Figure) out.getPrototype();
+    Figure prototype = (org.jhotdraw.draw.figures.Figure) out.getPrototype();
 
     boolean isElementOpen = false;
     for (Map.Entry<AttributeKey, Object> entry : attributes.entrySet()) {
@@ -257,7 +259,7 @@ public abstract class AttributedFigure extends AbstractFigure {
   /**
    * Applies all attributes of this figure to that figure.
    */
-  protected void applyAttributesTo(Figure that) {
+  protected void applyAttributesTo(org.jhotdraw.draw.figures.Figure that) {
     for (Map.Entry<AttributeKey, Object> entry : attributes.entrySet()) {
       that.setAttribute(entry.getKey(), entry.getValue());
     }

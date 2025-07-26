@@ -15,7 +15,7 @@
 package org.jhotdraw.samples.svg.figures;
 
 import org.jhotdraw.draw.AttributeKey;
-import org.jhotdraw.draw.TextFigure;
+import org.jhotdraw.draw.figures.TextFigure;
 import org.jhotdraw.samples.svg.SVGUtil;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;

@@ -20,6 +20,8 @@
  */
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.TextHolder;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;

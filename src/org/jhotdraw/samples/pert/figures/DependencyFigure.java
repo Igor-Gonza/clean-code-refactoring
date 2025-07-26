@@ -16,8 +16,8 @@ package org.jhotdraw.samples.pert.figures;
 
 import org.jhotdraw.draw.ArrowTip;
 import org.jhotdraw.draw.Drawing;
-import org.jhotdraw.draw.Figure;
-import org.jhotdraw.draw.LineConnectionFigure;
+import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.figures.LineConnectionFigure;
 
 import java.awt.*;
 

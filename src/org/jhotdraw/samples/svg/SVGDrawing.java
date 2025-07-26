@@ -16,6 +16,7 @@ package org.jhotdraw.samples.svg;
 
 import java.io.IOException;
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.samples.svg.figures.*;
 import org.jhotdraw.xml.*;
 /**
@@ -81,7 +82,7 @@ public class SVGDrawing extends DefaultDrawing {
                 if (f instanceof SVGDrawing) {
                     SVGGroup g = new SVGGroup();
                     g.willChange();
-                    for (Figure child : ((SVGDrawing) f).getFigures()) {
+                    for (org.jhotdraw.draw.figures.Figure child : ((SVGDrawing) f).getFigures()) {
                         g.basicAdd(child);
                     }
                     g.changed();
@@ -90,7 +91,7 @@ public class SVGDrawing extends DefaultDrawing {
                     }
                 } else if (f instanceof SVGFigure) {
                     if (!((SVGFigure) f).isEmpty()) {
-                        add((Figure) f);
+                        add((org.jhotdraw.draw.figures.Figure) f);
                     }
                 } else {
                     throw new IOException("Unexpected child "+f);

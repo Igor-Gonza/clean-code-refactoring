@@ -17,6 +17,7 @@ package org.jhotdraw.draw;
 import java.awt.*;
 import java.util.*;
 
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.geom.*;
 
 /**
@@ -261,7 +262,7 @@ public class AttributeKeys {
    * Convenience method for computing the total stroke widTH from the
    * STROKE_WIDTH, STROKE_INNER_WIDTH and STROKE_TYPE attributes.
    */
-  public static double getStrokeTotalWidth(Figure f) {
+  public static double getStrokeTotalWidth(org.jhotdraw.draw.figures.Figure f) {
     switch (STROKE_TYPE.get(f)) {
       case BASIC:
       default:
@@ -273,7 +274,7 @@ public class AttributeKeys {
     }
   }
 
-  public static Stroke getStroke(Figure f) {
+  public static Stroke getStroke(org.jhotdraw.draw.figures.Figure f) {
     double strokeWidth = STROKE_WIDTH.get(f);
     double dashFactor = STROKE_DASH_FACTOR.get(f) != null ? STROKE_DASH_FACTOR.get(f) : strokeWidth;
     double[] dDashes = STROKE_DASHES.get(f);
@@ -297,7 +298,7 @@ public class AttributeKeys {
     }
   }
 
-  public static Font getFont(Figure f) {
+  public static Font getFont(org.jhotdraw.draw.figures.Figure f) {
     Font prototype = FONT_FACE.get(f);
     if (prototype == null) {
       return null;
@@ -309,7 +310,7 @@ public class AttributeKeys {
     }
   }
 
-  public static int getFontStyle(Figure f) {
+  public static int getFontStyle(org.jhotdraw.draw.figures.Figure f) {
     int style = Font.PLAIN;
     if (FONT_BOLD.get(f)) style |= Font.BOLD;
     if (FONT_ITALIC.get(f)) style |= Font.ITALIC;
@@ -323,7 +324,7 @@ public class AttributeKeys {
    * The value returned is the number of units that need to be grown (or shrunk)
    * perpendicular to a stroke on an outline of the shape.
    */
-  public static double getPerpendicularFillGrowth(Figure f) {
+  public static double getPerpendicularFillGrowth(org.jhotdraw.draw.figures.Figure f) {
     double grow;
     double strokeWidth = AttributeKeys.getStrokeTotalWidth(f);
     StrokePlacement placement = STROKE_PLACEMENT.get(f);
@@ -382,7 +383,7 @@ public class AttributeKeys {
    * The value returned is the number of units that need to be grown (or shrunk)
    * perpendicular to a stroke on an outline of the shape.
    */
-  public static double getPerpendicularDrawGrowth(Figure f) {
+  public static double getPerpendicularDrawGrowth(org.jhotdraw.draw.figures.Figure f) {
     double grow;
 
     double strokeWidth = AttributeKeys.getStrokeTotalWidth(f);

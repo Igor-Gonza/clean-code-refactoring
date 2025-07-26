@@ -15,6 +15,7 @@
 package org.jhotdraw.draw.action;
 
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 import java.util.Collection;
@@ -48,7 +49,7 @@ public class PickAttributesAction extends AbstractSelectedAction {
     DrawingEditor editor = getEditor();
     Collection<Figure> selection = getView().getSelectedFigures();
     if (!selection.isEmpty()) {
-      Figure figure = selection.iterator().next();
+      org.jhotdraw.draw.figures.Figure figure = selection.iterator().next();
       for (Map.Entry<AttributeKey, Object> entry : figure.getAttributes().entrySet()) {
         if (entry.getKey() != AttributeKeys.TEXT) {
           editor.setDefaultAttribute(entry.getKey(), entry.getValue());

@@ -15,6 +15,7 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.edits.TransformEdit;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.locators.Locator;
 import org.jhotdraw.draw.locators.RelativeLocator;
 
@@ -43,7 +44,7 @@ public class MoveHandle extends LocatorHandle {
   /**
    * Creates a new instance.
    */
-  public MoveHandle(Figure owner, Locator locator) {
+  public MoveHandle(org.jhotdraw.draw.figures.Figure owner, Locator locator) {
     super(owner, locator);
   }
 
@@ -51,7 +52,7 @@ public class MoveHandle extends LocatorHandle {
    * Creates handles for each corner of a
    * figure and adds them to the provided collection.
    */
-  static public void addMoveHandles(Figure f, Collection<Handle> handles) {
+  static public void addMoveHandles(org.jhotdraw.draw.figures.Figure f, Collection<Handle> handles) {
     handles.add(southEast(f));
     handles.add(southWest(f));
     handles.add(northEast(f));
@@ -89,35 +90,35 @@ public class MoveHandle extends LocatorHandle {
     fireUndoableEditHappened(new TransformEdit(getOwner(), tx));
   }
 
-  static public Handle south(Figure owner) {
+  static public Handle south(org.jhotdraw.draw.figures.Figure owner) {
     return new MoveHandle(owner, org.jhotdraw.draw.locators.RelativeLocator.south());
   }
 
-  static public Handle southEast(Figure owner) {
+  static public Handle southEast(org.jhotdraw.draw.figures.Figure owner) {
     return new MoveHandle(owner, org.jhotdraw.draw.locators.RelativeLocator.southEast());
   }
 
-  static public Handle southWest(Figure owner) {
+  static public Handle southWest(org.jhotdraw.draw.figures.Figure owner) {
     return new MoveHandle(owner, org.jhotdraw.draw.locators.RelativeLocator.southWest());
   }
 
-  static public Handle north(Figure owner) {
+  static public Handle north(org.jhotdraw.draw.figures.Figure owner) {
     return new MoveHandle(owner, RelativeLocator.north());
   }
 
-  static public Handle northEast(Figure owner) {
+  static public Handle northEast(org.jhotdraw.draw.figures.Figure owner) {
     return new MoveHandle(owner, org.jhotdraw.draw.locators.RelativeLocator.northEast());
   }
 
-  static public Handle northWest(Figure owner) {
+  static public Handle northWest(org.jhotdraw.draw.figures.Figure owner) {
     return new MoveHandle(owner, org.jhotdraw.draw.locators.RelativeLocator.northWest());
   }
 
-  static public Handle east(Figure owner) {
+  static public Handle east(org.jhotdraw.draw.figures.Figure owner) {
     return new MoveHandle(owner, org.jhotdraw.draw.locators.RelativeLocator.east());
   }
 
-  static public Handle west(Figure owner) {
+  static public Handle west(org.jhotdraw.draw.figures.Figure owner) {
     return new MoveHandle(owner, org.jhotdraw.draw.locators.RelativeLocator.west());
   }
 }

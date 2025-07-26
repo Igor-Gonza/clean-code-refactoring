@@ -15,6 +15,7 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.edits.TransformEdit;
+import org.jhotdraw.draw.figures.Figure;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -29,7 +30,7 @@ import java.util.*;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class DragTracker extends AbstractTool {
-  Figure anchorFigure;
+  org.jhotdraw.draw.figures.Figure anchorFigure;
   Point2D.Double oldPoint;
   Point2D.Double anchorPoint;
   private boolean isDragging;
@@ -38,7 +39,7 @@ public class DragTracker extends AbstractTool {
   /**
    * Creates a new instance.
    */
-  public DragTracker(Figure figure) {
+  public DragTracker(org.jhotdraw.draw.figures.Figure figure) {
     anchorFigure = figure;
   }
 
@@ -84,7 +85,7 @@ public class DragTracker extends AbstractTool {
     Point2D.Double newPoint = view.getConstrainer().constrainPoint(view.viewToDrawing(new Point(evt.getX(), evt.getY())));
     AffineTransform tx = new AffineTransform();
     tx.translate(newPoint.x - oldPoint.x, newPoint.y - oldPoint.y);
-    for (Figure f : view.getSelectedFigures()) {
+    for (org.jhotdraw.draw.figures.Figure f : view.getSelectedFigures()) {
       f.willChange();
       f.basicTransform(tx);
       f.changed();
@@ -100,15 +101,15 @@ public class DragTracker extends AbstractTool {
     int y = evt.getY();
     updateCursor(editor.findView((Container) evt.getSource()), new Point(evt.getX(), evt.getY()));
     Point2D.Double p = getView().getConstrainer().constrainPoint(getView().viewToDrawing(new Point(x, y)));
-    Collection<Figure> draggedFigures = new LinkedList<>(getView().getSelectedFigures());
-    Figure dropTarget = getDrawing().findFigureExcept(p, draggedFigures);
+    Collection<org.jhotdraw.draw.figures.Figure> draggedFigures = new LinkedList<>(getView().getSelectedFigures());
+    org.jhotdraw.draw.figures.Figure dropTarget = getDrawing().findFigureExcept(p, draggedFigures);
 
     if (dropTarget != null) {
       boolean snapBack = dropTarget.handleDrop(p, draggedFigures, getView());
       if (snapBack) {
         AffineTransform tx = new AffineTransform();
         tx.translate(anchorPoint.x - oldPoint.x, anchorPoint.y - oldPoint.y);
-        for (Figure f : draggedFigures) {
+        for (org.jhotdraw.draw.figures.Figure f : draggedFigures) {
           f.willChange();
           f.basicTransform(tx);
           f.changed();

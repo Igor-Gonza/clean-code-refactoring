@@ -16,7 +16,7 @@ package org.jhotdraw.samples.svg;
 
 import netscape.javascript.JSObject;
 import org.jhotdraw.draw.Drawing;
-import org.jhotdraw.draw.TextFigure;
+import org.jhotdraw.draw.figures.TextFigure;
 import org.jhotdraw.draw.action.SwingWorker;
 import org.jhotdraw.xml.NanoXMLDOMInput;
 import org.jhotdraw.xml.NanoXMLDOMOutput;

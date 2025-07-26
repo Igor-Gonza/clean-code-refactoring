@@ -15,6 +15,7 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.connectors.Connector;
+import org.jhotdraw.draw.figures.Figure;
 
 import java.awt.geom.Point2D;
 
@@ -31,7 +32,7 @@ public class ChangeConnectionEndHandle extends ChangeConnectionHandle {
   /**
    * Constructs the connection handle for the given start figure.
    */
-  public ChangeConnectionEndHandle(Figure owner) {
+  public ChangeConnectionEndHandle(org.jhotdraw.draw.figures.Figure owner) {
     super(owner);
   }
 
@@ -71,7 +72,7 @@ public class ChangeConnectionEndHandle extends ChangeConnectionHandle {
     return getConnection().getEndPoint();
   }
 
-  protected boolean canConnect(Figure existingEnd, Figure targetEnd) {
+  protected boolean canConnect(Figure existingEnd, org.jhotdraw.draw.figures.Figure targetEnd) {
     return getConnection().canConnect(existingEnd, targetEnd);
   }
 }

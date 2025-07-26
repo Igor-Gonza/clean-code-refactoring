@@ -15,7 +15,7 @@
 package org.jhotdraw.samples.svg;
 
 import org.jhotdraw.draw.AttributeKey;
-import org.jhotdraw.draw.BezierFigure;
+import org.jhotdraw.draw.figures.BezierFigure;
 import org.jhotdraw.draw.BezierTool;
 import org.jhotdraw.samples.svg.figures.SVGPath;
 

@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.CompositeFigure;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.undo.CompositeEdit;
 
 import java.awt.*;
@@ -46,7 +48,7 @@ public class CreationTool extends AbstractTool {
   /**
    * The created figure.
    */
-  protected Figure createdFigure;
+  protected org.jhotdraw.draw.figures.Figure createdFigure;
 
   protected CompositeEdit creationEdit;
 
@@ -63,7 +65,7 @@ public class CreationTool extends AbstractTool {
 
   public CreationTool(String prototypeClassName, Map<AttributeKey, Object> attributes, String name) {
     try {
-      this.prototype = (Figure) Class.forName(prototypeClassName).newInstance();
+      this.prototype = (org.jhotdraw.draw.figures.Figure) Class.forName(prototypeClassName).newInstance();
     } catch (Exception e) {
       throw new InternalError("Unable to create Figure from " + prototypeClassName, e);
     }
@@ -71,27 +73,27 @@ public class CreationTool extends AbstractTool {
     this.name = name;
   }
 
-  public CreationTool(Figure prototype) {
+  public CreationTool(org.jhotdraw.draw.figures.Figure prototype) {
     this(prototype, null, null);
   }
 
   /**
    * Creates a new instance.
    */
-  public CreationTool(Figure prototype, Map<AttributeKey, Object> attributes) {
+  public CreationTool(org.jhotdraw.draw.figures.Figure prototype, Map<AttributeKey, Object> attributes) {
     this(prototype, attributes, null);
   }
 
   /**
    * Creates a new instance.
    */
-  public CreationTool(Figure prototype, Map<AttributeKey, Object> attributes, String name) {
+  public CreationTool(org.jhotdraw.draw.figures.Figure prototype, Map<AttributeKey, Object> attributes, String name) {
     this.prototype = prototype;
     this.attributes = attributes;
     this.name = name;
   }
 
-  public Figure getPrototype() {
+  public org.jhotdraw.draw.figures.Figure getPrototype() {
     return prototype;
   }
 
@@ -107,8 +109,8 @@ public class CreationTool extends AbstractTool {
       getView().setCursor(Cursor.getDefaultCursor());
     }
     if (createdFigure != null) {
-      if (createdFigure instanceof CompositeFigure) {
-        ((CompositeFigure) createdFigure).layout();
+      if (createdFigure instanceof org.jhotdraw.draw.figures.CompositeFigure) {
+        ((org.jhotdraw.draw.figures.CompositeFigure) createdFigure).layout();
       }
       createdFigure = null;
     }
@@ -131,8 +133,8 @@ public class CreationTool extends AbstractTool {
     getDrawing().add(createdFigure);
   }
 
-  protected Figure createFigure() {
-    Figure f = (Figure) prototype.clone();
+  protected org.jhotdraw.draw.figures.Figure createFigure() {
+    org.jhotdraw.draw.figures.Figure f = (org.jhotdraw.draw.figures.Figure) prototype.clone();
     getEditor().applyDefaultAttributesTo(f);
     if (attributes != null) {
       for (Map.Entry<AttributeKey, Object> entry : attributes.entrySet()) {
@@ -142,11 +144,11 @@ public class CreationTool extends AbstractTool {
     return f;
   }
 
-  protected Figure getCreatedFigure() {
+  protected org.jhotdraw.draw.figures.Figure getCreatedFigure() {
     return createdFigure;
   }
 
-  protected Figure getAddedFigure() {
+  protected org.jhotdraw.draw.figures.Figure getAddedFigure() {
     return createdFigure;
   }
 
@@ -170,7 +172,7 @@ public class CreationTool extends AbstractTool {
         }
         getView().addToSelection(createdFigure);
       }
-      if (createdFigure instanceof CompositeFigure) {
+      if (createdFigure instanceof org.jhotdraw.draw.figures.CompositeFigure) {
         ((CompositeFigure) createdFigure).layout();
       }
       createdFigure = null;

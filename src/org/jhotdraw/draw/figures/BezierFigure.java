@@ -12,8 +12,9 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.figures;
 
+import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.connectors.ChopBezierConnector;
 import org.jhotdraw.draw.connectors.ChopDiamondConnector;
 import org.jhotdraw.draw.connectors.Connector;
@@ -619,7 +620,7 @@ public class BezierFigure extends AttributedFigure {
   /**
    * Removes the Point2D.Double at the specified index.
    */
-  protected void basicRemoveNode(int index) {
+  public void basicRemoveNode(int index) {
     path.remove(index);
   }
 

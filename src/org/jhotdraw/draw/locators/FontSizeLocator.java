@@ -14,8 +14,8 @@
 
 package org.jhotdraw.draw.locators;
 
-import org.jhotdraw.draw.Figure;
-import org.jhotdraw.draw.TextHolder;
+import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.figures.TextHolder;
 
 import java.awt.geom.Point2D;
 

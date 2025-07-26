@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.Figure;
+
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
@@ -65,23 +67,23 @@ public interface DrawingView {
   /**
    * Adds a figure to the current selection.
    */
-  void addToSelection(Figure figure);
+  void addToSelection(org.jhotdraw.draw.figures.Figure figure);
 
   /**
    * Adds a collection of figures to the current selection.
    */
-  void addToSelection(Collection<Figure> figures);
+  void addToSelection(Collection<org.jhotdraw.draw.figures.Figure> figures);
 
   /**
    * Removes a figure from the selection.
    */
-  void removeFromSelection(Figure figure);
+  void removeFromSelection(org.jhotdraw.draw.figures.Figure figure);
 
   /**
    * If a figure isn't selected it is added to the selection.
    * Otherwise ,it is removed from the selection.
    */
-  void toggleSelection(Figure figure);
+  void toggleSelection(org.jhotdraw.draw.figures.Figure figure);
 
   /**
    * Clears the current selection.
@@ -97,7 +99,7 @@ public interface DrawingView {
    * Gets the current selection as a FigureSelection. A FigureSelection
    * can be cut, copied, pasted.
    */
-  Collection<Figure> getSelectedFigures();
+  Collection<org.jhotdraw.draw.figures.Figure> getSelectedFigures();
 
   /**
    * Gets the number of selected figures.
@@ -123,19 +125,19 @@ public interface DrawingView {
    *
    * @return A figure, null if no figure is found.
    */
-  Figure findFigure(Point p);
+  org.jhotdraw.draw.figures.Figure findFigure(Point p);
 
   /**
    * Returns all figures that lie within or intersect the specified
    * bounds. The figures are returned in Z-order from back to front.
    */
-  Collection<Figure> findFigures(Rectangle r);
+  Collection<org.jhotdraw.draw.figures.Figure> findFigures(Rectangle r);
 
   /**
    * Returns all figures that lie within the specified
    * bounds. The figures are returned in Z-order from back to front.
    */
-  Collection<Figure> findFiguresWithin(Rectangle r);
+  Collection<org.jhotdraw.draw.figures.Figure> findFiguresWithin(Rectangle r);
 
   /**
    * Informs the view that it has been added to the specified editor.

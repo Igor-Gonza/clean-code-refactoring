@@ -15,6 +15,7 @@
 package org.jhotdraw.draw.action;
 
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.figures.Figure;
 
 import javax.swing.*;
 import java.awt.*;

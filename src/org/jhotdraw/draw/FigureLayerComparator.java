@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.Figure;
+
 import java.util.*;
 
 /**
@@ -22,7 +24,7 @@ import java.util.*;
  * @author Werner Randelshofer
  * @version 1.0 1. April 2004  Created.
  */
-public class FigureLayerComparator implements Comparator<Figure> {
+public class FigureLayerComparator implements Comparator<org.jhotdraw.draw.figures.Figure> {
   public final static FigureLayerComparator INSTANCE = new FigureLayerComparator();
 
   /**
@@ -31,7 +33,7 @@ public class FigureLayerComparator implements Comparator<Figure> {
   private FigureLayerComparator() {
   }
 
-  public int compare(Figure f1, Figure f2) {
+  public int compare(Figure f1, org.jhotdraw.draw.figures.Figure f2) {
     return f1.getLayer() - f2.getLayer();
   }
 

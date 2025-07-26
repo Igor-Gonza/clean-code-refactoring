@@ -12,8 +12,9 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.figures;
 
+import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.locators.RelativeLocator;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.geom.Geom;
@@ -210,7 +211,7 @@ public class TextFigure extends AttributedFigure implements TextHolder {
     return 8;
   }
 
-  public TextHolder getLabelFor() {
+  public org.jhotdraw.draw.figures.TextHolder getLabelFor() {
     return this;
   }
 

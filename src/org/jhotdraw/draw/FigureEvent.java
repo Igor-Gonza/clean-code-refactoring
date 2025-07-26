@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.Figure;
+
 import java.awt.geom.Rectangle2D;
 import java.util.EventObject;
 
@@ -44,7 +46,7 @@ public class FigureEvent extends EventObject {
   /**
    * Constructs an event for the given source Figure.
    */
-  public FigureEvent(Figure source, AttributeKey attribute, Object oldValue, Object newValue) {
+  public FigureEvent(org.jhotdraw.draw.figures.Figure source, AttributeKey attribute, Object oldValue, Object newValue) {
     super(source);
     this.attribute = attribute;
     this.oldValue = oldValue;
@@ -54,8 +56,8 @@ public class FigureEvent extends EventObject {
   /**
    * Gets the changed figure
    */
-  public Figure getFigure() {
-    return (Figure) getSource();
+  public org.jhotdraw.draw.figures.Figure getFigure() {
+    return (org.jhotdraw.draw.figures.Figure) getSource();
   }
 
   /**

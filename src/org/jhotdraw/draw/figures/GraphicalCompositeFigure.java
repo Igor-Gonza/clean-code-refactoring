@@ -12,8 +12,9 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.figures;
 
+import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.edits.AttributeChangeEdit;
 import org.jhotdraw.draw.layouters.Layouter;
 import org.jhotdraw.geom.Geom;
@@ -42,9 +43,9 @@ import static org.jhotdraw.draw.AttributeKeys.STROKE_PLACEMENT;
  * its graphical presentation to another (graphical) figure which
  * purpose it is to draw the container for all contained figures.
  * <p>
- * The GraphicalCompositeFigure adds to the {@link AbstractCompositeFigure AbstractCompositeFigure}
+ * The GraphicalCompositeFigure adds to the {@link org.jhotdraw.draw.figures.AbstractCompositeFigure AbstractCompositeFigure}
  * by containing a presentation figure by default which can not be removed.  Normally,
- * the {@link AbstractCompositeFigure AbstractCompositeFigure} can not be seen without containing a figure
+ * the {@link org.jhotdraw.draw.figures.AbstractCompositeFigure AbstractCompositeFigure} can not be seen without containing a figure
  * because it has no mechanism to draw itself.  It instead relies on its contained
  * figures to draw themselves thereby giving the {@link AbstractCompositeFigure AbstractCompositeFigure} its
  * appearance.  However, the <b>GraphicalCompositeFigure</b>'s presentation figure
@@ -56,7 +57,7 @@ import static org.jhotdraw.draw.AttributeKeys.STROKE_PLACEMENT;
  * @version 2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 1. December 2003  Derived from JHotDraw 5.4b1.
  */
-public class GraphicalCompositeFigure extends AbstractCompositeFigure {
+public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.AbstractCompositeFigure {
   protected HashMap<AttributeKey, Object> attributes = new HashMap<>();
   private HashSet<AttributeKey> forbiddenAttributes;
 
@@ -66,7 +67,7 @@ public class GraphicalCompositeFigure extends AbstractCompositeFigure {
    * an own presentation but present only the sum of all its
    * children.
    */
-  private Figure presentationFigure;
+  private org.jhotdraw.draw.figures.Figure presentationFigure;
 
   /**
    * Handles figure changes in the children.
@@ -126,7 +127,7 @@ public class GraphicalCompositeFigure extends AbstractCompositeFigure {
    *
    * @param newPresentationFigure figure which renders the container
    */
-  public GraphicalCompositeFigure(Figure newPresentationFigure) {
+  public GraphicalCompositeFigure(org.jhotdraw.draw.figures.Figure newPresentationFigure) {
     super();
     setPresentationFigure(newPresentationFigure);
   }
@@ -252,7 +253,7 @@ public class GraphicalCompositeFigure extends AbstractCompositeFigure {
    *
    * @param newPresentationFigure figure takes over the presentation tasks
    */
-  public void setPresentationFigure(Figure newPresentationFigure) {
+  public void setPresentationFigure(org.jhotdraw.draw.figures.Figure newPresentationFigure) {
     if (this.presentationFigure != null) {
       this.presentationFigure.removeFigureListener(presentationFigureHandler);
       this.presentationFigure.removeUndoableEditListener(presentationFigureHandler);
@@ -278,13 +279,13 @@ public class GraphicalCompositeFigure extends AbstractCompositeFigure {
    *
    * @return figure takes over the presentation tasks
    */
-  public Figure getPresentationFigure() {
+  public org.jhotdraw.draw.figures.Figure getPresentationFigure() {
     return presentationFigure;
   }
 
   public GraphicalCompositeFigure clone() {
     GraphicalCompositeFigure that = (GraphicalCompositeFigure) super.clone();
-    that.presentationFigure = (this.presentationFigure == null) ? null : (Figure) this.presentationFigure.clone();
+    that.presentationFigure = (this.presentationFigure == null) ? null : (org.jhotdraw.draw.figures.Figure) this.presentationFigure.clone();
     if (that.presentationFigure != null) {
       that.presentationFigure.addFigureListener(that.presentationFigureHandler);
       that.presentationFigure.addUndoableEditListener(that.presentationFigureHandler);
@@ -292,7 +293,7 @@ public class GraphicalCompositeFigure extends AbstractCompositeFigure {
     return that;
   }
 
-  public void remap(HashMap<Figure, Figure> oldToNew) {
+  public void remap(HashMap<org.jhotdraw.draw.figures.Figure, org.jhotdraw.draw.figures.Figure> oldToNew) {
     super.remap(oldToNew);
     if (presentationFigure != null) {
       presentationFigure.remap(oldToNew);
@@ -359,14 +360,14 @@ public class GraphicalCompositeFigure extends AbstractCompositeFigure {
   /**
    * Applies all attributes of this figure to that figure.
    */
-  protected void applyAttributesTo(Figure that) {
+  protected void applyAttributesTo(org.jhotdraw.draw.figures.Figure that) {
     for (Map.Entry<AttributeKey, Object> entry : attributes.entrySet()) {
       that.setAttribute(entry.getKey(), entry.getValue());
     }
   }
 
   protected void writeAttributes(DOMOutput out) throws IOException {
-    Figure prototype = (Figure) out.getPrototype();
+    Figure prototype = (org.jhotdraw.draw.figures.Figure) out.getPrototype();
 
     boolean isElementOpen = false;
     for (Map.Entry<AttributeKey, Object> entry : attributes.entrySet()) {

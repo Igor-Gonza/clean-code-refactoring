@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;
 import org.jhotdraw.xml.DOMStorable;
@@ -76,7 +77,7 @@ public class ArrowTip extends AbstractLineDecoration implements DOMStorable {
     return path;
   }
 
-  protected double getDecoratorPathRadius(Figure f) {
+  protected double getDecoratorPathRadius(org.jhotdraw.draw.figures.Figure f) {
     double offset = (isStroked()) ? 0.5 : -0.1;
 
     return innerRadius + offset;

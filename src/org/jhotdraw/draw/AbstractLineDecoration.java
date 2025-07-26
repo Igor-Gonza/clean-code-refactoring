@@ -15,6 +15,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.geom.Geom;
 
 import java.awt.*;
@@ -73,7 +74,7 @@ public abstract class AbstractLineDecoration implements LineDecoration {
    * Draws the arrow tip in the direction specified by the given two
    * Points. (template method)
    */
-  public void draw(Graphics2D g, Figure f, Point2D.Double p1, Point2D.Double p2) {
+  public void draw(Graphics2D g, org.jhotdraw.draw.figures.Figure f, Point2D.Double p1, Point2D.Double p2) {
     GeneralPath path = getTransformedDecoratorPath(f, p1, p2);
     Color color;
     if (isFilled) {
@@ -100,7 +101,7 @@ public abstract class AbstractLineDecoration implements LineDecoration {
   /**
    * Returns the drawing bounds of the decorator.
    */
-  public Rectangle2D.Double getDrawBounds(Figure f, Point2D.Double p1, Point2D.Double p2) {
+  public Rectangle2D.Double getDrawBounds(org.jhotdraw.draw.figures.Figure f, Point2D.Double p1, Point2D.Double p2) {
     GeneralPath path = getTransformedDecoratorPath(f, p1, p2);
     Rectangle2D b = path.getBounds2D();
     Rectangle2D.Double bounds = new Rectangle2D.Double(b.getX(), b.getY(), b.getWidth(), b.getHeight());
@@ -122,7 +123,7 @@ public abstract class AbstractLineDecoration implements LineDecoration {
     return bounds;
   }
 
-  public double getDecorationRadius(Figure f) {
+  public double getDecorationRadius(org.jhotdraw.draw.figures.Figure f) {
     double strokeWidth = STROKE_WIDTH.get(f);
     double scaleFactor;
     if (strokeWidth > 1f) {
@@ -133,7 +134,7 @@ public abstract class AbstractLineDecoration implements LineDecoration {
     return getDecoratorPathRadius(f) * scaleFactor;
   }
 
-  private GeneralPath getTransformedDecoratorPath(Figure f, Point2D.Double p1, Point2D.Double p2) {
+  private GeneralPath getTransformedDecoratorPath(org.jhotdraw.draw.figures.Figure f, Point2D.Double p1, Point2D.Double p2) {
     GeneralPath path = getDecoratorPath(f);
     double strokeWidth = STROKE_WIDTH.get(f);
 
@@ -164,7 +165,7 @@ public abstract class AbstractLineDecoration implements LineDecoration {
   /**
    * Hook method to calculates the path of the decorator.
    */
-  protected abstract GeneralPath getDecoratorPath(Figure f);
+  protected abstract GeneralPath getDecoratorPath(org.jhotdraw.draw.figures.Figure f);
 
   /**
    * Hook method to calculates the radius of the decorator path.

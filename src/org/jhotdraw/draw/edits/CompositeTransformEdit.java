@@ -14,7 +14,7 @@
 
 package org.jhotdraw.draw.edits;
 
-import org.jhotdraw.draw.AbstractFigure;
+import org.jhotdraw.draw.figures.AbstractFigure;
 
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;

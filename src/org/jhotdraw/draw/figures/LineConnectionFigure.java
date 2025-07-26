@@ -12,8 +12,9 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.figures;
 
+import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.xml.DOMInput;
@@ -39,7 +40,7 @@ import java.util.Map;
  * <br>1.0 23. January 2006 Created.
  */
 @SuppressWarnings("unused")
-public class LineConnectionFigure extends LineFigure implements ConnectionFigure {
+public class LineConnectionFigure extends LineFigure implements org.jhotdraw.draw.figures.ConnectionFigure {
   private Connector startConnector;
   private org.jhotdraw.draw.connectors.Connector endConnector;
   private Liner liner;
@@ -167,7 +168,7 @@ public class LineConnectionFigure extends LineFigure implements ConnectionFigure
     lineout();
   }
 
-  public boolean canConnect(Figure start, Figure end) {
+  public boolean canConnect(org.jhotdraw.draw.figures.Figure start, Figure end) {
     return start.canConnect() && end.canConnect();
   }
 
@@ -179,7 +180,7 @@ public class LineConnectionFigure extends LineFigure implements ConnectionFigure
     return endConnector;
   }
 
-  public Figure getEndFigure() {
+  public org.jhotdraw.draw.figures.Figure getEndFigure() {
     return (endConnector == null) ? null : endConnector.getOwner();
   }
 
@@ -187,7 +188,7 @@ public class LineConnectionFigure extends LineFigure implements ConnectionFigure
     return startConnector;
   }
 
-  public Figure getStartFigure() {
+  public org.jhotdraw.draw.figures.Figure getStartFigure() {
     return (startConnector == null) ? null : startConnector.getOwner();
   }
 
@@ -357,14 +358,14 @@ public class LineConnectionFigure extends LineFigure implements ConnectionFigure
    * Handles the disconnection of a connection.
    * Override this method to handle this event.
    */
-  protected void handleDisconnect(Figure start, Figure end) {
+  protected void handleDisconnect(org.jhotdraw.draw.figures.Figure start, org.jhotdraw.draw.figures.Figure end) {
   }
 
   /**
    * Handles the connection of a connection.
    * Override this method to handle this event.
    */
-  protected void handleConnect(Figure start, Figure end) {
+  protected void handleConnect(org.jhotdraw.draw.figures.Figure start, org.jhotdraw.draw.figures.Figure end) {
   }
 
 
@@ -395,14 +396,14 @@ public class LineConnectionFigure extends LineFigure implements ConnectionFigure
   public void remap(Map oldToNew) {
     willChange();
     super.remap(oldToNew);
-    Figure newStartFigure = null;
-    Figure newEndFigure = null;
+    org.jhotdraw.draw.figures.Figure newStartFigure = null;
+    org.jhotdraw.draw.figures.Figure newEndFigure = null;
     if (getStartFigure() != null) {
-      newStartFigure = (Figure) oldToNew.get(getStartFigure());
+      newStartFigure = (org.jhotdraw.draw.figures.Figure) oldToNew.get(getStartFigure());
       if (newStartFigure == null) newStartFigure = getStartFigure();
     }
     if (getEndFigure() != null) {
-      newEndFigure = (Figure) oldToNew.get(getEndFigure());
+      newEndFigure = (org.jhotdraw.draw.figures.Figure) oldToNew.get(getEndFigure());
       if (newEndFigure == null) newEndFigure = getEndFigure();
     }
 
@@ -418,7 +419,7 @@ public class LineConnectionFigure extends LineFigure implements ConnectionFigure
   }
 
 
-  public boolean canConnect(Figure start) {
+  public boolean canConnect(org.jhotdraw.draw.figures.Figure start) {
     return start.canConnect();
   }
 

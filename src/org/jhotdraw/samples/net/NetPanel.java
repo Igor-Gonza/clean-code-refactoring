@@ -17,6 +17,7 @@ package org.jhotdraw.samples.net;
 import org.jhotdraw.app.action.*;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.*;
+import org.jhotdraw.draw.figures.LineConnectionFigure;
 import org.jhotdraw.samples.net.figures.NodeFigure;
 import org.jhotdraw.undo.UndoRedoManager;
 import org.jhotdraw.util.ResourceBundleUtil;

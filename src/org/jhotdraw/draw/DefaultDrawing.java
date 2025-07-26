@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.util.ReversedList;
 
 import javax.swing.event.UndoableEditEvent;
@@ -34,7 +35,7 @@ import java.util.HashSet;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class DefaultDrawing extends AbstractDrawing implements FigureListener, UndoableEditListener {
-  private ArrayList<Figure> figures = new ArrayList<>();
+  private ArrayList<org.jhotdraw.draw.figures.Figure> figures = new ArrayList<>();
   private boolean needsSorting = false;
 
   /**
@@ -43,18 +44,18 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
   public DefaultDrawing() {
   }
 
-  protected int indexOf(Figure figure) {
+  protected int indexOf(org.jhotdraw.draw.figures.Figure figure) {
     return figures.indexOf(figure);
   }
 
-  public void basicAdd(int index, Figure figure) {
+  public void basicAdd(int index, org.jhotdraw.draw.figures.Figure figure) {
     figures.add(index, figure);
     figure.addFigureListener(this);
     figure.addUndoableEditListener(this);
     invalidateSortOrder();
   }
 
-  public void basicRemove(Figure figure) {
+  public void basicRemove(org.jhotdraw.draw.figures.Figure figure) {
     figures.remove(figure);
     figure.removeFigureListener(this);
     figure.removeUndoableEditListener(this);
@@ -65,9 +66,9 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
   public void draw(Graphics2D g) {
     synchronized (getLock()) {
       ensureSorted();
-      ArrayList<Figure> toDraw = new ArrayList<>(figures.size());
+      ArrayList<org.jhotdraw.draw.figures.Figure> toDraw = new ArrayList<>(figures.size());
       Rectangle clipRect = g.getClipBounds();
-      for (Figure f : figures) {
+      for (org.jhotdraw.draw.figures.Figure f : figures) {
         if (f.getDrawBounds().intersects(clipRect)) {
           toDraw.add(f);
         }
@@ -76,24 +77,24 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     }
   }
 
-  public void draw(Graphics2D g, Collection<Figure> figures) {
-    for (Figure f : figures) {
+  public void draw(Graphics2D g, Collection<org.jhotdraw.draw.figures.Figure> figures) {
+    for (org.jhotdraw.draw.figures.Figure f : figures) {
       if (f.isVisible()) {
         f.draw(g);
       }
     }
   }
 
-  public Collection<Figure> sort(Collection<Figure> c) {
-    HashSet<Figure> unsorted = new HashSet<>(c);
-    ArrayList<Figure> sorted = new ArrayList<>(c.size());
-    for (Figure f : figures) {
+  public Collection<org.jhotdraw.draw.figures.Figure> sort(Collection<Figure> c) {
+    HashSet<org.jhotdraw.draw.figures.Figure> unsorted = new HashSet<>(c);
+    ArrayList<org.jhotdraw.draw.figures.Figure> sorted = new ArrayList<>(c.size());
+    for (org.jhotdraw.draw.figures.Figure f : figures) {
       if (unsorted.contains(f)) {
         sorted.add(f);
         unsorted.remove(f);
       }
     }
-    for (Figure f : c) {
+    for (org.jhotdraw.draw.figures.Figure f : c) {
       if (unsorted.contains(f)) {
         sorted.add(f);
         unsorted.remove(f);
@@ -121,8 +122,8 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     remove(e.getFigure());
   }
 
-  public Figure findFigure(Point2D.Double p) {
-    for (Figure f : getFiguresFrontToBack()) {
+  public org.jhotdraw.draw.figures.Figure findFigure(Point2D.Double p) {
+    for (org.jhotdraw.draw.figures.Figure f : getFiguresFrontToBack()) {
       if (f.isVisible() && f.contains(p)) {
         return f;
       }
@@ -130,8 +131,8 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     return null;
   }
 
-  public Figure findFigureExcept(Point2D.Double p, Figure ignore) {
-    for (Figure f : getFiguresFrontToBack()) {
+  public org.jhotdraw.draw.figures.Figure findFigureExcept(Point2D.Double p, org.jhotdraw.draw.figures.Figure ignore) {
+    for (org.jhotdraw.draw.figures.Figure f : getFiguresFrontToBack()) {
       if (f != ignore && f.isVisible() && f.contains(p)) {
         return f;
       }
@@ -139,8 +140,8 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     return null;
   }
 
-  public Figure findFigureExcept(Point2D.Double p, Collection<Figure> ignore) {
-    for (Figure f : getFiguresFrontToBack()) {
+  public org.jhotdraw.draw.figures.Figure findFigureExcept(Point2D.Double p, Collection<org.jhotdraw.draw.figures.Figure> ignore) {
+    for (org.jhotdraw.draw.figures.Figure f : getFiguresFrontToBack()) {
       if (!ignore.contains(f) && f.isVisible() && f.contains(p)) {
         return f;
       }
@@ -148,9 +149,9 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     return null;
   }
 
-  public Collection<Figure> findFigures(Rectangle2D.Double bounds) {
-    ArrayList<Figure> intersection = new ArrayList<>();
-    for (Figure f : figures) {
+  public Collection<org.jhotdraw.draw.figures.Figure> findFigures(Rectangle2D.Double bounds) {
+    ArrayList<org.jhotdraw.draw.figures.Figure> intersection = new ArrayList<>();
+    for (org.jhotdraw.draw.figures.Figure f : figures) {
       if (f.isVisible() && f.getBounds().intersects(bounds)) {
         intersection.add(f);
       }
@@ -158,9 +159,9 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     return intersection;
   }
 
-  public Collection<Figure> findFiguresWithin(Rectangle2D.Double bounds) {
-    ArrayList<Figure> contained = new ArrayList<>();
-    for (Figure f : figures) {
+  public Collection<org.jhotdraw.draw.figures.Figure> findFiguresWithin(Rectangle2D.Double bounds) {
+    ArrayList<org.jhotdraw.draw.figures.Figure> contained = new ArrayList<>();
+    for (org.jhotdraw.draw.figures.Figure f : figures) {
       if (f.isVisible() && bounds.contains(f.getBounds())) {
         contained.add(f);
       }
@@ -168,12 +169,12 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     return contained;
   }
 
-  public Collection<Figure> getFigures() {
+  public Collection<org.jhotdraw.draw.figures.Figure> getFigures() {
     return Collections.unmodifiableCollection(figures);
   }
 
-  public Figure findFigureInside(Point2D.Double p) {
-    Figure f = findFigure(p);
+  public org.jhotdraw.draw.figures.Figure findFigureInside(Point2D.Double p) {
+    org.jhotdraw.draw.figures.Figure f = findFigure(p);
     return (f == null) ? null : f.findFigureInside(p);
   }
 
@@ -181,12 +182,12 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
    * Returns an iterator to iterate in
    * Z-order front to back over the figures.
    */
-  public java.util.List<Figure> getFiguresFrontToBack() {
+  public java.util.List<org.jhotdraw.draw.figures.Figure> getFiguresFrontToBack() {
     ensureSorted();
     return new ReversedList<>(figures);
   }
 
-  public void bringToFront(Figure figure) {
+  public void bringToFront(org.jhotdraw.draw.figures.Figure figure) {
     if (figures.remove(figure)) {
       figures.add(figure);
       invalidateSortOrder();
@@ -194,7 +195,7 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     }
   }
 
-  public void sendToBack(Figure figure) {
+  public void sendToBack(org.jhotdraw.draw.figures.Figure figure) {
     if (figures.remove(figure)) {
       figures.add(0, figure);
       invalidateSortOrder();
@@ -213,7 +214,7 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
   public void figureAttributeChanged(FigureEvent e) {
   }
 
-  public boolean contains(Figure f) {
+  public boolean contains(org.jhotdraw.draw.figures.Figure f) {
     return figures.contains(f);
   }
 

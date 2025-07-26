@@ -17,7 +17,7 @@ package org.jhotdraw.samples.svg.figures;
 import java.awt.geom.*;
 import java.io.IOException;
 
-import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.figures.RoundRectangleFigure;
 import org.jhotdraw.samples.svg.*;
 import org.jhotdraw.xml.*;
 

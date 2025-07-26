@@ -12,8 +12,9 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.figures;
 
+import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.xml.DOMStorable;

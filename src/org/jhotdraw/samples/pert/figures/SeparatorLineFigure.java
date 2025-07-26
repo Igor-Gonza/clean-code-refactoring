@@ -14,7 +14,7 @@
 
 package org.jhotdraw.samples.pert.figures;
 
-import org.jhotdraw.draw.LineFigure;
+import org.jhotdraw.draw.figures.LineFigure;
 import org.jhotdraw.geom.Dimension2DDouble;
 
 import java.awt.geom.Point2D;

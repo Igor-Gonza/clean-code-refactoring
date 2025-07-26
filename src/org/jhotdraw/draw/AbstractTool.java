@@ -15,6 +15,7 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.edits.TransformEdit;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.undo.CompositeEdit;
 
 import java.awt.*;
@@ -173,7 +174,7 @@ public abstract class AbstractTool implements Tool {
         Collection<Figure> figures = getView().getSelectedFigures();
         AffineTransform tx = new AffineTransform();
         tx.translate(-1, 0);
-        for (Figure f : figures) {
+        for (org.jhotdraw.draw.figures.Figure f : figures) {
           f.willChange();
           f.basicTransform(tx);
           f.changed();
@@ -182,10 +183,10 @@ public abstract class AbstractTool implements Tool {
         break;
       }
       case KeyEvent.VK_RIGHT: {
-        Collection<Figure> figures = getView().getSelectedFigures();
+        Collection<org.jhotdraw.draw.figures.Figure> figures = getView().getSelectedFigures();
         AffineTransform tx = new AffineTransform();
         tx.translate(1, 0);
-        for (Figure f : figures) {
+        for (org.jhotdraw.draw.figures.Figure f : figures) {
           f.willChange();
           f.basicTransform(tx);
           f.changed();
@@ -194,10 +195,10 @@ public abstract class AbstractTool implements Tool {
         break;
       }
       case KeyEvent.VK_UP: {
-        Collection<Figure> figures = getView().getSelectedFigures();
+        Collection<org.jhotdraw.draw.figures.Figure> figures = getView().getSelectedFigures();
         AffineTransform tx = new AffineTransform();
         tx.translate(0, -1);
-        for (Figure f : figures) {
+        for (org.jhotdraw.draw.figures.Figure f : figures) {
           f.willChange();
           f.basicTransform(tx);
           f.changed();
@@ -206,11 +207,11 @@ public abstract class AbstractTool implements Tool {
         break;
       }
       case KeyEvent.VK_DOWN: {
-        Collection<Figure> figures = getView().getSelectedFigures();
+        Collection<org.jhotdraw.draw.figures.Figure> figures = getView().getSelectedFigures();
         getDrawing().fireUndoableEditHappened(edit = new CompositeEdit("Figur(en) verschieben"));
         AffineTransform tx = new AffineTransform();
         tx.translate(0, 1);
-        for (Figure f : figures) {
+        for (org.jhotdraw.draw.figures.Figure f : figures) {
           f.willChange();
           f.basicTransform(tx);
           f.changed();
@@ -339,7 +340,7 @@ public abstract class AbstractTool implements Tool {
     if (handle != null) {
       view.setCursor(handle.getCursor());
     } else {
-      Figure figure = view.findFigure(p);
+      org.jhotdraw.draw.figures.Figure figure = view.findFigure(p);
       if (figure != null) {
         view.setCursor(figure.getCursor(view.viewToDrawing(p)));
       } else {

@@ -15,6 +15,9 @@
 package org.jhotdraw.samples.svg.figures;
 
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.figures.AbstractAttributedCompositeFigure;
+import org.jhotdraw.draw.figures.BezierFigure;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.samples.svg.SVGUtil;
 import org.jhotdraw.util.ResourceBundleUtil;
@@ -53,7 +56,7 @@ public class SVGPath extends AbstractAttributedCompositeFigure implements SVGFig
    * Creates a new instance.
    */
   public SVGPath() {
-    add(new BezierFigure());
+    add(new org.jhotdraw.draw.figures.BezierFigure());
     SVGUtil.setDefaults(this);
   }
 
@@ -103,8 +106,8 @@ public class SVGPath extends AbstractAttributedCompositeFigure implements SVGFig
               GeneralPath.WIND_EVEN_ODD :
               GeneralPath.WIND_NON_ZERO
       );
-      for (Figure child : getChildren()) {
-        BezierFigure b = (BezierFigure) child;
+      for (org.jhotdraw.draw.figures.Figure child : getChildren()) {
+        org.jhotdraw.draw.figures.BezierFigure b = (org.jhotdraw.draw.figures.BezierFigure) child;
         path.append(b.getBezierPath(), false);
       }
     }
@@ -123,7 +126,7 @@ public class SVGPath extends AbstractAttributedCompositeFigure implements SVGFig
   protected void writePoints(DOMOutput out) {
     StringBuilder buf = new StringBuilder();
     for (Figure child : getChildren()) {
-      BezierFigure b = (BezierFigure) child;
+      org.jhotdraw.draw.figures.BezierFigure b = (org.jhotdraw.draw.figures.BezierFigure) child;
       buf.append(SVGUtil.toPathData(b.getBezierPath()));
     }
     out.addAttribute("d", buf.toString());
@@ -154,7 +157,7 @@ public class SVGPath extends AbstractAttributedCompositeFigure implements SVGFig
                 Double.parseDouble(tt.nextToken())
         ));
       }
-      BezierFigure child = new BezierFigure();
+      org.jhotdraw.draw.figures.BezierFigure child = new org.jhotdraw.draw.figures.BezierFigure();
       child.basicSetBezierPath(b);
       basicAdd(child);
 
@@ -170,19 +173,19 @@ public class SVGPath extends AbstractAttributedCompositeFigure implements SVGFig
                 Double.parseDouble(tt.nextToken())
         ));
       }
-      BezierFigure child = new BezierFigure();
+      org.jhotdraw.draw.figures.BezierFigure child = new org.jhotdraw.draw.figures.BezierFigure();
       child.basicSetBezierPath(b);
       basicAdd(child);
 
     } else {
       java.util.List<BezierPath> paths = SVGUtil.getPath(in, "d");
       for (BezierPath b : paths) {
-        BezierFigure child = new BezierFigure();
+        org.jhotdraw.draw.figures.BezierFigure child = new org.jhotdraw.draw.figures.BezierFigure();
         child.basicSetBezierPath(b);
         basicAdd(child);
       }
       if (paths.isEmpty()) {
-        BezierFigure child = new BezierFigure();
+        org.jhotdraw.draw.figures.BezierFigure child = new BezierFigure();
         basicAdd(child);
       }
     }
@@ -198,8 +201,8 @@ public class SVGPath extends AbstractAttributedCompositeFigure implements SVGFig
   }
 
   public boolean isEmpty() {
-    for (Figure child : getChildren()) {
-      BezierFigure b = (BezierFigure) child;
+    for (org.jhotdraw.draw.figures.Figure child : getChildren()) {
+      org.jhotdraw.draw.figures.BezierFigure b = (org.jhotdraw.draw.figures.BezierFigure) child;
       if (b.getPointCount() > 0) {
         return false;
       }
@@ -215,7 +218,7 @@ public class SVGPath extends AbstractAttributedCompositeFigure implements SVGFig
       handles.add(new RotateHandle(this));
     } else {
       handles = new LinkedList<>();
-      for (Figure child : getChildren()) {
+      for (org.jhotdraw.draw.figures.Figure child : getChildren()) {
         handles.addAll(child.createHandles(detailLevel));
       }
     }
@@ -228,16 +231,16 @@ public class SVGPath extends AbstractAttributedCompositeFigure implements SVGFig
     LinkedList<Action> actions = new LinkedList<>();
     actions.add(new AbstractAction(labels.getString("closePath")) {
       public void actionPerformed(ActionEvent evt) {
-        for (Figure child : getChildren()) {
-          BezierFigure b = (BezierFigure) child;
+        for (org.jhotdraw.draw.figures.Figure child : getChildren()) {
+          org.jhotdraw.draw.figures.BezierFigure b = (org.jhotdraw.draw.figures.BezierFigure) child;
           b.setClosed(true);
         }
       }
     });
     actions.add(new AbstractAction(labels.getString("openPath")) {
       public void actionPerformed(ActionEvent evt) {
-        for (Figure child : getChildren()) {
-          BezierFigure b = (BezierFigure) child;
+        for (org.jhotdraw.draw.figures.Figure child : getChildren()) {
+          org.jhotdraw.draw.figures.BezierFigure b = (org.jhotdraw.draw.figures.BezierFigure) child;
           b.setClosed(false);
         }
       }

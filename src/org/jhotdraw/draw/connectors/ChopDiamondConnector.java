@@ -18,8 +18,8 @@ import java.awt.geom.*;
 
 import static org.jhotdraw.draw.AttributeKeys.*;
 
-import org.jhotdraw.draw.DiamondFigure;
-import org.jhotdraw.draw.Figure;
+import org.jhotdraw.draw.figures.DiamondFigure;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.geom.*;
 
 /**

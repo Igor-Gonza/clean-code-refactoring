@@ -12,8 +12,10 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.figures;
 
+import org.jhotdraw.draw.AttributeKey;
+import org.jhotdraw.draw.AttributeKeys;
 import org.jhotdraw.draw.connectors.ChopDiamondConnector;
 import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.geom.Geom;

@@ -16,6 +16,8 @@ package org.jhotdraw.samples.pert;
 
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.connectors.ChopBoxConnector;
+import org.jhotdraw.draw.figures.ListFigure;
+import org.jhotdraw.draw.figures.TextFigure;
 import org.jhotdraw.samples.pert.figures.DependencyFigure;
 import org.jhotdraw.samples.pert.figures.SeparatorLineFigure;
 import org.jhotdraw.samples.pert.figures.TaskFigure;
@@ -34,8 +36,8 @@ public class PertFactory extends DefaultDOMFactory {
           {DependencyFigure.class, "dep"},
           {ListFigure.class, "list"},
           {TextFigure.class, "text"},
-          {GroupFigure.class, "g"},
-          {TextAreaFigure.class, "ta"},
+          {org.jhotdraw.draw.figures.GroupFigure.class, "g"},
+          {org.jhotdraw.draw.figures.TextAreaFigure.class, "ta"},
           {SeparatorLineFigure.class, "separator"},
 
           {ChopBoxConnector.class, "rectConnector"},

@@ -14,7 +14,7 @@
 
 package org.jhotdraw.draw.connectors;
 
-import org.jhotdraw.draw.Figure;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.geom.Geom;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;

@@ -15,6 +15,8 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.connectors.Connector;
+import org.jhotdraw.draw.figures.ConnectionFigure;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.undo.CompositeEdit;
 
 import java.awt.*;
@@ -45,11 +47,11 @@ public class BidirectionalConnectionTool extends AbstractTool implements FigureL
   private org.jhotdraw.draw.connectors.Connector endConnector;
   private org.jhotdraw.draw.connectors.Connector targetConnector;
 
-  private Figure target;
+  private org.jhotdraw.draw.figures.Figure target;
   /**
    * the currently created figure
    */
-  private ConnectionFigure connection;
+  private org.jhotdraw.draw.figures.ConnectionFigure connection;
 
   /**
    * the currently manipulated connection point
@@ -64,23 +66,23 @@ public class BidirectionalConnectionTool extends AbstractTool implements FigureL
    * the figure that was actually added
    * Note, this can be a different figure from the one which has been created.
    */
-  private Figure createdFigure;
+  private org.jhotdraw.draw.figures.Figure createdFigure;
 
   /**
    * the prototypical figure that is used to create new
    * connections.
    */
-  private ConnectionFigure prototype;
+  private org.jhotdraw.draw.figures.ConnectionFigure prototype;
 
 
   /**
    * Creates a new instance.
    */
-  public BidirectionalConnectionTool(ConnectionFigure prototype) {
+  public BidirectionalConnectionTool(org.jhotdraw.draw.figures.ConnectionFigure prototype) {
     this.prototype = prototype;
   }
 
-  public BidirectionalConnectionTool(ConnectionFigure prototype, Map<AttributeKey, Object> attributes) {
+  public BidirectionalConnectionTool(org.jhotdraw.draw.figures.ConnectionFigure prototype, Map<AttributeKey, Object> attributes) {
     this.prototype = prototype;
     this.attributes = attributes;
   }
@@ -104,7 +106,7 @@ public class BidirectionalConnectionTool extends AbstractTool implements FigureL
       if (getStartConnector() != null && prototype.canConnect(getTargetFigure())) {
         Point2D.Double p = getStartConnector().getAnchor();
         setConnection(createFigure());
-        ConnectionFigure cf = getConnection();
+        org.jhotdraw.draw.figures.ConnectionFigure cf = getConnection();
         cf.basicSetBounds(p, p);
         cf.addFigureListener(this);
         setCreatedFigure(cf);
@@ -134,7 +136,7 @@ public class BidirectionalConnectionTool extends AbstractTool implements FigureL
    * figure.
    */
   public void mouseReleased(MouseEvent e) {
-    Figure c = null;
+    org.jhotdraw.draw.figures.Figure c = null;
     Point2D.Double p = viewToDrawing(new Point(e.getX(), e.getY()));
     if (getStartConnector() != null) {
       c = findTarget(p, getDrawing());
@@ -185,8 +187,8 @@ public class BidirectionalConnectionTool extends AbstractTool implements FigureL
    * Creates the ConnectionFigure. By default, the figure prototype is
    * cloned.
    */
-  protected ConnectionFigure createFigure() {
-    ConnectionFigure f = (ConnectionFigure) prototype.clone();
+  protected org.jhotdraw.draw.figures.ConnectionFigure createFigure() {
+    org.jhotdraw.draw.figures.ConnectionFigure f = (org.jhotdraw.draw.figures.ConnectionFigure) prototype.clone();
     getEditor().applyDefaultAttributesTo(f);
     if (attributes != null) {
       for (Map.Entry<AttributeKey, Object> entry : attributes.entrySet()) {
@@ -199,16 +201,16 @@ public class BidirectionalConnectionTool extends AbstractTool implements FigureL
   /**
    * Finds a connectable figure target.
    */
-  protected Figure findSource(Point2D.Double p, Drawing drawing) {
+  protected org.jhotdraw.draw.figures.Figure findSource(Point2D.Double p, Drawing drawing) {
     return findConnectableFigure(p, drawing);
   }
 
   /**
    * Finds a connectable figure target.
    */
-  protected Figure findTarget(Point2D.Double p, Drawing drawing) {
-    Figure target = findConnectableFigure(p, drawing);
-    Figure start = getStartConnector().getOwner();
+  protected org.jhotdraw.draw.figures.Figure findTarget(Point2D.Double p, Drawing drawing) {
+    org.jhotdraw.draw.figures.Figure target = findConnectableFigure(p, drawing);
+    org.jhotdraw.draw.figures.Figure start = getStartConnector().getOwner();
 
     if (target != null && getConnection() != null && target.canConnect() && (getConnection().canConnect(start, target) || getConnection().canConnect(target, start))) {
       return target;
@@ -219,24 +221,24 @@ public class BidirectionalConnectionTool extends AbstractTool implements FigureL
   /**
    * Finds an existing connection figure.
    */
-  protected ConnectionFigure findConnection(Point2D.Double p, Drawing drawing) {
-    for (Figure f : drawing.getFiguresFrontToBack()) {
-      Figure fInside = f.findFigureInside(p);
-      if ((fInside instanceof ConnectionFigure)) {
-        return (ConnectionFigure) fInside;
+  protected org.jhotdraw.draw.figures.ConnectionFigure findConnection(Point2D.Double p, Drawing drawing) {
+    for (org.jhotdraw.draw.figures.Figure f : drawing.getFiguresFrontToBack()) {
+      org.jhotdraw.draw.figures.Figure fInside = f.findFigureInside(p);
+      if ((fInside instanceof org.jhotdraw.draw.figures.ConnectionFigure)) {
+        return (org.jhotdraw.draw.figures.ConnectionFigure) fInside;
       }
     }
     return null;
   }
 
-  private void setConnection(ConnectionFigure newConnection) {
+  private void setConnection(org.jhotdraw.draw.figures.ConnectionFigure newConnection) {
     connection = newConnection;
   }
 
   /**
    * Gets the connection which is created by this tool
    */
-  protected ConnectionFigure getConnection() {
+  protected org.jhotdraw.draw.figures.ConnectionFigure getConnection() {
     return connection;
   }
 
@@ -285,22 +287,22 @@ public class BidirectionalConnectionTool extends AbstractTool implements FigureL
     }
   }
 
-  private org.jhotdraw.draw.connectors.Connector findConnector(Point2D.Double p, Figure target, ConnectionFigure f) {
+  private org.jhotdraw.draw.connectors.Connector findConnector(Point2D.Double p, org.jhotdraw.draw.figures.Figure target, org.jhotdraw.draw.figures.ConnectionFigure f) {
     return target.findConnector(p, f);
   }
 
   /**
    * Finds a connection start figure.
    */
-  protected Figure findConnectionStart(Point2D.Double p, Drawing drawing) {
-    Figure target = findConnectableFigure(p, drawing);
+  protected org.jhotdraw.draw.figures.Figure findConnectionStart(Point2D.Double p, Drawing drawing) {
+    org.jhotdraw.draw.figures.Figure target = findConnectableFigure(p, drawing);
     if ((target != null) && target.canConnect()) {
       return target;
     }
     return null;
   }
 
-  private Figure findConnectableFigure(Point2D.Double p, Drawing drawing) {
+  private org.jhotdraw.draw.figures.Figure findConnectableFigure(Point2D.Double p, Drawing drawing) {
     return drawing.findFigureExcept(p, createdFigure);
   }
 
@@ -328,11 +330,11 @@ public class BidirectionalConnectionTool extends AbstractTool implements FigureL
     return targetConnector;
   }
 
-  private void setTargetFigure(Figure newTarget) {
+  private void setTargetFigure(org.jhotdraw.draw.figures.Figure newTarget) {
     target = newTarget;
   }
 
-  protected Figure getTargetFigure() {
+  protected org.jhotdraw.draw.figures.Figure getTargetFigure() {
     return target;
   }
 
@@ -340,11 +342,11 @@ public class BidirectionalConnectionTool extends AbstractTool implements FigureL
    * Gets the figure that was actually added
    * Note, this can be a different figure from the one which has been created.
    */
-  protected Figure getCreatedFigure() {
+  protected org.jhotdraw.draw.figures.Figure getCreatedFigure() {
     return createdFigure;
   }
 
-  private void setCreatedFigure(Figure newCreatedFigure) {
+  private void setCreatedFigure(org.jhotdraw.draw.figures.Figure newCreatedFigure) {
     createdFigure = newCreatedFigure;
   }
 

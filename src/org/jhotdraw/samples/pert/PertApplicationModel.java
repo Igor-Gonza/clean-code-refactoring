@@ -23,6 +23,7 @@ import org.jhotdraw.app.action.ProjectPropertyAction;
 import org.jhotdraw.app.action.ToggleProjectPropertyAction;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.ToolBarButtonFactory;
+import org.jhotdraw.draw.figures.TextAreaFigure;
 import org.jhotdraw.samples.pert.figures.DependencyFigure;
 import org.jhotdraw.samples.pert.figures.TaskFigure;
 import org.jhotdraw.util.ResourceBundleUtil;

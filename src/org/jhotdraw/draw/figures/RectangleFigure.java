@@ -13,8 +13,9 @@
  */
 
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.figures;
 
+import org.jhotdraw.draw.AttributeKeys;
 import org.jhotdraw.geom.Geom;
 
 import java.awt.*;

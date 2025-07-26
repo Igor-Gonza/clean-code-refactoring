@@ -17,7 +17,7 @@ package org.jhotdraw.samples.svg.figures;
 import java.awt.*;
 import java.awt.geom.*;
 
-import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.figures.AttributedFigure;
 import org.jhotdraw.samples.svg.*;
 
 /**

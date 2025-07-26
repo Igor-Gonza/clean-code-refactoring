@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.BezierFigure;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.geom.Bezier;
 import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.geom.Geom;
@@ -41,7 +43,7 @@ public class BezierTool extends AbstractTool {
   /**
    * The created figure.
    */
-  protected BezierFigure createdFigure;
+  protected org.jhotdraw.draw.figures.BezierFigure createdFigure;
 
   private CompositeEdit creationEdit;
 
@@ -50,14 +52,14 @@ public class BezierTool extends AbstractTool {
   /**
    * Creates a new instance.
    */
-  public BezierTool(BezierFigure prototype) {
+  public BezierTool(org.jhotdraw.draw.figures.BezierFigure prototype) {
     this(prototype, null);
   }
 
   /**
    * Creates a new instance.
    */
-  public BezierTool(BezierFigure prototype, Map attributes) {
+  public BezierTool(org.jhotdraw.draw.figures.BezierFigure prototype, Map attributes) {
     this.prototype = prototype;
     this.attributes = attributes;
   }
@@ -109,8 +111,8 @@ public class BezierTool extends AbstractTool {
     }
   }
 
-  protected BezierFigure createFigure() {
-    BezierFigure f = prototype.clone();
+  protected org.jhotdraw.draw.figures.BezierFigure createFigure() {
+    org.jhotdraw.draw.figures.BezierFigure f = prototype.clone();
     getEditor().applyDefaultAttributesTo(f);
     if (attributes != null) {
       for (Map.Entry<AttributeKey, Object> entry : attributes.entrySet()) {
@@ -124,7 +126,7 @@ public class BezierTool extends AbstractTool {
     return createdFigure;
   }
 
-  protected Figure getAddedFigure() {
+  protected org.jhotdraw.draw.figures.Figure getAddedFigure() {
     return createdFigure;
   }
 
@@ -214,7 +216,7 @@ public class BezierTool extends AbstractTool {
 
   }
 
-  protected void finishCreation(BezierFigure createdFigure) {
+  protected void finishCreation(org.jhotdraw.draw.figures.BezierFigure createdFigure) {
     getView().addToSelection(createdFigure);
   }
 

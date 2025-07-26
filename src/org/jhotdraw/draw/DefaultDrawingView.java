@@ -15,6 +15,7 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.app.EditableComponent;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.gui.datatransfer.CompositeTransferable;
 import org.jhotdraw.undo.CompositeEdit;
@@ -52,8 +53,8 @@ import java.util.*;
  */
 public class DefaultDrawingView extends JComponent implements DrawingView, DrawingListener, HandleListener, EditableComponent {
   private Drawing drawing;
-  private Set<Figure> dirtyFigures = new HashSet<>();
-  private Set<Figure> selectedFigures = new HashSet<>();
+  private Set<org.jhotdraw.draw.figures.Figure> dirtyFigures = new HashSet<>();
+  private Set<org.jhotdraw.draw.figures.Figure> selectedFigures = new HashSet<>();
   private int rainbow = 0;
   private LinkedList<Handle> selectionHandles = new LinkedList<>();
 
@@ -279,7 +280,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
   /**
    * Adds a figure to the current selection.
    */
-  public void addToSelection(Figure figure) {
+  public void addToSelection(org.jhotdraw.draw.figures.Figure figure) {
     selectedFigures.add(figure);
     invalidateHandles();
     fireSelectionChanged();
@@ -289,7 +290,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
   /**
    * Adds a collection of figures to the current selection.
    */
-  public void addToSelection(Collection<Figure> figures) {
+  public void addToSelection(Collection<org.jhotdraw.draw.figures.Figure> figures) {
     selectedFigures.addAll(figures);
     invalidateHandles();
     fireSelectionChanged();
@@ -299,7 +300,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
   /**
    * Removes a figure from the selection.
    */
-  public void removeFromSelection(Figure figure) {
+  public void removeFromSelection(org.jhotdraw.draw.figures.Figure figure) {
     if (selectedFigures.remove(figure)) {
       invalidateHandles();
       fireSelectionChanged();
@@ -311,7 +312,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
    * If a figure isn't selected it is added to the selection.
    * Otherwise, it is removed from the selection.
    */
-  public void toggleSelection(Figure figure) {
+  public void toggleSelection(org.jhotdraw.draw.figures.Figure figure) {
     if (selectedFigures.contains(figure)) {
       selectedFigures.remove(figure);
     } else {
@@ -348,7 +349,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
   /**
    * Test whether a given figure is selected.
    */
-  public boolean isFigureSelected(Figure checkFigure) {
+  public boolean isFigureSelected(org.jhotdraw.draw.figures.Figure checkFigure) {
     return selectedFigures.contains(checkFigure);
   }
 
@@ -356,7 +357,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
    * Gets the current selection as a FigureSelection. A FigureSelection
    * can be cut, copied, pasted.
    */
-  public Collection<Figure> getSelectedFigures() {
+  public Collection<org.jhotdraw.draw.figures.Figure> getSelectedFigures() {
     return Collections.unmodifiableSet(selectedFigures);
   }
 
@@ -432,7 +433,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
       Rectangle invalidatedArea = null;
       int level = detailLevel;
       do {
-        for (Figure figure : getSelectedFigures()) {
+        for (org.jhotdraw.draw.figures.Figure figure : getSelectedFigures()) {
           for (Handle handle : figure.createHandles(level)) {
             handle.setView(this);
             selectionHandles.add(handle);
@@ -483,7 +484,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
   public Collection<Handle> getCompatibleHandles(Handle master) {
     validateHandles();
 
-    HashSet<Figure> owners = new HashSet<>();
+    HashSet<org.jhotdraw.draw.figures.Figure> owners = new HashSet<>();
     LinkedList<Handle> compatibleHandles = new LinkedList<>();
     owners.add(master.getOwner());
     compatibleHandles.add(master);
@@ -503,15 +504,15 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
    *
    * @return A figure, null if no figure is found.
    */
-  public Figure findFigure(Point p) {
+  public org.jhotdraw.draw.figures.Figure findFigure(Point p) {
     return getDrawing().findFigure(viewToDrawing(p));
   }
 
-  public Collection<Figure> findFigures(Rectangle r) {
+  public Collection<org.jhotdraw.draw.figures.Figure> findFigures(Rectangle r) {
     return getDrawing().findFigures(viewToDrawing(r));
   }
 
-  public Collection<Figure> findFiguresWithin(Rectangle r) {
+  public Collection<org.jhotdraw.draw.figures.Figure> findFiguresWithin(Rectangle r) {
     return getDrawing().findFiguresWithin(viewToDrawing(r));
   }
 
@@ -579,7 +580,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
       if (drawing != null) {
         translate.x = 0;
         translate.y = 0;
-        for (Figure f : drawing.getFigures()) {
+        for (org.jhotdraw.draw.figures.Figure f : drawing.getFigures()) {
           Rectangle2D.Double r = f.getDrawBounds();
           d.width = Math.max(d.width, r.x + r.width);
           d.height = Math.max(d.height, r.y + r.height);
@@ -693,7 +694,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
       return;
     }
 
-    HashSet<Figure> toBeCopied = new HashSet<>(getSelectedFigures());
+    HashSet<org.jhotdraw.draw.figures.Figure> toBeCopied = new HashSet<>(getSelectedFigures());
     if (toBeCopied.isEmpty()) return;
 
 
@@ -701,7 +702,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
     try {
       NanoXMLLiteDOMOutput domo = new NanoXMLLiteDOMOutput(domFactory);
       domo.openElement("DrawingClip");
-      for (Figure f : getDrawing().getFigures()) {
+      for (org.jhotdraw.draw.figures.Figure f : getDrawing().getFigures()) {
         if (toBeCopied.contains(f)) {
           domo.writeObject(f);
         }
@@ -729,7 +730,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
   }
 
   public void delete() {
-    ArrayList<Figure> toBeDeleted = new ArrayList<>(getSelectedFigures());
+    ArrayList<org.jhotdraw.draw.figures.Figure> toBeDeleted = new ArrayList<>(getSelectedFigures());
     clearSelection();
     getDrawing().removeAll(toBeDeleted);
   }
@@ -740,13 +741,13 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
       return;
     }
     try {
-      ArrayList<Figure> toBeSelected = new ArrayList<>();
+      ArrayList<org.jhotdraw.draw.figures.Figure> toBeSelected = new ArrayList<>();
       DataFlavor flavor = new DataFlavor("application/x-drawing-clip", "Drawing Clip");
       Transferable transfer = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(this);
       if (transfer.isDataFlavorSupported(flavor)) {
         CompositeEdit ce = new CompositeEdit("Paste");
         getDrawing().fireUndoableEditHappened(ce);
-        for (Figure f : new LinkedList<>(getSelectedFigures())) {
+        for (org.jhotdraw.draw.figures.Figure f : new LinkedList<>(getSelectedFigures())) {
           getDrawing().remove(f);
         }
 
@@ -754,7 +755,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
           NanoXMLLiteDOMInput domi = new NanoXMLLiteDOMInput(domFactory, in);
           domi.openElement("DrawingClip");
           for (int i = 0, n = domi.getElementCount(); i < n; i++) {
-            Figure f = (Figure) domi.readObject(i);
+            Figure f = (org.jhotdraw.draw.figures.Figure) domi.readObject(i);
             getDrawing().add(f);
             toBeSelected.add(f);
           }
@@ -772,22 +773,22 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
   }
 
   public void duplicate() {
-    Collection<Figure> sorted = getDrawing().sort(getSelectedFigures());
-    HashMap<Figure, Figure> originalToDuplicateMap = new HashMap<>(sorted.size());
+    Collection<org.jhotdraw.draw.figures.Figure> sorted = getDrawing().sort(getSelectedFigures());
+    HashMap<org.jhotdraw.draw.figures.Figure, org.jhotdraw.draw.figures.Figure> originalToDuplicateMap = new HashMap<>(sorted.size());
 
     clearSelection();
     Drawing drawing = getDrawing();
-    ArrayList<Figure> duplicates = new ArrayList<>(sorted.size());
+    ArrayList<org.jhotdraw.draw.figures.Figure> duplicates = new ArrayList<>(sorted.size());
     AffineTransform tx = new AffineTransform();
     tx.translate(5, 5);
-    for (Figure f : sorted) {
-      Figure d = (Figure) f.clone();
+    for (org.jhotdraw.draw.figures.Figure f : sorted) {
+      org.jhotdraw.draw.figures.Figure d = (org.jhotdraw.draw.figures.Figure) f.clone();
       d.basicTransform(tx);
       duplicates.add(d);
       originalToDuplicateMap.put(f, d);
       drawing.add(d);
     }
-    for (Figure f : duplicates) {
+    for (org.jhotdraw.draw.figures.Figure f : duplicates) {
       f.remap(originalToDuplicateMap);
     }
     addToSelection(duplicates);

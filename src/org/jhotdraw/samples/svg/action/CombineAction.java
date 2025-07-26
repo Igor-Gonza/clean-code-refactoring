@@ -16,6 +16,8 @@ package org.jhotdraw.samples.svg.action;
 
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.GroupAction;
+import org.jhotdraw.draw.figures.CompositeFigure;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.samples.svg.figures.SVGPath;
 import org.jhotdraw.util.ResourceBundleUtil;
 
@@ -50,7 +52,7 @@ public class CombineAction extends GroupAction {
   protected boolean canGroup() {
     boolean canCombine = getView().getSelectionCount() > 1;
     if (canCombine) {
-      for (Figure f : getView().getSelectedFigures()) {
+      for (org.jhotdraw.draw.figures.Figure f : getView().getSelectedFigures()) {
         if (!(f instanceof SVGPath)) {
           canCombine = false;
           break;
@@ -60,12 +62,12 @@ public class CombineAction extends GroupAction {
     return canCombine;
   }
 
-  public Collection<Figure> ungroupFigures(DrawingView view, CompositeFigure group) {
-    LinkedList<Figure> figures = new LinkedList<>(group.getChildren());
+  public Collection<Figure> ungroupFigures(DrawingView view, org.jhotdraw.draw.figures.CompositeFigure group) {
+    LinkedList<org.jhotdraw.draw.figures.Figure> figures = new LinkedList<>(group.getChildren());
     view.clearSelection();
     group.basicRemoveAllChildren();
-    LinkedList<Figure> paths = new LinkedList<>();
-    for (Figure f : figures) {
+    LinkedList<org.jhotdraw.draw.figures.Figure> paths = new LinkedList<>();
+    for (org.jhotdraw.draw.figures.Figure f : figures) {
       SVGPath path = new SVGPath();
       path.removeAllChildren();
       for (Map.Entry<AttributeKey, Object> entry : group.getAttributes().entrySet()) {
@@ -80,8 +82,8 @@ public class CombineAction extends GroupAction {
     return figures;
   }
 
-  public void groupFigures(DrawingView view, CompositeFigure group, Collection<Figure> figures) {
-    Collection<Figure> sorted = view.getDrawing().sort(figures);
+  public void groupFigures(DrawingView view, CompositeFigure group, Collection<org.jhotdraw.draw.figures.Figure> figures) {
+    Collection<org.jhotdraw.draw.figures.Figure> sorted = view.getDrawing().sort(figures);
     view.getDrawing().basicRemoveAll(figures);
     view.clearSelection();
     view.getDrawing().add(group);
@@ -90,9 +92,9 @@ public class CombineAction extends GroupAction {
     for (Map.Entry<AttributeKey, Object> entry : figures.iterator().next().getAttributes().entrySet()) {
       group.basicSetAttribute(entry.getKey(), entry.getValue());
     }
-    for (Figure f : sorted) {
+    for (org.jhotdraw.draw.figures.Figure f : sorted) {
       SVGPath path = (SVGPath) f;
-      for (Figure child : path.getChildren()) {
+      for (org.jhotdraw.draw.figures.Figure child : path.getChildren()) {
         group.basicAdd(child);
       }
     }

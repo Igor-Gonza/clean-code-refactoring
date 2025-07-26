@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.Figure;
+
 import java.lang.reflect.*;
 
 /**
@@ -57,7 +59,7 @@ public class AttributeKey<T> {
     return defaultValue;
   }
 
-  public T get(Figure f) {
+  public T get(org.jhotdraw.draw.figures.Figure f) {
     // FIXME Whataheck is even this????
     T value = (T) f.getAttribute(this);
     return (value == null && !isNullValueAllowed) ? defaultValue : value;
@@ -70,7 +72,7 @@ public class AttributeKey<T> {
     f.setAttribute(this, value);
   }
 
-  public void basicSet(Figure f, T value) {
+  public void basicSet(org.jhotdraw.draw.figures.Figure f, T value) {
     if (value == null && !isNullValueAllowed) {
       throw new NullPointerException("Null value not allowed for AttributeKey " + key);
     }

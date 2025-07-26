@@ -12,8 +12,12 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.figures;
 
+import org.jhotdraw.draw.AttributeKey;
+import org.jhotdraw.draw.Drawing;
+import org.jhotdraw.draw.FigureEvent;
+import org.jhotdraw.draw.FigureListener;
 import org.jhotdraw.draw.layouters.Layouter;
 import org.jhotdraw.util.ReversedList;
 
@@ -38,7 +42,7 @@ import java.util.LinkedList;
 public class LabeledLineConnectionFigure extends LineConnectionFigure implements CompositeFigure {
 
   private org.jhotdraw.draw.layouters.Layouter layouter;
-  private ArrayList<Figure> children = new ArrayList<>();
+  private ArrayList<org.jhotdraw.draw.figures.Figure> children = new ArrayList<>();
   //private Rectangle2D.Double bounds;
   private Rectangle2D.Double drawBounds;
 
@@ -98,7 +102,7 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure implements
    */
   public void drawFigure(Graphics2D g) {
     super.drawFigure(g);
-    for (Figure child : children) {
+    for (org.jhotdraw.draw.figures.Figure child : children) {
       if (child.isVisible()) {
         child.draw(g);
       }
@@ -141,7 +145,7 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure implements
   public Rectangle2D.Double getFigureDrawBounds() {
     if (drawBounds == null) {
       drawBounds = super.getFigureDrawBounds();
-      for (Figure child : getChildrenFrontToBack()) {
+      for (org.jhotdraw.draw.figures.Figure child : getChildrenFrontToBack()) {
         if (child.isVisible()) {
           Rectangle2D.Double childBounds = child.getDrawBounds();
           if (!childBounds.isEmpty()) {
@@ -155,7 +159,7 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure implements
 
   public boolean contains(Point2D.Double p) {
     if (getDrawBounds().contains(p)) {
-      for (Figure child : getChildrenFrontToBack()) {
+      for (org.jhotdraw.draw.figures.Figure child : getChildrenFrontToBack()) {
         if (child.isVisible() && child.contains(p)) return true;
       }
       return super.contains(p);
@@ -179,7 +183,7 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure implements
     super.setAttribute(key, newValue);
     if (isAttributeEnabled(key)) {
       if (children != null) {
-        for (Figure child : children) {
+        for (org.jhotdraw.draw.figures.Figure child : children) {
           child.setAttribute(key, newValue);
         }
       }
@@ -188,10 +192,10 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure implements
   }
 
   // EDITING
-  public Figure findFigureInside(Point2D.Double p) {
+  public org.jhotdraw.draw.figures.Figure findFigureInside(Point2D.Double p) {
     if (getDrawBounds().contains(p)) {
-      Figure found;
-      for (Figure child : getChildrenFrontToBack()) {
+      org.jhotdraw.draw.figures.Figure found;
+      for (org.jhotdraw.draw.figures.Figure child : getChildrenFrontToBack()) {
         if (child.isVisible()) {
           found = child.findFigureInside(p);
           if (found != null) {
@@ -210,7 +214,7 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure implements
   }
 
   // COMPOSITE FIGURES
-  public java.util.List<Figure> getChildren() {
+  public java.util.List<org.jhotdraw.draw.figures.Figure> getChildren() {
     return Collections.unmodifiableList(children);
   }
 
@@ -218,11 +222,11 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure implements
     return children.size();
   }
 
-  public Figure getChild(int index) {
+  public org.jhotdraw.draw.figures.Figure getChild(int index) {
     return children.get(index);
   }
 
-  public void set(int index, Figure child) {
+  public void set(int index, org.jhotdraw.draw.figures.Figure child) {
     children.set(index, child);
   }
 
@@ -230,36 +234,36 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure implements
    * Returns an iterator to iterate in
    * Z-order front to back over the children.
    */
-  public java.util.List<Figure> getChildrenFrontToBack() {
+  public java.util.List<org.jhotdraw.draw.figures.Figure> getChildrenFrontToBack() {
     return children == null ? new LinkedList<>() : new ReversedList<>(children);
   }
 
-  public void add(Figure figure) {
+  public void add(org.jhotdraw.draw.figures.Figure figure) {
     basicAdd(figure);
     if (getDrawing() != null) {
       figure.addNotify(getDrawing());
     }
   }
 
-  public void add(int index, Figure figure) {
+  public void add(int index, org.jhotdraw.draw.figures.Figure figure) {
     basicAdd(index, figure);
     if (getDrawing() != null) {
       figure.addNotify(getDrawing());
     }
   }
 
-  public void basicAdd(Figure figure) {
+  public void basicAdd(org.jhotdraw.draw.figures.Figure figure) {
     basicAdd(children.size(), figure);
   }
 
-  public void basicAdd(int index, Figure figure) {
+  public void basicAdd(int index, org.jhotdraw.draw.figures.Figure figure) {
     children.add(index, figure);
     figure.addFigureListener(childHandler);
     figure.addUndoableEditListener(childHandler);
     invalidate();
   }
 
-  public boolean remove(final Figure figure) {
+  public boolean remove(final org.jhotdraw.draw.figures.Figure figure) {
     int index = children.indexOf(figure);
     if (index == -1) {
       return false;
@@ -274,9 +278,9 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure implements
     }
   }
 
-  public Figure removeChild(int index) {
+  public org.jhotdraw.draw.figures.Figure removeChild(int index) {
     willChange();
-    Figure figure = basicRemoveChild(index);
+    org.jhotdraw.draw.figures.Figure figure = basicRemoveChild(index);
     if (getDrawing() != null) {
       figure.removeNotify(getDrawing());
     }
@@ -284,7 +288,7 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure implements
     return figure;
   }
 
-  public boolean basicRemove(final Figure figure) {
+  public boolean basicRemove(final org.jhotdraw.draw.figures.Figure figure) {
     int index = children.indexOf(figure);
     if (index == -1) {
       return false;
@@ -294,8 +298,8 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure implements
     }
   }
 
-  public Figure basicRemoveChild(int index) {
-    Figure figure = children.remove(index);
+  public org.jhotdraw.draw.figures.Figure basicRemoveChild(int index) {
+    org.jhotdraw.draw.figures.Figure figure = children.remove(index);
     figure.removeFigureListener(childHandler);
     figure.removeUndoableEditListener(childHandler);
 
@@ -305,7 +309,7 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure implements
   public void removeAllChildren() {
     willChange();
     while (!children.isEmpty()) {
-      Figure figure = basicRemoveChild(children.size() - 1);
+      org.jhotdraw.draw.figures.Figure figure = basicRemoveChild(children.size() - 1);
       if (getDrawing() != null) {
         figure.removeNotify(getDrawing());
       }
@@ -364,14 +368,14 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure implements
   }
 
   public void addNotify(Drawing drawing) {
-    for (Figure child : new LinkedList<>(children)) {
+    for (org.jhotdraw.draw.figures.Figure child : new LinkedList<>(children)) {
       child.addNotify(drawing);
     }
     super.addNotify(drawing);
   }
 
   public void removeNotify(Drawing drawing) {
-    for (Figure child : new LinkedList<>(children)) {
+    for (org.jhotdraw.draw.figures.Figure child : new LinkedList<>(children)) {
       child.removeNotify(drawing);
     }
     super.removeNotify(drawing);
@@ -395,8 +399,8 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure implements
     LabeledLineConnectionFigure that = (LabeledLineConnectionFigure) super.clone();
     that.childHandler = new ChildHandler(that);
     that.children = new ArrayList<>();
-    for (Figure thisChild : this.children) {
-      Figure thatChild = (Figure) thisChild.clone();
+    for (org.jhotdraw.draw.figures.Figure thisChild : this.children) {
+      org.jhotdraw.draw.figures.Figure thatChild = (org.jhotdraw.draw.figures.Figure) thisChild.clone();
       that.children.add(thatChild);
       thatChild.addFigureListener(that.childHandler);
       thatChild.addUndoableEditListener(that.childHandler);
@@ -404,9 +408,9 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure implements
     return that;
   }
 
-  public void remap(HashMap<Figure, Figure> oldToNew) {
+  public void remap(HashMap<org.jhotdraw.draw.figures.Figure, org.jhotdraw.draw.figures.Figure> oldToNew) {
     super.remap(oldToNew);
-    for (Figure child : children) {
+    for (org.jhotdraw.draw.figures.Figure child : children) {
       child.remap(oldToNew);
     }
   }

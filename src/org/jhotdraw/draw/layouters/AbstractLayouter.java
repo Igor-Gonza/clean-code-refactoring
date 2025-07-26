@@ -14,8 +14,8 @@
 
 package org.jhotdraw.draw.layouters;
 
-import org.jhotdraw.draw.CompositeFigure;
-import org.jhotdraw.draw.Figure;
+import org.jhotdraw.draw.figures.CompositeFigure;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.geom.Insets2DDouble;
 
 /**

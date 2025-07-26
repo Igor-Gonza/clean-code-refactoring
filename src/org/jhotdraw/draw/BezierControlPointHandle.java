@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.BezierFigure;
 import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.undo.CompositeEdit;
 
@@ -36,14 +37,14 @@ public class BezierControlPointHandle extends AbstractHandle {
   /**
    * Creates a new instance.
    */
-  public BezierControlPointHandle(BezierFigure owner, int index, int coordinates) {
+  public BezierControlPointHandle(org.jhotdraw.draw.figures.BezierFigure owner, int index, int coordinates) {
     super(owner);
     this.index = index;
     this.controlPointIndex = coordinates;
   }
 
-  protected BezierFigure getBezierFigure() {
-    return (BezierFigure) getOwner();
+  protected org.jhotdraw.draw.figures.BezierFigure getBezierFigure() {
+    return (org.jhotdraw.draw.figures.BezierFigure) getOwner();
   }
 
   protected Point getLocation() {
@@ -54,7 +55,7 @@ public class BezierControlPointHandle extends AbstractHandle {
    * Draws this handle.
    */
   public void draw(Graphics2D g) {
-    BezierFigure f = getBezierFigure();
+    org.jhotdraw.draw.figures.BezierFigure f = getBezierFigure();
     if (f.getPointCount() > index) {
       BezierPath.Node v = f.getNode(index);
       if (v.keepColinear && v.mask == BezierPath.C1C2_MASK && (index > 0 && index < f.getNodeCount() || f.isClosed())) {
@@ -81,7 +82,7 @@ public class BezierControlPointHandle extends AbstractHandle {
   }
 
   public void trackStep(Point anchor, Point lead, int modifiersEx) {
-    BezierFigure figure = getBezierFigure();
+    org.jhotdraw.draw.figures.BezierFigure figure = getBezierFigure();
     Point2D.Double p = view.getConstrainer().constrainPoint(view.viewToDrawing(lead));
     BezierPath.Node v = figure.getNode(index);
     fireAreaInvalidated(v);

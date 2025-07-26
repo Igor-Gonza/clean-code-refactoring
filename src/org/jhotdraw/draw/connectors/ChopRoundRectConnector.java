@@ -15,8 +15,8 @@
 package org.jhotdraw.draw.connectors;
 
 import org.jhotdraw.draw.AttributeKeys;
-import org.jhotdraw.draw.Figure;
-import org.jhotdraw.draw.RoundRectangleFigure;
+import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.figures.RoundRectangleFigure;
 import org.jhotdraw.geom.Geom;
 
 import java.awt.geom.Point2D;

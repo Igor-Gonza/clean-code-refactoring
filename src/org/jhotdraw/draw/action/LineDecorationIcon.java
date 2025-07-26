@@ -19,6 +19,7 @@ import java.awt.geom.*;
 import javax.swing.*;
 
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.figures.LineFigure;
 
 import static org.jhotdraw.draw.AttributeKeys.*;
 
@@ -30,7 +31,7 @@ import static org.jhotdraw.draw.AttributeKeys.*;
  * <br>1.0 26. November 2003  Created.
  */
 public class LineDecorationIcon implements Icon {
-  private final LineFigure lineFigure;
+  private final org.jhotdraw.draw.figures.LineFigure lineFigure;
 
   /**
    * Creates a new instance.

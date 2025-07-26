@@ -13,8 +13,9 @@
  */
 
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.figures;
 
+import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.connectors.ChopBoxConnector;
 import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.draw.edits.SetBoundsEdit;
@@ -45,14 +46,14 @@ import java.util.*;
  * <br>3.0 2006-01-20 Reworked for J2SE 1.5.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
-public abstract class AbstractFigure implements Figure {
+public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure {
   protected EventListenerList listenerList = new EventListenerList();
   private boolean isConnectorsVisible;
   private ConnectionFigure courtingConnection;
   private Drawing drawing;
   private boolean isInteractive;
   private boolean isVisible = true;
-  protected Figure decorator;
+  protected org.jhotdraw.draw.figures.Figure decorator;
   private boolean isDrawDecoratorFirst = false;
   /**
    * We increase this number on each invocation of willChange() and
@@ -128,7 +129,7 @@ public abstract class AbstractFigure implements Figure {
    * Notify all listenerList that have registered interest for
    * notification on this event type.
    */
-  protected void fireAreaInvalidated(Rectangle2D.Double invalidatedArea) {
+  public void fireAreaInvalidated(Rectangle2D.Double invalidatedArea) {
     if (listenerList.getListenerCount() > 0) {
       FigureEvent event = null;
       // Notify all listeners that have registered interest for
@@ -150,7 +151,7 @@ public abstract class AbstractFigure implements Figure {
    * Notify all listenerList that have registered interest for
    * notification on this event type.
    */
-  protected void fireFigureRequestRemove() {
+  public void fireFigureRequestRemove() {
     if (listenerList.getListenerCount() > 0) {
       FigureEvent event = null;
       // Notify all listeners that have registered interest for
@@ -238,7 +239,7 @@ public abstract class AbstractFigure implements Figure {
     }
   }
 
-  protected void fireFigureChanged(FigureEvent event) {
+  public void fireFigureChanged(FigureEvent event) {
     if (listenerList.getListenerCount() > 0) {
       // Notify all listeners that have registered interest for
       // Guaranteed to return a non-null array
@@ -280,7 +281,7 @@ public abstract class AbstractFigure implements Figure {
    * Notify all listenerList that have registered interest for
    * notification on this event type.
    */
-  protected void fireUndoableEditHappened(UndoableEdit edit) {
+  public void fireUndoableEditHappened(UndoableEdit edit) {
     UndoableEditEvent event = null;
     if (listenerList.getListenerCount() > 0) {
       // Notify all listeners that have registered interest for
@@ -309,7 +310,7 @@ public abstract class AbstractFigure implements Figure {
       that.isConnectorsVisible = false;
       that.courtingConnection = null;
       if (this.decorator != null) {
-        that.decorator = (Figure) this.decorator.clone();
+        that.decorator = (org.jhotdraw.draw.figures.Figure) this.decorator.clone();
       }
       return that;
     } catch (CloneNotSupportedException e) {
@@ -317,12 +318,12 @@ public abstract class AbstractFigure implements Figure {
     }
   }
 
-  public final AbstractFigure basicClone(HashMap<Figure, Figure> oldToNew) {
+  public final AbstractFigure basicClone(HashMap<org.jhotdraw.draw.figures.Figure, org.jhotdraw.draw.figures.Figure> oldToNew) {
     // XXX - Delete me
     return null;
   }
 
-  public void remap(HashMap<Figure, Figure> oldToNew) {
+  public void remap(HashMap<org.jhotdraw.draw.figures.Figure, org.jhotdraw.draw.figures.Figure> oldToNew) {
   }
 
   public Collection<Handle> createHandles(int detailLevel) {
@@ -372,7 +373,7 @@ public abstract class AbstractFigure implements Figure {
     fireAreaInvalidated(getDrawBounds());
   }
 
-  protected boolean isChanging() {
+  public boolean isChanging() {
     return changingDepth != 0;
   }
 
@@ -431,15 +432,15 @@ public abstract class AbstractFigure implements Figure {
    *
    * @see ChopBoxConnector
    */
-  public org.jhotdraw.draw.connectors.Connector findConnector(Point2D.Double p, ConnectionFigure prototype) {
+  public org.jhotdraw.draw.connectors.Connector findConnector(Point2D.Double p, org.jhotdraw.draw.figures.ConnectionFigure prototype) {
     return new org.jhotdraw.draw.connectors.ChopBoxConnector(this);
   }
 
-  public boolean includes(Figure figure) {
+  public boolean includes(org.jhotdraw.draw.figures.Figure figure) {
     return figure == this;
   }
 
-  public Figure findFigureInside(Point2D.Double p) {
+  public org.jhotdraw.draw.figures.Figure findFigureInside(Point2D.Double p) {
     return (contains(p)) ? this : null;
   }
 
@@ -519,7 +520,7 @@ public abstract class AbstractFigure implements Figure {
     }
   }
 
-  public void setConnectorsVisible(boolean isVisible, ConnectionFigure connection) {
+  public void setConnectorsVisible(boolean isVisible, org.jhotdraw.draw.figures.ConnectionFigure connection) {
     willChange();
     isConnectorsVisible = isVisible;
     courtingConnection = connection;
@@ -530,12 +531,12 @@ public abstract class AbstractFigure implements Figure {
     return isConnectorsVisible;
   }
 
-  protected ConnectionFigure getCourtingConnection() {
+  protected org.jhotdraw.draw.figures.ConnectionFigure getCourtingConnection() {
     return courtingConnection;
   }
 
-  public Collection<Figure> getDecomposition() {
-    LinkedList<Figure> list = new LinkedList<>();
+  public Collection<org.jhotdraw.draw.figures.Figure> getDecomposition() {
+    LinkedList<org.jhotdraw.draw.figures.Figure> list = new LinkedList<>();
     list.add(this);
     return list;
   }
@@ -560,7 +561,7 @@ public abstract class AbstractFigure implements Figure {
     return null;
   }
 
-  public void setDecorator(Figure newValue) {
+  public void setDecorator(org.jhotdraw.draw.figures.Figure newValue) {
     willChange();
     decorator = newValue;
     if (decorator != null) {
@@ -569,7 +570,7 @@ public abstract class AbstractFigure implements Figure {
     changed();
   }
 
-  public Figure getDecorator() {
+  public org.jhotdraw.draw.figures.Figure getDecorator() {
     return decorator;
   }
 

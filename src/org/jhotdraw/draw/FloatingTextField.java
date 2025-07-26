@@ -14,6 +14,9 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.TextFigure;
+import org.jhotdraw.draw.figures.TextHolder;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -27,7 +30,7 @@ import java.awt.event.ActionListener;
  * @author Werner Randelshofer
  * @version 2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
- * @see org.jhotdraw.draw.TextFigure
+ * @see TextFigure
  */
 public class FloatingTextField {
 

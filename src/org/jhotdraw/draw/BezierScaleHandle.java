@@ -15,6 +15,7 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.edits.RestoreDataEdit;
+import org.jhotdraw.draw.figures.BezierFigure;
 import org.jhotdraw.geom.Geom;
 
 import java.awt.*;
@@ -41,7 +42,7 @@ public class BezierScaleHandle extends AbstractHandle {
   /**
    * Creates a new instance.
    */
-  public BezierScaleHandle(BezierFigure owner) {
+  public BezierScaleHandle(org.jhotdraw.draw.figures.BezierFigure owner) {
     super(owner);
   }
 
@@ -70,7 +71,7 @@ public class BezierScaleHandle extends AbstractHandle {
     return location;
   }
 
-  private BezierFigure getBezierFigure() {
+  private org.jhotdraw.draw.figures.BezierFigure getBezierFigure() {
     return (BezierFigure) getOwner();
   }
 

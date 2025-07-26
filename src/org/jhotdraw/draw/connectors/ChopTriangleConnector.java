@@ -14,8 +14,8 @@
 
 package org.jhotdraw.draw.connectors;
 
-import org.jhotdraw.draw.Figure;
-import org.jhotdraw.draw.TriangleFigure;
+import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.figures.TriangleFigure;
 
 import java.awt.geom.Point2D;
 

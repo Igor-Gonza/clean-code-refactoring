@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.Figure;
+
 import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.util.Collection;

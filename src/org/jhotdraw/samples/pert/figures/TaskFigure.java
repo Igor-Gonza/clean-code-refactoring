@@ -15,6 +15,11 @@
 package org.jhotdraw.samples.pert.figures;
 
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.figures.GraphicalCompositeFigure;
+import org.jhotdraw.draw.figures.ListFigure;
+import org.jhotdraw.draw.figures.RectangleFigure;
+import org.jhotdraw.draw.figures.TextFigure;
 import org.jhotdraw.draw.layouters.VerticalLayouter;
 import org.jhotdraw.draw.locators.RelativeLocator;
 import org.jhotdraw.geom.Insets2DDouble;
@@ -81,17 +86,17 @@ public class TaskFigure extends GraphicalCompositeFigure {
    * Creates a new instance.
    */
   public TaskFigure() {
-    super(new RectangleFigure());
+    super(new org.jhotdraw.draw.figures.RectangleFigure());
 
     setLayouter(new VerticalLayouter());
 
-    RectangleFigure nameCompartmentPF = new RectangleFigure();
+    RectangleFigure nameCompartmentPF = new org.jhotdraw.draw.figures.RectangleFigure();
     STROKE_COLOR.set(nameCompartmentPF, null);
     nameCompartmentPF.setAttributeEnabled(STROKE_COLOR, false);
     FILL_COLOR.set(nameCompartmentPF, null);
     nameCompartmentPF.setAttributeEnabled(FILL_COLOR, false);
-    ListFigure nameCompartment = new ListFigure(nameCompartmentPF);
-    ListFigure attributeCompartment = new ListFigure();
+    org.jhotdraw.draw.figures.ListFigure nameCompartment = new ListFigure(nameCompartmentPF);
+    org.jhotdraw.draw.figures.ListFigure attributeCompartment = new org.jhotdraw.draw.figures.ListFigure();
     SeparatorLineFigure separator1 = new SeparatorLineFigure();
 
     applyAttributes(getPresentationFigure());
@@ -104,19 +109,19 @@ public class TaskFigure extends GraphicalCompositeFigure {
     LAYOUT_INSETS.set(nameCompartment, insets);
     LAYOUT_INSETS.set(attributeCompartment, insets);
 
-    TextFigure nameFigure;
-    nameCompartment.add(nameFigure = new TextFigure());
+    org.jhotdraw.draw.figures.TextFigure nameFigure;
+    nameCompartment.add(nameFigure = new org.jhotdraw.draw.figures.TextFigure());
     FONT_BOLD.set(nameFigure, true);
     nameFigure.setAttributeEnabled(FONT_BOLD, false);
 
-    TextFigure durationFigure;
-    attributeCompartment.add(durationFigure = new TextFigure());
+    org.jhotdraw.draw.figures.TextFigure durationFigure;
+    attributeCompartment.add(durationFigure = new org.jhotdraw.draw.figures.TextFigure());
     FONT_BOLD.set(durationFigure, true);
     durationFigure.setText("0");
     durationFigure.setAttributeEnabled(FONT_BOLD, false);
 
     TextFigure startTimeFigure;
-    attributeCompartment.add(startTimeFigure = new TextFigure());
+    attributeCompartment.add(startTimeFigure = new org.jhotdraw.draw.figures.TextFigure());
     startTimeFigure.setEditable(false);
     startTimeFigure.setText("0");
     startTimeFigure.setAttributeEnabled(FONT_BOLD, false);
@@ -204,16 +209,16 @@ public class TaskFigure extends GraphicalCompositeFigure {
   }
 
 
-  private TextFigure getNameFigure() {
-    return (TextFigure) ((ListFigure) getChild(0)).getChild(0);
+  private org.jhotdraw.draw.figures.TextFigure getNameFigure() {
+    return (org.jhotdraw.draw.figures.TextFigure) ((org.jhotdraw.draw.figures.ListFigure) getChild(0)).getChild(0);
   }
 
-  private TextFigure getDurationFigure() {
-    return (TextFigure) ((ListFigure) getChild(2)).getChild(0);
+  private org.jhotdraw.draw.figures.TextFigure getDurationFigure() {
+    return (org.jhotdraw.draw.figures.TextFigure) ((org.jhotdraw.draw.figures.ListFigure) getChild(2)).getChild(0);
   }
 
-  private TextFigure getStartTimeFigure() {
-    return (TextFigure) ((ListFigure) getChild(2)).getChild(1);
+  private org.jhotdraw.draw.figures.TextFigure getStartTimeFigure() {
+    return (org.jhotdraw.draw.figures.TextFigure) ((org.jhotdraw.draw.figures.ListFigure) getChild(2)).getChild(1);
   }
 
   private void applyAttributes(Figure f) {

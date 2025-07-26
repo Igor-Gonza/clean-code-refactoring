@@ -17,6 +17,9 @@ package org.jhotdraw.samples.net;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.connectors.ChopBoxConnector;
 import org.jhotdraw.draw.connectors.LocatorConnector;
+import org.jhotdraw.draw.figures.GroupFigure;
+import org.jhotdraw.draw.figures.LineConnectionFigure;
+import org.jhotdraw.draw.figures.TextAreaFigure;
 import org.jhotdraw.draw.locators.RelativeLocator;
 import org.jhotdraw.geom.Insets2DDouble;
 import org.jhotdraw.samples.net.figures.NodeFigure;
@@ -34,7 +37,7 @@ public class NetFactory extends DefaultDOMFactory {
           {NodeFigure.class, "node"},
           {LineConnectionFigure.class, "link"},
           {GroupFigure.class, "g"},
-          {GroupFigure.class, "g"},
+          {org.jhotdraw.draw.figures.GroupFigure.class, "g"},
           {TextAreaFigure.class, "ta"},
 
           {LocatorConnector.class, "locConnect"},

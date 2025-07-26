@@ -12,7 +12,12 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.figures;
+
+import org.jhotdraw.draw.FigureEvent;
+import org.jhotdraw.draw.FigureListener;
+import org.jhotdraw.draw.TextTool;
+import org.jhotdraw.draw.Tool;
 
 import java.awt.geom.Point2D;
 import java.util.HashMap;
@@ -26,7 +31,7 @@ import java.util.HashMap;
  */
 @SuppressWarnings("unused")
 public class LabelFigure extends TextFigure implements FigureListener {
-  private TextHolder target;
+  private org.jhotdraw.draw.figures.TextHolder target;
 
   /**
    * Creates a new instance.
@@ -40,7 +45,7 @@ public class LabelFigure extends TextFigure implements FigureListener {
     setEditable(false);
   }
 
-  public void setLabelFor(TextHolder target) {
+  public void setLabelFor(org.jhotdraw.draw.figures.TextHolder target) {
     if (this.target != null) {
       this.target.removeFigureListener(this);
     }
@@ -88,10 +93,10 @@ public class LabelFigure extends TextFigure implements FigureListener {
   public void remap(HashMap oldToNew) {
     super.remap(oldToNew);
     if (target != null) {
-      Figure newTarget = (Figure) oldToNew.get(target);
+      org.jhotdraw.draw.figures.Figure newTarget = (Figure) oldToNew.get(target);
       if (newTarget != null) {
         target.removeFigureListener(this);
-        target = (TextHolder) newTarget;
+        target = (org.jhotdraw.draw.figures.TextHolder) newTarget;
         newTarget.addFigureListener(this);
       }
     }

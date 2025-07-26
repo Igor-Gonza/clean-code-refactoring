@@ -16,6 +16,8 @@ package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.connectors.ChopEllipseConnector;
 import org.jhotdraw.draw.connectors.Connector;
+import org.jhotdraw.draw.figures.AttributedFigure;
+import org.jhotdraw.draw.figures.ConnectionFigure;
 import org.jhotdraw.geom.Geom;
 
 import java.awt.*;

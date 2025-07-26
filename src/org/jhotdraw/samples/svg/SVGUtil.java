@@ -20,7 +20,7 @@ import java.io.*;
 import java.util.*;
 import javax.swing.*;
 
-import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.geom.*;
 import org.jhotdraw.samples.svg.figures.*;
 import org.jhotdraw.xml.*;
@@ -929,7 +929,7 @@ public class SVGUtil {
     }
   }
 
-  public static void setDefaults(Figure f) {
+  public static void setDefaults(org.jhotdraw.draw.figures.Figure f) {
     // Set SVG default values
 
     FILL_COLOR.set(f, Color.black);
@@ -940,7 +940,7 @@ public class SVGUtil {
   /**
    * Writes the attributes of the figure into the specified DOMOutput.
    */
-  public static void writeAttributes(Figure f, DOMOutput out) throws IOException {
+  public static void writeAttributes(org.jhotdraw.draw.figures.Figure f, DOMOutput out) throws IOException {
     Color color;
     Double dbl;
     String value;

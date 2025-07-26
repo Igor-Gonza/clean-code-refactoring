@@ -15,7 +15,7 @@
 package org.jhotdraw.samples.pert;
 
 import org.jhotdraw.draw.Drawing;
-import org.jhotdraw.draw.TextFigure;
+import org.jhotdraw.draw.figures.TextFigure;
 import org.jhotdraw.draw.action.SwingWorker;
 import org.jhotdraw.xml.NanoXMLLiteDOMInput;
 import org.jhotdraw.xml.NanoXMLLiteDOMOutput;

@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.locators.Locator;
 import org.jhotdraw.draw.locators.RelativeLocator;
 
@@ -53,7 +54,7 @@ public class NullHandle extends LocatorHandle {
    * Creates handles for each lead of a
    * figure and adds them to the provided collection.
    */
-  static public void addLeadHandles(Figure f, Collection<Handle> handles) {
+  static public void addLeadHandles(org.jhotdraw.draw.figures.Figure f, Collection<Handle> handles) {
     handles.add(new NullHandle(f, new org.jhotdraw.draw.locators.RelativeLocator(0f, 0f)));
     handles.add(new NullHandle(f, new org.jhotdraw.draw.locators.RelativeLocator(0f, 1f)));
     handles.add(new NullHandle(f, new org.jhotdraw.draw.locators.RelativeLocator(1f, 0f)));

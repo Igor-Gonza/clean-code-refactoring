@@ -14,7 +14,7 @@
 
 package org.jhotdraw.draw.edits;
 
-import org.jhotdraw.draw.Figure;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 import javax.swing.undo.AbstractUndoableEdit;

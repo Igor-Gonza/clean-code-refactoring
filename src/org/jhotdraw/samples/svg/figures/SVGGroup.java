@@ -19,6 +19,8 @@ import java.io.*;
 import java.util.*;
 
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.figures.GroupFigure;
 import org.jhotdraw.samples.svg.*;
 import org.jhotdraw.xml.*;
 
@@ -94,7 +96,7 @@ public class SVGGroup extends GroupFigure implements SVGFigure {
         if (f instanceof SVGDrawing) {
           SVGGroup g = new SVGGroup();
           g.willChange();
-          for (Figure child : ((SVGDrawing) f).getFigures()) {
+          for (org.jhotdraw.draw.figures.Figure child : ((SVGDrawing) f).getFigures()) {
             g.basicAdd(child);
           }
           g.changed();
@@ -123,7 +125,7 @@ public class SVGGroup extends GroupFigure implements SVGFigure {
 
   @Override
   public void write(DOMOutput out) throws IOException {
-    for (Figure child : getChildren()) {
+    for (org.jhotdraw.draw.figures.Figure child : getChildren()) {
       out.writeObject(child);
     }
     writeAttributes(out);
@@ -144,8 +146,8 @@ public class SVGGroup extends GroupFigure implements SVGFigure {
     buf.append(hashCode());
     if (getChildCount() > 0) {
       buf.append('(');
-      for (Iterator<Figure> i = getChildren().iterator(); i.hasNext(); ) {
-        Figure child = i.next();
+      for (Iterator<org.jhotdraw.draw.figures.Figure> i = getChildren().iterator(); i.hasNext(); ) {
+        org.jhotdraw.draw.figures.Figure child = i.next();
         buf.append(child);
         if (i.hasNext()) {
           buf.append(',');

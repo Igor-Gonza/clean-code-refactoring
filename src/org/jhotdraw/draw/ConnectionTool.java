@@ -15,6 +15,8 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.connectors.Connector;
+import org.jhotdraw.draw.figures.ConnectionFigure;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.undo.CompositeEdit;
 
 import java.awt.*;
@@ -50,11 +52,11 @@ public class ConnectionTool extends AbstractTool implements FigureListener {
   private org.jhotdraw.draw.connectors.Connector endConnector;
   private org.jhotdraw.draw.connectors.Connector targetConnector;
 
-  private Figure target;
+  private org.jhotdraw.draw.figures.Figure target;
   /**
    * the currently created figure
    */
-  private ConnectionFigure connection;
+  private org.jhotdraw.draw.figures.ConnectionFigure connection;
 
   /**
    * the currently manipulated connection point
@@ -63,30 +65,30 @@ public class ConnectionTool extends AbstractTool implements FigureListener {
   /**
    * the currently edited connection
    */
-  private ConnectionFigure editedConnection;
+  private org.jhotdraw.draw.figures.ConnectionFigure editedConnection;
 
   /**
    * the figure that was actually added
    * Note, this can be a different figure from the one which has been created.
    */
-  private Figure createdFigure;
+  private org.jhotdraw.draw.figures.Figure createdFigure;
 
   /**
    * the prototypical figure that is used to create new
    * connections.
    */
-  protected ConnectionFigure prototype;
+  protected org.jhotdraw.draw.figures.ConnectionFigure prototype;
 
   protected boolean isPressed;
 
   /**
    * Creates a new instance.
    */
-  public ConnectionTool(ConnectionFigure prototype) {
+  public ConnectionTool(org.jhotdraw.draw.figures.ConnectionFigure prototype) {
     this.prototype = prototype;
   }
 
-  public ConnectionTool(ConnectionFigure prototype, Map attributes) {
+  public ConnectionTool(org.jhotdraw.draw.figures.ConnectionFigure prototype, Map attributes) {
     this.prototype = prototype;
     this.attributes = attributes;
   }
@@ -97,14 +99,14 @@ public class ConnectionTool extends AbstractTool implements FigureListener {
 
   public ConnectionTool(String prototypeClassName, Map<AttributeKey, Object> attributes) {
     try {
-      this.prototype = (ConnectionFigure) Class.forName(prototypeClassName).newInstance();
+      this.prototype = (org.jhotdraw.draw.figures.ConnectionFigure) Class.forName(prototypeClassName).newInstance();
     } catch (Exception e) {
       throw new InternalError("Unable to create ConnectionFigure from " + prototypeClassName, e);
     }
     this.attributes = attributes;
   }
 
-  public ConnectionFigure getPrototype() {
+  public org.jhotdraw.draw.figures.ConnectionFigure getPrototype() {
     return prototype;
   }
 
@@ -151,7 +153,7 @@ public class ConnectionTool extends AbstractTool implements FigureListener {
       if (getTargetConnector() != null) {
         p = getTargetConnector().getAnchor();
       }
-      ConnectionFigure f = getConnection();
+      org.jhotdraw.draw.figures.ConnectionFigure f = getConnection();
       fireAreaInvalidated(f.getDrawBounds());
       f.willChange();
       f.basicSetBounds(f.getStartPoint(), p);
@@ -168,7 +170,7 @@ public class ConnectionTool extends AbstractTool implements FigureListener {
     return prototype.canConnect(start);
   }
 
-  protected boolean canConnect(Figure start, Figure end) {
+  protected boolean canConnect(org.jhotdraw.draw.figures.Figure start, org.jhotdraw.draw.figures.Figure end) {
     return prototype.canConnect(start, end);
   }
 
@@ -179,7 +181,7 @@ public class ConnectionTool extends AbstractTool implements FigureListener {
   public void mouseReleased(MouseEvent e) {
     isPressed = false;
     isWorking = false;
-    Figure c = null;
+    org.jhotdraw.draw.figures.Figure c = null;
     Point2D.Double p = viewToDrawing(new Point(e.getX(), e.getY()));
     if (getStartConnector() != null) {
       c = findTarget(p, getDrawing());
@@ -190,7 +192,7 @@ public class ConnectionTool extends AbstractTool implements FigureListener {
       if (getEndConnector() != null) {
         CompositeEdit creationEdit = new CompositeEdit("Verbindung erstellen");
         getDrawing().fireUndoableEditHappened(creationEdit);
-        ConnectionFigure f = getConnection();
+        org.jhotdraw.draw.figures.ConnectionFigure f = getConnection();
         f.willChange();
         f.setStartConnector(getStartConnector());
         f.setEndConnector(getEndConnector());
@@ -229,8 +231,8 @@ public class ConnectionTool extends AbstractTool implements FigureListener {
    * Creates the ConnectionFigure. By default, the figure prototype is
    * cloned.
    */
-  protected ConnectionFigure createFigure() {
-    ConnectionFigure f = (ConnectionFigure) prototype.clone();
+  protected org.jhotdraw.draw.figures.ConnectionFigure createFigure() {
+    org.jhotdraw.draw.figures.ConnectionFigure f = (org.jhotdraw.draw.figures.ConnectionFigure) prototype.clone();
     getEditor().applyDefaultAttributesTo(f);
     if (attributes != null) {
       for (Map.Entry<AttributeKey, Object> entry : attributes.entrySet()) {
@@ -243,16 +245,16 @@ public class ConnectionTool extends AbstractTool implements FigureListener {
   /**
    * Finds a connectable figure target.
    */
-  protected Figure findSource(Point2D.Double p, Drawing drawing) {
+  protected org.jhotdraw.draw.figures.Figure findSource(Point2D.Double p, Drawing drawing) {
     return findConnectableFigure(p, drawing);
   }
 
   /**
    * Finds a connectable figure target.
    */
-  protected Figure findTarget(Point2D.Double p, Drawing drawing) {
-    Figure target = findConnectableFigure(p, drawing);
-    Figure start = getStartConnector().getOwner();
+  protected org.jhotdraw.draw.figures.Figure findTarget(Point2D.Double p, Drawing drawing) {
+    org.jhotdraw.draw.figures.Figure target = findConnectableFigure(p, drawing);
+    org.jhotdraw.draw.figures.Figure start = getStartConnector().getOwner();
 
     if (target != null && getConnection() != null && canConnect(target)
             //&& ! target.includes(start)
@@ -266,28 +268,28 @@ public class ConnectionTool extends AbstractTool implements FigureListener {
    * Finds an existing connection figure.
    */
   protected ConnectionFigure findConnection(Point2D.Double p, Drawing drawing) {
-    for (Figure f : drawing.getFiguresFrontToBack()) {
-      if ((f instanceof ConnectionFigure)) {
-        return (ConnectionFigure) f;
+    for (org.jhotdraw.draw.figures.Figure f : drawing.getFiguresFrontToBack()) {
+      if ((f instanceof org.jhotdraw.draw.figures.ConnectionFigure)) {
+        return (org.jhotdraw.draw.figures.ConnectionFigure) f;
       }
     }
     return null;
   }
 
-  protected void setConnection(ConnectionFigure newConnection) {
+  protected void setConnection(org.jhotdraw.draw.figures.ConnectionFigure newConnection) {
     connection = newConnection;
   }
 
   /**
    * Gets the connection which is created by this tool
    */
-  protected ConnectionFigure getConnection() {
+  protected org.jhotdraw.draw.figures.ConnectionFigure getConnection() {
     return connection;
   }
 
   protected void trackConnectors(MouseEvent e) {
     Point2D.Double p = viewToDrawing(new Point(e.getX(), e.getY()));
-    Figure c;
+    org.jhotdraw.draw.figures.Figure c;
 
     if (getStartConnector() == null) {
       c = findSource(p, getDrawing());
@@ -333,22 +335,22 @@ public class ConnectionTool extends AbstractTool implements FigureListener {
     }
   }
 
-  protected Connector findConnector(Point2D.Double p, Figure target, ConnectionFigure f) {
+  protected Connector findConnector(Point2D.Double p, org.jhotdraw.draw.figures.Figure target, org.jhotdraw.draw.figures.ConnectionFigure f) {
     return target.findConnector(p, f);
   }
 
   /**
    * Finds a connection start figure.
    */
-  protected Figure findConnectionStart(Point2D.Double p, Drawing drawing) {
-    Figure target = findConnectableFigure(p, drawing);
+  protected org.jhotdraw.draw.figures.Figure findConnectionStart(Point2D.Double p, Drawing drawing) {
+    org.jhotdraw.draw.figures.Figure target = findConnectableFigure(p, drawing);
     if ((target != null) && target.canConnect()) {
       return target;
     }
     return null;
   }
 
-  protected Figure findConnectableFigure(Point2D.Double p, Drawing drawing) {
+  protected org.jhotdraw.draw.figures.Figure findConnectableFigure(Point2D.Double p, Drawing drawing) {
     return drawing.findFigureExcept(p, createdFigure);
   }
 
@@ -376,11 +378,11 @@ public class ConnectionTool extends AbstractTool implements FigureListener {
     return targetConnector;
   }
 
-  private void setTargetFigure(Figure newTarget) {
+  private void setTargetFigure(org.jhotdraw.draw.figures.Figure newTarget) {
     target = newTarget;
   }
 
-  protected Figure getTargetFigure() {
+  protected org.jhotdraw.draw.figures.Figure getTargetFigure() {
     return target;
   }
 
@@ -388,11 +390,11 @@ public class ConnectionTool extends AbstractTool implements FigureListener {
    * Gets the figure that was actually added
    * Note, this can be a different figure from the one which has been created.
    */
-  protected Figure getCreatedFigure() {
+  protected org.jhotdraw.draw.figures.Figure getCreatedFigure() {
     return createdFigure;
   }
 
-  protected void setCreatedFigure(Figure newCreatedFigure) {
+  protected void setCreatedFigure(org.jhotdraw.draw.figures.Figure newCreatedFigure) {
     createdFigure = newCreatedFigure;
   }
 

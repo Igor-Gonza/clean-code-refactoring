@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.Figure;
+
 import java.awt.geom.Rectangle2D;
 import java.util.EventObject;
 
@@ -26,7 +28,7 @@ import java.util.EventObject;
  */
 public class DrawingEvent extends EventObject {
   private Rectangle2D.Double invalidatedArea;
-  private Figure figure;
+  private org.jhotdraw.draw.figures.Figure figure;
 
   /**
    * Constructs an event for the provided Drawing.
@@ -34,7 +36,7 @@ public class DrawingEvent extends EventObject {
    * @param figure          The changed figure.
    * @param invalidatedArea The bounds of the invalidated area on the drawing.
    */
-  public DrawingEvent(Drawing source, Figure figure, Rectangle2D.Double invalidatedArea) {
+  public DrawingEvent(Drawing source, org.jhotdraw.draw.figures.Figure figure, Rectangle2D.Double invalidatedArea) {
     super(source);
     this.figure = figure;
     this.invalidatedArea = invalidatedArea;

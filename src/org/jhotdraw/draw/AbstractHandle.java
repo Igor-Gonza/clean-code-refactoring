@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.Figure;
+
 import java.util.Collection;
 import javax.swing.event.*;
 import java.awt.*;
@@ -40,7 +42,7 @@ public abstract class AbstractHandle implements Handle, FigureListener {
   /**
    * Creates a new instance.
    */
-  public AbstractHandle(Figure owner) {
+  public AbstractHandle(org.jhotdraw.draw.figures.Figure owner) {
     this.owner = owner;
     owner.addFigureListener(this);
   }
@@ -66,7 +68,7 @@ public abstract class AbstractHandle implements Handle, FigureListener {
     listenerList.remove(HandleListener.class, l);
   }
 
-  public Figure getOwner() {
+  public org.jhotdraw.draw.figures.Figure getOwner() {
     return owner;
   }
 

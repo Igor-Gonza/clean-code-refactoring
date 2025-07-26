@@ -21,6 +21,10 @@ import org.jhotdraw.draw.connectors.ChopDiamondConnector;
 import org.jhotdraw.draw.connectors.ChopEllipseConnector;
 import org.jhotdraw.draw.connectors.ChopRoundRectConnector;
 import org.jhotdraw.draw.connectors.ChopTriangleConnector;
+import org.jhotdraw.draw.figures.BezierFigure;
+import org.jhotdraw.draw.figures.DiamondFigure;
+import org.jhotdraw.draw.figures.GroupFigure;
+import org.jhotdraw.draw.figures.RectangleFigure;
 import org.jhotdraw.xml.DefaultDOMFactory;
 
 /**
@@ -34,16 +38,16 @@ public class DrawFigureFactory extends DefaultDOMFactory {
           {DefaultDrawing.class, "drawing"},
           {QuadTreeDrawing.class, "drawing"},
           {DiamondFigure.class, "diamond"},
-          {TriangleFigure.class, "triangle"},
-          {BezierFigure.class, "bezier"},
+          {org.jhotdraw.draw.figures.TriangleFigure.class, "triangle"},
+          {org.jhotdraw.draw.figures.BezierFigure.class, "bezier"},
           {RectangleFigure.class, "r"},
-          {RoundRectangleFigure.class, "rr"},
-          {LineFigure.class, "l"},
+          {org.jhotdraw.draw.figures.RoundRectangleFigure.class, "rr"},
+          {org.jhotdraw.draw.figures.LineFigure.class, "l"},
           {BezierFigure.class, "b"},
-          {LineConnectionFigure.class, "lnk"},
+          {org.jhotdraw.draw.figures.LineConnectionFigure.class, "lnk"},
           {EllipseFigure.class, "e"},
-          {TextFigure.class, "t"},
-          {TextAreaFigure.class, "ta"},
+          {org.jhotdraw.draw.figures.TextFigure.class, "t"},
+          {org.jhotdraw.draw.figures.TextAreaFigure.class, "ta"},
           {GroupFigure.class, "g"},
 
           {ArrowTip.class, "arrowTip"},

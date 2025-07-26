@@ -12,8 +12,9 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.figures;
 
+import org.jhotdraw.draw.Liner;
 import org.jhotdraw.draw.connectors.Connector;
 
 import java.awt.geom.Point2D;
@@ -29,7 +30,7 @@ import java.awt.geom.Point2D;
  * @version 2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
-public interface ConnectionFigure extends Figure {
+public interface ConnectionFigure extends org.jhotdraw.draw.figures.Figure {
   // DRAWING
   // SHAPE AND BOUNDS
   // ATTRIBUTES
@@ -75,7 +76,7 @@ public interface ConnectionFigure extends Figure {
    * Checks if two figures can be connected using this ConnectionFigure.
    * Implement this method to constrain the allowed connections between figures.
    */
-  boolean canConnect(Figure start, Figure end);
+  boolean canConnect(org.jhotdraw.draw.figures.Figure start, Figure end);
 
   /**
    * Checks if this ConnectionFigure can be attached to the provided
@@ -83,7 +84,7 @@ public interface ConnectionFigure extends Figure {
    * This is used to provide an early feedback to the user, when he/she
    * creates a new connection.
    */
-  boolean canConnect(Figure start);
+  boolean canConnect(org.jhotdraw.draw.figures.Figure start);
 
   /**
    * Checks if the ConnectionFigure connects the same figures.
@@ -132,14 +133,14 @@ public interface ConnectionFigure extends Figure {
    * This is a convenience method for doing getStartConnector().getOwner()
    * and handling null cases.
    */
-  Figure getStartFigure();
+  org.jhotdraw.draw.figures.Figure getStartFigure();
 
   /**
    * Gets the end figure of the connection.
    * This is a convenience method for doing getEndConnector().getOwner()
    * and handling null cases.
    */
-  Figure getEndFigure();
+  org.jhotdraw.draw.figures.Figure getEndFigure();
 // COMPOSITE FIGURES
 
   /**

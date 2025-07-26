@@ -15,6 +15,9 @@
 package org.jhotdraw.draw.action;
 
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.figures.CompositeFigure;
+import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.figures.GroupFigure;
 import org.jhotdraw.undo.CompositeEdit;
 
 import javax.swing.undo.CannotRedoException;
@@ -33,7 +36,7 @@ import java.util.LinkedList;
  */
 public class GroupAction extends AbstractSelectedAction {
   public final static String ID = "selectionGroup";
-  private final CompositeFigure prototype;
+  private final org.jhotdraw.draw.figures.CompositeFigure prototype;
 
   /**
    * Creates a new instance.
@@ -42,7 +45,7 @@ public class GroupAction extends AbstractSelectedAction {
     this(editor, new GroupFigure());
   }
 
-  public GroupAction(DrawingEditor editor, CompositeFigure prototype) {
+  public GroupAction(DrawingEditor editor, org.jhotdraw.draw.figures.CompositeFigure prototype) {
     super(editor);
     this.prototype = prototype;
     labels.configureAction(this, ID);
@@ -64,8 +67,8 @@ public class GroupAction extends AbstractSelectedAction {
   public void actionPerformed(java.awt.event.ActionEvent e) {
     if (canGroup()) {
       final DrawingView view = getView();
-      final LinkedList<Figure> ungroupedFigures = new LinkedList<>(view.getSelectedFigures());
-      final CompositeFigure group = (CompositeFigure) prototype.clone();
+      final LinkedList<org.jhotdraw.draw.figures.Figure> ungroupedFigures = new LinkedList<>(view.getSelectedFigures());
+      final org.jhotdraw.draw.figures.CompositeFigure group = (CompositeFigure) prototype.clone();
       CompositeEdit edit = new CompositeEdit(labels.getString("selectionGroup")) {
         public void redo() throws CannotRedoException {
           super.redo();
@@ -87,9 +90,9 @@ public class GroupAction extends AbstractSelectedAction {
     }
   }
 
-  public Collection<Figure> ungroupFigures(DrawingView view, CompositeFigure group) {
+  public Collection<org.jhotdraw.draw.figures.Figure> ungroupFigures(DrawingView view, org.jhotdraw.draw.figures.CompositeFigure group) {
 // XXX - This code is redundant with UngroupAction
-    LinkedList<Figure> figures = new LinkedList<>(group.getChildren());
+    LinkedList<org.jhotdraw.draw.figures.Figure> figures = new LinkedList<>(group.getChildren());
     view.clearSelection();
     group.basicRemoveAllChildren();
     view.getDrawing().basicAddAll(figures);
@@ -98,13 +101,13 @@ public class GroupAction extends AbstractSelectedAction {
     return figures;
   }
 
-  public void groupFigures(DrawingView view, CompositeFigure group, Collection<Figure> figures) {
+  public void groupFigures(DrawingView view, org.jhotdraw.draw.figures.CompositeFigure group, Collection<org.jhotdraw.draw.figures.Figure> figures) {
     Collection<Figure> sorted = view.getDrawing().sort(figures);
     view.getDrawing().basicRemoveAll(figures);
     view.clearSelection();
     view.getDrawing().add(group);
     group.willChange();
-    for (Figure f : sorted) {
+    for (org.jhotdraw.draw.figures.Figure f : sorted) {
       group.basicAdd(f);
     }
     group.changed();

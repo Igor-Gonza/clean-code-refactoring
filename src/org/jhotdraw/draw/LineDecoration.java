@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.Figure;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -39,10 +41,10 @@ public interface LineDecoration extends Cloneable, Serializable {
    * This is used to crop the end of the line, to prevent it from being
    * drawn it over the decorator.
    */
-  double getDecorationRadius(Figure f);
+  double getDecorationRadius(org.jhotdraw.draw.figures.Figure f);
 
   /**
    * Returns the drawing bounds of the decorator.
    */
-  Rectangle2D.Double getDrawBounds(Figure f, Point2D.Double p1, Point2D.Double p2);
+  Rectangle2D.Double getDrawBounds(org.jhotdraw.draw.figures.Figure f, Point2D.Double p1, Point2D.Double p2);
 }

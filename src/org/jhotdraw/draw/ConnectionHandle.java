@@ -15,6 +15,8 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.connectors.Connector;
+import org.jhotdraw.draw.figures.ConnectionFigure;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.locators.Locator;
 import org.jhotdraw.undo.*;
 import org.jhotdraw.util.*;
@@ -36,22 +38,22 @@ public class ConnectionHandle extends LocatorHandle {
   /**
    * the currently created connection
    */
-  private ConnectionFigure currentConnection;
+  private org.jhotdraw.draw.figures.ConnectionFigure currentConnection;
 
   /**
    * the prototype of the connection to be created
    */
-  private final ConnectionFigure prototype;
+  private final org.jhotdraw.draw.figures.ConnectionFigure prototype;
 
   /**
    * the current target
    */
-  private Figure targetFigure;
+  private org.jhotdraw.draw.figures.Figure targetFigure;
 
   /**
    * Creates a new instance.
    */
-  public ConnectionHandle(Figure owner, Locator locator, ConnectionFigure prototype) {
+  public ConnectionHandle(org.jhotdraw.draw.figures.Figure owner, Locator locator, org.jhotdraw.draw.figures.ConnectionFigure prototype) {
     super(owner, locator);
     this.prototype = prototype;
   }
@@ -121,28 +123,28 @@ public class ConnectionHandle extends LocatorHandle {
    * Creates the ConnectionFigure. By default, the figure prototype is
    * cloned.
    */
-  protected ConnectionFigure createConnection() {
-    return (ConnectionFigure) prototype.clone();
+  protected org.jhotdraw.draw.figures.ConnectionFigure createConnection() {
+    return (org.jhotdraw.draw.figures.ConnectionFigure) prototype.clone();
   }
 
   protected void setConnection(ConnectionFigure newConnection) {
     currentConnection = newConnection;
   }
 
-  protected ConnectionFigure getConnection() {
+  protected org.jhotdraw.draw.figures.ConnectionFigure getConnection() {
     return currentConnection;
   }
 
-  protected Figure getTargetFigure() {
+  protected org.jhotdraw.draw.figures.Figure getTargetFigure() {
     return targetFigure;
   }
 
-  protected void setTargetFigure(Figure newTargetFigure) {
+  protected void setTargetFigure(org.jhotdraw.draw.figures.Figure newTargetFigure) {
     targetFigure = newTargetFigure;
   }
 
-  private Figure findConnectableFigure(Point2D.Double p, Drawing drawing) {
-    for (Figure figure : drawing.getFiguresFrontToBack()) {
+  private org.jhotdraw.draw.figures.Figure findConnectableFigure(Point2D.Double p, Drawing drawing) {
+    for (org.jhotdraw.draw.figures.Figure figure : drawing.getFiguresFrontToBack()) {
       if (!figure.includes(getConnection()) && figure.canConnect() && figure.contains(p)) {
         return figure;
       }
@@ -159,7 +161,7 @@ public class ConnectionHandle extends LocatorHandle {
    * Finds a connection end figure.
    */
   protected org.jhotdraw.draw.connectors.Connector findConnectionTarget(Point2D.Double p, Drawing drawing) {
-    Figure target = findConnectableFigure(p, drawing);
+    org.jhotdraw.draw.figures.Figure target = findConnectableFigure(p, drawing);
     if ((target != null) && target.canConnect() && !target.includes(getOwner()) && getConnection().canConnect(getOwner(), target)) {
       return target.findConnector(p, getConnection());
     }

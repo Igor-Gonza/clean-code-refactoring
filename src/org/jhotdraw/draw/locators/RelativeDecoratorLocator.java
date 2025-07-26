@@ -14,7 +14,7 @@
 
 package org.jhotdraw.draw.locators;
 
-import org.jhotdraw.draw.Figure;
+import org.jhotdraw.draw.figures.Figure;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;

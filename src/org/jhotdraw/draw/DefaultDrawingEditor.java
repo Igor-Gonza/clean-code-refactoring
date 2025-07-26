@@ -15,6 +15,7 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.beans.AbstractBean;
+import org.jhotdraw.draw.figures.Figure;
 
 import java.awt.*;
 import java.awt.event.FocusEvent;

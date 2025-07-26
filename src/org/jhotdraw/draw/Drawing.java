@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.xml.DOMStorable;
 
 import javax.swing.event.UndoableEditListener;
@@ -49,7 +50,7 @@ public interface Drawing extends Serializable, DOMStorable {
    *
    * @param figure to be added to the drawing
    */
-   void add(Figure figure);
+   void add(org.jhotdraw.draw.figures.Figure figure);
 
   /**
    * Adds a collection of figures to the drawing.
@@ -58,7 +59,7 @@ public interface Drawing extends Serializable, DOMStorable {
    *
    * @param figures to be added to the drawing
    */
-   void addAll(Collection<Figure> figures);
+   void addAll(Collection<org.jhotdraw.draw.figures.Figure> figures);
 
   /**
    * Removes a figure from the drawing.
@@ -67,7 +68,7 @@ public interface Drawing extends Serializable, DOMStorable {
    *
    * @param figure that is part of the drawing and should be removed
    */
-   void remove(Figure figure);
+   void remove(org.jhotdraw.draw.figures.Figure figure);
 
   /**
    * Removes the specified figures from the drawing.
@@ -77,16 +78,16 @@ public interface Drawing extends Serializable, DOMStorable {
    * @param figures A collection of figures which are part of the drawing
    *                and should be removed
    */
-   void removeAll(Collection<Figure> figures);
+   void removeAll(Collection<org.jhotdraw.draw.figures.Figure> figures);
 
   /**
    * Removes a figure temporarily from the drawing.
    * The drawing sends no </code>removeNotify</code> message to the figure.
    *
    * @param figure that is part of the drawing and should be removed
-   * @see #basicAdd(Figure)
+   * @see #basicAdd(org.jhotdraw.draw.figures.Figure)
    */
-   void basicRemove(Figure figure);
+   void basicRemove(org.jhotdraw.draw.figures.Figure figure);
 
   /**
    * Removes the specified figures temporarily from the drawing.
@@ -96,25 +97,25 @@ public interface Drawing extends Serializable, DOMStorable {
    *                and should be removed
    * @see #basicAddAll(Collection)
    */
-   void basicRemoveAll(Collection<Figure> figures);
+   void basicRemoveAll(Collection<org.jhotdraw.draw.figures.Figure> figures);
 
   /**
    * Reinserts a figure which was temporarily removed using basicRemove.
    * The drawing sends no <code>addNotify</code> message to the figure.
    *
    * @param figure that is part of the drawing and should be removed
-   * @see #basicRemove(Figure)
+   * @see #basicRemove(org.jhotdraw.draw.figures.Figure)
    */
-   void basicAdd(Figure figure);
+   void basicAdd(org.jhotdraw.draw.figures.Figure figure);
 
   /**
    * Reinserts a figure which was temporarily removed using basicRemove.
    * The drawing sends no <code>addNotify</code> message to the figure.
    *
    * @param figure that is part of the drawing and should be removed
-   * @see #basicRemove(Figure)
+   * @see #basicRemove(org.jhotdraw.draw.figures.Figure)
    */
-   void basicAdd(int index, Figure figure);
+   void basicAdd(int index, org.jhotdraw.draw.figures.Figure figure);
 
   /**
    * Reinserts the specified figures which were temporarily basicRemoved from
@@ -142,20 +143,20 @@ public interface Drawing extends Serializable, DOMStorable {
    * Returns all figures that lie within or intersect the specified
    * bounds. The figures are returned in Z-order from back to front.
    */
-   Collection<Figure> findFigures(Rectangle2D.Double bounds);
+   Collection<org.jhotdraw.draw.figures.Figure> findFigures(Rectangle2D.Double bounds);
 
   /**
    * Returns all figures that lie within the specified
    * bounds. The figures are returned in Z-order from back to front.
    */
-   Collection<Figure> findFiguresWithin(Rectangle2D.Double bounds);
+   Collection<org.jhotdraw.draw.figures.Figure> findFiguresWithin(Rectangle2D.Double bounds);
 
   /**
    * Returns the figures of the drawing.
    *
    * @return A Collection of Figure's.
    */
-   Collection<Figure> getFigures();
+   Collection<org.jhotdraw.draw.figures.Figure> getFigures();
 
   /**
    * Returns the number of figures in this drawing.
@@ -166,29 +167,29 @@ public interface Drawing extends Serializable, DOMStorable {
    * Finds a top level Figure. Use this call for hit detection that
    * should not descend into the figure's children.
    */
-  Figure findFigure(Point2D.Double p);
+  org.jhotdraw.draw.figures.Figure findFigure(Point2D.Double p);
 
   /**
    * Finds a top level Figure. Use this call for hit detection that
    * should not descend into the figure's children.
    */
-  Figure findFigureExcept(Point2D.Double p, Figure ignore);
+  org.jhotdraw.draw.figures.Figure findFigureExcept(Point2D.Double p, org.jhotdraw.draw.figures.Figure ignore);
 
   /**
    * Finds a top level Figure. Use this call for hit detection that
    * should not descend into the figure's children.
    */
-  Figure findFigureExcept(Point2D.Double p, Collection<Figure> ignore);
+  org.jhotdraw.draw.figures.Figure findFigureExcept(Point2D.Double p, Collection<org.jhotdraw.draw.figures.Figure> ignore);
 
   /**
    * Returns true if this drawing contains the specified figure.
    */
-  boolean contains(Figure f);
+  boolean contains(org.jhotdraw.draw.figures.Figure f);
 
   /**
    * Returns a list of the figures in Z-Order from front to back.
    */
-   List<Figure> getFiguresFrontToBack();
+   List<org.jhotdraw.draw.figures.Figure> getFiguresFrontToBack();
 
   /**
    * Finds a figure but descends into a figure's
@@ -196,27 +197,27 @@ public interface Drawing extends Serializable, DOMStorable {
    * hit detection, that is, you want to detect the innermost
    * figure containing the given point.
    */
-   Figure findFigureInside(Point2D.Double p);
+   org.jhotdraw.draw.figures.Figure findFigureInside(Point2D.Double p);
 
   /**
    * Sends a figure to the back of the drawing.
    *
    * @param figure that is part of the drawing
    */
-   void sendToBack(Figure figure);
+   void sendToBack(org.jhotdraw.draw.figures.Figure figure);
 
   /**
    * Brings a figure to the front.
    *
    * @param figure that is part of the drawing
    */
-   void bringToFront(Figure figure);
+   void bringToFront(org.jhotdraw.draw.figures.Figure figure);
 
   /**
    * Returns a copy of the provided collection which is sorted
    * in z order from back to front.
    */
-   Collection<Figure> sort(Collection<Figure> figures);
+   Collection<org.jhotdraw.draw.figures.Figure> sort(Collection<org.jhotdraw.draw.figures.Figure> figures);
 
   /**
    * Adds a listener for this drawing.

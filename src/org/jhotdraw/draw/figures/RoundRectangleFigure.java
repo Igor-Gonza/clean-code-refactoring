@@ -13,7 +13,7 @@
  */
 
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.figures;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -23,6 +23,9 @@ import javax.swing.undo.*;
 
 import static org.jhotdraw.draw.AttributeKeys.*;
 
+import org.jhotdraw.draw.AttributeKeys;
+import org.jhotdraw.draw.Handle;
+import org.jhotdraw.draw.RoundRectRadiusHandle;
 import org.jhotdraw.draw.connectors.ChopRoundRectConnector;
 import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.geom.*;

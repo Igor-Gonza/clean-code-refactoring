@@ -12,8 +12,9 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.figures;
 
+import org.jhotdraw.draw.*;
 import org.jhotdraw.geom.Insets2DDouble;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;
@@ -66,7 +67,7 @@ import static org.jhotdraw.draw.AttributeKeys.*;
  * <br>1.0 5. Marz 2004  Created.
  */
 @SuppressWarnings("unused")
-public class TextAreaFigure extends AttributedFigure implements TextHolder {
+public class TextAreaFigure extends AttributedFigure implements org.jhotdraw.draw.figures.TextHolder {
   private Rectangle2D.Double bounds = new Rectangle2D.Double();
   private boolean editable = true;
   private final static BasicStroke dashes = new BasicStroke(1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0f, new float[]{4f, 4f}, 0f);
