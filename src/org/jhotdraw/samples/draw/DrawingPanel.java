@@ -24,6 +24,7 @@ import org.jhotdraw.draw.figures.BezierFigure;
 import org.jhotdraw.draw.figures.ConnectionFigure;
 import org.jhotdraw.draw.figures.RectangleFigure;
 import org.jhotdraw.draw.figures.RoundRectangleFigure;
+import org.jhotdraw.draw.liners.ElbowLiner;
 import org.jhotdraw.draw.tools.BezierTool;
 import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.undo.UndoRedoManager;

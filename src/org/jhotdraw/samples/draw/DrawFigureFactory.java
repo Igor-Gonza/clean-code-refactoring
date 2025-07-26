@@ -26,6 +26,7 @@ import org.jhotdraw.draw.figures.BezierFigure;
 import org.jhotdraw.draw.figures.DiamondFigure;
 import org.jhotdraw.draw.figures.GroupFigure;
 import org.jhotdraw.draw.figures.RectangleFigure;
+import org.jhotdraw.draw.liners.ElbowLiner;
 import org.jhotdraw.xml.DefaultDOMFactory;
 
 /**

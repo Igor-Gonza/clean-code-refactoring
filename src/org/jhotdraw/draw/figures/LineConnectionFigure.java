@@ -21,6 +21,7 @@ import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.handlers.BezierNodeHandle;
 import org.jhotdraw.draw.handlers.ChangeConnectionStartHandle;
 import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.liners.Liner;
 import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.xml.DOMInput;
@@ -49,7 +50,7 @@ import java.util.Map;
 public class LineConnectionFigure extends LineFigure implements org.jhotdraw.draw.figures.ConnectionFigure {
   private Connector startConnector;
   private org.jhotdraw.draw.connectors.Connector endConnector;
-  private Liner liner;
+  private org.jhotdraw.draw.liners.Liner liner;
 
   /**
    * Handles figure changes in the start and the
@@ -481,7 +482,7 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
   protected void readLiner(DOMInput in) throws IOException {
     if (in.getElementCount("liner") > 0) {
       in.openElement("liner");
-      liner = (Liner) in.readObject();
+      liner = (org.jhotdraw.draw.liners.Liner) in.readObject();
       in.closeElement();
     }
   }
@@ -569,7 +570,7 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
   }
 
 
-  public Liner getLiner() {
+  public org.jhotdraw.draw.liners.Liner getLiner() {
     return liner;
   }
 

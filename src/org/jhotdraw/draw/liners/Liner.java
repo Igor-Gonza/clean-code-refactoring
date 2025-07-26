@@ -12,7 +12,7 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.liners;
 
 import org.jhotdraw.draw.figures.ConnectionFigure;
 import org.jhotdraw.draw.handlers.Handle;

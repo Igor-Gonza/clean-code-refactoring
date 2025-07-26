@@ -14,7 +14,7 @@
 
 package org.jhotdraw.draw.figures;
 
-import org.jhotdraw.draw.Liner;
+import org.jhotdraw.draw.liners.Liner;
 import org.jhotdraw.draw.connectors.Connector;
 
 import java.awt.geom.Point2D;

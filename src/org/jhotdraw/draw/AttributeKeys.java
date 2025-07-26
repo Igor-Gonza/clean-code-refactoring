@@ -18,6 +18,7 @@ import java.awt.*;
 import java.util.*;
 
 import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.liners.Liner;
 import org.jhotdraw.geom.*;
 
 /**
