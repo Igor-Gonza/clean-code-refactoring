@@ -12,8 +12,12 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.tools;
 
+import org.jhotdraw.draw.Drawing;
+import org.jhotdraw.draw.DrawingEditor;
+import org.jhotdraw.draw.DrawingView;
+import org.jhotdraw.draw.ToolListener;
 import org.jhotdraw.draw.edits.TransformEdit;
 import org.jhotdraw.draw.events.ToolEvent;
 import org.jhotdraw.draw.figures.Figure;

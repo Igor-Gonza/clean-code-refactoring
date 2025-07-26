@@ -18,6 +18,7 @@ import org.jhotdraw.app.action.*;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.*;
 import org.jhotdraw.draw.figures.TextAreaFigure;
+import org.jhotdraw.draw.tools.CreationTool;
 import org.jhotdraw.samples.pert.figures.DependencyFigure;
 import org.jhotdraw.samples.pert.figures.TaskFigure;
 import org.jhotdraw.undo.UndoRedoManager;
@@ -188,9 +189,9 @@ public class PertPanel extends JPanel {
 
     attributes = new HashMap<>();
     attributes.put(AttributeKeys.STROKE_COLOR, new Color(0x000099));
-    ToolBarButtonFactory.addToolTo(tb, editor, new ConnectionTool(new DependencyFigure(), attributes), "createDependency", labels);
+    ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.ConnectionTool(new DependencyFigure(), attributes), "createDependency", labels);
     tb.addSeparator();
-    ToolBarButtonFactory.addToolTo(tb, editor, new TextAreaTool(new TextAreaFigure()), "createTextArea", drawLabels);
+    ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.TextAreaTool(new TextAreaFigure()), "createTextArea", drawLabels);
   }
 
 

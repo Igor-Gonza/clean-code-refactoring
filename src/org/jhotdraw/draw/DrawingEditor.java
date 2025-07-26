@@ -15,6 +15,7 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.tools.Tool;
 
 import java.awt.*;
 import java.beans.PropertyChangeListener;
@@ -102,7 +103,7 @@ public interface DrawingEditor {
   /**
    * Gets the current tool.
    */
-  Tool getTool();
+  org.jhotdraw.draw.tools.Tool getTool();
 
   /**
    * Sets the cursor on the view(s) of the drawing editor.

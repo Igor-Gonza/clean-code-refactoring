@@ -17,6 +17,7 @@ package org.jhotdraw.draw.figures;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.tools.Tool;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.xml.DOMStorable;
 

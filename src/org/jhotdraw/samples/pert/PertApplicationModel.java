@@ -24,6 +24,8 @@ import org.jhotdraw.app.action.ToggleProjectPropertyAction;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.ToolBarButtonFactory;
 import org.jhotdraw.draw.figures.TextAreaFigure;
+import org.jhotdraw.draw.tools.TextAreaTool;
+import org.jhotdraw.draw.tools.Tool;
 import org.jhotdraw.samples.pert.figures.DependencyFigure;
 import org.jhotdraw.samples.pert.figures.TaskFigure;
 import org.jhotdraw.util.ResourceBundleUtil;
@@ -48,7 +50,7 @@ public class PertApplicationModel extends DefaultApplicationModel {
     private Tool tool;
     private DrawingEditor editor;
 
-    public ToolButtonListener(Tool t, DrawingEditor editor) {
+    public ToolButtonListener(org.jhotdraw.draw.tools.Tool t, DrawingEditor editor) {
       this.tool = t;
       this.editor = editor;
     }
@@ -115,11 +117,11 @@ public class PertApplicationModel extends DefaultApplicationModel {
     attributes.put(AttributeKeys.FILL_COLOR, Color.white);
     attributes.put(AttributeKeys.STROKE_COLOR, Color.black);
     attributes.put(AttributeKeys.TEXT_COLOR, Color.black);
-    ToolBarButtonFactory.addToolTo(tb, editor, new CreationTool(new TaskFigure(), attributes), "createTask", labels);
+    ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.CreationTool(new TaskFigure(), attributes), "createTask", labels);
 
     attributes = new HashMap<>();
     attributes.put(AttributeKeys.STROKE_COLOR, new Color(0x000099));
-    ToolBarButtonFactory.addToolTo(tb, editor, new ConnectionTool(new DependencyFigure(), attributes), "createDependency", labels);
+    ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.ConnectionTool(new DependencyFigure(), attributes), "createDependency", labels);
     tb.addSeparator();
     ToolBarButtonFactory.addToolTo(tb, editor, new TextAreaTool(new TextAreaFigure()), "createTextArea", drawLabels);
 

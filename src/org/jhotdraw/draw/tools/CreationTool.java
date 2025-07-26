@@ -12,8 +12,10 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.tools;
 
+import org.jhotdraw.draw.AttributeKey;
+import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.figures.CompositeFigure;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.undo.CompositeEdit;

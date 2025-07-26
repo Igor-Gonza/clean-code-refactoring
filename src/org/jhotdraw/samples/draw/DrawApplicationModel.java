@@ -19,6 +19,7 @@ import org.jhotdraw.draw.figures.ConnectionFigure;
 import org.jhotdraw.draw.figures.LineConnectionFigure;
 import org.jhotdraw.draw.figures.RectangleFigure;
 import org.jhotdraw.draw.figures.RoundRectangleFigure;
+import org.jhotdraw.draw.tools.ConnectionTool;
 import org.jhotdraw.util.*;
 
 import java.util.*;
@@ -107,26 +108,26 @@ public class DrawApplicationModel extends DefaultApplicationModel {
     tb.addSeparator();
 
     org.jhotdraw.draw.figures.AttributedFigure af;
-    CreationTool ct;
-    ConnectionTool cnt;
+    org.jhotdraw.draw.tools.CreationTool ct;
+    org.jhotdraw.draw.tools.ConnectionTool cnt;
     ConnectionFigure lc;
 
-    ToolBarButtonFactory.addToolTo(tb, editor, new CreationTool(new RectangleFigure()), "createRectangle", labels);
-    ToolBarButtonFactory.addToolTo(tb, editor, new CreationTool(new RoundRectangleFigure()), "createRoundRectangle", labels);
-    ToolBarButtonFactory.addToolTo(tb, editor, new CreationTool(new EllipseFigure()), "createEllipse", labels);
-    ToolBarButtonFactory.addToolTo(tb, editor, new CreationTool(new org.jhotdraw.draw.figures.DiamondFigure()), "createDiamond", labels);
-    ToolBarButtonFactory.addToolTo(tb, editor, new CreationTool(new org.jhotdraw.draw.figures.TriangleFigure()), "createTriangle", labels);
-    ToolBarButtonFactory.addToolTo(tb, editor, new CreationTool(new org.jhotdraw.draw.figures.LineFigure()), "createLine", labels);
-    ToolBarButtonFactory.addToolTo(tb, editor, ct = new CreationTool(new org.jhotdraw.draw.figures.LineFigure()), "createArrow", labels);
+    ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.CreationTool(new RectangleFigure()), "createRectangle", labels);
+    ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.CreationTool(new RoundRectangleFigure()), "createRoundRectangle", labels);
+    ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.CreationTool(new EllipseFigure()), "createEllipse", labels);
+    ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.CreationTool(new org.jhotdraw.draw.figures.DiamondFigure()), "createDiamond", labels);
+    ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.CreationTool(new org.jhotdraw.draw.figures.TriangleFigure()), "createTriangle", labels);
+    ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.CreationTool(new org.jhotdraw.draw.figures.LineFigure()), "createLine", labels);
+    ToolBarButtonFactory.addToolTo(tb, editor, ct = new org.jhotdraw.draw.tools.CreationTool(new org.jhotdraw.draw.figures.LineFigure()), "createArrow", labels);
     af = (AttributedFigure) ct.getPrototype();
     af.setAttribute(END_DECORATION, new ArrowTip(0.35, 12, 11.3));
     ToolBarButtonFactory.addToolTo(tb, editor, new ConnectionTool(new LineConnectionFigure()), "createLineConnection", labels);
-    ToolBarButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new org.jhotdraw.draw.figures.LineConnectionFigure()), "createElbowConnection", labels);
+    ToolBarButtonFactory.addToolTo(tb, editor, cnt = new org.jhotdraw.draw.tools.ConnectionTool(new org.jhotdraw.draw.figures.LineConnectionFigure()), "createElbowConnection", labels);
     lc = cnt.getPrototype();
     lc.setLiner(new ElbowLiner());
-    ToolBarButtonFactory.addToolTo(tb, editor, new BezierTool(new org.jhotdraw.draw.figures.BezierFigure()), "createScribble", labels);
-    ToolBarButtonFactory.addToolTo(tb, editor, new BezierTool(new org.jhotdraw.draw.figures.BezierFigure(true)), "createPolygon", labels);
-    ToolBarButtonFactory.addToolTo(tb, editor, new TextTool(new org.jhotdraw.draw.figures.TextFigure()), "createText", labels);
-    ToolBarButtonFactory.addToolTo(tb, editor, new TextAreaTool(new org.jhotdraw.draw.figures.TextAreaFigure()), "createTextArea", labels);
+    ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.BezierTool(new org.jhotdraw.draw.figures.BezierFigure()), "createScribble", labels);
+    ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.BezierTool(new org.jhotdraw.draw.figures.BezierFigure(true)), "createPolygon", labels);
+    ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.TextTool(new org.jhotdraw.draw.figures.TextFigure()), "createText", labels);
+    ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.TextAreaTool(new org.jhotdraw.draw.figures.TextAreaFigure()), "createTextArea", labels);
   }
 }

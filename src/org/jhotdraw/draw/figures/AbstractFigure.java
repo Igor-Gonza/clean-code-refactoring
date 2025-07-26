@@ -22,6 +22,7 @@ import org.jhotdraw.draw.edits.SetBoundsEdit;
 import org.jhotdraw.draw.edits.TransformEdit;
 import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.tools.Tool;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.geom.Insets2DDouble;
 

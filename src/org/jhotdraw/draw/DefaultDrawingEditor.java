@@ -17,6 +17,7 @@ package org.jhotdraw.draw;
 import org.jhotdraw.beans.AbstractBean;
 import org.jhotdraw.draw.events.ToolEvent;
 import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.tools.Tool;
 
 import java.awt.*;
 import java.awt.event.FocusEvent;
@@ -34,7 +35,7 @@ import static org.jhotdraw.draw.AttributeKeys.*;
  */
 public class DefaultDrawingEditor extends AbstractBean implements DrawingEditor, ToolListener {
   private HashMap<AttributeKey, Object> defaultAttributes = new HashMap<>();
-  private Tool tool;
+  private org.jhotdraw.draw.tools.Tool tool;
   private HashSet<DrawingView> views;
   private DrawingView activeView;
   private boolean isEnabled = true;
@@ -114,7 +115,7 @@ public class DefaultDrawingEditor extends AbstractBean implements DrawingEditor,
     }
   }
 
-  public Tool getTool() {
+  public org.jhotdraw.draw.tools.Tool getTool() {
     return tool;
   }
 

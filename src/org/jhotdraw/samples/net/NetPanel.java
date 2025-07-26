@@ -18,6 +18,7 @@ import org.jhotdraw.app.action.*;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.*;
 import org.jhotdraw.draw.figures.LineConnectionFigure;
+import org.jhotdraw.draw.tools.TextTool;
 import org.jhotdraw.samples.net.figures.NodeFigure;
 import org.jhotdraw.undo.UndoRedoManager;
 import org.jhotdraw.util.ResourceBundleUtil;
@@ -187,7 +188,7 @@ public class NetPanel extends JPanel {
 
     attributes = new HashMap<>();
     attributes.put(AttributeKeys.STROKE_COLOR, new Color(0x000099));
-    ToolBarButtonFactory.addToolTo(tb, editor, new ConnectionTool(new LineConnectionFigure(), attributes), "createLink", labels);
+    ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.ConnectionTool(new LineConnectionFigure(), attributes), "createLink", labels);
   }
 
 

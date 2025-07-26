@@ -18,6 +18,8 @@ import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.draw.handlers.MoveHandle;
 import org.jhotdraw.draw.locators.RelativeLocator;
+import org.jhotdraw.draw.tools.TextTool;
+import org.jhotdraw.draw.tools.Tool;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.geom.Geom;
 import org.jhotdraw.geom.Insets2DDouble;
@@ -191,7 +193,7 @@ public class TextFigure extends AttributedFigure implements TextHolder {
    * <p>Returns null, if no specialized tool is available.
    */
   public Tool getTool(Point2D.Double p) {
-    return (isEditable() && contains(p)) ? new TextTool(this) : null;
+    return (isEditable() && contains(p)) ? new org.jhotdraw.draw.tools.TextTool(this) : null;
   }
 
   public void read(DOMInput in) throws IOException {

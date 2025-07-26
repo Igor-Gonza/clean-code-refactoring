@@ -12,7 +12,7 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.tools;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -21,6 +21,7 @@ import javax.swing.*;
 import java.util.*;
 
 import org.jhotdraw.app.action.Actions;
+import org.jhotdraw.draw.DrawingView;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.handlers.Handle;
 

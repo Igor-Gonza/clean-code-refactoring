@@ -16,8 +16,8 @@ package org.jhotdraw.draw.figures;
 
 import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.FigureListener;
-import org.jhotdraw.draw.TextTool;
-import org.jhotdraw.draw.Tool;
+import org.jhotdraw.draw.tools.TextTool;
+import org.jhotdraw.draw.tools.Tool;
 
 import java.awt.geom.Point2D;
 import java.util.HashMap;

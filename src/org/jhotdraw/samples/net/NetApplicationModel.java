@@ -24,6 +24,8 @@ import org.jhotdraw.app.action.ToggleProjectPropertyAction;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.ToolBarButtonFactory;
 import org.jhotdraw.draw.figures.LineConnectionFigure;
+import org.jhotdraw.draw.tools.ConnectionTool;
+import org.jhotdraw.draw.tools.Tool;
 import org.jhotdraw.samples.net.figures.NodeFigure;
 import org.jhotdraw.util.ResourceBundleUtil;
 
@@ -44,7 +46,7 @@ public class NetApplicationModel extends DefaultApplicationModel {
   private final static double[] scaleFactors = {5, 4, 3, 2, 1.5, 1.25, 1, 0.75, 0.5, 0.25, 0.10};
 
   private static class ToolButtonListener implements ItemListener {
-    private Tool tool;
+    private org.jhotdraw.draw.tools.Tool tool;
     private DrawingEditor editor;
 
     public ToolButtonListener(Tool t, DrawingEditor editor) {
@@ -114,7 +116,7 @@ public class NetApplicationModel extends DefaultApplicationModel {
     attributes.put(AttributeKeys.FILL_COLOR, Color.white);
     attributes.put(AttributeKeys.STROKE_COLOR, Color.black);
     attributes.put(AttributeKeys.TEXT_COLOR, Color.black);
-    ToolBarButtonFactory.addToolTo(tb, editor, new TextTool(new NodeFigure(), attributes), "createNode", labels);
+    ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.TextTool(new NodeFigure(), attributes), "createNode", labels);
 
     attributes = new HashMap<>();
     attributes.put(AttributeKeys.STROKE_COLOR, new Color(0x000099));

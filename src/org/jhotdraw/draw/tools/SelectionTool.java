@@ -12,8 +12,11 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.tools;
 
+import org.jhotdraw.draw.DrawingEditor;
+import org.jhotdraw.draw.DrawingView;
+import org.jhotdraw.draw.ToolListener;
 import org.jhotdraw.draw.events.ToolEvent;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.handlers.Handle;
@@ -35,7 +38,7 @@ public class SelectionTool extends AbstractTool implements ToolListener {
   /**
    * The tracker encapsulates the current state of the SelectionTool.
    */
-  private Tool tracker;
+  private org.jhotdraw.draw.tools.Tool tracker;
 
   /**
    * Creates a new instance.
@@ -103,7 +106,7 @@ public class SelectionTool extends AbstractTool implements ToolListener {
     super.mousePressed(evt);
     DrawingView view = getView();
     Handle handle = view.findHandle(anchor);
-    Tool newTracker;
+    org.jhotdraw.draw.tools.Tool newTracker;
     if (handle != null) {
       newTracker = createHandleTracker(handle);
     } else {
@@ -125,7 +128,7 @@ public class SelectionTool extends AbstractTool implements ToolListener {
     tracker.mousePressed(evt);
   }
 
-  protected void setTracker(Tool newTracker) {
+  protected void setTracker(org.jhotdraw.draw.tools.Tool newTracker) {
     if (tracker != null) {
       tracker.deactivate(getEditor());
       tracker.removeToolListener(this);
@@ -140,7 +143,7 @@ public class SelectionTool extends AbstractTool implements ToolListener {
   /**
    * Factory method to create a Handle tracker. It is used to track a handle.
    */
-  protected Tool createHandleTracker(org.jhotdraw.draw.handlers.Handle handle) {
+  protected org.jhotdraw.draw.tools.Tool createHandleTracker(org.jhotdraw.draw.handlers.Handle handle) {
     return new HandleTracker(handle, getView().getCompatibleHandles(handle));
   }
 
@@ -155,7 +158,7 @@ public class SelectionTool extends AbstractTool implements ToolListener {
    * Factory method to create an area tracker. It is used to select an
    * area.
    */
-  protected Tool createAreaTracker() {
+  protected org.jhotdraw.draw.tools.Tool createAreaTracker() {
     return new SelectAreaTracker();
   }
 
@@ -165,7 +168,7 @@ public class SelectionTool extends AbstractTool implements ToolListener {
 
   public void toolDone(ToolEvent event) {
     // Empty
-    Tool newTracker = createAreaTracker();
+    org.jhotdraw.draw.tools.Tool newTracker = createAreaTracker();
 
     if (newTracker != null) {
       if (tracker != null) {

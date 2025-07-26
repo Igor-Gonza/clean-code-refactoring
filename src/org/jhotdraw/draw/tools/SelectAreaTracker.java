@@ -12,7 +12,7 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.tools;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

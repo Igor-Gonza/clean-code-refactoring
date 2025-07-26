@@ -18,6 +18,8 @@ import org.jhotdraw.app.action.*;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.constrainers.Constrainer;
 import org.jhotdraw.draw.events.ToolEvent;
+import org.jhotdraw.draw.tools.DelegationSelectionTool;
+import org.jhotdraw.draw.tools.Tool;
 import org.jhotdraw.geom.DoubleStroke;
 import org.jhotdraw.util.ResourceBundleUtil;
 
@@ -110,10 +112,10 @@ public class ToolBarButtonFactory {
 
 
   private static class ToolButtonListener implements ItemListener {
-    private final Tool tool;
+    private final org.jhotdraw.draw.tools.Tool tool;
     private final DrawingEditor editor;
 
-    public ToolButtonListener(Tool t, DrawingEditor editor) {
+    public ToolButtonListener(org.jhotdraw.draw.tools.Tool t, DrawingEditor editor) {
       this.tool = t;
       this.editor = editor;
     }
@@ -165,7 +167,7 @@ public class ToolBarButtonFactory {
     ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
     JToggleButton t;
-    Tool tool;
+    org.jhotdraw.draw.tools.Tool tool;
     HashMap<String, Object> attributes;
 
     ButtonGroup group;
@@ -177,7 +179,7 @@ public class ToolBarButtonFactory {
     }
 
     // Selection tool
-    Tool selectionTool = new DelegationSelectionTool(drawingActions, selectionActions);
+    org.jhotdraw.draw.tools.Tool selectionTool = new DelegationSelectionTool(drawingActions, selectionActions);
     editor.setTool(selectionTool);
     t = new JToggleButton();
     final JToggleButton defaultToolButton = t;

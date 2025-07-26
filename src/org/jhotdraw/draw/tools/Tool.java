@@ -12,7 +12,10 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.tools;
+
+import org.jhotdraw.draw.DrawingEditor;
+import org.jhotdraw.draw.ToolListener;
 
 import java.awt.*;
 import java.awt.event.KeyListener;

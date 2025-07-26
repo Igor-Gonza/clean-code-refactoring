@@ -17,6 +17,8 @@ package org.jhotdraw.draw.figures;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.handlers.FontSizeHandle;
 import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.tools.TextAreaTool;
+import org.jhotdraw.draw.tools.Tool;
 import org.jhotdraw.geom.Insets2DDouble;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;

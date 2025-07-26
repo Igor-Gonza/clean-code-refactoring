@@ -17,6 +17,7 @@ package org.jhotdraw.draw;
 import org.jhotdraw.draw.constrainers.Constrainer;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.tools.Tool;
 
 import java.awt.*;
 import java.awt.event.KeyListener;

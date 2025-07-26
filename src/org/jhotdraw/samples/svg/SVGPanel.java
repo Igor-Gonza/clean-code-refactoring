@@ -18,6 +18,7 @@ import org.jhotdraw.app.action.*;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.*;
 import org.jhotdraw.draw.figures.BezierFigure;
+import org.jhotdraw.draw.tools.CreationTool;
 import org.jhotdraw.samples.svg.action.CombineAction;
 import org.jhotdraw.samples.svg.action.SplitAction;
 import org.jhotdraw.samples.svg.figures.*;
@@ -163,18 +164,18 @@ public class SVGPanel extends JPanel {
     attributes = new HashMap<>();
     attributes.put(AttributeKeys.FILL_COLOR, Color.white);
     attributes.put(AttributeKeys.STROKE_COLOR, Color.black);
-    ToolBarButtonFactory.addToolTo(tb, editor, new CreationTool(new SVGRect(), attributes), "createRectangle", drawLabels);
+    ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.CreationTool(new SVGRect(), attributes), "createRectangle", drawLabels);
     ToolBarButtonFactory.addToolTo(tb, editor, new CreationTool(new SVGEllipse(), attributes), "createEllipse", drawLabels);
     ToolBarButtonFactory.addToolTo(tb, editor, new PathTool(new SVGPath(), new BezierFigure(true), attributes), "createPolygon", drawLabels);
     attributes = new HashMap<>();
     attributes.put(AttributeKeys.FILL_COLOR, null);
     attributes.put(AttributeKeys.STROKE_COLOR, Color.black);
-    ToolBarButtonFactory.addToolTo(tb, editor, new CreationTool(new SVGLine(), attributes), "createLine", drawLabels);
+    ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.CreationTool(new SVGLine(), attributes), "createLine", drawLabels);
     ToolBarButtonFactory.addToolTo(tb, editor, new PathTool(new SVGPath(), new org.jhotdraw.draw.figures.BezierFigure(false), attributes), "createScribble", drawLabels);
     attributes = new HashMap<>();
     attributes.put(AttributeKeys.FILL_COLOR, Color.black);
     attributes.put(AttributeKeys.STROKE_COLOR, null);
-    ToolBarButtonFactory.addToolTo(tb, editor, new CreationTool(new SVGText(), attributes), "createText", drawLabels);
+    ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.CreationTool(new SVGText(), attributes), "createText", drawLabels);
   }
 
   /**

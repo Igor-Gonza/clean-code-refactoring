@@ -13,8 +13,10 @@
  */
 
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.tools;
 
+import org.jhotdraw.draw.DrawingEditor;
+import org.jhotdraw.draw.HandleMultiCaster;
 import org.jhotdraw.draw.handlers.Handle;
 
 import java.awt.*;
