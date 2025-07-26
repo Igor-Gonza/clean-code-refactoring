@@ -14,10 +14,10 @@
 
 package org.jhotdraw.draw.action;
 
-import org.jhotdraw.draw.Constrainer;
+import org.jhotdraw.draw.constrainers.Constrainer;
 import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.DrawingView;
-import org.jhotdraw.draw.GridConstrainer;
+import org.jhotdraw.draw.constrainers.GridConstrainer;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 /**

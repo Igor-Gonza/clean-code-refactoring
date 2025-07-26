@@ -19,6 +19,7 @@ import org.jhotdraw.app.action.RedoAction;
 import org.jhotdraw.app.action.UndoAction;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.ToolBarButtonFactory;
+import org.jhotdraw.draw.constrainers.GridConstrainer;
 import org.jhotdraw.gui.PlacardScrollPaneLayout;
 import org.jhotdraw.io.ExtensionFileFilter;
 import org.jhotdraw.undo.UndoRedoManager;
@@ -55,8 +56,8 @@ public class NetProject extends AbstractProject {
    */
   private DrawingEditor editor;
 
-  private GridConstrainer visibleConstrainer = new GridConstrainer(10, 10);
-  private GridConstrainer invisibleConstrainer = new GridConstrainer(1, 1);
+  private org.jhotdraw.draw.constrainers.GridConstrainer visibleConstrainer = new GridConstrainer(10, 10);
+  private org.jhotdraw.draw.constrainers.GridConstrainer invisibleConstrainer = new org.jhotdraw.draw.constrainers.GridConstrainer(1, 1);
   private Preferences prefs;
   private AbstractButton toggleGridButton;
 
@@ -110,8 +111,8 @@ public class NetProject extends AbstractProject {
     view.addPropertyChangeListener(evt -> {
       String name = evt.getPropertyName();
       if (name.equals("constrainer")) {
-        prefs.putBoolean("project.gridVisible", ((Constrainer) evt.getNewValue()).isVisible());
-        firePropertyChange("gridVisible", ((Constrainer) evt.getOldValue()).isVisible(), ((Constrainer) evt.getNewValue()).isVisible());
+        prefs.putBoolean("project.gridVisible", ((org.jhotdraw.draw.constrainers.Constrainer) evt.getNewValue()).isVisible());
+        firePropertyChange("gridVisible", ((org.jhotdraw.draw.constrainers.Constrainer) evt.getOldValue()).isVisible(), ((org.jhotdraw.draw.constrainers.Constrainer) evt.getNewValue()).isVisible());
       } else if (name.equals("scaleFactor")) {
         prefs.putDouble("project.scaleFactor", (Double) evt.getNewValue());
         firePropertyChange("scaleFactor", evt.getOldValue(), evt.getNewValue());

@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.constrainers.Constrainer;
 import org.jhotdraw.draw.figures.Figure;
 
 import java.awt.*;
@@ -203,7 +204,7 @@ public interface DrawingView {
   /**
    * Sets the editor's constrainer.
    */
-  void setConstrainer(Constrainer constrainer);
+  void setConstrainer(org.jhotdraw.draw.constrainers.Constrainer constrainer);
 
   /**
    * Gets the editor's constrainer.

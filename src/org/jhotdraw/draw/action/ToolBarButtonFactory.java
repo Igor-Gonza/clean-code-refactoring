@@ -16,6 +16,7 @@ package org.jhotdraw.draw.action;
 
 import org.jhotdraw.app.action.*;
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.constrainers.Constrainer;
 import org.jhotdraw.draw.events.ToolEvent;
 import org.jhotdraw.geom.DoubleStroke;
 import org.jhotdraw.util.ResourceBundleUtil;
@@ -616,11 +617,11 @@ public class ToolBarButtonFactory {
     labels.configureToolBarButton(toggleGridButton, "alignGrid");
     toggleGridButton.setFocusable(false);
     toggleGridButton.addItemListener(event -> {
-      Constrainer c;
+      org.jhotdraw.draw.constrainers.Constrainer c;
       if (toggleGridButton.isSelected()) {
-        c = new GridConstrainer(10, 10);
+        c = new org.jhotdraw.draw.constrainers.GridConstrainer(10, 10);
       } else {
-        c = new GridConstrainer(1, 1);
+        c = new org.jhotdraw.draw.constrainers.GridConstrainer(1, 1);
       }
       for (DrawingView v : editor.getDrawingViews()) {
         v.setConstrainer(c);
@@ -642,11 +643,11 @@ public class ToolBarButtonFactory {
     labels.configureToolBarButton(toggleGridButton, "alignGrid");
     toggleGridButton.setFocusable(false);
     toggleGridButton.addItemListener(event -> {
-      Constrainer c;
+      org.jhotdraw.draw.constrainers.Constrainer c;
       if (toggleGridButton.isSelected()) {
-        c = new GridConstrainer(10, 10);
+        c = new org.jhotdraw.draw.constrainers.GridConstrainer(10, 10);
       } else {
-        c = new GridConstrainer(1, 1);
+        c = new org.jhotdraw.draw.constrainers.GridConstrainer(1, 1);
       }
       view.setConstrainer(c);
       view.getContainer().repaint();
@@ -654,7 +655,7 @@ public class ToolBarButtonFactory {
     view.addPropertyChangeListener(evt -> {
       // String constants are interned
       if (Objects.equals(evt.getPropertyName(), "gridConstrainer")) {
-        Constrainer c = (Constrainer) evt.getNewValue();
+        Constrainer c = (org.jhotdraw.draw.constrainers.Constrainer) evt.getNewValue();
         toggleGridButton.setSelected(c.isVisible());
       }
     });

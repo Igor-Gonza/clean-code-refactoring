@@ -19,6 +19,7 @@ import org.jhotdraw.app.action.RedoAction;
 import org.jhotdraw.app.action.UndoAction;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.ToolBarButtonFactory;
+import org.jhotdraw.draw.constrainers.GridConstrainer;
 import org.jhotdraw.gui.PlacardScrollPaneLayout;
 import org.jhotdraw.io.ExtensionFileFilter;
 import org.jhotdraw.undo.UndoRedoManager;
@@ -55,8 +56,8 @@ public class PertProject extends AbstractProject {
    */
   private DrawingEditor editor;
 
-  private GridConstrainer visibleConstrainer = new GridConstrainer(10, 10);
-  private GridConstrainer invisibleConstrainer = new GridConstrainer(1, 1);
+  private org.jhotdraw.draw.constrainers.GridConstrainer visibleConstrainer = new org.jhotdraw.draw.constrainers.GridConstrainer(10, 10);
+  private GridConstrainer invisibleConstrainer = new org.jhotdraw.draw.constrainers.GridConstrainer(1, 1);
   private Preferences prefs;
 
   /**
@@ -124,7 +125,7 @@ public class PertProject extends AbstractProject {
 
   public void setGridVisible(boolean newValue) {
     boolean oldValue = isGridVisible();
-    Constrainer c = (newValue) ? visibleConstrainer : invisibleConstrainer;
+    org.jhotdraw.draw.constrainers.Constrainer c = (newValue) ? visibleConstrainer : invisibleConstrainer;
     view.setConstrainer(c);
 
     firePropertyChange("gridVisible", oldValue, newValue);

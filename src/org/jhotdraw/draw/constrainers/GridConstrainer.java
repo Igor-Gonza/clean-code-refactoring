@@ -12,7 +12,9 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.constrainers;
+
+import org.jhotdraw.draw.DrawingView;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;

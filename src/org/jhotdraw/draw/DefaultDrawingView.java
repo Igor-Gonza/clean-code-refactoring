@@ -15,6 +15,8 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.app.EditableComponent;
+import org.jhotdraw.draw.constrainers.Constrainer;
+import org.jhotdraw.draw.constrainers.GridConstrainer;
 import org.jhotdraw.draw.events.DrawingEvent;
 import org.jhotdraw.draw.events.FigureSelectionEvent;
 import org.jhotdraw.draw.events.HandleEvent;
@@ -70,7 +72,7 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
   private int detailLevel;
   private DOMFactory domFactory;
   private DrawingEditor editor;
-  private Constrainer constrainer = new GridConstrainer(1, 1);
+  private org.jhotdraw.draw.constrainers.Constrainer constrainer = new GridConstrainer(1, 1);
   private JLabel emptyDrawingLabel;
   //private boolean hasPermanentFocus;
 
@@ -562,11 +564,11 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
     preferredSize = null;
   }
 
-  public Constrainer getConstrainer() {
+  public org.jhotdraw.draw.constrainers.Constrainer getConstrainer() {
     return constrainer;
   }
 
-  public void setConstrainer(Constrainer newValue) {
+  public void setConstrainer(org.jhotdraw.draw.constrainers.Constrainer newValue) {
     Constrainer oldValue = constrainer;
     constrainer = newValue;
     repaint();
