@@ -12,7 +12,6 @@
  * JHotDraw.org.
  */
 
-
 package org.jhotdraw.draw.handlers;
 
 import org.jhotdraw.draw.figures.Figure;

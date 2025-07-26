@@ -12,7 +12,6 @@
  * JHotDraw.org.
  */
 
-
 package org.jhotdraw.xml;
 
 import java.io.IOException;
@@ -23,7 +22,7 @@ import java.io.IOException;
  * @author Werner Randelshofer
  * @version 1.2 2006-08-26 Added method setDoctype.
  * <br>1.1. 2006-06-18 Renamed addElement to openElement.
- * <br>1.0 10. Maerz 2004  Created.
+ * <br>1.0 10. März 2004 Created.
  */
 public interface DOMOutput {
   /**

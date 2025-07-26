@@ -49,7 +49,6 @@ public class RotateHandle extends AbstractHandle {
     return false;
   }
 
-
   /**
    * Draws this handle.
    */

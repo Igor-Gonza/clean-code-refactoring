@@ -35,7 +35,7 @@ import java.net.URL;
  * @author wrandels
  * @version 2.1 2006-07-15 Added main method.
  * <br>2.0 Changed to support double precision coordinates.
- * <br>1.0 Created on 10. Marz 2004, 13:22.
+ * <br>1.0 Created on 10. März 2004, 13:22.
  */
 public class DrawApplet extends JApplet {
   private static final String VERSION = "0.5";
@@ -137,7 +137,6 @@ public class DrawApplet extends JApplet {
     }.start();
   }
 
-
   private void setDrawing(Drawing d) {
     drawingPanel.setDrawing(d);
   }
@@ -145,7 +144,6 @@ public class DrawApplet extends JApplet {
   private Drawing getDrawing() {
     return drawingPanel.getDrawing();
   }
-
 
   public void setData(String text) {
     if (text != null && !text.isEmpty()) {
@@ -221,7 +219,6 @@ public class DrawApplet extends JApplet {
       a.start();
     });
   }
-
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.ButtonGroup toolButtonGroup;

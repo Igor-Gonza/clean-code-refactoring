@@ -528,7 +528,6 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
     return getDrawing().findFiguresWithin(viewToDrawing(r));
   }
 
-
   public void addFigureSelectionListener(FigureSelectionListener fsl) {
     listenerList.add(FigureSelectionListener.class, fsl);
   }
@@ -581,7 +580,6 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
     repaint();
     firePropertyChange("constrainer", oldValue, newValue);
   }
-
 
   /**
    * Side effect: Changes view Translation!!!
@@ -708,7 +706,6 @@ public class DefaultDrawingView extends JComponent implements DrawingView, Drawi
 
     HashSet<org.jhotdraw.draw.figures.Figure> toBeCopied = new HashSet<>(getSelectedFigures());
     if (toBeCopied.isEmpty()) return;
-
 
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     try {

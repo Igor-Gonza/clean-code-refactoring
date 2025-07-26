@@ -37,7 +37,6 @@ public class DefaultApplicationModel extends AbstractBean implements Application
   private Class<?> projectClass;
   private String projectClassName;
 
-
   /**
    * Creates a new instance.
    */

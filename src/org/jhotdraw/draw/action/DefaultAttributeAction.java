@@ -36,7 +36,6 @@ import javax.swing.*;
 public class DefaultAttributeAction extends AbstractSelectedAction {
   private final AttributeKey<?>[] keys;
 
-
   /**
    * Creates a new instance.
    */

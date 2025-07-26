@@ -40,7 +40,7 @@ import static org.jhotdraw.draw.AttributeKeys.END_DECORATION;
  * DrawingPanel.
  *
  * @author Werner Randelshofer
- * @version 1.0 11. M�rz 2004  Created.
+ * @version 1.0 11. März 2004  Created.
  */
 public class DrawingPanel extends JPanel {
   private final UndoRedoManager undoManager;
@@ -110,7 +110,6 @@ public class DrawingPanel extends JPanel {
     pb.setFocusable(false);
     creationToolbar.addSeparator();
     creationToolbar.add(pb);
-
 
     org.jhotdraw.draw.drawings.DefaultDrawing drawing = new org.jhotdraw.draw.drawings.DefaultDrawing();
     view.setDrawing(drawing);
@@ -212,7 +211,6 @@ public class DrawingPanel extends JPanel {
     ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.TextTool(new org.jhotdraw.draw.figures.TextFigure()), "createText", labels);
     ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.TextAreaTool(new org.jhotdraw.draw.figures.TextAreaFigure()), "createTextArea", labels);
   }
-
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JToolBar attributesToolbar;

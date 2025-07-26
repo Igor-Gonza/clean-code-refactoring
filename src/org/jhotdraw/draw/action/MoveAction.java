@@ -1,5 +1,5 @@
 /*
- * @(#)MoveAction.java  1.0  17. Marz 2004
+ * @(#)MoveAction.java  1.0  17. März 2004
  *
  * Copyright (c) 1996-2006 by the original authors of JHotDraw
  * and all its contributors ("JHotDraw.org")
@@ -25,7 +25,7 @@ import java.awt.geom.AffineTransform;
  * MoveAction.
  *
  * @author Werner Randelshofer
- * @version 1.0 17. Marz 2004  Created.
+ * @version 1.0 17. März 2004  Created.
  */
 @SuppressWarnings("unused")
 public abstract class MoveAction extends AbstractSelectedAction {

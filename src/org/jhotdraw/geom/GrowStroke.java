@@ -74,7 +74,6 @@ public class GrowStroke extends DoubleStroke {
       traceStroke(bp, left, right);
     }
 
-
     if (left.getBounds2D().contains(right.getBounds2D())) {
       return (grow > 0) ? left : right;
     } else {

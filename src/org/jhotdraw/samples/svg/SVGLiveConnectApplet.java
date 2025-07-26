@@ -36,7 +36,7 @@ import java.net.URL;
  *
  * @author wrandels
  * @version 2.0 Changed to support double precision coordinates.
- * <br>1.0 Created on 10. M�rz 2004, 13:22.
+ * <br>1.0 Created on 10. März 2004, 13:22.
  */
 public class SVGLiveConnectApplet extends JApplet {
   private final static String VERSION = "0.44";
@@ -135,7 +135,6 @@ public class SVGLiveConnectApplet extends JApplet {
     }.start();
   }
 
-
   private void setDrawing(Drawing d) {
     drawingPanel.setDrawing(d);
   }
@@ -143,7 +142,6 @@ public class SVGLiveConnectApplet extends JApplet {
   private Drawing getDrawing() {
     return drawingPanel.getDrawing();
   }
-
 
   public void setData(String text) {
     if (text != null && !text.isEmpty()) {
@@ -260,7 +258,6 @@ public class SVGLiveConnectApplet extends JApplet {
     }
 
   }//GEN-LAST:event_load
-
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private org.jhotdraw.samples.draw.DrawingPanel drawingPanel;

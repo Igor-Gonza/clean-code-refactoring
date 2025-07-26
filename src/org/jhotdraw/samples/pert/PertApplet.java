@@ -131,7 +131,6 @@ public class PertApplet extends JApplet {
     }.start();
   }
 
-
   private void setDrawing(Drawing d) {
     drawingPanel.setDrawing(d);
   }
@@ -139,7 +138,6 @@ public class PertApplet extends JApplet {
   private Drawing getDrawing() {
     return drawingPanel.getDrawing();
   }
-
 
   public void setData(String text) {
     if (text != null && !text.isEmpty()) {
@@ -215,7 +213,6 @@ public class PertApplet extends JApplet {
       }
     });
   }
-
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.ButtonGroup toolButtonGroup;

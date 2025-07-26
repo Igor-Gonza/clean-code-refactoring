@@ -12,7 +12,6 @@
  * JHotDraw.org.
  */
 
-
 package org.jhotdraw.gui;
 
 import org.jhotdraw.app.action.Arrangeable;
@@ -61,7 +60,6 @@ public class MDIDesktopPane extends JDesktopPane implements Arrangeable {
     }
     firePropertyChange("arrangement", oldValue, newValue);
   }
-
 
   public Arrangeable.Arrangement getArrangement() {
     // FIXME Check for the arrangement of the JInternalFrames here

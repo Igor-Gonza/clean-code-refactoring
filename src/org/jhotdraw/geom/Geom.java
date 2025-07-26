@@ -10,9 +10,7 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
-
 
 package org.jhotdraw.geom;
 
@@ -287,7 +285,6 @@ public class Geom {
             }
         }*/
 
-
     // if none found, pick the closest vertex
     if (len == Double.MAX_VALUE) {
       i = shape.getPathIterator(new AffineTransform(), 1);
@@ -312,7 +309,6 @@ public class Geom {
   public static Point2D.Double west(Rectangle2D.Double r) {
     return new Point2D.Double(r.x, r.y + r.height / 2);
   }
-
 
   public static Point east(Rectangle r) {
     return new Point(r.x + r.width, r.y + r.height / 2);
@@ -689,7 +685,6 @@ public class Geom {
    **/
   // from Doug Lea's PolygonFigure
   public static double distanceFromLine(int xa, int ya, int xb, int yb, int xc, int yc) {
-
 
     // source:http://vision.dai.ed.ac.uk/andrewfg/c-g-a-faq.html#q7
     //Let the point be C (XC,YC) and the line be AB (XA,YA) to (XB,YB).

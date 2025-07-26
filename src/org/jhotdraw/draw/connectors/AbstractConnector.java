@@ -58,7 +58,6 @@ public abstract class AbstractConnector implements org.jhotdraw.draw.connectors.
    */
   private boolean isStatePersistent;
 
-
   /**
    * Constructs a connector that has no owner. It is only
    * used internally to resurrect a connectors from a
@@ -94,7 +93,6 @@ public abstract class AbstractConnector implements org.jhotdraw.draw.connectors.
   protected final Figure getConnectorTarget(Figure f) {
     return (isConnectToDecorator && f.getDecorator() != null) ? f.getDecorator() : f;
   }
-
 
   /**
    * Tests if a point is contained in the connector.

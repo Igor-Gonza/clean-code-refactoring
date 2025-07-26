@@ -158,11 +158,9 @@ public class DefaultOSXApplication extends AbstractApplication {
     super.launch(args);
   }
 
-
   protected void initLookAndFeel() {
     System.setProperty("apple.laf.useScreenMenuBar", "true");
     System.setProperty("com.apple.macos.useScreenMenuBar", "true");
-
 
     try {
       UIManager.setLookAndFeel(QuaquaManager.getLookAndFeelClassName());
@@ -201,7 +199,6 @@ public class DefaultOSXApplication extends AbstractApplication {
     p.putAction(FocusAction.ID, new FocusAction(p));
   }
 
-
   public void addPalette(Window palette) {
     paletteHandler.addPalette(palette);
   }
@@ -224,7 +221,6 @@ public class DefaultOSXApplication extends AbstractApplication {
       f.setTitle(labels.getFormatted("frameTitle", title, getName(), p.getMultipleOpenId()));
       f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
       f.setPreferredSize(new Dimension(400, 400));
-
 
       PreferencesUtil.installFramePrefsHandler(prefs, "project", f);
       Point loc = f.getLocation();
@@ -342,7 +338,6 @@ public class DefaultOSXApplication extends AbstractApplication {
     for (JMenu mm : model.createMenus(this, p)) {
       mb.add(mm);
     }
-
 
     m = new JMenu();
     final JMenu windowMenu = m;

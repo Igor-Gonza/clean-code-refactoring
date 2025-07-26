@@ -12,7 +12,6 @@
  * JHotDraw.org.
  */
 
-
 package org.jhotdraw.draw.figures;
 
 import org.jhotdraw.draw.*;
@@ -340,7 +339,6 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
     return handles;
   }
 
-
   public Cursor getCursor(Point2D.Double p) {
     if (contains(p)) {
       return Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
@@ -422,7 +420,6 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
     fireUndoableEditHappened(new TransformEdit(this, tx));
     changed();
   }
-
 
   /**
    * Moves the figure. This is the
@@ -610,9 +607,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
       ep.y += decoratorInsets.bottom;
       decorator.basicSetBounds(sp, ep);
     }
-
   }
-
 
   public final Rectangle2D.Double getDrawBounds() {
     Rectangle2D.Double figureDrawBounds = getFigureDrawBounds();

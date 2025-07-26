@@ -335,7 +335,6 @@ public class SVGUtil {
           }
           t.rotate(angle * Math.PI / 180d, cx * Math.PI / 180d, cy * Math.PI / 180d);
 
-
         } else if (type.equals("skewX")) {
           double angle;
           if (tt.nextToken() != StreamTokenizer.TT_NUMBER) {

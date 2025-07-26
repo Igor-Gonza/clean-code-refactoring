@@ -63,7 +63,6 @@ public class ConnectionHandle extends LocatorHandle {
     drawCircle(g, Color.blue, Color.blue.darker());
   }
 
-
   public void trackStart(Point anchor, int modifiersEx) {
     setConnection(createConnection());
 

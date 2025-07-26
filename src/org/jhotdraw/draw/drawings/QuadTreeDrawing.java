@@ -95,7 +95,6 @@ public class QuadTreeDrawing extends AbstractDrawing implements FigureListener, 
     }
   }
 
-
   public void figureAreaInvalidated(FigureEvent e) {
     fireAreaInvalidated(e.getInvalidatedArea());
   }

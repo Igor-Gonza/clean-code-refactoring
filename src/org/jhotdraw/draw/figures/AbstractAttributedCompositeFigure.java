@@ -109,7 +109,6 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
     basicSetAttributeOnChildren(key, newValue);
   }
 
-
   protected void basicSetAttributeOnChildren(AttributeKey key, Object newValue) {
     for (org.jhotdraw.draw.figures.Figure child : getChildren()) {
       child.basicSetAttribute(key, newValue);
@@ -122,7 +121,6 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
   public Object getAttribute(AttributeKey key) {
     return hasAttribute(key) ? attributes.get(key) : key.getDefaultValue();
   }
-
 
   public void drawFigure(Graphics2D g) {
     drawChildren(g);
@@ -254,7 +252,6 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
     return AttributeKeys.supportedAttributeMap.get(name);
   }
 
-
   /**
    * Applies all attributes of this figure to that figure.
    */
@@ -263,7 +260,6 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
       that.setAttribute(entry.getKey(), entry.getValue());
     }
   }
-
 
   public void write(DOMOutput out) throws IOException {
     super.write(out);

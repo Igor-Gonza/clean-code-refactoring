@@ -12,7 +12,6 @@
  * JHotDraw.org.
  */
 
-
 package org.jhotdraw.draw.tools;
 
 import org.jhotdraw.draw.editors.DrawingEditor;
@@ -110,7 +109,6 @@ public class TextAreaTool extends CreationTool implements ActionListener {
     textArea.requestFocus();
     typingTarget = textHolder;
   }
-
 
   private Rectangle2D.Double getFieldBounds(org.jhotdraw.draw.figures.TextHolder figure) {
     Rectangle2D.Double r = figure.getBounds();

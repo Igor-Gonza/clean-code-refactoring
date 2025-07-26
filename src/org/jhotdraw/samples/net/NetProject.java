@@ -241,7 +241,6 @@ public class NetProject extends AbstractProject {
     undo.discardAllEdits();
   }
 
-
   @Override
   protected JFileChooser createOpenChooser() {
     JFileChooser c = super.createOpenChooser();
@@ -276,7 +275,6 @@ public class NetProject extends AbstractProject {
     add(scrollPane, java.awt.BorderLayout.CENTER);
 
   }// </editor-fold>//GEN-END:initComponents
-
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JScrollPane scrollPane;

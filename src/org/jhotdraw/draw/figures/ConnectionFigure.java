@@ -71,7 +71,6 @@ public interface ConnectionFigure extends org.jhotdraw.draw.figures.Figure {
    */
   void updateConnection();
 
-
   /**
    * Checks if two figures can be connected using this ConnectionFigure.
    * Implement this method to constrain the allowed connections between figures.

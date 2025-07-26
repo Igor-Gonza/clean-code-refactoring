@@ -41,7 +41,6 @@ public class Main {
       app = new DefaultSDIApplication();
     }
 
-
     DrawApplicationModel model = new DrawApplicationModel();
     model.setName("JHotDraw PlasmaDraw");
     model.setVersion("0.5");

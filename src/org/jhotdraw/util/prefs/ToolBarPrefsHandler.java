@@ -54,7 +54,6 @@ public class ToolBarPrefsHandler implements ComponentListener, AncestorListener 
     toolbar.addAncestorListener(this);
   }
 
-
   /*
    * XXX - This does not work
   private void makeToolBarFloat() {

@@ -36,7 +36,6 @@ public class DragTracker extends AbstractTool {
   Point2D.Double anchorPoint;
   private boolean isDragging;
 
-
   /**
    * Creates a new instance.
    */

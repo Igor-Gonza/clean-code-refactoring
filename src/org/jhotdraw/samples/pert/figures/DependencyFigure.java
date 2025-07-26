@@ -71,7 +71,6 @@ public class DependencyFigure extends LineConnectionFigure {
     return (start instanceof TaskFigure);
   }
 
-
   /**
    * Handles the disconnection of a connection.
    * Override this method to handle this event.

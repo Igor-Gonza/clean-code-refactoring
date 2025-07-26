@@ -96,7 +96,6 @@ public abstract class ChangeConnectionHandle extends AbstractHandle {
     return getConnection().getStartConnector();
   }
 
-
   /**
    * Disconnects the connection.
    */
@@ -159,7 +158,6 @@ public abstract class ChangeConnectionHandle extends AbstractHandle {
     }
     connection.setLiner(liner);
     getConnection().updateConnection();
-
 
     if (getTargetFigure() != null) {
       getTargetFigure().setConnectorsVisible(false, null);

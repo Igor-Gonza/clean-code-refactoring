@@ -301,7 +301,6 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
     }
   }
 
-
   // COMPOSITE FIGURES
   // LAYOUT
     /*
@@ -375,7 +374,6 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
   protected void handleConnect(org.jhotdraw.draw.figures.Figure start, org.jhotdraw.draw.figures.Figure end) {
   }
 
-
   public LineConnectionFigure clone() {
     LineConnectionFigure that = (LineConnectionFigure) super.clone();
     that.connectionHandler = new ConnectionHandler(that);
@@ -424,7 +422,6 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
     updateConnection();
     changed();
   }
-
 
   public boolean canConnect(org.jhotdraw.draw.figures.Figure start) {
     return start.canConnect();
@@ -568,7 +565,6 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
   public BezierPath getBezierPath() {
     return path;
   }
-
 
   public org.jhotdraw.draw.liners.Liner getLiner() {
     return liner;

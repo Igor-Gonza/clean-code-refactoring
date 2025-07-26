@@ -130,7 +130,6 @@ public class ImageBevelBorder implements Border {
     return (Insets) borderInsets.clone();
   }
 
-
   /**
    * Paints the bevel image for the specified component with the
    * specified position and size.
@@ -155,7 +154,6 @@ public class ImageBevelBorder implements Border {
     int right = imageInsets.right;
     int imgWidth = image.getWidth();
     int imgHeight = image.getHeight();
-
 
     // Optimisation: Draw image directly if it fits into the component
     if (fillContentArea) {

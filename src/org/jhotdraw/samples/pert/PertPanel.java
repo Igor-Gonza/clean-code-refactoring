@@ -106,7 +106,6 @@ public class PertPanel extends JPanel {
     creationToolbar.addSeparator();
     creationToolbar.add(pb);
 
-
     org.jhotdraw.draw.drawings.DefaultDrawing drawing = new DefaultDrawing();
     view.setDrawing(drawing);
     drawing.addUndoableEditListener(undoManager);
@@ -196,7 +195,6 @@ public class PertPanel extends JPanel {
     tb.addSeparator();
     ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.TextAreaTool(new TextAreaFigure()), "createTextArea", drawLabels);
   }
-
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JToolBar attributesToolbar;

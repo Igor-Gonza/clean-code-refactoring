@@ -66,7 +66,6 @@ public class BezierFigure extends AttributedFigure {
    */
   private transient BezierPath cappedPath;
 
-
   /**
    * Creates a new instance.
    */
@@ -247,7 +246,6 @@ public class BezierFigure extends AttributedFigure {
     invalidateCappedPath();
   }
 
-
   /**
    * Returns a clone of the bezier path of this figure.
    */
@@ -341,7 +339,6 @@ public class BezierFigure extends AttributedFigure {
             } else {
               pp = p1.getControlPoint(0);
             }
-
 
             double radius = END_DECORATION.get(this).getDecorationRadius(this);
             double lineLength = Geom.length(p0.getControlPoint(0), pp);

@@ -31,7 +31,6 @@ public class DrawingPanelBeanInfo extends SimpleBeanInfo {
     return beanDescriptor;
   }//GEN-LAST:BeanDescriptor
 
-
   // Properties information will be obtained from introspection.//GEN-FIRST:Properties
   private static PropertyDescriptor[] properties = null;
 
@@ -73,7 +72,6 @@ public class DrawingPanelBeanInfo extends SimpleBeanInfo {
 
   private static int defaultPropertyIndex = -1;//GEN-BEGIN:Idx
   private static int defaultEventIndex = -1;//GEN-END:Idx
-
 
 //GEN-FIRST:Superclass
 

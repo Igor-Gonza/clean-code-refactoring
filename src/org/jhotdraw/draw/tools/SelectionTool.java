@@ -48,7 +48,6 @@ public class SelectionTool extends AbstractTool implements ToolListener {
     tracker.addToolListener(this);
   }
 
-
   public void activate(DrawingEditor editor) {
     super.activate(editor);
     tracker.activate(editor);
@@ -100,7 +99,6 @@ public class SelectionTool extends AbstractTool implements ToolListener {
   public void draw(Graphics2D g) {
     tracker.draw(g);
   }
-
 
   public void mousePressed(MouseEvent evt) {
     super.mousePressed(evt);

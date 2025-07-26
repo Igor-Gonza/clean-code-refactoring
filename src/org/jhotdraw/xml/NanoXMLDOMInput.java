@@ -146,7 +146,6 @@ public class NanoXMLDOMInput implements DOMInput {
     return (value == null || value.isEmpty()) ? defaultValue : Boolean.parseBoolean(value);
   }
 
-
   /**
    * Returns the number of child elements of the current element.
    */

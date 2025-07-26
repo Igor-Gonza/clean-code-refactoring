@@ -58,7 +58,6 @@ public abstract class AttributedFigure extends AbstractFigure {
   public AttributedFigure() {
   }
 
-
   /**
    * Sets an attribute of the figure.
    * AttributeKey name and semantics are defined by the class implementing
@@ -121,7 +120,6 @@ public abstract class AttributedFigure extends AbstractFigure {
     return hasAttribute(key) ? attributes.get(key) : key.getDefaultValue();
   }
 
-
   public void drawFigure(Graphics2D g) {
     if (AttributeKeys.FILL_COLOR.get(this) != null) {
       g.setColor(AttributeKeys.FILL_COLOR.get(this));
@@ -152,7 +150,6 @@ public abstract class AttributedFigure extends AbstractFigure {
   protected void drawConnectors(Graphics2D g) {
   }
 
-
   public Stroke getStroke() {
     return AttributeKeys.getStroke(this);
   }
@@ -161,7 +158,6 @@ public abstract class AttributedFigure extends AbstractFigure {
     Number value = (Number) getAttribute(AttributeKeys.STROKE_MITER_LIMIT_FACTOR);
     return (value != null) ? value.doubleValue() : 10f;
   }
-
 
   public Rectangle2D.Double getFigureDrawBounds() {
     double width = AttributeKeys.getStrokeTotalWidth(this) / 2d;
@@ -255,7 +251,6 @@ public abstract class AttributedFigure extends AbstractFigure {
     return AttributeKeys.supportedAttributeMap.get(name);
   }
 
-
   /**
    * Applies all attributes of this figure to that figure.
    */
@@ -264,7 +259,6 @@ public abstract class AttributedFigure extends AbstractFigure {
       that.setAttribute(entry.getKey(), entry.getValue());
     }
   }
-
 
   public void write(DOMOutput out) throws IOException {
     Rectangle2D.Double r = getBounds();

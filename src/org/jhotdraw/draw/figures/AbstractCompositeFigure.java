@@ -256,7 +256,6 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
     }
   }
 
-
   /**
    * Sends a figure to the back of the composite figure.
    *
@@ -352,7 +351,6 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
   public Object getAttribute(AttributeKey name) {
     return null;
   }
-
 
   public boolean contains(Point2D.Double p) {
     if (getDrawBounds().contains(p)) {
@@ -574,7 +572,6 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
     }
     super.changed();
   }
-
 
   public void invalidate() {
     super.invalidate();

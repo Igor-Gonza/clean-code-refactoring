@@ -14,7 +14,6 @@
 
 package org.jhotdraw.draw.action;
 
-
 import javax.swing.*;
 import java.awt.*;
 

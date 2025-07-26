@@ -168,7 +168,6 @@ public class JavaxDOMInput implements DOMInput {
     return (value.isEmpty()) ? defaultValue : Boolean.parseBoolean(value);
   }
 
-
   /**
    * Returns the number of child elements of the current element.
    */

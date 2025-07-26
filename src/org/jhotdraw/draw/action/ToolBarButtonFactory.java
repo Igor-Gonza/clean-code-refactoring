@@ -79,7 +79,6 @@ public class ToolBarButtonFactory {
     m.put("Iron", new Color(76, 76, 76));
     m.put("Magnesium", new Color(179, 179, 179));
 
-
     m.put("Mocha", new Color(128, 64, 0));
     m.put("Fern", new Color(64, 128, 0));
     m.put("Moss", new Color(0, 128, 64));
@@ -88,7 +87,6 @@ public class ToolBarButtonFactory {
     m.put("Maroon", new Color(128, 0, 64));
     m.put("Tungsten", new Color(51, 51, 51));
     m.put("Silver", new Color(204, 204, 204));
-
 
     m.put("Tangerine", new Color(255, 128, 0));
     m.put("Lime", new Color(128, 255, 0));
@@ -113,7 +111,6 @@ public class ToolBarButtonFactory {
     m.put("Transparent", null);
     DEFAULT_COLORS = Collections.unmodifiableMap(m);
   }
-
 
   private static class ToolButtonListener implements ItemListener {
     private final org.jhotdraw.draw.tools.Tool tool;
@@ -231,7 +228,6 @@ public class ToolBarButtonFactory {
     group.add(t);
     tb.add(t);
   }
-
 
   public static void addZoomButtonsTo(JToolBar bar, final org.jhotdraw.draw.editors.DrawingEditor editor) {
     bar.add(createZoomButton(editor));
@@ -448,7 +444,6 @@ public class ToolBarButtonFactory {
     attr.put(STROKE_TYPE, AttributeKeys.StrokeType.DOUBLE);
     attr.put(STROKE_INNER_WIDTH_FACTOR, 4d);
     strokeTypePopupButton.add(new AttributeAction(editor, attr, labels.getString("attributeStrokeTypeDouble"), new StrokeIcon(new DoubleStroke(4, 1))));
-
 
     bar.add(strokeTypePopupButton);
   }

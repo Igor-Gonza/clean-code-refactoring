@@ -79,7 +79,6 @@ public class BidirectionalConnectionTool extends AbstractTool implements FigureL
    */
   private org.jhotdraw.draw.figures.ConnectionFigure prototype;
 
-
   /**
    * Creates a new instance.
    */

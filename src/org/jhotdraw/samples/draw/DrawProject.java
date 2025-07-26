@@ -246,7 +246,6 @@ public class DrawProject extends AbstractProject {
 
   }// </editor-fold>//GEN-END:initComponents
 
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JScrollPane scrollPane;
   private DefaultDrawingView view;

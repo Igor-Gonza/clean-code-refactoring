@@ -219,7 +219,6 @@ public class UndoRedoManager extends UndoManager {//javax.swing.undo.UndoManager
     return redoAction;
   }
 
-
   /**
    * Updates the properties of the UndoAction
    * and of the RedoAction.

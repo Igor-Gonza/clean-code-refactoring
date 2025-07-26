@@ -38,10 +38,8 @@ public class PlacardScrollPaneLayout extends ScrollPaneLayout {
 //Insets insets = parent.getInsets();
       lowerLeft.setBounds(hsb.getX(), hsb.getY(), llp.width, hsb.getHeight());
       hsb.setBounds(hsb.getX() + llp.width, hsb.getY(), hsb.getWidth() - llp.width, hsb.getHeight());
-
     }
   }
-
 
   /**
    * The UI resource version of <code>ScrollPaneLayout</code>.
@@ -49,6 +47,3 @@ public class PlacardScrollPaneLayout extends ScrollPaneLayout {
   public static class UIResource extends PlacardScrollPaneLayout implements javax.swing.plaf.UIResource {
   }
 }
-
-
-

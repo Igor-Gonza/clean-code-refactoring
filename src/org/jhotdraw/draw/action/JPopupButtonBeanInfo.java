@@ -32,7 +32,6 @@ public class JPopupButtonBeanInfo extends SimpleBeanInfo {
     return beanDescriptor;
   } //GEN-LAST:BeanDescriptor
 
-
   // Properties information will be obtained from introspection.//GEN-FIRST:Properties
   private static final PropertyDescriptor[] properties = null;
 
@@ -74,7 +73,6 @@ public class JPopupButtonBeanInfo extends SimpleBeanInfo {
 
   private static final int defaultPropertyIndex = -1; //GEN-BEGIN:Idx
   private static final int defaultEventIndex = -1; //GEN-END:Idx
-
 
   //GEN-FIRST:Superclass
 

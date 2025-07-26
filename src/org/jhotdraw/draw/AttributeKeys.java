@@ -126,7 +126,6 @@ public class AttributeKeys {
    */
   public final static AttributeKey<Double> STROKE_DASH_FACTOR = new AttributeKey<>("strokeDashFactor", null);
 
-
   public enum StrokeType {
     /**
      * If STROKE_TYPE is set to this value, a BasicStroke instance is used
@@ -258,7 +257,6 @@ public class AttributeKeys {
     }
     supportedAttributeMap = Collections.unmodifiableMap(am);
   }
-
 
   /**
    * Convenience method for computing the total stroke widTH from the

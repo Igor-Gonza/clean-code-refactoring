@@ -12,7 +12,6 @@
  * JHotDraw.org.
  */
 
-
 package org.jhotdraw.draw.figures;
 
 import org.jhotdraw.draw.AttributeKeys;

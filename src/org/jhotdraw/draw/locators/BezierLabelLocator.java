@@ -93,7 +93,6 @@ public class BezierLabelLocator implements Locator, DOMStorable {
     return p;
   }
 
-
   /**
    * Returns a Point2D.Double on the polyline that is at the provided relative position.
    * XXX - Implement this and move it to BezierPath

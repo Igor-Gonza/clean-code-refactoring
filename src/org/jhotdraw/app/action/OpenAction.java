@@ -25,7 +25,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
-
 /**
  * Opens a file in new project, or in the current project, if it is empty.
  *

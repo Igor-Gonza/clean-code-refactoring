@@ -67,7 +67,6 @@ public class ChopRoundRectConnector extends ChopBoxConnector {
     }
     Geom.grow(outer, grow, grow);
 
-
     Rectangle2D.Double inner = (Rectangle2D.Double) outer.clone();
     double gw = -(rrf.getArcWidth() + grow * 2) / 2;
     double gh = -(rrf.getArcHeight() + grow * 2) / 2;

@@ -110,7 +110,6 @@ public abstract class AbstractApplication extends AbstractBean implements Applic
 
   protected abstract void initProjectActions(Project p);
 
-
   public void stop() {
     for (Project p : new LinkedList<>(projects())) {
       dispose(p);

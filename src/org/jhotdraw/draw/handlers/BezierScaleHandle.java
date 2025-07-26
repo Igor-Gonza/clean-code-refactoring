@@ -50,7 +50,6 @@ public class BezierScaleHandle extends AbstractHandle {
     return false;
   }
 
-
   /**
    * Draws this handle.
    */

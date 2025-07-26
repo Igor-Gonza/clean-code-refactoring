@@ -12,7 +12,6 @@
  * JHotDraw.org.
  */
 
-
 package org.jhotdraw.draw.tools;
 
 import org.jhotdraw.draw.editors.DrawingEditor;

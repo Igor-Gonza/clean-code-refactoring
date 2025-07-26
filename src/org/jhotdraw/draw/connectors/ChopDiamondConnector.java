@@ -1,5 +1,5 @@
 /*
- * @(#)ChopDiamondConnector.java  1.0  27. Marz 2006
+ * @(#)ChopDiamondConnector.java  1.0  27. März 2006
  *
  * Copyright (c) 1996-2006 by the original authors of JHotDraw
  * and all its contributors ("JHotDraw.org")
@@ -28,7 +28,7 @@ import org.jhotdraw.geom.*;
  * a diamond figure.
  *
  * @author Werner Randelshofer
- * @version 1.0 27. Marz 2006 Created.
+ * @version 1.0 27. März 2006 Created.
  */
 public class ChopDiamondConnector extends ChopBoxConnector {
 

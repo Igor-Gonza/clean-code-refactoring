@@ -144,7 +144,6 @@ public class TaskFigure extends GraphicalCompositeFigure {
     durationFigure.addFigureListener(new DurationAdapter(this));
   }
 
-
   public Collection<org.jhotdraw.draw.handlers.Handle> createHandles(int detailLevel) {
     List<Handle> handles = new LinkedList<>();
     if (detailLevel == 0) {
@@ -211,7 +210,6 @@ public class TaskFigure extends GraphicalCompositeFigure {
       return 0;
     }
   }
-
 
   private org.jhotdraw.draw.figures.TextFigure getNameFigure() {
     return (org.jhotdraw.draw.figures.TextFigure) ((org.jhotdraw.draw.figures.ListFigure) getChild(0)).getChild(0);
@@ -290,7 +288,6 @@ public class TaskFigure extends GraphicalCompositeFigure {
     dependencies.remove(f);
     updateStartTime();
   }
-
 
   /**
    * Returns dependent PertTasks which are directly connected via a

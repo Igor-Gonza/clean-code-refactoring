@@ -44,7 +44,6 @@ public class FloatingTextArea {
    */
   protected org.jhotdraw.draw.views.DrawingView view;
 
-
   /**
    * Constructor for the FloatingTextArea object
    */
@@ -56,7 +55,6 @@ public class FloatingTextArea {
     editScrollContainer.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     editScrollContainer.setBorder(BorderFactory.createLineBorder(Color.black));
   }
-
 
   /**
    * Creates the overlay within the given container.
@@ -92,7 +90,6 @@ public class FloatingTextArea {
     this.view = view;
   }
 
-
   /**
    * Positions and sizes the overlay.
    *
@@ -107,7 +104,6 @@ public class FloatingTextArea {
     editWidget.requestFocus();
   }
 
-
   /**
    * Gets the text contents of the overlay.
    *
@@ -116,7 +112,6 @@ public class FloatingTextArea {
   public String getText() {
     return editWidget.getText();
   }
-
 
   /**
    * Gets the preferred size of the overlay.
@@ -127,7 +122,6 @@ public class FloatingTextArea {
   public Dimension getPreferredSize(int cols) {
     return new Dimension(editWidget.getWidth(), editWidget.getHeight());
   }
-
 
   /**
    * Removes the overlay.

@@ -78,7 +78,6 @@ public class BezierNodeHandle extends AbstractHandle {
     return r;
   }
 
-
   public void trackStart(Point anchor, int modifiersEx) {
     org.jhotdraw.draw.figures.BezierFigure figure = getBezierFigure();
     view.getDrawing().fireUndoableEditHappened(edit = new CompositeEdit("Punkt verschieben"));

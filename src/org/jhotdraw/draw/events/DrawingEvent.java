@@ -43,7 +43,6 @@ public class DrawingEvent extends EventObject {
     this.invalidatedArea = invalidatedArea;
   }
 
-
   /**
    * Gets the changed drawing.
    */

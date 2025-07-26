@@ -67,7 +67,6 @@ public class LabelFigure extends TextFigure implements FigureListener {
     return (target != null && contains(p)) ? new TextTool(target) : null;
   }
 
-
   public void figureAreaInvalidated(FigureEvent e) {
   }
 

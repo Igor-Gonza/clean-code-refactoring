@@ -42,7 +42,6 @@ public class Main {
       app = new DefaultSDIApplication();
     }
 
-
     DefaultApplicationModel model = new PertApplicationModel();
     model.setName("Pert");
     model.setVersion("1.0");

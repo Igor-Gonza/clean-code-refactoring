@@ -86,7 +86,6 @@ public class TextFigure extends AttributedFigure implements TextHolder {
     origin = new Point2D.Double(anchor.x, anchor.y);
   }
 
-
   public boolean contains(Point2D.Double p) {
     if (getBounds().contains(p)) {
       return true;

@@ -108,7 +108,6 @@ public class TextTool extends CreationTool implements ActionListener {
     typingTarget = textHolder;
   }
 
-
   private Rectangle getFieldBounds(org.jhotdraw.draw.figures.TextHolder figure) {
         /*
         Rectangle box = getView().drawingToView(figure.getBounds());

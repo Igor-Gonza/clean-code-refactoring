@@ -270,7 +270,6 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
     }
   }
 
-
   public FontRenderContext getFontRenderContext() {
     return fontRenderContext;
   }

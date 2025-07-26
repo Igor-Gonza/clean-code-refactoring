@@ -397,7 +397,6 @@ public class XMLElement implements IXMLElement, Serializable {
     return this.children.get(index);
   }
 
-
   /**
    * Searches a child element.
    *

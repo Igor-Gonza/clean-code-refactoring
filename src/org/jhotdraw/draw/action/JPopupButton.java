@@ -111,7 +111,6 @@ public class JPopupButton extends javax.swing.JButton {
     return popupMenu;
   }
 
-
   /**
    * This method is called from within the constructor to
    * initialize the form.
@@ -185,7 +184,6 @@ public class JPopupButton extends javax.swing.JButton {
       popupMenu.show(this, x, y);
     }
   }//GEN-LAST:event_showPopup
-
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   // End of variables declaration//GEN-END:variables

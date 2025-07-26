@@ -68,7 +68,7 @@ import static org.jhotdraw.draw.AttributeKeys.*;
  * Werner Randelshofer (this derived version)
  * @version 2.0.1 2006-02-27 Draw UNDERLINE_LOW_ONE_PIXEL instead of UNDERLINE_ON.
  * <br>2.0 2006-01-14 Changed to support double precision coordinates.
- * <br>1.0 5. Marz 2004  Created.
+ * <br>1.0 5. März 2004  Created.
  */
 @SuppressWarnings("unused")
 public class TextAreaFigure extends AttributedFigure implements org.jhotdraw.draw.figures.TextHolder {
@@ -117,7 +117,6 @@ public class TextAreaFigure extends AttributedFigure implements org.jhotdraw.dra
     Point2D.Double lead = getEndPoint();
     basicSetBounds((Point2D.Double) tx.transform(anchor, anchor), (Point2D.Double) tx.transform(lead, lead));
   }
-
 
   public boolean contains(Point2D.Double p) {
     return bounds.contains(p);
@@ -278,7 +277,6 @@ public class TextAreaFigure extends AttributedFigure implements org.jhotdraw.dra
     return verticalPos;
   }
 
-
   protected void drawFill(Graphics2D g) {
     g.fill(bounds);
   }
@@ -323,7 +321,6 @@ public class TextAreaFigure extends AttributedFigure implements org.jhotdraw.dra
   public Tool getTool(Point2D.Double p) {
     return (isEditable() && contains(p)) ? new TextAreaTool(this) : null;
   }
-
 
   protected void readBounds(DOMInput in) {
     bounds.x = in.getAttribute("x", 0d);

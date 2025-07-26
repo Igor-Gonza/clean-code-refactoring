@@ -137,7 +137,6 @@ public interface Application {
    */
   boolean isEnabled();
 
-
   /**
    * Sets the enabled state of the application.
    * <p>

@@ -96,7 +96,6 @@ public interface Figure extends Cloneable, Serializable, DOMStorable {
    */
   void setVisible(boolean newValue);
 
-
   // BOUNDS
 
   /**
@@ -344,7 +343,6 @@ public interface Figure extends Cloneable, Serializable, DOMStorable {
    * to the new figures.
    */
   void remap(Map<Figure, Figure> oldToNew);
-
 
   // EVENT HANDLING
 

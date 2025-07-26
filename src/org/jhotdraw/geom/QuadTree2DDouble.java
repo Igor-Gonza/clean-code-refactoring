@@ -10,9 +10,7 @@
  * such Confidential Information and shall use it only in accordance
  * with the terms of the license agreement you entered into with
  * JHotDraw.org.
-�
  */
-
 
 package org.jhotdraw.geom;
 
@@ -135,7 +133,6 @@ public class QuadTree2DDouble<T> {
     private QuadNode northWest;
     private QuadNode southEast;
     private QuadNode southWest;
-
 
     public QuadNode(Rectangle2D.Double bounds) {
       this.bounds = bounds;

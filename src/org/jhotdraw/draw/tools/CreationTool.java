@@ -118,7 +118,6 @@ public class CreationTool extends AbstractTool {
     }
   }
 
-
   public void mousePressed(MouseEvent evt) {
     super.mousePressed(evt);
     getView().clearSelection();

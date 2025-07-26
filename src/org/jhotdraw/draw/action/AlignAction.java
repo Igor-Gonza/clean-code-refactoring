@@ -30,7 +30,7 @@ import java.util.Collection;
  *
  * @author Werner Randelshofer
  * @version 2.0 2006-01-15 Changed to support double precision coordinates.
- * <br>1.0 17. Marz 2004  Created.
+ * <br>1.0 17. März Created.
  */
 public abstract class AlignAction extends AbstractSelectedAction {
 

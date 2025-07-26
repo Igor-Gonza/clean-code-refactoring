@@ -129,7 +129,6 @@ public class NetApplet extends JApplet {
     }.start();
   }
 
-
   private void setDrawing(Drawing d) {
     drawingPanel.setDrawing(d);
   }
@@ -137,7 +136,6 @@ public class NetApplet extends JApplet {
   private Drawing getDrawing() {
     return drawingPanel.getDrawing();
   }
-
 
   public void setData(String text) {
     if (text != null && !text.isEmpty()) {
@@ -211,7 +209,6 @@ public class NetApplet extends JApplet {
       a.start();
     });
   }
-
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.ButtonGroup toolButtonGroup;

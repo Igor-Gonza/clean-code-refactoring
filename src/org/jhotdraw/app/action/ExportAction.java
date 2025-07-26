@@ -62,7 +62,6 @@ public class ExportAction extends AbstractProjectAction {
     }
   }
 
-
   public void actionPerformed(ActionEvent evt) {
     final Project project = getCurrentProject();
     if (project.isEnabled()) {

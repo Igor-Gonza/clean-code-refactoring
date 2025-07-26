@@ -207,7 +207,6 @@ public class DiamondFigure extends AttributedFigure {
     return diamond.contains(p);
   }
 
-
   public void basicSetBounds(Point2D.Double anchor, Point2D.Double lead) {
     rectangle.x = Math.min(anchor.x, lead.x);
     rectangle.y = Math.min(anchor.y, lead.y);

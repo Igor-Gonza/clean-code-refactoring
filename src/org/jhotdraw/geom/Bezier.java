@@ -122,7 +122,6 @@ public class Bezier {
     return bezierPath;
   }
 
-
   /**
    * Fit a Bézier curve to a (sub)set of digitized points.
    *
@@ -177,7 +176,6 @@ public class Bezier {
       bezierPath.curveTo((float) bezCurve[1].x, (float) bezCurve[1].y, (float) bezCurve[2].x, (float) bezCurve[2].y, (float) bezCurve[3].x, (float) bezCurve[3].y);
       return;
     }
-
 
     /*  If error not too large, try some reparameterization  */
     /*  and iteration */
@@ -256,7 +254,6 @@ public class Bezier {
       return;
     }
 
-
     /*  If error not too large, try some reparameterization  */
     /*  and iteration */
     if (maxError < iterationError) {
@@ -309,7 +306,6 @@ public class Bezier {
 
     nPts = last - first + 1;
 
-
     /* Compute the A's	*/
     for (i = 0; i < nPts; i++) {
       Point2D.Double v1, v2;
@@ -338,7 +334,6 @@ public class Bezier {
 
       tmp = v2SubII(d[first + i], v2AddII(v2ScaleIII(d[first], b0(uPrime[i])), v2AddII(v2ScaleIII(d[first], b1(uPrime[i])), v2AddII(v2ScaleIII(d[last], b2(uPrime[i])), v2ScaleIII(d[last], b3(uPrime[i]))))));
 
-
       X[0] += v2Dot(A[i][0], tmp);
       X[1] += v2Dot(A[i][1], tmp);
     }
@@ -354,7 +349,6 @@ public class Bezier {
     }
     alpha_l = det_X_C1 / det_C0_C1;
     alpha_r = det_C0_X / det_C0_C1;
-
 
     /*  If alpha negative, use the Wu/Barsky heuristic (see text) */
     /* (if alpha is 0, you get coincident control points that lead to
@@ -380,7 +374,6 @@ public class Bezier {
     return (bezCurve);
   }
 
-
   /**
    * Given set of points and their parameterization, try to find
    * a better parameterization.
@@ -402,7 +395,6 @@ public class Bezier {
     }
     return (uPrime);
   }
-
 
   /**
    * Use Newton-Raphson iteration to find better root.
@@ -444,7 +436,6 @@ public class Bezier {
     return (uPrime);
   }
 
-
   /**
    * Evaluate a Bezier curve at a particular parameter value.
    *
@@ -475,7 +466,6 @@ public class Bezier {
     return Q;
   }
 
-
   /**
    * B0, B1, B2, B3 :
    * Bezier multipliers
@@ -484,7 +474,6 @@ public class Bezier {
     double tmp = 1.0 - u;
     return (tmp * tmp * tmp);
   }
-
 
   private static double b1(double u) {
     double tmp = 1.0 - u;
@@ -499,7 +488,6 @@ public class Bezier {
   private static double b3(double u) {
     return (u * u * u);
   }
-
 
   /**
    * Approximate unit tangents at "left" endpoint of digitized curve.
@@ -526,7 +514,6 @@ public class Bezier {
     tHat2 = v2Normalize(tHat2);
     return tHat2;
   }
-
 
   /**
    * Approximate unit tangents at "center" of digitized curve.
@@ -570,7 +557,6 @@ public class Bezier {
 
     return (u);
   }
-
 
   /**
    * Find the maximum squared distance of digitized points
@@ -625,7 +611,6 @@ public class Bezier {
     c.y = a.y - b.y;
     return (c);
   }
-
 
   /* -------------------------------------------------------------------------
    * GraphicsGems.c

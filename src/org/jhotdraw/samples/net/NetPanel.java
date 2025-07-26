@@ -105,7 +105,6 @@ public class NetPanel extends JPanel {
     creationToolbar.addSeparator();
     creationToolbar.add(pb);
 
-
     DefaultDrawing drawing = new org.jhotdraw.draw.drawings.DefaultDrawing();
     view.setDrawing(drawing);
     drawing.addUndoableEditListener(undoManager);
@@ -193,7 +192,6 @@ public class NetPanel extends JPanel {
     attributes.put(AttributeKeys.STROKE_COLOR, new Color(0x000099));
     ToolBarButtonFactory.addToolTo(tb, editor, new org.jhotdraw.draw.tools.ConnectionTool(new LineConnectionFigure(), attributes), "createLink", labels);
   }
-
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JToolBar attributesToolbar;

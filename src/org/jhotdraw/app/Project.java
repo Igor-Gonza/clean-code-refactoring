@@ -29,7 +29,7 @@ public interface Project {
   /**
    * Gets the application to which this project belongs.
    */
-   Application getApplication();
+  Application getApplication();
 
   /**
    * Sets the application of the project.
@@ -37,28 +37,28 @@ public interface Project {
    * Application.removeProject().
    * This is a bound property.
    */
-   void setApplication(Application newValue);
+  void setApplication(Application newValue);
 
   /**
    * Returns the visual component of the project.
    */
-   JComponent getComponent();
+  JComponent getComponent();
 
   /**
    * Returns the project file.
    */
-   File getFile();
+  File getFile();
 
   /**
    * Sets the project file.
    * This is a bound property.
    */
-   void setFile(File newValue);
+  void setFile(File newValue);
 
   /**
    * Returns the enabled state of the project.
    */
-   boolean isEnabled();
+  boolean isEnabled();
 
   /**
    * Sets the enabled state of the project.
@@ -76,54 +76,53 @@ public interface Project {
    * <p>
    * This is a bound property.
    */
-   void setEnabled(boolean newValue);
+  void setEnabled(boolean newValue);
 
   /**
    * Writes the project to the specified file.
    * By convention this is never invoked on the AWT Event Dispatcher Thread.
    */
-   void write(File f) throws IOException;
+  void write(File f) throws IOException;
 
   /**
    * Reads the project from the specified file.
    * By convention this is never invoked on the AWT Event Dispatcher Thread.
    */
-   void read(File f) throws IOException;
+  void read(File f) throws IOException;
 
   /**
    * Clears the project.
    */
-   void clear();
-
+  void clear();
 
   /**
    * Gets the open file chooser for the project.
    */
-   JFileChooser getOpenChooser();
+  JFileChooser getOpenChooser();
 
   /**
    * Gets the save file chooser for the project.
    */
-   JFileChooser getSaveChooser();
+  JFileChooser getSaveChooser();
 
   /**
    * Returns true, if the project has unsaved changes.
    * This is a bound property.
    */
-   boolean hasUnsavedChanges();
+  boolean hasUnsavedChanges();
 
   /**
    * Marks all changes as saved.
    * This changes the state of hasUnsavedChanges to false.
    */
-   void markChangesAsSaved();
+  void markChangesAsSaved();
 
   /**
    * Executes the specified runnable on the worker thread of the project.
    * Execution is performed sequentially in the same sequence as the
    * runnable have been passed to this method.
    */
-   void execute(Runnable worker);
+  void execute(Runnable worker);
 
   /**
    * Initializes the project.
@@ -131,7 +130,7 @@ public interface Project {
    * A project must not consume many resources before method init() is called.
    * This is crucial for the responsiveness of an application.
    */
-   void init();
+  void init();
 
   /**
    * Gets rid of all the resources of the project.
@@ -139,49 +138,49 @@ public interface Project {
    * A project must not consume many resources after method dispose() has been called.
    * This is crucial for the responsiveness of an application.
    */
-   void dispose();
+  void dispose();
 
   /**
    * Returns the action with the specified id.
    */
-   Action getAction(String id);
+  Action getAction(String id);
 
   /**
    * Puts an action with the specified id.
    */
-   void putAction(String id, Action action);
+  void putAction(String id, Action action);
 
   /**
    * Adds a property change listener.
    */
-   void addPropertyChangeListener(PropertyChangeListener l);
+  void addPropertyChangeListener(PropertyChangeListener l);
 
   /**
    * Removes a property change listener.
    */
-   void removePropertyChangeListener(PropertyChangeListener l);
+  void removePropertyChangeListener(PropertyChangeListener l);
 
   /**
    * Sets the multiple open id.
    * The id is used to help distinguish multiply opened projects.
    * The id should be displayed in the title of the project.
    */
-   void setMultipleOpenId(int newValue);
+  void setMultipleOpenId(int newValue);
 
   /**
    * Returns the multiple open id.
    * If a project is open only once this should be 1.
    */
-   int getMultipleOpenId();
+  int getMultipleOpenId();
 
   /**
    * This is used by Application to keep track if a project is showing.
    */
-   boolean isShowing();
+  boolean isShowing();
 
   /**
    * This is used by Application to keep track if a project is showing.
    */
-   void setShowing(boolean newValue);
+  void setShowing(boolean newValue);
 
 }

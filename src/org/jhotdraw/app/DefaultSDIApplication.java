@@ -262,7 +262,6 @@ public class DefaultSDIApplication extends AbstractApplication {
     b.setFocusable(false);
   }
 
-
   public void hide(Project p) {
     if (p.isShowing()) {
       p.setShowing(false);

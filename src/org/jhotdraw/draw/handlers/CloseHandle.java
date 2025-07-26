@@ -24,7 +24,7 @@ import java.awt.*;
  *
  * @author Werner Randelshofer
  * @version 2.0 2006-01-14 Changed to support double precision coordinates.
- * <br>1.0 31. Marz 2004  Created.
+ * <br>1.0 31. März 2004  Created.
  */
 public class CloseHandle extends LocatorHandle {
   private boolean pressed;
@@ -49,7 +49,6 @@ public class CloseHandle extends LocatorHandle {
     g.drawLine(r.x, r.y, r.x + r.width, r.y + r.height);
     g.drawLine(r.x + r.width, r.y, r.x, r.y + r.height);
   }
-
 
   /**
    * Returns a cursor for the handle.

@@ -227,7 +227,6 @@ public class BoxHandleKit {
       super(owner, org.jhotdraw.draw.locators.RelativeLocator.southEast());
     }
 
-
     protected void trackStepNormalized(Point2D.Double p) {
       Rectangle2D.Double r = getOwner().getBounds();
       setBounds(new Point2D.Double(r.x, r.y), new Point2D.Double(Math.max(r.x + 1, p.x), Math.max(r.y + 1, p.y)));

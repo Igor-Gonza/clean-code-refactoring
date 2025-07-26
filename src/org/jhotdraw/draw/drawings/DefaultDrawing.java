@@ -65,7 +65,6 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     invalidateSortOrder();
   }
 
-
   public void draw(Graphics2D g) {
     synchronized (getLock()) {
       ensureSorted();

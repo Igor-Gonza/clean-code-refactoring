@@ -38,7 +38,7 @@ import java.util.LinkedList;
  * SVGPanel.
  *
  * @author Werner Randelshofer
- * @version 1.0 11. Marz 2004  Created.
+ * @version 1.0 11. März 2004  Created.
  */
 public class SVGPanel extends JPanel {
   private UndoRedoManager undoManager;
@@ -108,7 +108,6 @@ public class SVGPanel extends JPanel {
     pb.setFocusable(false);
     creationToolbar.addSeparator();
     creationToolbar.add(pb);
-
 
     org.jhotdraw.draw.drawings.DefaultDrawing drawing = new org.jhotdraw.draw.drawings.DefaultDrawing();
     view.setDrawing(drawing);
@@ -223,7 +222,6 @@ public class SVGPanel extends JPanel {
     add(jPanel1, java.awt.BorderLayout.SOUTH);
 
   }// </editor-fold>//GEN-END:initComponents
-
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JToolBar attributesToolbar;

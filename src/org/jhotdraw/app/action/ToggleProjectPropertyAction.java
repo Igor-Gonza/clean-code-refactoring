@@ -85,7 +85,6 @@ public class ToggleProjectPropertyAction extends AbstractProjectAction {
     return null;
   }
 
-
   protected void installProjectListeners(Project p) {
     super.installProjectListeners(p);
     p.addPropertyChangeListener(projectListener);

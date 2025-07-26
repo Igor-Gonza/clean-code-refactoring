@@ -74,7 +74,6 @@ public class BezierControlPointHandle extends AbstractHandle {
     return r;
   }
 
-
   public void trackStart(Point anchor, int modifiersEx) {
     view.getDrawing().fireUndoableEditHappened(edit = new CompositeEdit("Punkt verschieben"));
     Point2D.Double location = view.getConstrainer().constrainPoint(view.viewToDrawing(getLocation()));
@@ -118,7 +117,6 @@ public class BezierControlPointHandle extends AbstractHandle {
     vr.grow(getHandleSize(), getHandleSize());
     fireAreaInvalidated(vr);
   }
-
 
   public void trackEnd(Point anchor, Point lead, int modifiersEx) {
     BezierFigure figure = getBezierFigure();

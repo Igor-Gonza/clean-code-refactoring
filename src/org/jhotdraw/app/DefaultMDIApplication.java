@@ -111,7 +111,6 @@ public class DefaultMDIApplication extends AbstractApplication {
     scrollPane.setViewportView(desktopPane);
     toolBarActions = new LinkedList<>();
 
-
     initApplicationActions();
     parentFrame.getContentPane().add(wrapDesktopPane(scrollPane, toolBarActions));
 
@@ -352,7 +351,6 @@ public class DefaultMDIApplication extends AbstractApplication {
     for (JMenu mm : mo.createMenus(this, null)) {
       mb.add(mm);
     }
-
 
     m = new JMenu();
     final JMenu windowMenu = m;

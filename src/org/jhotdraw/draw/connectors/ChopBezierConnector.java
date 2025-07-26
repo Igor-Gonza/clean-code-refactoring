@@ -27,7 +27,7 @@ import java.awt.geom.Point2D;
  *
  * @author Werner Randelshofer
  * @version 2.0 2006-01-14 Changed to support double precision coordinates.
- * <br>1.0 5. Marz 2004  Created.
+ * <br>1.0 5. März 2004  Created.
  */
 public class ChopBezierConnector extends ChopBoxConnector {
 

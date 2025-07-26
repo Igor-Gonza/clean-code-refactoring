@@ -58,12 +58,10 @@ public class ArrowTip extends AbstractLineDecoration implements DOMStorable {
     this.innerRadius = innerRadius;
   }
 
-
   protected GeneralPath getDecoratorPath(Figure f) {
     // FIXME - This should take the stroke join an the outer radius into
     // account to compute the offset properly.
     double offset = (isStroked()) ? 1 : 0;
-
 
     GeneralPath path = new GeneralPath();
     path.moveTo((float) (outerRadius * Math.sin(-angle)), (float) (offset + outerRadius * Math.cos(-angle)));

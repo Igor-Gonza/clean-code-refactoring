@@ -30,7 +30,6 @@ public class Main {
   public static void main(String[] args) {
     Application app = new DefaultOSXApplication();
 
-
     SVGApplicationModel model = new SVGApplicationModel();
     model.setName("SVG Draw");
     model.setVersion("0.1");

@@ -33,7 +33,6 @@ public class SelectAreaTracker extends AbstractTool {
   public SelectAreaTracker() {
   }
 
-
   public void mousePressed(MouseEvent evt) {
     super.mousePressed(evt);
     clearRubberBand();

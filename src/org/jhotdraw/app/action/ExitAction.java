@@ -166,7 +166,6 @@ public class ExitAction extends AbstractApplicationAction {
     }
   }
 
-
   protected void saveChangesAndReviewNext() {
     if (unsavedProject.getFile() == null) {
       JFileChooser fileChooser = unsavedProject.getSaveChooser();

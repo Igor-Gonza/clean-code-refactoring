@@ -50,7 +50,6 @@ public class ChangeConnectionStartHandle extends ChangeConnectionHandle {
     getConnection().setStartConnector(null);
   }
 
-
   protected org.jhotdraw.draw.connectors.Connector getTarget() {
     return getConnection().getStartConnector();
   }
