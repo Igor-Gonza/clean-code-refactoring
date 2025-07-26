@@ -15,13 +15,13 @@
 package org.jhotdraw.samples.draw;
 
 import org.jhotdraw.app.action.*;
-import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.*;
 import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.figures.AttributedFigure;
 import org.jhotdraw.draw.figures.BezierFigure;
 import org.jhotdraw.draw.figures.ConnectionFigure;
+import org.jhotdraw.draw.figures.EllipseFigure;
 import org.jhotdraw.draw.figures.RectangleFigure;
 import org.jhotdraw.draw.figures.RoundRectangleFigure;
 import org.jhotdraw.draw.linedecorations.ArrowTip;

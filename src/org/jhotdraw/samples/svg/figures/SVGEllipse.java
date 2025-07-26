@@ -14,7 +14,7 @@
 
 package org.jhotdraw.samples.svg.figures;
 
-import org.jhotdraw.draw.EllipseFigure;
+import org.jhotdraw.draw.figures.EllipseFigure;
 import org.jhotdraw.samples.svg.SVGUtil;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;

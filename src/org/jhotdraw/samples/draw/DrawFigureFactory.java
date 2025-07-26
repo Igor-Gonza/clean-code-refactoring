@@ -24,6 +24,7 @@ import org.jhotdraw.draw.connectors.ChopTriangleConnector;
 import org.jhotdraw.draw.drawings.DefaultDrawing;
 import org.jhotdraw.draw.figures.BezierFigure;
 import org.jhotdraw.draw.figures.DiamondFigure;
+import org.jhotdraw.draw.figures.EllipseFigure;
 import org.jhotdraw.draw.figures.GroupFigure;
 import org.jhotdraw.draw.figures.RectangleFigure;
 import org.jhotdraw.draw.linedecorations.ArrowTip;

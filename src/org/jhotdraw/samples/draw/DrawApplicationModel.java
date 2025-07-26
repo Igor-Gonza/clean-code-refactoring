@@ -17,6 +17,7 @@ package org.jhotdraw.samples.draw;
 import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.figures.AttributedFigure;
 import org.jhotdraw.draw.figures.ConnectionFigure;
+import org.jhotdraw.draw.figures.EllipseFigure;
 import org.jhotdraw.draw.figures.LineConnectionFigure;
 import org.jhotdraw.draw.figures.RectangleFigure;
 import org.jhotdraw.draw.figures.RoundRectangleFigure;
@@ -29,7 +30,6 @@ import java.util.*;
 import javax.swing.*;
 
 import org.jhotdraw.app.*;
-import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.*;
 
 import static org.jhotdraw.draw.AttributeKeys.*;
