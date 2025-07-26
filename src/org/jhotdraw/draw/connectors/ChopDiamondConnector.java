@@ -12,12 +12,14 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.connectors;
 
 import java.awt.geom.*;
 
 import static org.jhotdraw.draw.AttributeKeys.*;
 
+import org.jhotdraw.draw.DiamondFigure;
+import org.jhotdraw.draw.Figure;
 import org.jhotdraw.geom.*;
 
 /**

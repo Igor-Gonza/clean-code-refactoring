@@ -23,6 +23,8 @@ import javax.swing.undo.*;
 
 import static org.jhotdraw.draw.AttributeKeys.*;
 
+import org.jhotdraw.draw.connectors.ChopRoundRectConnector;
+import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.geom.*;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;
@@ -174,12 +176,12 @@ public class RoundRectangleFigure extends AttributedFigure {
     return handles;
   }
 
-  public Connector findConnector(Point2D.Double p, ConnectionFigure prototype) {
+  public org.jhotdraw.draw.connectors.Connector findConnector(Point2D.Double p, ConnectionFigure prototype) {
     return new ChopRoundRectConnector(this);
   }
 
-  public Connector findCompatibleConnector(Connector c, boolean isStartConnector) {
-    return new ChopRoundRectConnector(this);
+  public org.jhotdraw.draw.connectors.Connector findCompatibleConnector(Connector c, boolean isStartConnector) {
+    return new org.jhotdraw.draw.connectors.ChopRoundRectConnector(this);
   }
 
   public RoundRectangleFigure clone() {

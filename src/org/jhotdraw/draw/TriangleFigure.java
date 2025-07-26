@@ -14,6 +14,9 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.connectors.ChopDiamondConnector;
+import org.jhotdraw.draw.connectors.ChopTriangleConnector;
+import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.geom.Geom;
 import org.jhotdraw.geom.GrowStroke;
@@ -72,10 +75,10 @@ public class TriangleFigure extends AttributedFigure {
   // EDITING
   // CONNECTING
   public Connector findConnector(Point2D.Double p, ConnectionFigure prototype) {
-    return new ChopTriangleConnector(this);
+    return new org.jhotdraw.draw.connectors.ChopTriangleConnector(this);
   }
 
-  public Connector findCompatibleConnector(Connector c, boolean isStartConnector) {
+  public org.jhotdraw.draw.connectors.Connector findCompatibleConnector(org.jhotdraw.draw.connectors.Connector c, boolean isStartConnector) {
     return new ChopTriangleConnector(this);
   }
 

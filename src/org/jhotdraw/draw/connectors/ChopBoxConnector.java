@@ -12,8 +12,11 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.connectors;
 
+import org.jhotdraw.draw.AttributeKeys;
+import org.jhotdraw.draw.ConnectionFigure;
+import org.jhotdraw.draw.Figure;
 import org.jhotdraw.geom.Geom;
 
 import java.awt.geom.Point2D;

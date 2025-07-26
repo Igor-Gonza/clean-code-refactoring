@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.undo.CompositeEdit;
 
 import java.awt.*;
@@ -45,9 +46,9 @@ public class ConnectionTool extends AbstractTool implements FigureListener {
   /**
    * the anchor point of the interaction
    */
-  private Connector startConnector;
-  private Connector endConnector;
-  private Connector targetConnector;
+  private org.jhotdraw.draw.connectors.Connector startConnector;
+  private org.jhotdraw.draw.connectors.Connector endConnector;
+  private org.jhotdraw.draw.connectors.Connector targetConnector;
 
   private Figure target;
   /**
@@ -312,7 +313,7 @@ public class ConnectionTool extends AbstractTool implements FigureListener {
       }
     }
 
-    Connector cc = null;
+    org.jhotdraw.draw.connectors.Connector cc = null;
     if (c != null) {
       cc = findConnector(p, c, prototype);
     }
@@ -351,27 +352,27 @@ public class ConnectionTool extends AbstractTool implements FigureListener {
     return drawing.findFigureExcept(p, createdFigure);
   }
 
-  protected void setStartConnector(Connector newStartConnector) {
+  protected void setStartConnector(org.jhotdraw.draw.connectors.Connector newStartConnector) {
     startConnector = newStartConnector;
   }
 
-  protected Connector getStartConnector() {
+  protected org.jhotdraw.draw.connectors.Connector getStartConnector() {
     return startConnector;
   }
 
-  protected void setEndConnector(Connector newEndConnector) {
+  protected void setEndConnector(org.jhotdraw.draw.connectors.Connector newEndConnector) {
     endConnector = newEndConnector;
   }
 
-  protected Connector getEndConnector() {
+  protected org.jhotdraw.draw.connectors.Connector getEndConnector() {
     return endConnector;
   }
 
-  private void setTargetConnector(Connector newTargetConnector) {
+  private void setTargetConnector(org.jhotdraw.draw.connectors.Connector newTargetConnector) {
     targetConnector = newTargetConnector;
   }
 
-  protected Connector getTargetConnector() {
+  protected org.jhotdraw.draw.connectors.Connector getTargetConnector() {
     return targetConnector;
   }
 

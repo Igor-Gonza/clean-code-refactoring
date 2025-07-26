@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.undo.CompositeEdit;
 
 import java.awt.*;
@@ -40,9 +41,9 @@ public class BidirectionalConnectionTool extends AbstractTool implements FigureL
   /**
    * the anchor point of the interaction
    */
-  private Connector startConnector;
-  private Connector endConnector;
-  private Connector targetConnector;
+  private org.jhotdraw.draw.connectors.Connector startConnector;
+  private org.jhotdraw.draw.connectors.Connector endConnector;
+  private org.jhotdraw.draw.connectors.Connector targetConnector;
 
   private Figure target;
   /**
@@ -267,7 +268,7 @@ public class BidirectionalConnectionTool extends AbstractTool implements FigureL
       }
     }
 
-    Connector cc = null;
+    org.jhotdraw.draw.connectors.Connector cc = null;
     if (c != null) {
       cc = findConnector(p, c, prototype);
     }
@@ -284,7 +285,7 @@ public class BidirectionalConnectionTool extends AbstractTool implements FigureL
     }
   }
 
-  private Connector findConnector(Point2D.Double p, Figure target, ConnectionFigure f) {
+  private org.jhotdraw.draw.connectors.Connector findConnector(Point2D.Double p, Figure target, ConnectionFigure f) {
     return target.findConnector(p, f);
   }
 
@@ -303,23 +304,23 @@ public class BidirectionalConnectionTool extends AbstractTool implements FigureL
     return drawing.findFigureExcept(p, createdFigure);
   }
 
-  private void setStartConnector(Connector newStartConnector) {
+  private void setStartConnector(org.jhotdraw.draw.connectors.Connector newStartConnector) {
     startConnector = newStartConnector;
   }
 
-  protected Connector getStartConnector() {
+  protected org.jhotdraw.draw.connectors.Connector getStartConnector() {
     return startConnector;
   }
 
-  private void setEndConnector(Connector newEndConnector) {
+  private void setEndConnector(org.jhotdraw.draw.connectors.Connector newEndConnector) {
     endConnector = newEndConnector;
   }
 
-  protected Connector getEndConnector() {
+  protected org.jhotdraw.draw.connectors.Connector getEndConnector() {
     return endConnector;
   }
 
-  private void setTargetConnector(Connector newTargetConnector) {
+  private void setTargetConnector(org.jhotdraw.draw.connectors.Connector newTargetConnector) {
     targetConnector = newTargetConnector;
   }
 

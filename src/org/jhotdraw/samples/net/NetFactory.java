@@ -15,6 +15,8 @@
 package org.jhotdraw.samples.net;
 
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.connectors.ChopBoxConnector;
+import org.jhotdraw.draw.connectors.LocatorConnector;
 import org.jhotdraw.geom.Insets2DDouble;
 import org.jhotdraw.samples.net.figures.NodeFigure;
 import org.jhotdraw.xml.DefaultDOMFactory;

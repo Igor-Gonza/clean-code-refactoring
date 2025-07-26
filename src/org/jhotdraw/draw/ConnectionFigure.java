@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.connectors.Connector;
+
 import java.awt.geom.Point2D;
 
 /**
@@ -40,13 +42,13 @@ public interface ConnectionFigure extends Figure {
    *
    * @param start the start figure of the connection
    */
-  void setStartConnector(Connector start);
+  void setStartConnector(org.jhotdraw.draw.connectors.Connector start);
 
   /**
    * Gets the start Connector.
    * Returns null, if there is no start connection.
    */
-  Connector getStartConnector();
+  org.jhotdraw.draw.connectors.Connector getStartConnector();
 
   /**
    * Sets the end Connector of the connection.
@@ -60,7 +62,7 @@ public interface ConnectionFigure extends Figure {
    * Gets the end Connector.
    * Returns null, if there is no end connection.
    */
-  Connector getEndConnector();
+  org.jhotdraw.draw.connectors.Connector getEndConnector();
 
   /**
    * Updates the connection.

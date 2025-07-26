@@ -14,6 +14,9 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.connectors.ChopBezierConnector;
+import org.jhotdraw.draw.connectors.ChopDiamondConnector;
+import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.geom.Geom;
 import org.jhotdraw.geom.GrowStroke;
@@ -91,8 +94,8 @@ public class BezierFigure extends AttributedFigure {
     return new ChopBezierConnector(this);
   }
 
-  public Connector findCompatibleConnector(Connector c, boolean isStart) {
-    return new ChopBezierConnector(this);
+  public org.jhotdraw.draw.connectors.Connector findCompatibleConnector(org.jhotdraw.draw.connectors.Connector c, boolean isStart) {
+    return new org.jhotdraw.draw.connectors.ChopBezierConnector(this);
   }
 
   // COMPOSITE FIGURES

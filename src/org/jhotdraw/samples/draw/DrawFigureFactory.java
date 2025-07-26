@@ -15,6 +15,12 @@
 package org.jhotdraw.samples.draw;
 
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.connectors.ChopBezierConnector;
+import org.jhotdraw.draw.connectors.ChopBoxConnector;
+import org.jhotdraw.draw.connectors.ChopDiamondConnector;
+import org.jhotdraw.draw.connectors.ChopEllipseConnector;
+import org.jhotdraw.draw.connectors.ChopRoundRectConnector;
+import org.jhotdraw.draw.connectors.ChopTriangleConnector;
 import org.jhotdraw.xml.DefaultDOMFactory;
 
 /**

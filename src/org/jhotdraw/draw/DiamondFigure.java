@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.connectors.ChopDiamondConnector;
+import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.geom.Geom;
 
 import java.awt.*;
@@ -252,12 +254,12 @@ public class DiamondFigure extends AttributedFigure {
    *
    * @see ChopDiamondConnector
    */
-  public Connector findConnector(Point2D.Double p, ConnectionFigure prototype) {
-    return new ChopDiamondConnector(this);
+  public org.jhotdraw.draw.connectors.Connector findConnector(Point2D.Double p, ConnectionFigure prototype) {
+    return new org.jhotdraw.draw.connectors.ChopDiamondConnector(this);
   }
 
-  public Connector findCompatibleConnector(Connector c, boolean isStart) {
-    return new ChopDiamondConnector(this);
+  public org.jhotdraw.draw.connectors.Connector findCompatibleConnector(Connector c, boolean isStart) {
+    return new org.jhotdraw.draw.connectors.ChopDiamondConnector(this);
   }
 
   // COMPOSITE FIGURES

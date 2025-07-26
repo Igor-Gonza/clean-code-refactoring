@@ -15,6 +15,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.connectors.ChopBoxConnector;
+import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.geom.Insets2DDouble;
 
@@ -427,8 +429,8 @@ public abstract class AbstractFigure implements Figure {
    *
    * @see ChopBoxConnector
    */
-  public Connector findConnector(Point2D.Double p, ConnectionFigure prototype) {
-    return new ChopBoxConnector(this);
+  public org.jhotdraw.draw.connectors.Connector findConnector(Point2D.Double p, ConnectionFigure prototype) {
+    return new org.jhotdraw.draw.connectors.ChopBoxConnector(this);
   }
 
   public boolean includes(Figure figure) {
@@ -439,8 +441,8 @@ public abstract class AbstractFigure implements Figure {
     return (contains(p)) ? this : null;
   }
 
-  public Connector findCompatibleConnector(Connector c, boolean isStart) {
-    return new ChopBoxConnector(this);
+  public Connector findCompatibleConnector(org.jhotdraw.draw.connectors.Connector c, boolean isStart) {
+    return new org.jhotdraw.draw.connectors.ChopBoxConnector(this);
   }
 
   /**

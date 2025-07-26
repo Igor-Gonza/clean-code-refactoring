@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.connectors.Connector;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 
@@ -29,7 +31,7 @@ import java.awt.geom.Point2D;
  * @see ChangeConnectionStartHandle
  */
 public abstract class ChangeConnectionHandle extends AbstractHandle {
-  private Connector originalTarget;
+  private org.jhotdraw.draw.connectors.Connector originalTarget;
   private Figure targetFigure;
   private ConnectionFigure connection;
   private Point start;
@@ -57,7 +59,7 @@ public abstract class ChangeConnectionHandle extends AbstractHandle {
   /**
    * Returns the target connector of the change.
    */
-  protected abstract Connector getTarget();
+  protected abstract org.jhotdraw.draw.connectors.Connector getTarget();
 
   /**
    * Disconnects the connection.
@@ -67,7 +69,7 @@ public abstract class ChangeConnectionHandle extends AbstractHandle {
   /**
    * Connect the connection with the given figure.
    */
-  protected abstract void connect(Connector c);
+  protected abstract void connect(org.jhotdraw.draw.connectors.Connector c);
 
   /**
    * Sets the location of the target point.
@@ -127,7 +129,7 @@ public abstract class ChangeConnectionHandle extends AbstractHandle {
       }
     }
 
-    Connector target = findConnectionTarget(p, view.getDrawing());
+    org.jhotdraw.draw.connectors.Connector target = findConnectionTarget(p, view.getDrawing());
     if (target != null) {
       p = target.getAnchor();
     }
@@ -141,7 +143,7 @@ public abstract class ChangeConnectionHandle extends AbstractHandle {
    */
   public void trackEnd(Point anchor, Point lead, int modifiersEx) {
     Point2D.Double p = view.viewToDrawing(lead);
-    Connector target = findConnectionTarget(p, view.getDrawing());
+    org.jhotdraw.draw.connectors.Connector target = findConnectionTarget(p, view.getDrawing());
     if (target == null) {
       target = originalTarget;
     }
@@ -161,7 +163,7 @@ public abstract class ChangeConnectionHandle extends AbstractHandle {
     }
   }
 
-  private Connector findConnectionTarget(Point2D.Double p, Drawing drawing) {
+  private org.jhotdraw.draw.connectors.Connector findConnectionTarget(Point2D.Double p, Drawing drawing) {
     Figure targetFigure = findConnectableFigure(p, drawing);
 
     if (getSource() == null && targetFigure != null) {
@@ -178,7 +180,7 @@ public abstract class ChangeConnectionHandle extends AbstractHandle {
 
   protected abstract boolean canConnect(Figure existingEnd, Figure targetEnd);
 
-  protected Connector findConnector(Point2D.Double p, Figure f, ConnectionFigure prototype) {
+  protected org.jhotdraw.draw.connectors.Connector findConnector(Point2D.Double p, Figure f, ConnectionFigure prototype) {
     return f.findConnector(p, prototype);
   }
 

@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.xml.DOMStorable;
 
@@ -288,7 +289,7 @@ public interface Figure extends Cloneable, Serializable, DOMStorable {
    * with the same semantics for this figure.
    * Return null, if no compatible connector is available.
    */
-  Connector findCompatibleConnector(Connector c, boolean isStartConnector);
+  org.jhotdraw.draw.connectors.Connector findCompatibleConnector(org.jhotdraw.draw.connectors.Connector c, boolean isStartConnector);
 
   /**
    * Sets whether the connectors should be visible for the

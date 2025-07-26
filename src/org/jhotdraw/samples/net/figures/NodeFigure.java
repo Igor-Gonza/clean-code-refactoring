@@ -23,6 +23,9 @@
 package org.jhotdraw.samples.net.figures;
 
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.connectors.AbstractConnector;
+import org.jhotdraw.draw.connectors.Connector;
+import org.jhotdraw.draw.connectors.LocatorConnector;
 import org.jhotdraw.geom.Geom;
 import org.jhotdraw.geom.Insets2DDouble;
 import org.jhotdraw.util.ResourceBundleUtil;
@@ -43,11 +46,11 @@ import static org.jhotdraw.draw.AttributeKeys.DECORATOR_INSETS;
  */
 @SuppressWarnings("unused")
 public class NodeFigure extends TextFigure {
-  private LinkedList<AbstractConnector> connectors;
-  private static LocatorConnector north;
-  private static LocatorConnector south;
-  private static LocatorConnector east;
-  private static LocatorConnector west;
+  private LinkedList<org.jhotdraw.draw.connectors.AbstractConnector> connectors;
+  private static org.jhotdraw.draw.connectors.LocatorConnector north;
+  private static org.jhotdraw.draw.connectors.LocatorConnector south;
+  private static org.jhotdraw.draw.connectors.LocatorConnector east;
+  private static org.jhotdraw.draw.connectors.LocatorConnector west;
 
   public NodeFigure() {
     RectangleFigure rf = new RectangleFigure();
@@ -61,10 +64,10 @@ public class NodeFigure extends TextFigure {
 
   private void createConnectors() {
     connectors = new LinkedList<>();
-    connectors.add(new LocatorConnector(this, new RelativeLocator(0.5, 0)));
+    connectors.add(new org.jhotdraw.draw.connectors.LocatorConnector(this, new RelativeLocator(0.5, 0)));
     connectors.add(new LocatorConnector(this, new RelativeLocator(0.5, 1)));
-    connectors.add(new LocatorConnector(this, new RelativeLocator(1, 0.5)));
-    connectors.add(new LocatorConnector(this, new RelativeLocator(0, 0.5)));
+    connectors.add(new org.jhotdraw.draw.connectors.LocatorConnector(this, new RelativeLocator(1, 0.5)));
+    connectors.add(new org.jhotdraw.draw.connectors.LocatorConnector(this, new RelativeLocator(0, 0.5)));
     for (AbstractConnector c : connectors) {
       c.setVisible(true);
     }
@@ -99,8 +102,8 @@ public class NodeFigure extends TextFigure {
   public Connector findConnector(Point2D.Double p, ConnectionFigure figure) {
     // return closest connector
     double min = Double.MAX_VALUE;
-    Connector closest = null;
-    for (Connector c : connectors) {
+    org.jhotdraw.draw.connectors.Connector closest = null;
+    for (org.jhotdraw.draw.connectors.Connector c : connectors) {
       Point2D.Double p2 = Geom.center(c.getBounds());
       double d = Geom.length2(p.x, p.y, p2.x, p2.y);
       if (d < min) {
@@ -112,7 +115,7 @@ public class NodeFigure extends TextFigure {
   }
 
   @Override
-  public Connector findCompatibleConnector(Connector c, boolean isStart) {
+  public org.jhotdraw.draw.connectors.Connector findCompatibleConnector(org.jhotdraw.draw.connectors.Connector c, boolean isStart) {
     return connectors.getFirst();
   }
 
@@ -124,7 +127,7 @@ public class NodeFigure extends TextFigure {
 
   @Override
   protected void drawConnectors(Graphics2D g) {
-    for (Connector c : connectors) {
+    for (org.jhotdraw.draw.connectors.Connector c : connectors) {
       c.draw(g);
     }
   }

@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.undo.*;
 import org.jhotdraw.util.*;
 
@@ -87,7 +88,7 @@ public class ConnectionHandle extends LocatorHandle {
       }
     }
 
-    Connector target = findConnectionTarget(p, view.getDrawing());
+    org.jhotdraw.draw.connectors.Connector target = findConnectionTarget(p, view.getDrawing());
     if (target != null) {
       p = Geom.center(target.getBounds());
     }
@@ -96,7 +97,7 @@ public class ConnectionHandle extends LocatorHandle {
 
   public void trackEnd(Point anchor, Point lead, int modifiersEx) {
     Point2D.Double p = view.viewToDrawing(lead);
-    Connector target = findConnectionTarget(p, view.getDrawing());
+    org.jhotdraw.draw.connectors.Connector target = findConnectionTarget(p, view.getDrawing());
     if (target != null) {
       getConnection().setStartConnector(getStartConnector());
       getConnection().setEndConnector(target);
@@ -156,7 +157,7 @@ public class ConnectionHandle extends LocatorHandle {
   /**
    * Finds a connection end figure.
    */
-  protected Connector findConnectionTarget(Point2D.Double p, Drawing drawing) {
+  protected org.jhotdraw.draw.connectors.Connector findConnectionTarget(Point2D.Double p, Drawing drawing) {
     Figure target = findConnectableFigure(p, drawing);
     if ((target != null) && target.canConnect() && !target.includes(getOwner()) && getConnection().canConnect(getOwner(), target)) {
       return target.findConnector(p, getConnection());

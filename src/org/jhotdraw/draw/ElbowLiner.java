@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.geom.Geom;
 import org.jhotdraw.xml.DOMInput;
@@ -44,7 +45,7 @@ public class ElbowLiner implements Liner, DOMStorable {
 
   public void lineout(ConnectionFigure figure) {
     BezierPath path = ((LineConnectionFigure) figure).getBezierPath();
-    Connector start = figure.getStartConnector();
+    org.jhotdraw.draw.connectors.Connector start = figure.getStartConnector();
     Connector end = figure.getEndConnector();
     if (start == null || end == null || path == null) {
       return;

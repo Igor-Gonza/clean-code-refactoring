@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.connectors.Connector;
+
 import java.awt.geom.Point2D;
 
 /**
@@ -48,7 +50,7 @@ public class ChangeConnectionStartHandle extends ChangeConnectionHandle {
   }
 
 
-  protected Connector getTarget() {
+  protected org.jhotdraw.draw.connectors.Connector getTarget() {
     return getConnection().getStartConnector();
   }
 

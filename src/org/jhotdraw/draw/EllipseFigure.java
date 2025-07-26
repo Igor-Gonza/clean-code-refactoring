@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.connectors.ChopEllipseConnector;
+import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.geom.Geom;
 
 import java.awt.*;
@@ -59,10 +61,10 @@ public class EllipseFigure extends AttributedFigure {
   // EDITING
   // CONNECTING
   public Connector findConnector(Point2D.Double p, ConnectionFigure prototype) {
-    return new ChopEllipseConnector(this);
+    return new org.jhotdraw.draw.connectors.ChopEllipseConnector(this);
   }
 
-  public Connector findCompatibleConnector(Connector c, boolean isStartConnector) {
+  public org.jhotdraw.draw.connectors.Connector findCompatibleConnector(org.jhotdraw.draw.connectors.Connector c, boolean isStartConnector) {
     return new ChopEllipseConnector(this);
   }
 

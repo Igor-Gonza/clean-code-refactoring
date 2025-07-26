@@ -12,8 +12,10 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.connectors;
 
+import org.jhotdraw.draw.ConnectionFigure;
+import org.jhotdraw.draw.Figure;
 import org.jhotdraw.geom.Geom;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;
@@ -35,7 +37,7 @@ import java.io.IOException;
  * @see Connector
  */
 @SuppressWarnings("unused")
-public abstract class AbstractConnector implements Connector {
+public abstract class AbstractConnector implements org.jhotdraw.draw.connectors.Connector {
   /**
    * The owner of the connector
    */
