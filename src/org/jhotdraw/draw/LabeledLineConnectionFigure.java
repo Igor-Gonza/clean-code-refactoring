@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.layouters.Layouter;
 import org.jhotdraw.util.ReversedList;
 
 import javax.swing.event.UndoableEditEvent;
@@ -36,7 +37,7 @@ import java.util.LinkedList;
  */
 public class LabeledLineConnectionFigure extends LineConnectionFigure implements CompositeFigure {
 
-  private Layouter layouter;
+  private org.jhotdraw.draw.layouters.Layouter layouter;
   private ArrayList<Figure> children = new ArrayList<>();
   //private Rectangle2D.Double bounds;
   private Rectangle2D.Double drawBounds;
@@ -331,7 +332,7 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure implements
     return layouter;
   }
 
-  public void setLayouter(Layouter newLayouter) {
+  public void setLayouter(org.jhotdraw.draw.layouters.Layouter newLayouter) {
     this.layouter = newLayouter;
   }
 

@@ -15,6 +15,7 @@
 package org.jhotdraw.samples.pert.figures;
 
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.layouters.VerticalLayouter;
 import org.jhotdraw.geom.Insets2DDouble;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;

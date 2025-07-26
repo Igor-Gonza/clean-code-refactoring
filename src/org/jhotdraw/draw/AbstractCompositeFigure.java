@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.layouters.Layouter;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.util.ReversedList;
 import org.jhotdraw.xml.DOMInput;
@@ -397,7 +398,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
    *
    * @return layout strategy used by this figure
    */
-  public Layouter getLayouter() {
+  public org.jhotdraw.draw.layouters.Layouter getLayouter() {
     return layouter;
   }
 
@@ -428,7 +429,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
    *
    * @param newLayouter encapsulation of a layout algorithm.
    */
-  public void setLayouter(Layouter newLayouter) {
+  public void setLayouter(org.jhotdraw.draw.layouters.Layouter newLayouter) {
     this.layouter = newLayouter;
   }
 

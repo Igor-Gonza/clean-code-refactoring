@@ -12,7 +12,9 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.layouters;
+
+import org.jhotdraw.draw.CompositeFigure;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;

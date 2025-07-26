@@ -12,8 +12,10 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.layouters;
 
+import org.jhotdraw.draw.CompositeFigure;
+import org.jhotdraw.draw.Figure;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.geom.Insets2DDouble;
 

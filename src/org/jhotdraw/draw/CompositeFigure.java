@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.draw.layouters.Layouter;
 import org.jhotdraw.geom.Insets2DDouble;
 
 /**
@@ -109,7 +110,7 @@ public interface CompositeFigure extends Figure {
    *
    * @return layout strategy used by this figure
    */
-  Layouter getLayouter();
+  org.jhotdraw.draw.layouters.Layouter getLayouter();
 
   /**
    * A layout algorithm is used to define how the child components
