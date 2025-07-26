@@ -175,7 +175,7 @@ public class XMLElement implements Serializable {
    *     <li>The values are char arrays
    * </ul></dd></dl>
    */
-  private final HashMap<String, char[]> entities;
+  private final Map<String, char[]> entities;
 
   /**
    * The line number where the element starts.
@@ -248,10 +248,10 @@ public class XMLElement implements Serializable {
    *     <li>getName() =&gt; null
    * </ul></dd></dl>
    *
-   * @see #XMLElement(java.util.HashMap)
+   * @see #XMLElement(java.util.Map)
    * XMLElement(HashMap)
    * @see #XMLElement(boolean)
-   * @see #XMLElement(java.util.HashMap, boolean)
+   * @see #XMLElement(java.util.Map, boolean)
    * XMLElement(HashMap, boolean)
    */
   public XMLElement() {
@@ -281,10 +281,10 @@ public class XMLElement implements Serializable {
    *                 </ul></dd></dl><dl>
    * @see #XMLElement()
    * @see #XMLElement(boolean)
-   * @see #XMLElement(java.util.HashMap, boolean)
+   * @see #XMLElement(java.util.Map, boolean)
    * XMLElement(HashMap, boolean)
    */
-  public XMLElement(HashMap<String, char[]> entities) {
+  public XMLElement(Map<String, char[]> entities) {
     this(entities, false, true, true);
   }
 
@@ -307,9 +307,9 @@ public class XMLElement implements Serializable {
    *                                  <li>getName() =&gt; null
    *                              </ul></dd></dl><dl>
    * @see #XMLElement()
-   * @see #XMLElement(java.util.HashMap)
+   * @see #XMLElement(java.util.Map)
    * XMLElement(HashMap)
-   * @see #XMLElement(java.util.HashMap, boolean)
+   * @see #XMLElement(java.util.Map, boolean)
    * XMLElement(HashMap, boolean)
    */
   public XMLElement(boolean skipLeadingWhitespace) {
@@ -341,10 +341,10 @@ public class XMLElement implements Serializable {
    *                              </ul></dd></dl><dl>
    * @see #XMLElement()
    * @see #XMLElement(boolean)
-   * @see #XMLElement(java.util.HashMap)
+   * @see #XMLElement(java.util.Map)
    * XMLElement(HashMap)
    */
-  public XMLElement(HashMap<String, char[]> entities, boolean skipLeadingWhitespace) {
+  public XMLElement(Map<String, char[]> entities, boolean skipLeadingWhitespace) {
     this(entities, skipLeadingWhitespace, true, true);
   }
 
@@ -372,12 +372,12 @@ public class XMLElement implements Serializable {
    *                              </ul></dd></dl><dl>
    * @see #XMLElement()
    * @see #XMLElement(boolean)
-   * @see #XMLElement(java.util.HashMap)
+   * @see #XMLElement(java.util.Map)
    * XMLElement(HashMap)
-   * @see #XMLElement(java.util.HashMap, boolean)
+   * @see #XMLElement(java.util.Map, boolean)
    * XMLElement(HashMap, boolean)
    */
-  public XMLElement(HashMap<String, char[]> entities, boolean skipLeadingWhitespace, boolean ignoreCase) {
+  public XMLElement(Map<String, char[]> entities, boolean skipLeadingWhitespace, boolean ignoreCase) {
     this(entities, skipLeadingWhitespace, true, ignoreCase);
   }
 
@@ -415,11 +415,11 @@ public class XMLElement implements Serializable {
    *                                 </ul></dd></dl><dl>
    * @see #createElement()
    */
-  protected XMLElement(HashMap<String, char[]> entities, boolean skipLeadingWhitespace, boolean fillBasicConversionTable, boolean ignoreCase) {
+  protected XMLElement(Map<String, char[]> entities, boolean skipLeadingWhitespace, boolean fillBasicConversionTable, boolean ignoreCase) {
     this(entities, skipLeadingWhitespace, fillBasicConversionTable, ignoreCase, true);
   }
 
-  protected XMLElement(HashMap<String, char[]> entities, boolean skipLeadingWhitespace, boolean fillBasicConversionTable, boolean ignoreCase, boolean encodeUnicodeCharacters) {
+  protected XMLElement(Map<String, char[]> entities, boolean skipLeadingWhitespace, boolean fillBasicConversionTable, boolean ignoreCase, boolean encodeUnicodeCharacters) {
     this.ignoreWhitespace = skipLeadingWhitespace;
     this.ignoreCase = ignoreCase;
     this.name = null;
@@ -595,7 +595,7 @@ public class XMLElement implements Serializable {
    * @see #removeChild(nanoxml.XMLElement)
    * removeChild(XMLElement)
    */
-  public ArrayList<XMLElement> getChildren() {
+  public List<XMLElement> getChildren() {
     return new ArrayList<>(this.children);
   }
 
@@ -731,7 +731,7 @@ public class XMLElement implements Serializable {
    * java.lang.String)
    * getStringAttribute(String, String)
    * @see #getStringAttribute(java.lang.String,
-   * java.util.HashMap,
+   * java.util.Map,
    * java.lang.String, boolean)
    * getStringAttribute(String, HashMap, String, boolean)
    */
@@ -758,7 +758,7 @@ public class XMLElement implements Serializable {
    * @see #getStringAttribute(java.lang.String)
    * getStringAttribute(String)
    * @see #getStringAttribute(java.lang.String,
-   * java.util.HashMap,
+   * java.util.Map,
    * java.lang.String, boolean)
    * getStringAttribute(String, HashMap, String, boolean)
    */
@@ -800,7 +800,7 @@ public class XMLElement implements Serializable {
    * java.lang.String)
    * getStringAttribute(String, String)
    */
-  public String getStringAttribute(String name, HashMap<String, String> valueSet, String defaultKey, boolean allowLiterals) {
+  public String getStringAttribute(String name, Map<String, String> valueSet, String defaultKey, boolean allowLiterals) {
     return this.getAttribute(name, valueSet, defaultKey, allowLiterals);
   }
 
@@ -820,7 +820,7 @@ public class XMLElement implements Serializable {
    * @see #getIntAttribute(java.lang.String, int)
    * getIntAttribute(String, int)
    * @see #getIntAttribute(java.lang.String,
-   * java.util.HashMap,
+   * java.util.Map,
    * java.lang.String, boolean)
    * getIntAttribute(String, HashMap, String, boolean)
    */
@@ -845,7 +845,7 @@ public class XMLElement implements Serializable {
    * @see #getIntAttribute(java.lang.String)
    * getIntAttribute(String)
    * @see #getIntAttribute(java.lang.String,
-   * java.util.HashMap,
+   * java.util.Map,
    * java.lang.String, boolean)
    * getIntAttribute(String, HashMap, String, boolean)
    */
@@ -903,7 +903,7 @@ public class XMLElement implements Serializable {
    * @see #getIntAttribute(java.lang.String, int)
    * getIntAttribute(String, int)
    */
-  public int getIntAttribute(String name, HashMap<String, Integer> valueSet, String defaultKey, boolean allowLiteralNumbers) {
+  public int getIntAttribute(String name, Map<String, Integer> valueSet, String defaultKey, boolean allowLiteralNumbers) {
     if (this.ignoreCase) {
       name = name.toUpperCase();
     }
@@ -946,7 +946,7 @@ public class XMLElement implements Serializable {
    * @see #getDoubleAttribute(java.lang.String, double)
    * getDoubleAttribute(String, double)
    * @see #getDoubleAttribute(java.lang.String,
-   * java.util.HashMap,
+   * java.util.Map,
    * java.lang.String, boolean)
    * getDoubleAttribute(String, HashMap, String, boolean)
    */
@@ -971,7 +971,7 @@ public class XMLElement implements Serializable {
    * @see #getDoubleAttribute(java.lang.String)
    * getDoubleAttribute(String)
    * @see #getDoubleAttribute(java.lang.String,
-   * java.util.HashMap,
+   * java.util.Map,
    * java.lang.String, boolean)
    * getDoubleAttribute(String, HashMap, String, boolean)
    */
@@ -1024,7 +1024,7 @@ public class XMLElement implements Serializable {
    * @see #getDoubleAttribute(java.lang.String, double)
    * getDoubleAttribute(String, double)
    */
-  public double getDoubleAttribute(String name, HashMap<String, Double> valueSet, String defaultKey, boolean allowLiteralNumbers) {
+  public double getDoubleAttribute(String name, Map<String, Double> valueSet, String defaultKey, boolean allowLiteralNumbers) {
     if (this.ignoreCase) {
       name = name.toUpperCase();
     }
@@ -1629,7 +1629,7 @@ public class XMLElement implements Serializable {
           writer.write(';');
           break;
         default:
-          if ((int) ch < 32 || (isEncodeUnicodeCharacters && (int) ch > 126)) {
+          if (ch < 32 || (isEncodeUnicodeCharacters && ch > 126)) {
             writer.write('&');
             writer.write('#');
             writer.write('x');
