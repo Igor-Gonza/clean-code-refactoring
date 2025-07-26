@@ -11,4 +11,9 @@ SourceForge link: [https://sourceforge.net/projects/jhotdraw/](https://sourcefor
 
 ---
 
+Class Diagrams
+[org.jhotdraw.draw](https://online.visual-paradigm.com/pt/community/share/jhotdraw-28i75e29l1)
+
+---
+
 Thanks for your time :D
