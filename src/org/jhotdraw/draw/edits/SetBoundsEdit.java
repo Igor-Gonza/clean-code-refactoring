@@ -31,8 +31,10 @@ import java.awt.geom.Point2D;
  */
 public class SetBoundsEdit extends AbstractUndoableEdit {
   private final AbstractFigure owner;
-  private Point2D.Double oldAnchor, oldLead;
-  private Point2D.Double newAnchor, newLead;
+  private Point2D.Double oldAnchor;
+  private Point2D.Double oldLead;
+  private Point2D.Double newAnchor;
+  private Point2D.Double newLead;
 
   public SetBoundsEdit(AbstractFigure owner, Point2D.Double oldAnchor, Point2D.Double oldLead, Point2D.Double newAnchor, Point2D.Double newLead) {
     this.owner = owner;
@@ -43,10 +45,12 @@ public class SetBoundsEdit extends AbstractUndoableEdit {
   }
 
   // FIXME German (holy moly!)
+  @Override
   public String getPresentationName() {
     return "Abmessungen ändern";
   }
 
+  @Override
   public boolean addEdit(UndoableEdit anEdit) {
     if (anEdit instanceof SetBoundsEdit) {
       SetBoundsEdit that = (SetBoundsEdit) anEdit;
@@ -60,6 +64,7 @@ public class SetBoundsEdit extends AbstractUndoableEdit {
     return false;
   }
 
+  @Override
   public boolean replaceEdit(UndoableEdit anEdit) {
     if (anEdit instanceof SetBoundsEdit) {
       SetBoundsEdit that = (SetBoundsEdit) anEdit;
@@ -73,6 +78,7 @@ public class SetBoundsEdit extends AbstractUndoableEdit {
     return false;
   }
 
+  @Override
   public void redo() throws CannotRedoException {
     super.redo();
     owner.willChange();
@@ -80,6 +86,7 @@ public class SetBoundsEdit extends AbstractUndoableEdit {
     owner.changed();
   }
 
+  @Override
   public void undo() throws CannotUndoException {
     super.undo();
     owner.willChange();

@@ -57,11 +57,13 @@ public class TransformEdit extends AbstractUndoableEdit {
     this.tx = (AffineTransform) tx.clone();
   }
 
+  @Override
   public String getPresentationName() {
     ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
     return labels.getString("transformFigure");
   }
 
+  @Override
   public boolean addEdit(UndoableEdit anEdit) {
     if (anEdit instanceof TransformEdit) {
       TransformEdit that = (TransformEdit) anEdit;
@@ -74,6 +76,7 @@ public class TransformEdit extends AbstractUndoableEdit {
     return false;
   }
 
+  @Override
   public boolean replaceEdit(UndoableEdit anEdit) {
     if (anEdit instanceof TransformEdit) {
       TransformEdit that = (TransformEdit) anEdit;
@@ -86,6 +89,7 @@ public class TransformEdit extends AbstractUndoableEdit {
     return false;
   }
 
+  @Override
   public void redo() throws CannotRedoException {
     super.redo();
     for (Figure f : figures) {
@@ -96,6 +100,7 @@ public class TransformEdit extends AbstractUndoableEdit {
     }
   }
 
+  @Override
   public void undo() throws CannotUndoException {
     super.undo();
     try {
@@ -110,6 +115,7 @@ public class TransformEdit extends AbstractUndoableEdit {
     }
   }
 
+  @Override
   public String toString() {
     return getClass().getName() + '@' + hashCode() + " tx:" + tx;
   }

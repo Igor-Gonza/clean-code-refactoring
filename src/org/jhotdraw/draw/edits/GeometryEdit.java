@@ -37,10 +37,12 @@ public class GeometryEdit extends AbstractUndoableEdit {
     this.newGeometry = newGeometry;
   }
 
+  @Override
   public String getPresentationName() {
     return "Geometry changed";
   }
 
+  @Override
   public void undo() throws CannotUndoException {
     super.undo();
     owner.willChange();
@@ -48,6 +50,7 @@ public class GeometryEdit extends AbstractUndoableEdit {
     owner.changed();
   }
 
+  @Override
   public void redo() throws CannotRedoException {
     super.redo();
     owner.willChange();

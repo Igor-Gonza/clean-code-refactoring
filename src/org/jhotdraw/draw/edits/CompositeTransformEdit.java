@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw.edits;
 
+import com.sun.istack.internal.logging.Logger;
 import org.jhotdraw.draw.figures.AbstractFigure;
 
 import javax.swing.undo.AbstractUndoableEdit;
@@ -29,8 +30,10 @@ import java.awt.geom.NoninvertibleTransformException;
  * @author Werner Randelshofer
  * @version 1.0 2006-01-21 Created.
  */
-@SuppressWarnings("CallToPrintStackTrace")
 public class CompositeTransformEdit extends AbstractUndoableEdit {
+
+  static final Logger logger = Logger.getLogger(CompositeTransformEdit.class);
+
   private final AbstractFigure owner;
   private final AffineTransform tx;
   /**
@@ -45,10 +48,12 @@ public class CompositeTransformEdit extends AbstractUndoableEdit {
   }
 
   // FIXME German (holy moly!)
+  @Override
   public String getPresentationName() {
     return "Figur transformieren";
   }
 
+  @Override
   public boolean addEdit(UndoableEdit anEdit) {
     if (anEdit == this) {
       end();
@@ -63,6 +68,7 @@ public class CompositeTransformEdit extends AbstractUndoableEdit {
     }
   }
 
+  @Override
   public boolean replaceEdit(UndoableEdit anEdit) {
     // TODO See how this might work (or not)
 //    if (anEdit instanceof CompositeTransformEdit) {
@@ -76,6 +82,7 @@ public class CompositeTransformEdit extends AbstractUndoableEdit {
     return false;
   }
 
+  @Override
   public void redo() throws CannotRedoException {
     super.redo();
     owner.willChange();
@@ -83,13 +90,14 @@ public class CompositeTransformEdit extends AbstractUndoableEdit {
     owner.changed();
   }
 
+  @Override
   public void undo() throws CannotUndoException {
     super.undo();
     owner.willChange();
     try {
       owner.basicTransform(tx.createInverse());
     } catch (NoninvertibleTransformException ex) {
-      ex.printStackTrace();
+      logger.info("CompositeTransformEdit - undo: " + ex.getMessage());
     }
     owner.changed();
   }
@@ -121,6 +129,7 @@ public class CompositeTransformEdit extends AbstractUndoableEdit {
    *
    * @see #isInProgress
    */
+  @Override
   public boolean canUndo() {
     return !isInProgress() && super.canUndo();
   }
@@ -131,6 +140,7 @@ public class CompositeTransformEdit extends AbstractUndoableEdit {
    *
    * @see #isInProgress
    */
+  @Override
   public boolean canRedo() {
     return !isInProgress() && super.canRedo();
   }

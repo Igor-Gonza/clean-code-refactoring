@@ -42,12 +42,14 @@ public class AttributeChangeEdit extends AbstractUndoableEdit {
     this.newValue = newValue;
   }
 
+  @Override
   public String getPresentationName() {
     // FIXME - Localize me
     // FIXME That's what I am saying! Why German????
     return "Eigenschaft ändern";
   }
 
+  @Override
   public void redo() throws CannotRedoException {
     super.redo();
     owner.willChange();
@@ -55,6 +57,7 @@ public class AttributeChangeEdit extends AbstractUndoableEdit {
     owner.changed();
   }
 
+  @Override
   public void undo() throws CannotUndoException {
     super.undo();
     owner.willChange();

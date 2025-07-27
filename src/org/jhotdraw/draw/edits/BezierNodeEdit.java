@@ -42,10 +42,12 @@ public class BezierNodeEdit extends AbstractUndoableEdit {
   }
 
   // FIXME German (holy moly!)
+  @Override
   public String getPresentationName() {
     return "Punkt verschieben";
   }
 
+  @Override
   public void redo() throws CannotRedoException {
     super.redo();
     owner.willChange();
@@ -53,6 +55,7 @@ public class BezierNodeEdit extends AbstractUndoableEdit {
     owner.changed();
   }
 
+  @Override
   public void undo() throws CannotUndoException {
     super.undo();
     owner.willChange();
@@ -60,6 +63,7 @@ public class BezierNodeEdit extends AbstractUndoableEdit {
     owner.changed();
   }
 
+  @Override
   public boolean addEdit(UndoableEdit anEdit) {
     if (anEdit instanceof BezierNodeEdit) {
       BezierNodeEdit that = (BezierNodeEdit) anEdit;
@@ -72,6 +76,7 @@ public class BezierNodeEdit extends AbstractUndoableEdit {
     return false;
   }
 
+  @Override
   public boolean replaceEdit(UndoableEdit anEdit) {
     if (anEdit instanceof BezierNodeEdit) {
       BezierNodeEdit that = (BezierNodeEdit) anEdit;

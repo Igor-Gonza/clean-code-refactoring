@@ -40,11 +40,13 @@ public class RestoreDataEdit extends AbstractUndoableEdit {
     this.newRestoreData = figure.getRestoreData();
   }
 
+  @Override
   public String getPresentationName() {
     ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
     return labels.getString("transformFigure");
   }
 
+  @Override
   public void redo() throws CannotRedoException {
     super.redo();
     figure.willChange();
@@ -52,6 +54,7 @@ public class RestoreDataEdit extends AbstractUndoableEdit {
     figure.changed();
   }
 
+  @Override
   public void undo() throws CannotUndoException {
     super.undo();
     figure.willChange();
