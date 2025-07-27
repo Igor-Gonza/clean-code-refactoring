@@ -23,6 +23,7 @@ import org.jhotdraw.util.ResourceBundleUtil;
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
+import java.awt.event.ActionEvent;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Locale;
@@ -44,20 +45,23 @@ public class MoveToFrontAction extends AbstractSelectedAction {
     labels.configureAction(this, "moveToFront");
   }
 
-  public void actionPerformed(java.awt.event.ActionEvent e) {
+  public void actionPerformed(ActionEvent e) {
     final DrawingView view = getView();
     final LinkedList<Figure> figures = new LinkedList<>(view.getSelectedFigures());
     bringToFront(view, figures);
     fireUndoableEditHappened(new AbstractUndoableEdit() {
+      @Override
       public String getPresentationName() {
         return labels.getString("moveToFront");
       }
 
+      @Override
       public void redo() throws CannotRedoException {
         super.redo();
         MoveToFrontAction.bringToFront(view, figures);
       }
 
+      @Override
       public void undo() throws CannotUndoException {
         super.undo();
         MoveToBackAction.sendToBack(view, figures);
@@ -71,5 +75,4 @@ public class MoveToFrontAction extends AbstractSelectedAction {
       drawing.bringToFront(figure);
     }
   }
-
 }

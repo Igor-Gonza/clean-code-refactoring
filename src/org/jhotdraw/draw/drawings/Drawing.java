@@ -14,8 +14,8 @@
 
 package org.jhotdraw.draw.drawings;
 
-import org.jhotdraw.draw.listeners.DrawingListener;
 import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.listeners.DrawingListener;
 import org.jhotdraw.xml.DOMStorable;
 
 import javax.swing.event.UndoableEditListener;
@@ -25,6 +25,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -39,10 +40,11 @@ import java.util.List;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public interface Drawing extends Serializable, DOMStorable {
+
   /**
    * Removes all figures from the drawing.
    */
-   void clear();
+  void clear();
 
   /**
    * Adds a figure to the drawing.
@@ -51,7 +53,7 @@ public interface Drawing extends Serializable, DOMStorable {
    *
    * @param figure to be added to the drawing
    */
-   void add(org.jhotdraw.draw.figures.Figure figure);
+  void add(Figure figure);
 
   /**
    * Adds a collection of figures to the drawing.
@@ -60,7 +62,7 @@ public interface Drawing extends Serializable, DOMStorable {
    *
    * @param figures to be added to the drawing
    */
-   void addAll(Collection<org.jhotdraw.draw.figures.Figure> figures);
+  void addAll(Collection<Figure> figures);
 
   /**
    * Removes a figure from the drawing.
@@ -69,7 +71,7 @@ public interface Drawing extends Serializable, DOMStorable {
    *
    * @param figure that is part of the drawing and should be removed
    */
-   void remove(org.jhotdraw.draw.figures.Figure figure);
+  void remove(Figure figure);
 
   /**
    * Removes the specified figures from the drawing.
@@ -79,16 +81,16 @@ public interface Drawing extends Serializable, DOMStorable {
    * @param figures A collection of figures which are part of the drawing
    *                and should be removed
    */
-   void removeAll(Collection<org.jhotdraw.draw.figures.Figure> figures);
+  void removeAll(Collection<Figure> figures);
 
   /**
    * Removes a figure temporarily from the drawing.
    * The drawing sends no </code>removeNotify</code> message to the figure.
    *
    * @param figure that is part of the drawing and should be removed
-   * @see #basicAdd(org.jhotdraw.draw.figures.Figure)
+   * @see #basicAdd(Figure)
    */
-   void basicRemove(org.jhotdraw.draw.figures.Figure figure);
+  void basicRemove(Figure figure);
 
   /**
    * Removes the specified figures temporarily from the drawing.
@@ -98,25 +100,25 @@ public interface Drawing extends Serializable, DOMStorable {
    *                and should be removed
    * @see #basicAddAll(Collection)
    */
-   void basicRemoveAll(Collection<org.jhotdraw.draw.figures.Figure> figures);
+  void basicRemoveAll(Collection<Figure> figures);
 
   /**
    * Reinserts a figure which was temporarily removed using basicRemove.
    * The drawing sends no <code>addNotify</code> message to the figure.
    *
    * @param figure that is part of the drawing and should be removed
-   * @see #basicRemove(org.jhotdraw.draw.figures.Figure)
+   * @see #basicRemove(Figure)
    */
-   void basicAdd(org.jhotdraw.draw.figures.Figure figure);
+  void basicAdd(Figure figure);
 
   /**
    * Reinserts a figure which was temporarily removed using basicRemove.
    * The drawing sends no <code>addNotify</code> message to the figure.
    *
    * @param figure that is part of the drawing and should be removed
-   * @see #basicRemove(org.jhotdraw.draw.figures.Figure)
+   * @see #basicRemove(Figure)
    */
-   void basicAdd(int index, org.jhotdraw.draw.figures.Figure figure);
+  void basicAdd(int index, Figure figure);
 
   /**
    * Reinserts the specified figures which were temporarily basicRemoved from
@@ -127,70 +129,69 @@ public interface Drawing extends Serializable, DOMStorable {
    *                and should be reinserted.
    * @see #basicRemoveAll(Collection)
    */
-   void basicAddAll(Collection<Figure> figures);
+  void basicAddAll(Collection<Figure> figures);
 
   /**
    * Draws all the figures from back to front.
    */
   void draw(Graphics2D g);
 
-  /*
+  /**
    * Draws only the figures in the supplied set.
-   * /
-   * void draw(Graphics2D g, ArrayList figures);
    */
+  void draw(Graphics2D g, ArrayList<Figure> figures);
 
   /**
    * Returns all figures that lie within or intersect the specified
    * bounds. The figures are returned in Z-order from back to front.
    */
-   Collection<org.jhotdraw.draw.figures.Figure> findFigures(Rectangle2D.Double bounds);
+  Collection<Figure> findFigures(Rectangle2D.Double bounds);
 
   /**
    * Returns all figures that lie within the specified
    * bounds. The figures are returned in Z-order from back to front.
    */
-   Collection<org.jhotdraw.draw.figures.Figure> findFiguresWithin(Rectangle2D.Double bounds);
+  Collection<Figure> findFiguresWithin(Rectangle2D.Double bounds);
 
   /**
    * Returns the figures of the drawing.
    *
    * @return A Collection of Figure's.
    */
-   Collection<org.jhotdraw.draw.figures.Figure> getFigures();
+  Collection<Figure> getFigures();
 
   /**
    * Returns the number of figures in this drawing.
    */
-   int getFigureCount();
+  int getFigureCount();
 
   /**
    * Finds a top level Figure. Use this call for hit detection that
    * should not descend into the figure's children.
    */
-  org.jhotdraw.draw.figures.Figure findFigure(Point2D.Double p);
+  Figure findFigure(Point2D.Double p);
 
   /**
    * Finds a top level Figure. Use this call for hit detection that
    * should not descend into the figure's children.
    */
-  org.jhotdraw.draw.figures.Figure findFigureExcept(Point2D.Double p, org.jhotdraw.draw.figures.Figure ignore);
+  Figure findFigureExcept(Point2D.Double p, Figure ignore);
 
   /**
    * Finds a top level Figure. Use this call for hit detection that
    * should not descend into the figure's children.
    */
-  org.jhotdraw.draw.figures.Figure findFigureExcept(Point2D.Double p, Collection<org.jhotdraw.draw.figures.Figure> ignore);
+  Figure findFigureExcept(Point2D.Double p, Collection<Figure> ignore);
 
   /**
    * Returns true if this drawing contains the specified figure.
    */
-  boolean contains(org.jhotdraw.draw.figures.Figure f);
+  boolean contains(Figure f);
 
   /**
    * Returns a list of the figures in Z-Order from front to back.
    */
-   List<org.jhotdraw.draw.figures.Figure> getFiguresFrontToBack();
+  List<Figure> getFiguresFrontToBack();
 
   /**
    * Finds a figure but descends into a figure's
@@ -198,27 +199,27 @@ public interface Drawing extends Serializable, DOMStorable {
    * hit detection, that is, you want to detect the innermost
    * figure containing the given point.
    */
-   org.jhotdraw.draw.figures.Figure findFigureInside(Point2D.Double p);
+  Figure findFigureInside(Point2D.Double p);
 
   /**
    * Sends a figure to the back of the drawing.
    *
    * @param figure that is part of the drawing
    */
-   void sendToBack(org.jhotdraw.draw.figures.Figure figure);
+  void sendToBack(Figure figure);
 
   /**
    * Brings a figure to the front.
    *
    * @param figure that is part of the drawing
    */
-   void bringToFront(org.jhotdraw.draw.figures.Figure figure);
+  void bringToFront(Figure figure);
 
   /**
    * Returns a copy of the provided collection which is sorted
    * in z order from back to front.
    */
-   Collection<org.jhotdraw.draw.figures.Figure> sort(Collection<org.jhotdraw.draw.figures.Figure> figures);
+  Collection<Figure> sort(Collection<Figure> figures);
 
   /**
    * Adds a listener for this drawing.
@@ -233,33 +234,33 @@ public interface Drawing extends Serializable, DOMStorable {
   /**
    * Adds a listener for undoable edit events.
    */
-   void addUndoableEditListener(UndoableEditListener l);
+  void addUndoableEditListener(UndoableEditListener l);
 
   /**
    * Removes a listener for undoable edit events.
    */
-   void removeUndoableEditListener(UndoableEditListener l);
+  void removeUndoableEditListener(UndoableEditListener l);
 
   /**
    * Notify all listenerList that have registered interest for
    * notification on this event type.
    */
-   void fireUndoableEditHappened(UndoableEdit edit);
+  void fireUndoableEditHappened(UndoableEdit edit);
 
   /**
    * Returns the font render context used to do text layout and text drawing.
    */
-   FontRenderContext getFontRenderContext();
+  FontRenderContext getFontRenderContext();
 
   /**
    * Sets the font render context used to do text layout and text drawing.
    */
-   void setFontRenderContext(FontRenderContext frc);
+  void setFontRenderContext(FontRenderContext frc);
 
   /**
    * Returns the lock object on which all threads acting in Figures in this
    * drawing synchronize to prevent race conditions.
    */
-   Object getLock();
+  Object getLock();
 }
 

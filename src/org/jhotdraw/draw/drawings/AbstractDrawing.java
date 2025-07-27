@@ -15,9 +15,9 @@
 package org.jhotdraw.draw.drawings;
 
 import org.jhotdraw.beans.AbstractBean;
-import org.jhotdraw.draw.listeners.DrawingListener;
 import org.jhotdraw.draw.events.DrawingEvent;
 import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.listeners.DrawingListener;
 import org.jhotdraw.undo.CompositeEdit;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;
@@ -46,7 +46,7 @@ import java.util.Collection;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public abstract class AbstractDrawing extends AbstractBean implements Drawing {
-  private final static Object lock = new JPanel().getTreeLock();
+  private static final Object lock = new JPanel().getTreeLock();
   protected EventListenerList listenerList = new EventListenerList();
   private FontRenderContext fontRenderContext;
 
@@ -72,10 +72,10 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
     listenerList.remove(UndoableEditListener.class, l);
   }
 
-  public void addAll(Collection<org.jhotdraw.draw.figures.Figure> figures) {
+  public void addAll(Collection<Figure> figures) {
     CompositeEdit edit = new CompositeEdit("Figuren hinzufügen");
     fireUndoableEditHappened(edit);
-    for (org.jhotdraw.draw.figures.Figure f : figures) {
+    for (Figure f : figures) {
       add(f);
     }
     fireUndoableEditHappened(edit);
@@ -95,28 +95,28 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
     return getFigures().size();
   }
 
-  public void removeAll(Collection<org.jhotdraw.draw.figures.Figure> toBeRemoved) {
+  public void removeAll(Collection<Figure> toBeRemoved) {
     CompositeEdit edit = new CompositeEdit("Figuren entfernen");
     fireUndoableEditHappened(edit);
 
-    for (org.jhotdraw.draw.figures.Figure f : new ArrayList<>(toBeRemoved)) {
+    for (Figure f : new ArrayList<>(toBeRemoved)) {
       remove(f);
     }
 
     fireUndoableEditHappened(edit);
   }
 
-  public void basicAddAll(Collection<org.jhotdraw.draw.figures.Figure> figures) {
-    for (org.jhotdraw.draw.figures.Figure f : figures) {
+  public void basicAddAll(Collection<Figure> figures) {
+    for (Figure f : figures) {
       basicAdd(f);
     }
   }
 
-  public void basicRemoveAll(Collection<org.jhotdraw.draw.figures.Figure> toBeOrphaned) {
+  public void basicRemoveAll(Collection<Figure> toBeOrphaned) {
     // Implementation note: We create a new collection to
     // avoid problems that may be caused, if the collection
     // is somehow connected to our figures' connection.
-    for (org.jhotdraw.draw.figures.Figure f : new ArrayList<>(toBeOrphaned)) {
+    for (Figure f : new ArrayList<>(toBeOrphaned)) {
       basicRemove(f);
     }
   }
@@ -124,16 +124,18 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
   /**
    * Calls basicAdd and then calls figure.addNotify and firesFigureAdded.
    */
-  public final void add(final org.jhotdraw.draw.figures.Figure figure) {
+  public final void add(final Figure figure) {
     final int index = getFigureCount();
     basicAdd(index, figure);
     figure.addNotify(this);
     fireFigureAdded(figure);
     fireUndoableEditHappened(new AbstractUndoableEdit() {
+      @Override
       public String getPresentationName() {
         return "Figur einfügen";
       }
 
+      @Override
       public void undo() throws CannotUndoException {
         super.undo();
         basicRemove(figure);
@@ -141,6 +143,7 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
         fireFigureRemoved(figure);
       }
 
+      @Override
       public void redo() throws CannotUndoException {
         super.redo();
         basicAdd(index, figure);
@@ -157,17 +160,19 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
   /**
    * Calls basicRemove and then calls figure.addNotify and firesFigureAdded.
    */
-  public final void remove(final org.jhotdraw.draw.figures.Figure figure) {
+  public final void remove(final Figure figure) {
     if (contains(figure)) {
       final int index = indexOf(figure);
       basicRemove(figure);
       figure.removeNotify(this);
       fireFigureRemoved(figure);
       fireUndoableEditHappened(new AbstractUndoableEdit() {
+        @Override
         public String getPresentationName() {
           return "Figur entfernen";
         }
 
+        @Override
         public void redo() throws CannotUndoException {
           super.redo();
           basicRemove(figure);
@@ -175,6 +180,7 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
           fireFigureRemoved(figure);
         }
 
+        @Override
         public void undo() throws CannotUndoException {
           super.undo();
           basicAdd(index, figure);
@@ -187,14 +193,14 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
     }
   }
 
-  protected abstract int indexOf(org.jhotdraw.draw.figures.Figure figure);
+  protected abstract int indexOf(Figure figure);
 
   /**
    * Notify all listenerList that have registered interest for
    * notification on this event type.
    */
   protected void fireAreaInvalidated(Rectangle2D.Double dirtyRegion) {
-    org.jhotdraw.draw.events.DrawingEvent event = null;
+    DrawingEvent event = null;
     // Notify all listeners that have registered interest for
     // Guaranteed to return a non-null array
     Object[] listeners = listenerList.getListenerList();
@@ -203,7 +209,7 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
     for (int i = listeners.length - 2; i >= 0; i -= 2) {
       if (listeners[i] == DrawingListener.class) {
         // Lazily create the event:
-        if (event == null) event = new org.jhotdraw.draw.events.DrawingEvent(this, null, dirtyRegion);
+        if (event == null) event = new DrawingEvent(this, null, dirtyRegion);
         ((DrawingListener) listeners[i + 1]).areaInvalidated(event);
       }
     }
@@ -234,7 +240,7 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
    * Notify all listenerList that have registered interest for
    * notification on this event type.
    */
-  protected void fireFigureAdded(org.jhotdraw.draw.figures.Figure f) {
+  protected void fireFigureAdded(Figure f) {
     DrawingEvent event = null;
     // Notify all listeners that have registered interest for
     // Guaranteed to return a non-null array
@@ -244,7 +250,7 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
     for (int i = listeners.length - 2; i >= 0; i -= 2) {
       if (listeners[i] == DrawingListener.class) {
         // Lazily create the event:
-        if (event == null) event = new org.jhotdraw.draw.events.DrawingEvent(this, f, f.getDrawBounds());
+        if (event == null) event = new DrawingEvent(this, f, f.getDrawBounds());
         ((DrawingListener) listeners[i + 1]).figureAdded(event);
       }
     }
@@ -254,8 +260,8 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
    * Notify all listenerList that have registered interest for
    * notification on this event type.
    */
-  protected void fireFigureRemoved(org.jhotdraw.draw.figures.Figure f) {
-    org.jhotdraw.draw.events.DrawingEvent event = null;
+  protected void fireFigureRemoved(Figure f) {
+    DrawingEvent event = null;
     // Notify all listeners that have registered interest for
     // Guaranteed to return a non-null array
     Object[] listeners = listenerList.getListenerList();
@@ -264,7 +270,7 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
     for (int i = listeners.length - 2; i >= 0; i -= 2) {
       if (listeners[i] == DrawingListener.class) {
         // Lazily create the event:
-        if (event == null) event = new org.jhotdraw.draw.events.DrawingEvent(this, f, f.getDrawBounds());
+        if (event == null) event = new DrawingEvent(this, f, f.getDrawBounds());
         ((DrawingListener) listeners[i + 1]).figureRemoved(event);
       }
     }
@@ -281,15 +287,14 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
   public void read(DOMInput in) throws IOException {
     in.openElement("figures");
     for (int i = 0; i < in.getElementCount(); i++) {
-      org.jhotdraw.draw.figures.Figure f;
-      add(f = (org.jhotdraw.draw.figures.Figure) in.readObject(i));
+      add((Figure) in.readObject(i));
     }
     in.closeElement();
   }
 
   public void write(DOMOutput out) throws IOException {
     out.openElement("figures");
-    for (org.jhotdraw.draw.figures.Figure f : getFigures()) {
+    for (Figure f : getFigures()) {
       out.writeObject(f);
     }
     out.closeElement();

@@ -15,9 +15,9 @@
 package org.jhotdraw.draw.drawings;
 
 import org.jhotdraw.draw.FigureLayerComparator;
-import org.jhotdraw.draw.listeners.FigureListener;
 import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.listeners.FigureListener;
 import org.jhotdraw.geom.QuadTree2DDouble;
 import org.jhotdraw.util.ReversedList;
 
@@ -29,6 +29,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * QuadTreeDrawing uses a QuadTree2DDouble to improve responsiveness of drawings which
@@ -39,21 +40,22 @@ import java.util.Collections;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class QuadTreeDrawing extends AbstractDrawing implements FigureListener, UndoableEditListener {
-  private ArrayList<org.jhotdraw.draw.figures.Figure> figures = new ArrayList<>();
-  private QuadTree2DDouble<org.jhotdraw.draw.figures.Figure> quadTree = new QuadTree2DDouble<>();
+  private final ArrayList<Figure> figures = new ArrayList<>();
+  private final QuadTree2DDouble<Figure> quadTree = new QuadTree2DDouble<>();
   private boolean needsSorting = false;
 
   /**
    * Creates a new instance.
    */
   public QuadTreeDrawing() {
+    // TODO document why this constructor is empty
   }
 
-  protected int indexOf(org.jhotdraw.draw.figures.Figure figure) {
+  protected int indexOf(Figure figure) {
     return figures.indexOf(figure);
   }
 
-  public void basicAdd(int index, org.jhotdraw.draw.figures.Figure figure) {
+  public void basicAdd(int index, Figure figure) {
     figures.add(index, figure);
     quadTree.add(figure, figure.getDrawBounds());
     figure.addFigureListener(this);
@@ -61,7 +63,7 @@ public class QuadTreeDrawing extends AbstractDrawing implements FigureListener, 
     needsSorting = true;
   }
 
-  public void basicRemove(org.jhotdraw.draw.figures.Figure figure) {
+  public void basicRemove(Figure figure) {
     figures.remove(figure);
     quadTree.remove(figure);
     figure.removeFigureListener(this);
@@ -70,18 +72,18 @@ public class QuadTreeDrawing extends AbstractDrawing implements FigureListener, 
   }
 
   public void draw(Graphics2D g) {
-    Collection<org.jhotdraw.draw.figures.Figure> c = quadTree.findIntersects(g.getClipBounds().getBounds2D());
-    Collection<org.jhotdraw.draw.figures.Figure> toDraw = sort(c);
-    draw(g, toDraw);
+    Collection<Figure> c = quadTree.findIntersects(g.getClipBounds().getBounds2D());
+    Collection<Figure> toDraw = sort(c);
+    draw(g, (ArrayList<Figure>) toDraw);
   }
 
   /**
    * Implementation note: Sorting can not be done for orphaned figures.
    */
-  public Collection<org.jhotdraw.draw.figures.Figure> sort(Collection<org.jhotdraw.draw.figures.Figure> c) {
+  public Collection<Figure> sort(Collection<Figure> c) {
     ensureSorted();
-    ArrayList<org.jhotdraw.draw.figures.Figure> sorted = new ArrayList<>(c.size());
-    for (org.jhotdraw.draw.figures.Figure f : figures) {
+    ArrayList<Figure> sorted = new ArrayList<>(c.size());
+    for (Figure f : figures) {
       if (c.contains(f)) {
         sorted.add(f);
       }
@@ -89,8 +91,8 @@ public class QuadTreeDrawing extends AbstractDrawing implements FigureListener, 
     return sorted;
   }
 
-  public void draw(Graphics2D g, Collection<org.jhotdraw.draw.figures.Figure> c) {
-    for (org.jhotdraw.draw.figures.Figure f : c) {
+  public void draw(Graphics2D g, ArrayList<Figure> c) {
+    for (Figure f : c) {
       f.draw(g);
     }
   }
@@ -99,34 +101,36 @@ public class QuadTreeDrawing extends AbstractDrawing implements FigureListener, 
     fireAreaInvalidated(e.getInvalidatedArea());
   }
 
-  public void figureChanged(org.jhotdraw.draw.events.FigureEvent e) {
+  public void figureChanged(FigureEvent e) {
     quadTree.remove(e.getFigure());
     quadTree.add(e.getFigure(), e.getFigure().getDrawBounds());
     needsSorting = true;
     fireAreaInvalidated(e.getInvalidatedArea());
   }
 
-  public void figureAdded(org.jhotdraw.draw.events.FigureEvent e) {
+  public void figureAdded(FigureEvent e) {
+    // TODO document why this method is empty
   }
 
-  public void figureRemoved(org.jhotdraw.draw.events.FigureEvent e) {
+  public void figureRemoved(FigureEvent e) {
+    // TODO document why this method is empty
   }
 
-  public void figureRequestRemove(org.jhotdraw.draw.events.FigureEvent e) {
+  public void figureRequestRemove(FigureEvent e) {
     remove(e.getFigure());
   }
 
-  public Collection<org.jhotdraw.draw.figures.Figure> getFigures(Rectangle2D.Double bounds) {
+  public Collection<Figure> getFigures(Rectangle2D.Double bounds) {
     return quadTree.findInside(bounds);
   }
 
-  public Collection<org.jhotdraw.draw.figures.Figure> getFigures() {
+  public Collection<Figure> getFigures() {
     return Collections.unmodifiableCollection(figures);
   }
 
-  public org.jhotdraw.draw.figures.Figure findFigureInside(Point2D.Double p) {
-    Collection<org.jhotdraw.draw.figures.Figure> c = quadTree.findContains(p);
-    for (org.jhotdraw.draw.figures.Figure f : getFiguresFrontToBack()) {
+  public Figure findFigureInside(Point2D.Double p) {
+    Collection<Figure> c = quadTree.findContains(p);
+    for (Figure f : getFiguresFrontToBack()) {
       if (c.contains(f) && f.contains(p)) {
         return f.findFigureInside(p);
       }
@@ -139,22 +143,22 @@ public class QuadTreeDrawing extends AbstractDrawing implements FigureListener, 
    * Returns an iterator to iterate in
    * Z-order front to back over the figures.
    */
-  public java.util.List<org.jhotdraw.draw.figures.Figure> getFiguresFrontToBack() {
+  public List<Figure> getFiguresFrontToBack() {
     ensureSorted();
     return new ReversedList<>(figures);
   }
 
-  public org.jhotdraw.draw.figures.Figure findFigure(Point2D.Double p) {
-    Collection<org.jhotdraw.draw.figures.Figure> c = quadTree.findContains(p);
+  public Figure findFigure(Point2D.Double p) {
+    Collection<Figure> c = quadTree.findContains(p);
     switch (c.size()) {
       case 0:
         return null;
       case 1: {
-        org.jhotdraw.draw.figures.Figure f = c.iterator().next();
+        Figure f = c.iterator().next();
         return (f.contains(p)) ? f : null;
       }
       default: {
-        for (org.jhotdraw.draw.figures.Figure f : getFiguresFrontToBack()) {
+        for (Figure f : getFiguresFrontToBack()) {
           if (c.contains(f) && f.contains(p)) return f;
         }
         return null;
@@ -162,18 +166,18 @@ public class QuadTreeDrawing extends AbstractDrawing implements FigureListener, 
     }
   }
 
-  public org.jhotdraw.draw.figures.Figure findFigureExcept(Point2D.Double p, org.jhotdraw.draw.figures.Figure ignore) {
-    Collection<org.jhotdraw.draw.figures.Figure> c = quadTree.findContains(p);
+  public Figure findFigureExcept(Point2D.Double p, Figure ignore) {
+    Collection<Figure> c = quadTree.findContains(p);
     switch (c.size()) {
       case 0: {
         return null;
       }
       case 1: {
-        org.jhotdraw.draw.figures.Figure f = c.iterator().next();
+        Figure f = c.iterator().next();
         return (f == ignore || !f.contains(p)) ? null : f;
       }
       default: {
-        for (org.jhotdraw.draw.figures.Figure f : getFiguresFrontToBack()) {
+        for (Figure f : getFiguresFrontToBack()) {
           if (f != ignore && f.contains(p)) return f;
         }
         return null;
@@ -181,18 +185,18 @@ public class QuadTreeDrawing extends AbstractDrawing implements FigureListener, 
     }
   }
 
-  public org.jhotdraw.draw.figures.Figure findFigureExcept(Point2D.Double p, Collection ignore) {
-    Collection<org.jhotdraw.draw.figures.Figure> c = quadTree.findContains(p);
+  public Figure findFigureExcept(Point2D.Double p, Collection<Figure> ignore) {
+    Collection<Figure> c = quadTree.findContains(p);
     switch (c.size()) {
       case 0: {
         return null;
       }
       case 1: {
-        org.jhotdraw.draw.figures.Figure f = c.iterator().next();
+        Figure f = c.iterator().next();
         return (!ignore.contains(f) || !f.contains(p)) ? null : f;
       }
       default: {
-        for (org.jhotdraw.draw.figures.Figure f : getFiguresFrontToBack()) {
+        for (Figure f : getFiguresFrontToBack()) {
           if (!ignore.contains(f) && f.contains(p)) return f;
         }
         return null;
@@ -201,7 +205,7 @@ public class QuadTreeDrawing extends AbstractDrawing implements FigureListener, 
   }
 
   public Collection<Figure> findFigures(Rectangle2D.Double r) {
-    Collection<org.jhotdraw.draw.figures.Figure> c = quadTree.findIntersects(r);
+    Collection<Figure> c = quadTree.findIntersects(r);
     switch (c.size()) {
       case 0:
         // fall through
@@ -212,10 +216,10 @@ public class QuadTreeDrawing extends AbstractDrawing implements FigureListener, 
     }
   }
 
-  public Collection<org.jhotdraw.draw.figures.Figure> findFiguresWithin(Rectangle2D.Double r) {
-    Collection<org.jhotdraw.draw.figures.Figure> c = findFigures(r);
-    ArrayList<org.jhotdraw.draw.figures.Figure> result = new ArrayList<>(c.size());
-    for (org.jhotdraw.draw.figures.Figure f : c) {
+  public Collection<Figure> findFiguresWithin(Rectangle2D.Double r) {
+    Collection<Figure> c = findFigures(r);
+    ArrayList<Figure> result = new ArrayList<>(c.size());
+    for (Figure f : c) {
       if (r.contains(f.getBounds())) {
         result.add(f);
       }
@@ -223,7 +227,7 @@ public class QuadTreeDrawing extends AbstractDrawing implements FigureListener, 
     return result;
   }
 
-  public void bringToFront(org.jhotdraw.draw.figures.Figure figure) {
+  public void bringToFront(Figure figure) {
     if (figures.remove(figure)) {
       figures.add(figure);
       needsSorting = true;
@@ -231,7 +235,7 @@ public class QuadTreeDrawing extends AbstractDrawing implements FigureListener, 
     }
   }
 
-  public void sendToBack(org.jhotdraw.draw.figures.Figure figure) {
+  public void sendToBack(Figure figure) {
     if (figures.remove(figure)) {
       figures.add(0, figure);
       needsSorting = true;
@@ -247,10 +251,11 @@ public class QuadTreeDrawing extends AbstractDrawing implements FigureListener, 
     fireUndoableEditHappened(e.getEdit());
   }
 
-  public void figureAttributeChanged(org.jhotdraw.draw.events.FigureEvent e) {
+  public void figureAttributeChanged(FigureEvent e) {
+    // TODO document why this method is empty
   }
 
-  public boolean contains(org.jhotdraw.draw.figures.Figure f) {
+  public boolean contains(Figure f) {
     return figures.contains(f);
   }
 

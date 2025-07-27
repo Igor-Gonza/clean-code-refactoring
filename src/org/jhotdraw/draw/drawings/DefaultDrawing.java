@@ -15,9 +15,9 @@
 package org.jhotdraw.draw.drawings;
 
 import org.jhotdraw.draw.FigureLayerComparator;
-import org.jhotdraw.draw.listeners.FigureListener;
 import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.listeners.FigureListener;
 import org.jhotdraw.util.ReversedList;
 
 import javax.swing.event.UndoableEditEvent;
@@ -38,27 +38,28 @@ import java.util.HashSet;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class DefaultDrawing extends AbstractDrawing implements FigureListener, UndoableEditListener {
-  private ArrayList<org.jhotdraw.draw.figures.Figure> figures = new ArrayList<>();
+  private final ArrayList<Figure> figures = new ArrayList<>();
   private boolean needsSorting = false;
 
   /**
    * Creates a new instance.
    */
   public DefaultDrawing() {
+    // TODO document why this constructor is empty
   }
 
-  protected int indexOf(org.jhotdraw.draw.figures.Figure figure) {
+  protected int indexOf(Figure figure) {
     return figures.indexOf(figure);
   }
 
-  public void basicAdd(int index, org.jhotdraw.draw.figures.Figure figure) {
+  public void basicAdd(int index, Figure figure) {
     figures.add(index, figure);
     figure.addFigureListener(this);
     figure.addUndoableEditListener(this);
     invalidateSortOrder();
   }
 
-  public void basicRemove(org.jhotdraw.draw.figures.Figure figure) {
+  public void basicRemove(Figure figure) {
     figures.remove(figure);
     figure.removeFigureListener(this);
     figure.removeUndoableEditListener(this);
@@ -68,9 +69,9 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
   public void draw(Graphics2D g) {
     synchronized (getLock()) {
       ensureSorted();
-      ArrayList<org.jhotdraw.draw.figures.Figure> toDraw = new ArrayList<>(figures.size());
+      ArrayList<Figure> toDraw = new ArrayList<>(figures.size());
       Rectangle clipRect = g.getClipBounds();
-      for (org.jhotdraw.draw.figures.Figure f : figures) {
+      for (Figure f : figures) {
         if (f.getDrawBounds().intersects(clipRect)) {
           toDraw.add(f);
         }
@@ -79,24 +80,24 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     }
   }
 
-  public void draw(Graphics2D g, Collection<org.jhotdraw.draw.figures.Figure> figures) {
-    for (org.jhotdraw.draw.figures.Figure f : figures) {
+  public void draw(Graphics2D g, ArrayList<Figure> figures) {
+    for (Figure f : figures) {
       if (f.isVisible()) {
         f.draw(g);
       }
     }
   }
 
-  public Collection<org.jhotdraw.draw.figures.Figure> sort(Collection<Figure> c) {
-    HashSet<org.jhotdraw.draw.figures.Figure> unsorted = new HashSet<>(c);
-    ArrayList<org.jhotdraw.draw.figures.Figure> sorted = new ArrayList<>(c.size());
-    for (org.jhotdraw.draw.figures.Figure f : figures) {
+  public Collection<Figure> sort(Collection<Figure> c) {
+    HashSet<Figure> unsorted = new HashSet<>(c);
+    ArrayList<Figure> sorted = new ArrayList<>(c.size());
+    for (Figure f : figures) {
       if (unsorted.contains(f)) {
         sorted.add(f);
         unsorted.remove(f);
       }
     }
-    for (org.jhotdraw.draw.figures.Figure f : c) {
+    for (Figure f : c) {
       if (unsorted.contains(f)) {
         sorted.add(f);
         unsorted.remove(f);
@@ -109,23 +110,25 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     fireAreaInvalidated(e.getInvalidatedArea());
   }
 
-  public void figureChanged(org.jhotdraw.draw.events.FigureEvent e) {
+  public void figureChanged(FigureEvent e) {
     invalidateSortOrder();
     fireAreaInvalidated(e.getInvalidatedArea());
   }
 
-  public void figureAdded(org.jhotdraw.draw.events.FigureEvent e) {
+  public void figureAdded(FigureEvent e) {
+    // TODO document why this method is empty
   }
 
-  public void figureRemoved(org.jhotdraw.draw.events.FigureEvent e) {
+  public void figureRemoved(FigureEvent e) {
+    // TODO document why this method is empty
   }
 
-  public void figureRequestRemove(org.jhotdraw.draw.events.FigureEvent e) {
+  public void figureRequestRemove(FigureEvent e) {
     remove(e.getFigure());
   }
 
-  public org.jhotdraw.draw.figures.Figure findFigure(Point2D.Double p) {
-    for (org.jhotdraw.draw.figures.Figure f : getFiguresFrontToBack()) {
+  public Figure findFigure(Point2D.Double p) {
+    for (Figure f : getFiguresFrontToBack()) {
       if (f.isVisible() && f.contains(p)) {
         return f;
       }
@@ -133,8 +136,8 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     return null;
   }
 
-  public org.jhotdraw.draw.figures.Figure findFigureExcept(Point2D.Double p, org.jhotdraw.draw.figures.Figure ignore) {
-    for (org.jhotdraw.draw.figures.Figure f : getFiguresFrontToBack()) {
+  public Figure findFigureExcept(Point2D.Double p, Figure ignore) {
+    for (Figure f : getFiguresFrontToBack()) {
       if (f != ignore && f.isVisible() && f.contains(p)) {
         return f;
       }
@@ -142,8 +145,8 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     return null;
   }
 
-  public org.jhotdraw.draw.figures.Figure findFigureExcept(Point2D.Double p, Collection<org.jhotdraw.draw.figures.Figure> ignore) {
-    for (org.jhotdraw.draw.figures.Figure f : getFiguresFrontToBack()) {
+  public Figure findFigureExcept(Point2D.Double p, Collection<Figure> ignore) {
+    for (Figure f : getFiguresFrontToBack()) {
       if (!ignore.contains(f) && f.isVisible() && f.contains(p)) {
         return f;
       }
@@ -151,9 +154,9 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     return null;
   }
 
-  public Collection<org.jhotdraw.draw.figures.Figure> findFigures(Rectangle2D.Double bounds) {
-    ArrayList<org.jhotdraw.draw.figures.Figure> intersection = new ArrayList<>();
-    for (org.jhotdraw.draw.figures.Figure f : figures) {
+  public Collection<Figure> findFigures(Rectangle2D.Double bounds) {
+    ArrayList<Figure> intersection = new ArrayList<>();
+    for (Figure f : figures) {
       if (f.isVisible() && f.getBounds().intersects(bounds)) {
         intersection.add(f);
       }
@@ -161,9 +164,9 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     return intersection;
   }
 
-  public Collection<org.jhotdraw.draw.figures.Figure> findFiguresWithin(Rectangle2D.Double bounds) {
-    ArrayList<org.jhotdraw.draw.figures.Figure> contained = new ArrayList<>();
-    for (org.jhotdraw.draw.figures.Figure f : figures) {
+  public Collection<Figure> findFiguresWithin(Rectangle2D.Double bounds) {
+    ArrayList<Figure> contained = new ArrayList<>();
+    for (Figure f : figures) {
       if (f.isVisible() && bounds.contains(f.getBounds())) {
         contained.add(f);
       }
@@ -171,12 +174,12 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     return contained;
   }
 
-  public Collection<org.jhotdraw.draw.figures.Figure> getFigures() {
+  public Collection<Figure> getFigures() {
     return Collections.unmodifiableCollection(figures);
   }
 
-  public org.jhotdraw.draw.figures.Figure findFigureInside(Point2D.Double p) {
-    org.jhotdraw.draw.figures.Figure f = findFigure(p);
+  public Figure findFigureInside(Point2D.Double p) {
+    Figure f = findFigure(p);
     return (f == null) ? null : f.findFigureInside(p);
   }
 
@@ -184,12 +187,12 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
    * Returns an iterator to iterate in
    * Z-order front to back over the figures.
    */
-  public java.util.List<org.jhotdraw.draw.figures.Figure> getFiguresFrontToBack() {
+  public java.util.List<Figure> getFiguresFrontToBack() {
     ensureSorted();
     return new ReversedList<>(figures);
   }
 
-  public void bringToFront(org.jhotdraw.draw.figures.Figure figure) {
+  public void bringToFront(Figure figure) {
     if (figures.remove(figure)) {
       figures.add(figure);
       invalidateSortOrder();
@@ -197,7 +200,7 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     }
   }
 
-  public void sendToBack(org.jhotdraw.draw.figures.Figure figure) {
+  public void sendToBack(Figure figure) {
     if (figures.remove(figure)) {
       figures.add(0, figure);
       invalidateSortOrder();
@@ -213,10 +216,11 @@ public class DefaultDrawing extends AbstractDrawing implements FigureListener, U
     fireUndoableEditHappened(e.getEdit());
   }
 
-  public void figureAttributeChanged(org.jhotdraw.draw.events.FigureEvent e) {
+  public void figureAttributeChanged(FigureEvent e) {
+    // TODO document why this method is empty
   }
 
-  public boolean contains(org.jhotdraw.draw.figures.Figure f) {
+  public boolean contains(Figure f) {
     return figures.contains(f);
   }
 
