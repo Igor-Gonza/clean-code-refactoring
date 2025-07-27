@@ -15,6 +15,8 @@
 package org.jhotdraw.draw.editors;
 
 import org.jhotdraw.draw.AttributeKey;
+import org.jhotdraw.draw.drawings.Drawing;
+import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.tools.Tool;
@@ -50,12 +52,12 @@ public interface DrawingEditor {
   /**
    * Gets the editor's current drawing.
    */
-//  Drawing getDrawing();
+  Drawing getDrawing();
 
   /**
    * Sets the editor's current drawing.
    */
-//  void setDrawing(Drawing drawing);
+  void setDrawing(Drawing drawing);
 
   /**
    * Adds a drawing view to the editor.
@@ -117,7 +119,7 @@ public interface DrawingEditor {
    *
    * @return A handle, null if no handle is found.
    */
-//  Handle findHandle(Point p);
+  Handle findHandle(Point p);
 
   /**
    * Finds a drawing view.
@@ -131,14 +133,14 @@ public interface DrawingEditor {
    * The default attribute will be used by creation tools, to create a new
    * figure.
    */
-  void setDefaultAttribute(AttributeKey key, Object value);
+  void setDefaultAttribute(AttributeKey<?> key, Object value);
 
   /**
    * Gets a default attribute from the editor.
    * The default attribute will be used by creation tools, to create a new
    * figure.
    */
-  Object getDefaultAttribute(AttributeKey key);
+  Object getDefaultAttribute(AttributeKey<?> key);
 
   /**
    * Applies the default attributes to the specified figure.

@@ -16,11 +16,13 @@ package org.jhotdraw.draw.editors;
 
 import org.jhotdraw.beans.AbstractBean;
 import org.jhotdraw.draw.AttributeKey;
-import org.jhotdraw.draw.views.DrawingView;
-import org.jhotdraw.draw.listeners.ToolListener;
+import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.events.ToolEvent;
 import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.listeners.ToolListener;
 import org.jhotdraw.draw.tools.Tool;
+import org.jhotdraw.draw.views.DrawingView;
 
 import java.awt.*;
 import java.awt.event.FocusEvent;
@@ -37,9 +39,9 @@ import static org.jhotdraw.draw.AttributeKeys.*;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class DefaultDrawingEditor extends AbstractBean implements DrawingEditor, ToolListener {
-  private HashMap<AttributeKey, Object> defaultAttributes = new HashMap<>();
-  private org.jhotdraw.draw.tools.Tool tool;
-  private HashSet<DrawingView> views;
+  private final HashMap<AttributeKey<?>, Object> defaultAttributes = new HashMap<>();
+  private Tool tool;
+  private final HashSet<DrawingView> views;
   private DrawingView activeView;
   private boolean isEnabled = true;
   private DrawingView focusedView;
@@ -118,7 +120,7 @@ public class DefaultDrawingEditor extends AbstractBean implements DrawingEditor,
     }
   }
 
-  public org.jhotdraw.draw.tools.Tool getTool() {
+  public Tool getTool() {
     return tool;
   }
 
@@ -147,16 +149,16 @@ public class DefaultDrawingEditor extends AbstractBean implements DrawingEditor,
   }
 
   public void applyDefaultAttributesTo(Figure f) {
-    for (Map.Entry<AttributeKey, Object> entry : defaultAttributes.entrySet()) {
+    for (Map.Entry<AttributeKey<?>, Object> entry : defaultAttributes.entrySet()) {
       f.setAttribute(entry.getKey(), entry.getValue());
     }
   }
 
-  public Object getDefaultAttribute(AttributeKey key) {
+  public Object getDefaultAttribute(AttributeKey<?> key) {
     return defaultAttributes.get(key);
   }
 
-  public void setDefaultAttribute(AttributeKey key, Object newValue) {
+  public void setDefaultAttribute(AttributeKey<?> key, Object newValue) {
     Object oldValue = defaultAttributes.put(key, newValue);
     firePropertyChange(key.getKey(), oldValue, newValue);
   }
@@ -177,6 +179,16 @@ public class DefaultDrawingEditor extends AbstractBean implements DrawingEditor,
     updateFocusedView();
   }
 
+  @Override
+  public Drawing getDrawing() {
+    return null;
+  }
+
+  @Override
+  public void setDrawing(Drawing drawing) {
+    // TODO document why this method is empty
+  }
+
   public void add(DrawingView view) {
     views.add(view);
     view.addNotify(this);
@@ -190,6 +202,12 @@ public class DefaultDrawingEditor extends AbstractBean implements DrawingEditor,
   }
 
   public void setCursor(Cursor c) {
+    // TODO document why this method is empty
+  }
+
+  @Override
+  public Handle findHandle(Point p) {
+    return null;
   }
 
   public Collection<DrawingView> getDrawingViews() {
