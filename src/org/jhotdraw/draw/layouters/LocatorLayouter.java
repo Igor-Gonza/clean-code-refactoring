@@ -36,12 +36,13 @@ public class LocatorLayouter implements Layouter {
    * LayoutLocator property used by the children to specify their location
    * relative to the compositeFigure.
    */
-  public final static AttributeKey<Locator> LAYOUT_LOCATOR = new AttributeKey<>("layoutLocator", null);
+  public static final AttributeKey<Locator> LAYOUT_LOCATOR = new AttributeKey<>("layoutLocator", null);
 
   /**
    * Creates a new instance.
    */
   public LocatorLayouter() {
+    // TODO document why this constructor is empty
   }
 
   public Rectangle2D.Double calculateLayout(CompositeFigure compositeFigure, Point2D.Double anchor, Point2D.Double lead) {
