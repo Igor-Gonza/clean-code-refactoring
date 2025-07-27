@@ -40,6 +40,7 @@ public class ElbowLiner implements Liner, DOMStorable {
    * Creates a new instance.
    */
   public ElbowLiner() {
+    // TODO document why this constructor is empty
   }
 
   public Collection<Handle> createHandles(BezierPath path) {
@@ -48,7 +49,7 @@ public class ElbowLiner implements Liner, DOMStorable {
 
   public void lineout(ConnectionFigure figure) {
     BezierPath path = ((LineConnectionFigure) figure).getBezierPath();
-    org.jhotdraw.draw.connectors.Connector start = figure.getStartConnector();
+    Connector start = figure.getStartConnector();
     Connector end = figure.getEndConnector();
     if (start == null || end == null || path == null) {
       return;
@@ -98,9 +99,11 @@ public class ElbowLiner implements Liner, DOMStorable {
   }
 
   public void read(DOMInput in) {
+    // TODO document why this method is empty
   }
 
   public void write(DOMOutput out) {
+    // TODO document why this method is empty
   }
 
   public Liner clone() {

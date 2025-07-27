@@ -54,7 +54,7 @@ public class SlantedLiner implements Liner, DOMStorable {
 
   public void lineout(ConnectionFigure figure) {
     BezierPath path = ((LineConnectionFigure) figure).getBezierPath();
-    org.jhotdraw.draw.connectors.Connector start = figure.getStartConnector();
+    Connector start = figure.getStartConnector();
     Connector end = figure.getEndConnector();
     if (start == null || end == null || path == null) {
       return;
