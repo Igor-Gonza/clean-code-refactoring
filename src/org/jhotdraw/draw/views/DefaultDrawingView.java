@@ -68,7 +68,7 @@ import java.util.List;
  */
 public class DefaultDrawingView extends JComponent implements DrawingView, DrawingListener, HandleListener, EditableComponent {
 
-  static final Logger logger = Logger.getLogger(DefaultSDIApplication.class);
+  static final Logger logger = Logger.getLogger(DefaultDrawingView.class);
 
   private Drawing drawing;
   private Set<Figure> dirtyFigures = new HashSet<>();

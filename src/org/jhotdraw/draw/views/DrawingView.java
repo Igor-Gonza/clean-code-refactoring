@@ -14,12 +14,12 @@
 
 package org.jhotdraw.draw.views;
 
-import org.jhotdraw.draw.listeners.FigureSelectionListener;
 import org.jhotdraw.draw.constrainers.Constrainer;
 import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.listeners.FigureSelectionListener;
 import org.jhotdraw.draw.tools.Tool;
 
 import java.awt.*;
@@ -58,7 +58,7 @@ public interface DrawingView {
   /**
    * Sets and installs another drawing in the view.
    */
-  void setDrawing(org.jhotdraw.draw.drawings.Drawing d);
+  void setDrawing(Drawing d);
 
   /**
    * Sets the cursor of the DrawingView
@@ -73,23 +73,23 @@ public interface DrawingView {
   /**
    * Adds a figure to the current selection.
    */
-  void addToSelection(org.jhotdraw.draw.figures.Figure figure);
+  void addToSelection(Figure figure);
 
   /**
    * Adds a collection of figures to the current selection.
    */
-  void addToSelection(Collection<org.jhotdraw.draw.figures.Figure> figures);
+  void addToSelection(Collection<Figure> figures);
 
   /**
    * Removes a figure from the selection.
    */
-  void removeFromSelection(org.jhotdraw.draw.figures.Figure figure);
+  void removeFromSelection(Figure figure);
 
   /**
    * If a figure isn't selected it is added to the selection.
    * Otherwise ,it is removed from the selection.
    */
-  void toggleSelection(org.jhotdraw.draw.figures.Figure figure);
+  void toggleSelection(Figure figure);
 
   /**
    * Clears the current selection.
@@ -105,7 +105,7 @@ public interface DrawingView {
    * Gets the current selection as a FigureSelection. A FigureSelection
    * can be cut, copied, pasted.
    */
-  Collection<org.jhotdraw.draw.figures.Figure> getSelectedFigures();
+  Collection<Figure> getSelectedFigures();
 
   /**
    * Gets the number of selected figures.
@@ -117,40 +117,40 @@ public interface DrawingView {
    *
    * @return A handle, null if no handle is found.
    */
-  org.jhotdraw.draw.handlers.Handle findHandle(Point p);
+  Handle findHandle(Point p);
 
   /**
    * Gets compatible handles.
    *
    * @return A collection containing the handle and all compatible handles.
    */
-  Collection<Handle> getCompatibleHandles(org.jhotdraw.draw.handlers.Handle handle);
+  Collection<Handle> getCompatibleHandles(Handle handle);
 
   /**
    * Finds a figure at the given point.
    *
    * @return A figure, null if no figure is found.
    */
-  org.jhotdraw.draw.figures.Figure findFigure(Point p);
+  Figure findFigure(Point p);
 
   /**
    * Returns all figures that lie within or intersect the specified
    * bounds. The figures are returned in Z-order from back to front.
    */
-  Collection<org.jhotdraw.draw.figures.Figure> findFigures(Rectangle r);
+  Collection<Figure> findFigures(Rectangle r);
 
   /**
    * Returns all figures that lie within the specified
    * bounds. The figures are returned in Z-order from back to front.
    */
-  Collection<org.jhotdraw.draw.figures.Figure> findFiguresWithin(Rectangle r);
+  Collection<Figure> findFiguresWithin(Rectangle r);
 
   /**
    * Informs the view that it has been added to the specified editor.
    * The view must draw the tool of the editor, if getActiveView() of the
    * editor returns the view.
    */
-  void addNotify(org.jhotdraw.draw.editors.DrawingEditor editor);
+  void addNotify(DrawingEditor editor);
 
   /**
    * Informs the view that it has been removed from the specified editor.
@@ -209,7 +209,7 @@ public interface DrawingView {
   /**
    * Sets the editor's constrainer.
    */
-  void setConstrainer(org.jhotdraw.draw.constrainers.Constrainer constrainer);
+  void setConstrainer(Constrainer constrainer);
 
   /**
    * Gets the editor's constrainer.
