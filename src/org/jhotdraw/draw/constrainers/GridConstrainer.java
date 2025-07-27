@@ -87,7 +87,7 @@ public class GridConstrainer implements Constrainer {
           g.setColor((i % 5 == 0) ? majorColor : minorColor);
 
           point.x = width * i;
-          t.transform(point, viewPoint);  
+          t.transform(point, viewPoint);
           g.drawLine((int) viewPoint.x, viewBounds.y, (int) viewPoint.x, viewBounds.y + viewBounds.height);
         }
       }

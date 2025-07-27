@@ -37,7 +37,7 @@ import java.io.IOException;
  * @see Connector
  */
 @SuppressWarnings("unused")
-public abstract class AbstractConnector implements org.jhotdraw.draw.connectors.Connector {
+public abstract class AbstractConnector implements Connector {
   /**
    * The owner of the connector
    */
@@ -146,14 +146,6 @@ public abstract class AbstractConnector implements org.jhotdraw.draw.connectors.
    */
   protected void setOwner(Figure newValue) {
     owner = newValue;
-  }
-
-  public Object clone() {
-    try {
-      return super.clone();
-    } catch (CloneNotSupportedException e) {
-      throw new InternalError(e.toString(), e);
-    }
   }
 
   /**

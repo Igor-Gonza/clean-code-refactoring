@@ -83,9 +83,4 @@ public interface Connector extends Cloneable, Serializable, DOMStorable {
    * and it is OK leave this method empty.
    */
   void draw(Graphics2D g);
-
-  /**
-   * Returns a clone of the Connection.
-   */
-  Object clone();
 }
