@@ -62,10 +62,10 @@ public class EllipseFigure extends AttributedFigure {
   // EDITING
   // CONNECTING
   public Connector findConnector(Point2D.Double p, ConnectionFigure prototype) {
-    return new org.jhotdraw.draw.connectors.ChopEllipseConnector(this);
+    return new ChopEllipseConnector(this);
   }
 
-  public org.jhotdraw.draw.connectors.Connector findCompatibleConnector(org.jhotdraw.draw.connectors.Connector c, boolean isStartConnector) {
+  public Connector findCompatibleConnector(Connector c, boolean isStartConnector) {
     return new ChopEllipseConnector(this);
   }
 

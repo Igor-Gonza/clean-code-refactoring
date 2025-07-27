@@ -31,7 +31,7 @@ import java.util.HashMap;
  */
 @SuppressWarnings("unused")
 public class LabelFigure extends TextFigure implements FigureListener {
-  private org.jhotdraw.draw.figures.TextHolder target;
+  private TextHolder target;
 
   /**
    * Creates a new instance.
@@ -45,7 +45,7 @@ public class LabelFigure extends TextFigure implements FigureListener {
     setEditable(false);
   }
 
-  public void setLabelFor(org.jhotdraw.draw.figures.TextHolder target) {
+  public void setLabelFor(TextHolder target) {
     if (this.target != null) {
       this.target.removeFigureListener(this);
     }
@@ -92,10 +92,10 @@ public class LabelFigure extends TextFigure implements FigureListener {
   public void remap(HashMap oldToNew) {
     super.remap(oldToNew);
     if (target != null) {
-      org.jhotdraw.draw.figures.Figure newTarget = (Figure) oldToNew.get(target);
+      Figure newTarget = (Figure) oldToNew.get(target);
       if (newTarget != null) {
         target.removeFigureListener(this);
-        target = (org.jhotdraw.draw.figures.TextHolder) newTarget;
+        target = (TextHolder) newTarget;
         newTarget.addFigureListener(this);
       }
     }

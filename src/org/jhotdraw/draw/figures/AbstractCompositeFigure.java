@@ -14,11 +14,11 @@
 
 package org.jhotdraw.draw.figures;
 
-import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.AttributeKey;
+import org.jhotdraw.draw.layouters.Layouter;
 import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.handlers.Handle;
-import org.jhotdraw.draw.layouters.Layouter;
 import org.jhotdraw.draw.listeners.FigureListener;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.util.ReversedList;
@@ -54,7 +54,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
    * @see #add
    * @see #removeChild
    */
-  private LinkedList<org.jhotdraw.draw.figures.Figure> children = new LinkedList<>();
+  private LinkedList<Figure> children = new LinkedList<>();
 
   /**
    * Cached draw bounds.
@@ -83,15 +83,15 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
       this.owner = owner;
     }
 
-    public void figureRequestRemove(org.jhotdraw.draw.events.FigureEvent e) {
+    public void figureRequestRemove(FigureEvent e) {
       owner.remove(e.getFigure());
     }
 
-    public void figureRemoved(org.jhotdraw.draw.events.FigureEvent evt) {
+    public void figureRemoved(FigureEvent evt) {
       //  owner.remove(evt.getFigure());
     }
 
-    public void figureChanged(org.jhotdraw.draw.events.FigureEvent e) {
+    public void figureChanged(FigureEvent e) {
       if (!owner.isChanging()) {
         owner.willChange();
         owner.fireFigureChanged(e);
@@ -100,12 +100,14 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
     }
 
     public void figureAdded(FigureEvent e) {
+      // TODO document why this method is empty
     }
 
-    public void figureAttributeChanged(org.jhotdraw.draw.events.FigureEvent e) {
+    public void figureAttributeChanged(FigureEvent e) {
+      // TODO document why this method is empty
     }
 
-    public void figureAreaInvalidated(org.jhotdraw.draw.events.FigureEvent e) {
+    public void figureAreaInvalidated(FigureEvent e) {
       if (!owner.isChanging()) {
         owner.fireAreaInvalidated(e.getInvalidatedArea());
       }
@@ -135,11 +137,11 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
     return new LinkedList<>();
   }
 
-  public void add(org.jhotdraw.draw.figures.Figure figure) {
+  public void add(Figure figure) {
     add(getChildCount(), figure);
   }
 
-  public void add(final int index, final org.jhotdraw.draw.figures.Figure figure) {
+  public void add(final int index, final Figure figure) {
     willChange();
     basicAdd(index, figure);
     if (getDrawing() != null) {
@@ -148,9 +150,9 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
     changed();
   }
 
-  public void addAll(Collection<org.jhotdraw.draw.figures.Figure> newFigures) {
+  public void addAll(Collection<Figure> newFigures) {
     willChange();
-    for (org.jhotdraw.draw.figures.Figure f : newFigures) {
+    for (Figure f : newFigures) {
       basicAdd(getChildCount(), f);
       if (getDrawing() != null) {
         f.addNotify(getDrawing());
@@ -159,39 +161,39 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
     changed();
   }
 
-  public void basicAdd(org.jhotdraw.draw.figures.Figure figure) {
+  public void basicAdd(Figure figure) {
     basicAdd(getChildCount(), figure);
   }
 
-  public void basicAdd(int index, org.jhotdraw.draw.figures.Figure figure) {
+  public void basicAdd(int index, Figure figure) {
     children.add(index, figure);
     figure.addFigureListener(childHandler);
     figure.addUndoableEditListener(childHandler);
 
   }
 
-  public void basicAddAll(Collection<org.jhotdraw.draw.figures.Figure> newFigures) {
-    for (org.jhotdraw.draw.figures.Figure f : newFigures) {
+  public void basicAddAll(Collection<Figure> newFigures) {
+    for (Figure f : newFigures) {
       basicAdd(getChildCount(), f);
     }
   }
 
-  public void addNotify(org.jhotdraw.draw.drawings.Drawing drawing) {
+  public void addNotify(Drawing drawing) {
     super.addNotify(drawing);
-    for (org.jhotdraw.draw.figures.Figure child : children) {
+    for (Figure child : children) {
       child.addNotify(drawing);
     }
   }
 
   public void removeNotify(Drawing drawing) {
     // Copy children collection to avoid concurrent modification exception
-    for (org.jhotdraw.draw.figures.Figure child : new LinkedList<>(children)) {
+    for (Figure child : new LinkedList<>(children)) {
       child.removeNotify(drawing);
     }
     super.removeNotify(drawing);
   }
 
-  public boolean remove(final org.jhotdraw.draw.figures.Figure figure) {
+  public boolean remove(final Figure figure) {
     int index = children.indexOf(figure);
     if (index == -1) {
       return false;
@@ -206,9 +208,9 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
     }
   }
 
-  public org.jhotdraw.draw.figures.Figure removeChild(int index) {
+  public Figure removeChild(int index) {
     willChange();
-    org.jhotdraw.draw.figures.Figure removed = basicRemoveChild(index);
+    Figure removed = basicRemoveChild(index);
     if (getDrawing() != null) {
       removed.removeNotify(getDrawing());
     }
@@ -216,7 +218,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
     return removed;
   }
 
-  public boolean basicRemove(final org.jhotdraw.draw.figures.Figure figure) {
+  public boolean basicRemove(final Figure figure) {
     int index = children.indexOf(figure);
     if (index == -1) {
       return false;
@@ -226,8 +228,8 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
     }
   }
 
-  public org.jhotdraw.draw.figures.Figure basicRemoveChild(int index) {
-    org.jhotdraw.draw.figures.Figure figure = children.remove(index);
+  public Figure basicRemoveChild(int index) {
+    Figure figure = children.remove(index);
     figure.removeFigureListener(childHandler);
     figure.removeUndoableEditListener(childHandler);
 
@@ -242,7 +244,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
   public void removeAllChildren() {
     willChange();
     while (!children.isEmpty()) {
-      org.jhotdraw.draw.figures.Figure f = basicRemoveChild(children.size() - 1);
+      Figure f = basicRemoveChild(children.size() - 1);
       if (getDrawing() != null) {
         f.addNotify(getDrawing());
       }
@@ -252,7 +254,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
 
   public void basicRemoveAllChildren() {
     while (!children.isEmpty()) {
-      org.jhotdraw.draw.figures.Figure f = basicRemoveChild(children.size() - 1);
+      basicRemoveChild(children.size() - 1);
     }
   }
 
@@ -261,7 +263,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
    *
    * @param figure that is part of this composite figure
    */
-  public synchronized void sendToBack(org.jhotdraw.draw.figures.Figure figure) {
+  public synchronized void sendToBack(Figure figure) {
     if (children.remove(figure)) {
       children.add(0, figure);
       figure.invalidate();
@@ -273,7 +275,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
    *
    * @param figure that is part of the drawing
    */
-  public synchronized void sendToFront(org.jhotdraw.draw.figures.Figure figure) {
+  public synchronized void sendToFront(Figure figure) {
     if (children.remove(figure)) {
       children.add(figure);
       figure.invalidate();
@@ -299,7 +301,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
 
     AffineTransform tx = new AffineTransform();
     tx.translate(-oldBounds.x, -oldBounds.y);
-    if (!Double.isNaN(sx) && !Double.isNaN(sy) && (sx != 1d || sy != 1d) && !(sx < 0.0001) && !(sy < 0.0001)) {
+    if (!Double.isNaN(sx) && !Double.isNaN(sy) && (sx != 1d || sy != 1d) && sx >= 0.0001 && sy >= 0.0001) {
       basicTransform(tx);
       tx.setToIdentity();
       tx.scale(sx, sy);
@@ -314,7 +316,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
     fireUndoableEditHappened(e.getEdit());
   }
 
-  public java.util.List<org.jhotdraw.draw.figures.Figure> getChildren() {
+  public java.util.List<Figure> getChildren() {
     return Collections.unmodifiableList(children);
   }
 
@@ -322,7 +324,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
     return children.size();
   }
 
-  public org.jhotdraw.draw.figures.Figure getChild(int index) {
+  public Figure getChild(int index) {
     return children.get(index);
   }
 
@@ -330,41 +332,41 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
    * Returns an iterator to iterate in
    * Z-order front to back over the children.
    */
-  public java.util.List<org.jhotdraw.draw.figures.Figure> getChildrenFrontToBack() {
+  public java.util.List<Figure> getChildrenFrontToBack() {
     return children == null ? new LinkedList<>() : new ReversedList<>(children);
   }
 
-  public void setAttribute(AttributeKey name, Object value) {
+  public void setAttribute(AttributeKey<?> name, Object value) {
     willChange();
-    for (org.jhotdraw.draw.figures.Figure child : children) {
+    for (Figure child : children) {
       child.setAttribute(name, value);
     }
     changed();
   }
 
-  public void basicSetAttribute(AttributeKey name, Object value) {
-    for (org.jhotdraw.draw.figures.Figure child : children) {
+  public void basicSetAttribute(AttributeKey<?> name, Object value) {
+    for (Figure child : children) {
       child.basicSetAttribute(name, value);
     }
   }
 
-  public Object getAttribute(AttributeKey name) {
+  public Object getAttribute(AttributeKey<?> name) {
     return null;
   }
 
   public boolean contains(Point2D.Double p) {
     if (getDrawBounds().contains(p)) {
-      for (org.jhotdraw.draw.figures.Figure child : getChildrenFrontToBack()) {
+      for (Figure child : getChildrenFrontToBack()) {
         if (child.isVisible() && child.contains(p)) return true;
       }
     }
     return false;
   }
 
-  public org.jhotdraw.draw.figures.Figure findFigureInside(Point2D.Double p) {
+  public Figure findFigureInside(Point2D.Double p) {
     if (getDrawBounds().contains(p)) {
-      org.jhotdraw.draw.figures.Figure found = null;
-      for (org.jhotdraw.draw.figures.Figure child : getChildrenFrontToBack()) {
+      Figure found;
+      for (Figure child : getChildrenFrontToBack()) {
         if (child.isVisible()) {
           found = child.findFigureInside(p);
           if (found != null) {
@@ -376,10 +378,9 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
     return null;
   }
 
-  public org.jhotdraw.draw.figures.Figure findChild(Point2D.Double p) {
+  public Figure findChild(Point2D.Double p) {
     if (getBounds().contains(p)) {
-      org.jhotdraw.draw.figures.Figure found = null;
-      for (org.jhotdraw.draw.figures.Figure child : getChildrenFrontToBack()) {
+      for (Figure child : getChildrenFrontToBack()) {
         if (child.isVisible() && child.contains(p)) {
           return child;
         }
@@ -389,7 +390,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
   }
 
   public int findChildIndex(Point2D.Double p) {
-    org.jhotdraw.draw.figures.Figure child = findChild(p);
+    Figure child = findChild(p);
     return (child == null) ? -1 : children.indexOf(child);
   }
 
@@ -401,7 +402,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
    *
    * @return layout strategy used by this figure
    */
-  public org.jhotdraw.draw.layouters.Layouter getLayouter() {
+  public Layouter getLayouter() {
     return layouter;
   }
 
@@ -432,7 +433,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
    *
    * @param newLayouter encapsulation of a layout algorithm.
    */
-  public void setLayouter(org.jhotdraw.draw.layouters.Layouter newLayouter) {
+  public void setLayouter(Layouter newLayouter) {
     this.layouter = newLayouter;
   }
 
@@ -447,25 +448,26 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
 
   public Rectangle2D.Double getFigureDrawBounds() {
     if (drawBounds == null) {
-      for (org.jhotdraw.draw.figures.Figure child : getChildrenFrontToBack()) {
-        if (child.isVisible()) {
-          Rectangle2D.Double childBounds = child.getDrawBounds();
-          if (!childBounds.isEmpty()) {
-            if (drawBounds == null) {
-              drawBounds = childBounds;
-            } else {
-              drawBounds.add(childBounds);
-            }
+      return new Rectangle2D.Double(0, 0, -1, -1);
+    }
+    for (Figure child : getChildrenFrontToBack()) {
+      if (child.isVisible()) {
+        Rectangle2D.Double childBounds = child.getDrawBounds();
+        if (!childBounds.isEmpty()) {
+          if (drawBounds == null) {
+            drawBounds = childBounds;
+          } else {
+            drawBounds.add(childBounds);
           }
         }
       }
     }
-    return (drawBounds == null) ? new Rectangle2D.Double(0, 0, -1, -1) : (Rectangle2D.Double) drawBounds.clone();
+    return (Rectangle2D.Double) drawBounds.clone();
   }
 
   public Rectangle2D.Double getBounds() {
     if (bounds == null) {
-      for (org.jhotdraw.draw.figures.Figure child : getChildrenFrontToBack()) {
+      for (Figure child : getChildrenFrontToBack()) {
         if (child.isVisible()) {
           if (bounds == null) {
             bounds = child.getBounds();
@@ -479,7 +481,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
   }
 
   public void drawFigure(Graphics2D g) {
-    for (org.jhotdraw.draw.figures.Figure child : children) {
+    for (Figure child : children) {
       if (child.isVisible()) {
         child.draw(g);
       }
@@ -496,8 +498,8 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
     AbstractCompositeFigure that = (AbstractCompositeFigure) super.clone();
     that.childHandler = new ChildHandler(that);
     that.children = new LinkedList<>();
-    for (org.jhotdraw.draw.figures.Figure thisChild : this.children) {
-      org.jhotdraw.draw.figures.Figure thatChild = (org.jhotdraw.draw.figures.Figure) thisChild.clone();
+    for (Figure thisChild : this.children) {
+      Figure thatChild = (Figure) thisChild.clone();
       that.children.add(thatChild);
       thatChild.addFigureListener(that.childHandler);
       thatChild.addUndoableEditListener(that.childHandler);
@@ -510,8 +512,8 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
     drawBounds = null;
   }
 
-  public Collection<org.jhotdraw.draw.figures.Figure> getDecomposition() {
-    LinkedList<org.jhotdraw.draw.figures.Figure> list = new LinkedList<>();
+  public Collection<Figure> getDecomposition() {
+    LinkedList<Figure> list = new LinkedList<>();
     list.add(this);
     list.addAll(getChildren());
     return list;
@@ -520,14 +522,14 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
   public void read(DOMInput in) throws IOException {
     in.openElement("children");
     for (int i = 0; i < in.getElementCount(); i++) {
-      add((org.jhotdraw.draw.figures.Figure) in.readObject(i));
+      add((Figure) in.readObject(i));
     }
     in.closeElement();
   }
 
   public void write(DOMOutput out) throws IOException {
     out.openElement("children");
-    for (org.jhotdraw.draw.figures.Figure child : getChildren()) {
+    for (Figure child : getChildren()) {
       out.writeObject(child);
     }
     out.closeElement();
@@ -549,7 +551,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
 
   public Object getRestoreData() {
     LinkedList<Object> list = new LinkedList<>();
-    for (org.jhotdraw.draw.figures.Figure child : children) {
+    for (Figure child : children) {
       list.add(child.getRestoreData());
     }
     return list;
@@ -558,7 +560,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
   public void willChange() {
     super.willChange();
     if (getChangingDepth() == 1) {
-      for (org.jhotdraw.draw.figures.Figure child : children) {
+      for (Figure child : children) {
         child.willChange();
       }
     }
@@ -566,7 +568,7 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
 
   public void changed() {
     if (getChangingDepth() == 1) {
-      for (org.jhotdraw.draw.figures.Figure child : children) {
+      for (Figure child : children) {
         child.changed();
       }
     }
@@ -584,11 +586,11 @@ public abstract class AbstractCompositeFigure extends AbstractFigure implements 
     invalidateBounds();
   }
 
-  public void removeAttribute(AttributeKey key) {
+  public void removeAttribute(AttributeKey<?> key) {
     // do nothing
   }
 
-  public boolean hasAttribute(AttributeKey key) {
+  public boolean hasAttribute(AttributeKey<?> key) {
     return false;
   }
 }

@@ -18,6 +18,7 @@ import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.handlers.BezierNodeHandle;
+import org.jhotdraw.draw.handlers.ChangeConnectionEndHandle;
 import org.jhotdraw.draw.handlers.ChangeConnectionStartHandle;
 import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.draw.liners.Liner;
@@ -47,10 +48,10 @@ import java.util.Map;
  * <br>1.0 23. January 2006 Created.
  */
 @SuppressWarnings("unused")
-public class LineConnectionFigure extends LineFigure implements org.jhotdraw.draw.figures.ConnectionFigure {
+public class LineConnectionFigure extends LineFigure implements ConnectionFigure {
   private Connector startConnector;
-  private org.jhotdraw.draw.connectors.Connector endConnector;
-  private org.jhotdraw.draw.liners.Liner liner;
+  private Connector endConnector;
+  private Liner liner;
 
   /**
    * Handles figure changes in the start and the
@@ -65,10 +66,10 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
       this.owner = owner;
     }
 
-    public void figureRequestRemove(org.jhotdraw.draw.events.FigureEvent e) {
+    public void figureRequestRemove(FigureEvent e) {
     }
 
-    public void figureRemoved(org.jhotdraw.draw.events.FigureEvent evt) {
+    public void figureRemoved(FigureEvent evt) {
       // The commented lines below must stay commented out.
       // This is because, we must not set our connectors to null,
       // in order to support reconnection using redo.
@@ -89,13 +90,13 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
       }
     }
 
-    public void figureAdded(org.jhotdraw.draw.events.FigureEvent e) {
+    public void figureAdded(FigureEvent e) {
     }
 
-    public void figureAttributeChanged(org.jhotdraw.draw.events.FigureEvent e) {
+    public void figureAttributeChanged(FigureEvent e) {
     }
 
-    public void figureAreaInvalidated(org.jhotdraw.draw.events.FigureEvent e) {
+    public void figureAreaInvalidated(FigureEvent e) {
     }
 
   }
@@ -125,7 +126,7 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
    * start and end.
    */
   public Collection<Handle> createHandles(int detailLevel) {
-    ArrayList<org.jhotdraw.draw.handlers.Handle> handles = new ArrayList<>(getNodeCount());
+    ArrayList<Handle> handles = new ArrayList<>(getNodeCount());
 
     switch (detailLevel) {
       case 0:
@@ -135,7 +136,7 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
           }
         }
         handles.add(new ChangeConnectionStartHandle(this));
-        handles.add(new org.jhotdraw.draw.handlers.ChangeConnectionEndHandle(this));
+        handles.add(new ChangeConnectionEndHandle(this));
         break;
     }
     return handles;
@@ -175,7 +176,7 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
     lineout();
   }
 
-  public boolean canConnect(org.jhotdraw.draw.figures.Figure start, Figure end) {
+  public boolean canConnect(Figure start, Figure end) {
     return start.canConnect() && end.canConnect();
   }
 
@@ -183,19 +184,19 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
     return other.getStartConnector() == getStartConnector() && other.getEndConnector() == getEndConnector();
   }
 
-  public org.jhotdraw.draw.connectors.Connector getEndConnector() {
+  public Connector getEndConnector() {
     return endConnector;
   }
 
-  public org.jhotdraw.draw.figures.Figure getEndFigure() {
+  public Figure getEndFigure() {
     return (endConnector == null) ? null : endConnector.getOwner();
   }
 
-  public org.jhotdraw.draw.connectors.Connector getStartConnector() {
+  public Connector getStartConnector() {
     return startConnector;
   }
 
-  public org.jhotdraw.draw.figures.Figure getStartFigure() {
+  public Figure getStartFigure() {
     return (startConnector == null) ? null : startConnector.getOwner();
   }
 
@@ -203,16 +204,18 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
    * Note: this method is only final for testing purposes. You can
    * remove the final keyword at any time.
    */
-  public final void setEndConnector(final org.jhotdraw.draw.connectors.Connector newEnd) {
-    final org.jhotdraw.draw.connectors.Connector oldEnd = endConnector;
+  public final void setEndConnector(final Connector newEnd) {
+    final Connector oldEnd = endConnector;
     if (newEnd != oldEnd) {
       willChange();
       basicSetEndConnector(newEnd);
       fireUndoableEditHappened(new AbstractUndoableEdit() {
+        @Override
         public String getPresentationName() {
           return "End-Verbindung setzen";
         }
 
+        @Override
         public void undo() throws CannotUndoException {
           super.undo();
           willChange();
@@ -220,6 +223,7 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
           changed();
         }
 
+        @Override
         public void redo() throws CannotUndoException {
           super.redo();
           willChange();
@@ -231,7 +235,7 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
     }
   }
 
-  protected void basicSetEndConnector(org.jhotdraw.draw.connectors.Connector newEnd) {
+  protected void basicSetEndConnector(Connector newEnd) {
     if (newEnd != endConnector) {
       if (endConnector != null) {
         getEndFigure().removeFigureListener(connectionHandler);
@@ -254,16 +258,18 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
    * Note: this method is only final for testing purposes. You can
    * remove the final keyword at any time.
    */
-  public final void setStartConnector(final org.jhotdraw.draw.connectors.Connector newStart) {
-    final org.jhotdraw.draw.connectors.Connector oldStart = startConnector;
+  public final void setStartConnector(final Connector newStart) {
+    final Connector oldStart = startConnector;
     if (newStart != oldStart) {
       willChange();
       basicSetStartConnector(newStart);
       fireUndoableEditHappened(new AbstractUndoableEdit() {
+        @Override
         public String getPresentationName() {
           return "Start-Verbindung setzen";
         }
 
+        @Override
         public void undo() throws CannotUndoException {
           super.undo();
           willChange();
@@ -271,6 +277,7 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
           changed();
         }
 
+        @Override
         public void redo() throws CannotUndoException {
           super.redo();
           willChange();
@@ -282,7 +289,7 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
     }
   }
 
-  public void basicSetStartConnector(org.jhotdraw.draw.connectors.Connector newStart) {
+  public void basicSetStartConnector(Connector newStart) {
     if (newStart != startConnector) {
       if (startConnector != null) {
         getStartFigure().removeFigureListener(connectionHandler);
@@ -349,7 +356,7 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
         }*/
   }
 
-  public void removeNotify(org.jhotdraw.draw.drawings.Drawing drawing) {
+  public void removeNotify(Drawing drawing) {
         /*
         setStartConnector(null);
         setEndConnector(null);
@@ -364,14 +371,16 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
    * Handles the disconnection of a connection.
    * Override this method to handle this event.
    */
-  protected void handleDisconnect(org.jhotdraw.draw.figures.Figure start, org.jhotdraw.draw.figures.Figure end) {
+  protected void handleDisconnect(Figure start, Figure end) {
+    // TODO document why this method is empty
   }
 
   /**
    * Handles the connection of a connection.
    * Override this method to handle this event.
    */
-  protected void handleConnect(org.jhotdraw.draw.figures.Figure start, org.jhotdraw.draw.figures.Figure end) {
+  protected void handleConnect(Figure start, Figure end) {
+    // TODO document why this method is empty
   }
 
   public LineConnectionFigure clone() {
@@ -384,11 +393,11 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
     // To work properly, that must be registered as a figure listener
     // to the connected figures.
     if (this.startConnector != null) {
-      that.startConnector = (org.jhotdraw.draw.connectors.Connector) this.startConnector.clone();
+      that.startConnector = (Connector) this.startConnector.clone();
       that.getStartFigure().addFigureListener(that.connectionHandler);
     }
     if (this.endConnector != null) {
-      that.endConnector = (org.jhotdraw.draw.connectors.Connector) this.endConnector.clone();
+      that.endConnector = (Connector) this.endConnector.clone();
       that.getEndFigure().addFigureListener(that.connectionHandler);
     }
     if (that.startConnector != null && that.endConnector != null) {
@@ -401,14 +410,14 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
   public void remap(Map oldToNew) {
     willChange();
     super.remap(oldToNew);
-    org.jhotdraw.draw.figures.Figure newStartFigure = null;
-    org.jhotdraw.draw.figures.Figure newEndFigure = null;
+    Figure newStartFigure = null;
+    Figure newEndFigure = null;
     if (getStartFigure() != null) {
-      newStartFigure = (org.jhotdraw.draw.figures.Figure) oldToNew.get(getStartFigure());
+      newStartFigure = (Figure) oldToNew.get(getStartFigure());
       if (newStartFigure == null) newStartFigure = getStartFigure();
     }
     if (getEndFigure() != null) {
-      newEndFigure = (org.jhotdraw.draw.figures.Figure) oldToNew.get(getEndFigure());
+      newEndFigure = (Figure) oldToNew.get(getEndFigure());
       if (newEndFigure == null) newEndFigure = getEndFigure();
     }
 
@@ -423,7 +432,7 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
     changed();
   }
 
-  public boolean canConnect(org.jhotdraw.draw.figures.Figure start) {
+  public boolean canConnect(Figure start) {
     return start.canConnect();
   }
 
@@ -437,6 +446,7 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
       if (index != -1) {
         final BezierPath.Node newNode = getNode(index);
         fireUndoableEditHappened(new AbstractUndoableEdit() {
+          @Override
           public void redo() throws CannotRedoException {
             super.redo();
             willChange();
@@ -444,6 +454,7 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
             changed();
           }
 
+          @Override
           public void undo() throws CannotUndoException {
             super.undo();
             willChange();
@@ -463,10 +474,10 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
   protected void readPoints(DOMInput in) throws IOException {
     super.readPoints(in);
     in.openElement("startConnector");
-    setStartConnector((org.jhotdraw.draw.connectors.Connector) in.readObject());
+    setStartConnector((Connector) in.readObject());
     in.closeElement();
     in.openElement("endConnector");
-    setEndConnector((org.jhotdraw.draw.connectors.Connector) in.readObject());
+    setEndConnector((Connector) in.readObject());
     in.closeElement();
   }
 
@@ -479,7 +490,7 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
   protected void readLiner(DOMInput in) throws IOException {
     if (in.getElementCount("liner") > 0) {
       in.openElement("liner");
-      liner = (org.jhotdraw.draw.liners.Liner) in.readObject();
+      liner = (Liner) in.readObject();
       in.closeElement();
     }
   }
@@ -566,7 +577,7 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
     return path;
   }
 
-  public org.jhotdraw.draw.liners.Liner getLiner() {
+  public Liner getLiner() {
     return liner;
   }
 
@@ -585,7 +596,7 @@ public class LineConnectionFigure extends LineFigure implements org.jhotdraw.dra
   public void reverseConnection() {
     if (startConnector != null && endConnector != null) {
       handleDisconnect(startConnector.getOwner(), endConnector.getOwner());
-      org.jhotdraw.draw.connectors.Connector tmpC = startConnector;
+      Connector tmpC = startConnector;
       startConnector = endConnector;
       endConnector = tmpC;
       Point2D.Double tmpP = getStartPoint();

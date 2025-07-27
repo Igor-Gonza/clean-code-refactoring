@@ -58,6 +58,8 @@ public class LineFigure extends BezierFigure {
           handles.add(new BezierNodeHandle(this, i));
         }
         break;
+      default:
+        break;
     }
     return handles;
   }
@@ -80,6 +82,7 @@ public class LineFigure extends BezierFigure {
       if (index != -1) {
         final BezierPath.Node newNode = getNode(index);
         fireUndoableEditHappened(new AbstractUndoableEdit() {
+          @Override
           public void redo() throws CannotRedoException {
             super.redo();
             willChange();
@@ -87,6 +90,7 @@ public class LineFigure extends BezierFigure {
             changed();
           }
 
+          @Override
           public void undo() throws CannotUndoException {
             super.undo();
             willChange();

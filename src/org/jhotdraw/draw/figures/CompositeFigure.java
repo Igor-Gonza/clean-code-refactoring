@@ -18,6 +18,8 @@ import org.jhotdraw.draw.AttributeKey;
 import org.jhotdraw.draw.layouters.Layouter;
 import org.jhotdraw.geom.Insets2DDouble;
 
+import java.util.List;
+
 /**
  * A CompositeFigure is composed of several child Figures.
  * A CompositeFigure can be laid out using a Layouter.
@@ -25,7 +27,7 @@ import org.jhotdraw.geom.Insets2DDouble;
  * @author Werner Randelshofer
  * @version 1.0 27. January 2006 Created.
  */
-public interface CompositeFigure extends org.jhotdraw.draw.figures.Figure {
+public interface CompositeFigure extends Figure {
   /**
    * The value of this attribute is a Insets2DDouble object.
    */
@@ -35,36 +37,36 @@ public interface CompositeFigure extends org.jhotdraw.draw.figures.Figure {
    * Adds a child to the figure.
    * This is a convenience method for add(getChildCount(), child);
    */
-  void add(org.jhotdraw.draw.figures.Figure child);
+  void add(Figure child);
 
   /**
    * Adds a child to the figure at the specified index.
    */
-  void add(int index, org.jhotdraw.draw.figures.Figure child);
+  void add(int index, Figure child);
 
   /**
    * Adds a child to the figure without firing events.
    * This is a convenience method for basicAdd(getChildCount(), child);
    */
-  void basicAdd(org.jhotdraw.draw.figures.Figure child);
+  void basicAdd(Figure child);
 
   /**
    * Adds a child to the figure at the specified index without
    * firing events.
    */
-  void basicAdd(int index, org.jhotdraw.draw.figures.Figure child);
+  void basicAdd(int index, Figure child);
 
   /**
    * Removes the specified child.
    * Returns true, if the Figure contained the removed child.
    */
-  boolean remove(org.jhotdraw.draw.figures.Figure child);
+  boolean remove(Figure child);
 
   /**
    * Removes the child at the specified index.
    * Returns the removed child figure.
    */
-  org.jhotdraw.draw.figures.Figure removeChild(int index);
+  Figure removeChild(int index);
 
   /**
    * Removes all children from the composite figure.
@@ -75,13 +77,13 @@ public interface CompositeFigure extends org.jhotdraw.draw.figures.Figure {
    * Removes the specified child without firing events.
    * Returns true, if the Figure contained the removed child.
    */
-  boolean basicRemove(org.jhotdraw.draw.figures.Figure child);
+  boolean basicRemove(Figure child);
 
   /**
    * Removes the child at the specified index without firing events.
    * Returns the removed child figure.
    */
-  org.jhotdraw.draw.figures.Figure basicRemoveChild(int index);
+  Figure basicRemoveChild(int index);
 
   /**
    * Removes all children from the composite figure without firing events.
@@ -91,7 +93,7 @@ public interface CompositeFigure extends org.jhotdraw.draw.figures.Figure {
   /**
    * Returns an unchangeable list view on the children.
    */
-  java.util.List<org.jhotdraw.draw.figures.Figure> getChildren();
+  List<Figure> getChildren();
 
   /**
    * Returns the number of children.
@@ -111,7 +113,7 @@ public interface CompositeFigure extends org.jhotdraw.draw.figures.Figure {
    *
    * @return layout strategy used by this figure
    */
-  org.jhotdraw.draw.layouters.Layouter getLayouter();
+  Layouter getLayouter();
 
   /**
    * A layout algorithm is used to define how the child components

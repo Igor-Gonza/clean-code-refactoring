@@ -14,12 +14,13 @@
 
 package org.jhotdraw.draw.figures;
 
-import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.AttributeKeys;
+import org.jhotdraw.draw.handlers.FontSizeHandle;
 import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.draw.handlers.MoveHandle;
 import org.jhotdraw.draw.locators.RelativeLocator;
-import org.jhotdraw.draw.tools.TextTool;
 import org.jhotdraw.draw.tools.Tool;
+import org.jhotdraw.draw.tools.TextTool;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.geom.Geom;
 import org.jhotdraw.geom.Insets2DDouble;
@@ -54,7 +55,7 @@ public class TextFigure extends AttributedFigure implements TextHolder {
   private boolean editable = true;
 
   // cache of the TextFigure's layout
-  transient private TextLayout textLayout;
+  private transient TextLayout textLayout;
 
   public TextFigure() {
     this("Text");
@@ -97,19 +98,23 @@ public class TextFigure extends AttributedFigure implements TextHolder {
     return false;
   }
 
-  protected void drawStroke(java.awt.Graphics2D g) {
+  protected void drawStroke(Graphics2D g) {
+    // TODO document why this method is empty
   }
 
-  protected void drawFill(java.awt.Graphics2D g) {
+  protected void drawFill(Graphics2D g) {
+    // TODO document why this method is empty
   }
 
-  protected void drawText(java.awt.Graphics2D g) {
+  @Override
+  protected void drawText(Graphics2D g) {
     if (getText() != null || isEditable()) {
       TextLayout layout = getTextLayout();
       layout.draw(g, (float) origin.x, (float) (origin.y + layout.getAscent()));
     }
   }
 
+  @Override
   public void invalidate() {
     super.invalidate();
     textLayout = null;
@@ -125,7 +130,7 @@ public class TextFigure extends AttributedFigure implements TextHolder {
       FontRenderContext frc = getFontRenderContext();
       HashMap<TextAttribute, Object> textAttributes = new HashMap<>();
       textAttributes.put(TextAttribute.FONT, getFont());
-      if (FONT_UNDERLINED.get(this)) {
+      if (Boolean.TRUE.equals(FONT_UNDERLINED.get(this))) {
         textAttributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_LOW_ONE_PIXEL);
       }
       textLayout = new TextLayout(text, textAttributes, frc);
@@ -138,11 +143,13 @@ public class TextFigure extends AttributedFigure implements TextHolder {
     return new Rectangle2D.Double(origin.x, origin.y, layout.getAdvance(), layout.getAscent() + layout.getDescent());
   }
 
+  @Override
   public Dimension2DDouble getPreferredSize() {
     Rectangle2D.Double b = getBounds();
     return new Dimension2DDouble(b.width, b.height);
   }
 
+  @Override
   public Rectangle2D.Double getFigureDrawBounds() {
     if (getText() == null) {
       return getBounds();
@@ -159,17 +166,19 @@ public class TextFigure extends AttributedFigure implements TextHolder {
     }
   }
 
-  public Collection<org.jhotdraw.draw.handlers.Handle> createHandles(int detailLevel) {
+  @Override
+  public Collection<Handle> createHandles(int detailLevel) {
     LinkedList<Handle> handles = new LinkedList<>();
     if (detailLevel == 0) {
       handles.add(new MoveHandle(this, RelativeLocator.northWest()));
-      handles.add(new org.jhotdraw.draw.handlers.MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.northEast()));
-      handles.add(new org.jhotdraw.draw.handlers.MoveHandle(this, org.jhotdraw.draw.locators.RelativeLocator.southEast()));
-      handles.add(new org.jhotdraw.draw.handlers.FontSizeHandle(this));
+      handles.add(new MoveHandle(this, RelativeLocator.northEast()));
+      handles.add(new MoveHandle(this, RelativeLocator.southEast()));
+      handles.add(new FontSizeHandle(this));
     }
     return handles;
   }
 
+  @Override
   protected void validate() {
     super.validate();
     textLayout = null;
@@ -191,15 +200,18 @@ public class TextFigure extends AttributedFigure implements TextHolder {
    * Returns a specialized tool for the given coordinate.
    * <p>Returns null, if no specialized tool is available.
    */
+  @Override
   public Tool getTool(Point2D.Double p) {
-    return (isEditable() && contains(p)) ? new org.jhotdraw.draw.tools.TextTool(this) : null;
+    return (isEditable() && contains(p)) ? new TextTool(this) : null;
   }
 
+  @Override
   public void read(DOMInput in) throws IOException {
     setBounds(new Point2D.Double(in.getAttribute("x", 0d), in.getAttribute("y", 0d)), new Point2D.Double(0, 0));
     readAttributes(in);
   }
 
+  @Override
   public void write(DOMOutput out) throws IOException {
     Rectangle2D.Double b = getBounds();
     out.addAttribute("x", b.x);
@@ -214,7 +226,7 @@ public class TextFigure extends AttributedFigure implements TextHolder {
     return 8;
   }
 
-  public org.jhotdraw.draw.figures.TextHolder getLabelFor() {
+  public TextHolder getLabelFor() {
     return this;
   }
 

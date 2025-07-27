@@ -14,7 +14,10 @@
 
 package org.jhotdraw.draw.figures;
 
-import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.AttributeKey;
+import org.jhotdraw.draw.AttributeKeys;
+import org.jhotdraw.draw.handlers.BezierScaleHandle;
+import org.jhotdraw.draw.BoxHandleKit;
 import org.jhotdraw.draw.connectors.ChopBezierConnector;
 import org.jhotdraw.draw.connectors.ChopDiamondConnector;
 import org.jhotdraw.draw.connectors.Connector;
@@ -54,7 +57,7 @@ import static org.jhotdraw.draw.AttributeKeys.*;
  */
 @SuppressWarnings("unused")
 public class BezierFigure extends AttributedFigure {
-  public final static AttributeKey<Boolean> CLOSED = new AttributeKey<>("closed", false);
+  public static final AttributeKey<Boolean> CLOSED = new AttributeKey<>("closed", false);
   /**
    * The BezierPath.
    */
@@ -94,12 +97,13 @@ public class BezierFigure extends AttributedFigure {
    *
    * @see ChopDiamondConnector
    */
+  @Override
   public Connector findConnector(Point2D.Double p, ConnectionFigure prototype) {
     return new ChopBezierConnector(this);
   }
 
-  public org.jhotdraw.draw.connectors.Connector findCompatibleConnector(org.jhotdraw.draw.connectors.Connector c, boolean isStart) {
-    return new org.jhotdraw.draw.connectors.ChopBezierConnector(this);
+  public Connector findCompatibleConnector(Connector c, boolean isStart) {
+    return new ChopBezierConnector(this);
   }
 
   // COMPOSITE FIGURES
@@ -143,6 +147,7 @@ public class BezierFigure extends AttributedFigure {
     }
   }
 
+  @Override
   protected void drawFill(Graphics2D g) {
     if (isClosed()) {
       double grow = AttributeKeys.getPerpendicularFillGrowth(this);
@@ -197,17 +202,19 @@ public class BezierFigure extends AttributedFigure {
     return isClosed();
   }
 
-  public Collection<org.jhotdraw.draw.handlers.Handle> createHandles(int detailLevel) {
+  public Collection<Handle> createHandles(int detailLevel) {
     LinkedList<Handle> handles = new LinkedList<>();
     switch (detailLevel) {
       case 0:
         BoxHandleKit.addBoxHandles(this, handles);
-        handles.add(new org.jhotdraw.draw.handlers.BezierScaleHandle(this));
+        handles.add(new BezierScaleHandle(this));
         break;
       case 1:
         for (int i = 0, n = path.size(); i < n; i++) {
           handles.add(new BezierNodeHandle(this, i));
         }
+        break;
+      default:
         break;
     }
     return handles;
@@ -273,7 +280,7 @@ public class BezierFigure extends AttributedFigure {
     CLOSED.set(this, newValue);
   }
 
-  public void basicSetAttribute(AttributeKey key, Object newValue) {
+  public void basicSetAttribute(AttributeKey<?> key, Object newValue) {
     if (key == CLOSED) {
       path.setClosed((Boolean) newValue);
     }
@@ -306,52 +313,54 @@ public class BezierFigure extends AttributedFigure {
    * it from drawing under the end caps.
    */
   protected BezierPath getCappedPath() {
-    if (cappedPath == null) {
-      cappedPath = (BezierPath) path.clone();
-      if (isClosed()) {
-        cappedPath.setClosed(true);
-      } else {
-        if (cappedPath.size() > 1) {
-          if (START_DECORATION.get(this) != null) {
-            BezierPath.Node p0 = cappedPath.get(0);
-            BezierPath.Node p1 = cappedPath.get(1);
-            Point2D.Double pp;
-            if ((p0.getMask() & BezierPath.C2_MASK) != 0) {
-              pp = p0.getControlPoint(2);
-            } else if ((p1.getMask() & BezierPath.C1_MASK) != 0) {
-              pp = p1.getControlPoint(1);
-            } else {
-              pp = p1.getControlPoint(0);
-            }
-            double radius = START_DECORATION.get(this).getDecorationRadius(this);
-            double lineLength = Geom.length(p0.getControlPoint(0), pp);
-            cappedPath.set(0, 0, Geom.cap(pp, p0.getControlPoint(0), -Math.min(radius, lineLength)));
-          }
-          if (END_DECORATION.get(this) != null) {
-            BezierPath.Node p0 = cappedPath.get(cappedPath.size() - 1);
-            BezierPath.Node p1 = cappedPath.get(cappedPath.size() - 2);
-
-            Point2D.Double pp;
-            if ((p0.getMask() & BezierPath.C1_MASK) != 0) {
-              pp = p0.getControlPoint(1);
-            } else if ((p1.getMask() & BezierPath.C2_MASK) != 0) {
-              pp = p1.getControlPoint(2);
-            } else {
-              pp = p1.getControlPoint(0);
-            }
-
-            double radius = END_DECORATION.get(this).getDecorationRadius(this);
-            double lineLength = Geom.length(p0.getControlPoint(0), pp);
-            cappedPath.set(cappedPath.size() - 1, 0, Geom.cap(pp, p0.getControlPoint(0), -Math.min(radius, lineLength)));
-          }
-          cappedPath.invalidatePath();
+    if (cappedPath != null) {
+      return cappedPath;
+    }
+    cappedPath = (BezierPath) path.clone();
+    if (isClosed()) {
+      cappedPath.setClosed(true);
+      return cappedPath;
+    }
+    if (cappedPath.size() > 1) {
+      if (START_DECORATION.get(this) != null) {
+        BezierPath.Node p0 = cappedPath.get(0);
+        BezierPath.Node p1 = cappedPath.get(1);
+        Point2D.Double pp;
+        if ((p0.getMask() & BezierPath.C2_MASK) != 0) {
+          pp = p0.getControlPoint(2);
+        } else if ((p1.getMask() & BezierPath.C1_MASK) != 0) {
+          pp = p1.getControlPoint(1);
+        } else {
+          pp = p1.getControlPoint(0);
         }
+        double radius = START_DECORATION.get(this).getDecorationRadius(this);
+        double lineLength = Geom.length(p0.getControlPoint(0), pp);
+        cappedPath.set(0, 0, Geom.cap(pp, p0.getControlPoint(0), -Math.min(radius, lineLength)));
       }
+      if (END_DECORATION.get(this) != null) {
+        BezierPath.Node p0 = cappedPath.get(cappedPath.size() - 1);
+        BezierPath.Node p1 = cappedPath.get(cappedPath.size() - 2);
+
+        Point2D.Double pp;
+        if ((p0.getMask() & BezierPath.C1_MASK) != 0) {
+          pp = p0.getControlPoint(1);
+        } else if ((p1.getMask() & BezierPath.C2_MASK) != 0) {
+          pp = p1.getControlPoint(2);
+        } else {
+          pp = p1.getControlPoint(0);
+        }
+
+        double radius = END_DECORATION.get(this).getDecorationRadius(this);
+        double lineLength = Geom.length(p0.getControlPoint(0), pp);
+        cappedPath.set(cappedPath.size() - 1, 0, Geom.cap(pp, p0.getControlPoint(0), -Math.min(radius, lineLength)));
+      }
+      cappedPath.invalidatePath();
     }
     return cappedPath;
   }
 
   public void layout() {
+    // TODO document why this method is empty
   }
 
   /**
@@ -372,10 +381,12 @@ public class BezierFigure extends AttributedFigure {
     layout();
     changed();
     fireUndoableEditHappened(new AbstractUndoableEdit() {
+      @Override
       public String getPresentationName() {
         return "Punkt einfügen";
       }
 
+      @Override
       public void undo() throws CannotUndoException {
         super.undo();
         willChange();
@@ -383,6 +394,7 @@ public class BezierFigure extends AttributedFigure {
         changed();
       }
 
+      @Override
       public void redo() throws CannotUndoException {
         super.redo();
         willChange();
@@ -544,10 +556,12 @@ public class BezierFigure extends AttributedFigure {
     layout();
     changed();
     fireUndoableEditHappened(new AbstractUndoableEdit() {
+      @Override
       public String getPresentationName() {
         return "Punkt entfernen";
       }
 
+      @Override
       public void undo() throws CannotUndoException {
         super.undo();
         willChange();
@@ -555,6 +569,7 @@ public class BezierFigure extends AttributedFigure {
         changed();
       }
 
+      @Override
       public void redo() throws CannotUndoException {
         super.redo();
         basicRemoveNode(index);
@@ -574,7 +589,8 @@ public class BezierFigure extends AttributedFigure {
   public int findSegment(Point2D.Double find) {
     // Fixme - use path iterator
 
-    Point2D.Double p1, p2;
+    Point2D.Double p1;
+    Point2D.Double p2;
     for (int i = 0, n = getNodeCount() - 1; i < n; i++) {
       p1 = path.get(i, 0);
       p2 = path.get(i + 1, 0);
@@ -711,6 +727,7 @@ public class BezierFigure extends AttributedFigure {
       if (index != -1) {
         final BezierPath.Node newNode = getNode(index);
         fireUndoableEditHappened(new AbstractUndoableEdit() {
+          @Override
           public void redo() throws CannotRedoException {
             super.redo();
             willChange();
@@ -718,13 +735,13 @@ public class BezierFigure extends AttributedFigure {
             changed();
           }
 
+          @Override
           public void undo() throws CannotUndoException {
             super.undo();
             willChange();
             basicRemoveNode(index);
             changed();
           }
-
         });
         changed();
         return true;

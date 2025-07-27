@@ -14,7 +14,8 @@
 
 package org.jhotdraw.draw.figures;
 
-import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.AttributeKey;
+import org.jhotdraw.draw.AttributeKeys;
 import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.edits.AttributeChangeEdit;
 import org.jhotdraw.draw.events.FigureEvent;
@@ -48,9 +49,9 @@ import static org.jhotdraw.draw.AttributeKeys.STROKE_PLACEMENT;
  * its graphical presentation to another (graphical) figure which
  * purpose it is to draw the container for all contained figures.
  * <p>
- * The GraphicalCompositeFigure adds to the {@link org.jhotdraw.draw.figures.AbstractCompositeFigure AbstractCompositeFigure}
+ * The GraphicalCompositeFigure adds to the {@link AbstractCompositeFigure AbstractCompositeFigure}
  * by containing a presentation figure by default which can not be removed.  Normally,
- * the {@link org.jhotdraw.draw.figures.AbstractCompositeFigure AbstractCompositeFigure} can not be seen without containing a figure
+ * the {@link AbstractCompositeFigure AbstractCompositeFigure} can not be seen without containing a figure
  * because it has no mechanism to draw itself.  It instead relies on its contained
  * figures to draw themselves thereby giving the {@link AbstractCompositeFigure AbstractCompositeFigure} its
  * appearance.  However, the <b>GraphicalCompositeFigure</b>'s presentation figure
@@ -62,7 +63,7 @@ import static org.jhotdraw.draw.AttributeKeys.STROKE_PLACEMENT;
  * @version 2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 1. December 2003  Derived from JHotDraw 5.4b1.
  */
-public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.AbstractCompositeFigure {
+public class GraphicalCompositeFigure extends AbstractCompositeFigure {
   protected HashMap<AttributeKey, Object> attributes = new HashMap<>();
   private HashSet<AttributeKey> forbiddenAttributes;
 
@@ -72,12 +73,12 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
    * an own presentation but present only the sum of all its
    * children.
    */
-  private org.jhotdraw.draw.figures.Figure presentationFigure;
+  private Figure presentationFigure;
 
   /**
    * Handles figure changes in the children.
    */
-  private PresentationFigureHandler presentationFigureHandler = new PresentationFigureHandler(this);
+  private final PresentationFigureHandler presentationFigureHandler = new PresentationFigureHandler(this);
 
   private static class PresentationFigureHandler implements FigureListener, UndoableEditListener {
     private GraphicalCompositeFigure owner;
@@ -86,11 +87,12 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
       this.owner = owner;
     }
 
-    public void figureRequestRemove(org.jhotdraw.draw.events.FigureEvent e) {
+    public void figureRequestRemove(FigureEvent e) {
       owner.remove(e.getFigure());
     }
 
-    public void figureRemoved(org.jhotdraw.draw.events.FigureEvent evt) {
+    public void figureRemoved(FigureEvent evt) {
+      // TODO document why this method is empty
     }
 
     public void figureChanged(FigureEvent e) {
@@ -101,13 +103,15 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
       }
     }
 
-    public void figureAdded(org.jhotdraw.draw.events.FigureEvent e) {
+    public void figureAdded(FigureEvent e) {
+      // TODO document why this method is empty
     }
 
-    public void figureAttributeChanged(org.jhotdraw.draw.events.FigureEvent e) {
+    public void figureAttributeChanged(FigureEvent e) {
+      // TODO document why this method is empty
     }
 
-    public void figureAreaInvalidated(org.jhotdraw.draw.events.FigureEvent e) {
+    public void figureAreaInvalidated(FigureEvent e) {
       if (!owner.isChanging()) {
         owner.fireAreaInvalidated(e.getInvalidatedArea());
       }
@@ -132,7 +136,7 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
    *
    * @param newPresentationFigure figure which renders the container
    */
-  public GraphicalCompositeFigure(org.jhotdraw.draw.figures.Figure newPresentationFigure) {
+  public GraphicalCompositeFigure(Figure newPresentationFigure) {
     super();
     setPresentationFigure(newPresentationFigure);
   }
@@ -154,7 +158,7 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
     }
   }
 
-  public void addNotify(org.jhotdraw.draw.drawings.Drawing drawing) {
+  public void addNotify(Drawing drawing) {
     super.addNotify(drawing);
     if (getPresentationFigure() != null) {
       getPresentationFigure().addNotify(drawing);
@@ -243,7 +247,7 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
    * Return default handles from the presentation figure.
    */
   public Collection<Handle> createHandles(int detailLevel) {
-    LinkedList<org.jhotdraw.draw.handlers.Handle> handles = new LinkedList<>();
+    LinkedList<Handle> handles = new LinkedList<>();
     if (detailLevel == 0) {
       MoveHandle.addMoveHandles(this, handles);
     }
@@ -258,7 +262,7 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
    *
    * @param newPresentationFigure figure takes over the presentation tasks
    */
-  public void setPresentationFigure(org.jhotdraw.draw.figures.Figure newPresentationFigure) {
+  public void setPresentationFigure(Figure newPresentationFigure) {
     if (this.presentationFigure != null) {
       this.presentationFigure.removeFigureListener(presentationFigureHandler);
       this.presentationFigure.removeUndoableEditListener(presentationFigureHandler);
@@ -284,13 +288,13 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
    *
    * @return figure takes over the presentation tasks
    */
-  public org.jhotdraw.draw.figures.Figure getPresentationFigure() {
+  public Figure getPresentationFigure() {
     return presentationFigure;
   }
 
   public GraphicalCompositeFigure clone() {
     GraphicalCompositeFigure that = (GraphicalCompositeFigure) super.clone();
-    that.presentationFigure = (this.presentationFigure == null) ? null : (org.jhotdraw.draw.figures.Figure) this.presentationFigure.clone();
+    that.presentationFigure = (this.presentationFigure == null) ? null : (Figure) this.presentationFigure.clone();
     if (that.presentationFigure != null) {
       that.presentationFigure.addFigureListener(that.presentationFigureHandler);
       that.presentationFigure.addUndoableEditListener(that.presentationFigureHandler);
@@ -298,7 +302,7 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
     return that;
   }
 
-  public void remap(HashMap<org.jhotdraw.draw.figures.Figure, org.jhotdraw.draw.figures.Figure> oldToNew) {
+  public void remap(HashMap<Figure, Figure> oldToNew) {
     super.remap(oldToNew);
     if (presentationFigure != null) {
       presentationFigure.remap(oldToNew);
@@ -310,7 +314,7 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
    * AttributeKey name and semantics are defined by the class implementing
    * the figure interface.
    */
-  public void setAttribute(AttributeKey key, Object newValue) {
+  public void setAttribute(AttributeKey<?> key, Object newValue) {
     if (forbiddenAttributes == null || !forbiddenAttributes.contains(key)) {
       willChange();
       if (getPresentationFigure() != null) {
@@ -330,7 +334,7 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
    * AttributeKey name and semantics are defined by the class implementing
    * the figure interface.
    */
-  public void basicSetAttribute(AttributeKey key, Object newValue) {
+  public void basicSetAttribute(AttributeKey<?> key, Object newValue) {
     if (forbiddenAttributes == null || !forbiddenAttributes.contains(key)) {
       if (getPresentationFigure() != null) {
         getPresentationFigure().basicSetAttribute(key, newValue);
@@ -340,7 +344,7 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
     }
   }
 
-  public void setAttributeEnabled(AttributeKey key, boolean b) {
+  public void setAttributeEnabled(AttributeKey<?> key, boolean b) {
     if (forbiddenAttributes == null) {
       forbiddenAttributes = new HashSet<>();
     }
@@ -354,7 +358,7 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
   /**
    * Gets an attribute from the figure.
    */
-  public Object getAttribute(AttributeKey key) {
+  public Object getAttribute(AttributeKey<?> key) {
     if (getPresentationFigure() != null) {
       return getPresentationFigure().getAttribute(key);
     } else {
@@ -365,22 +369,22 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
   /**
    * Applies all attributes of this figure to that figure.
    */
-  protected void applyAttributesTo(org.jhotdraw.draw.figures.Figure that) {
+  protected void applyAttributesTo(Figure that) {
     for (Map.Entry<AttributeKey, Object> entry : attributes.entrySet()) {
       that.setAttribute(entry.getKey(), entry.getValue());
     }
   }
 
   protected void writeAttributes(DOMOutput out) throws IOException {
-    Figure prototype = (org.jhotdraw.draw.figures.Figure) out.getPrototype();
+    Figure prototype = (Figure) out.getPrototype();
 
     boolean isElementOpen = false;
     for (Map.Entry<AttributeKey, Object> entry : attributes.entrySet()) {
-      AttributeKey key = entry.getKey();
+      AttributeKey<?> key = entry.getKey();
       if (forbiddenAttributes == null || !forbiddenAttributes.contains(key)) {
         Object prototypeValue = key.get(prototype);
         Object attributeValue = key.get(this);
-        if (prototypeValue != attributeValue || (prototypeValue != null && attributeValue != null && !prototypeValue.equals(attributeValue))) {
+        if (prototypeValue != null && !prototypeValue.equals(attributeValue)) {
           if (!isElementOpen) {
             out.openElement("a");
             isElementOpen = true;
@@ -403,7 +407,7 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
         in.openElement(i);
         String name = in.getTagName();
         Object value = in.readObject();
-        AttributeKey key = getAttributeKey(name);
+        AttributeKey<?> key = getAttributeKey(name);
         if (key != null && key.isAssignable(value)) {
           if (forbiddenAttributes == null || !forbiddenAttributes.contains(key)) {
             setAttribute(key, value);
@@ -415,7 +419,7 @@ public class GraphicalCompositeFigure extends org.jhotdraw.draw.figures.Abstract
     }
   }
 
-  protected AttributeKey getAttributeKey(String name) {
+  protected AttributeKey<?> getAttributeKey(String name) {
     return AttributeKeys.supportedAttributeMap.get(name);
   }
 

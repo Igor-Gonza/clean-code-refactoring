@@ -14,7 +14,7 @@
 
 package org.jhotdraw.draw.figures;
 
-import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.AttributeKeys;
 import org.jhotdraw.draw.handlers.FontSizeHandle;
 import org.jhotdraw.draw.handlers.Handle;
 import org.jhotdraw.draw.tools.TextAreaTool;
@@ -71,13 +71,13 @@ import static org.jhotdraw.draw.AttributeKeys.*;
  * <br>1.0 5. März 2004  Created.
  */
 @SuppressWarnings("unused")
-public class TextAreaFigure extends AttributedFigure implements org.jhotdraw.draw.figures.TextHolder {
+public class TextAreaFigure extends AttributedFigure implements TextHolder {
   private Rectangle2D.Double bounds = new Rectangle2D.Double();
   private boolean editable = true;
-  private final static BasicStroke dashes = new BasicStroke(1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0f, new float[]{4f, 4f}, 0f);
+  private static final BasicStroke dashes = new BasicStroke(1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0f, new float[]{4f, 4f}, 0f);
 
   // cache of the TextFigure's layout
-  transient private TextLayout textLayout;
+  private transient TextLayout textLayout;
 
   /**
    * Creates a new instance.
@@ -136,49 +136,49 @@ public class TextAreaFigure extends AttributedFigure implements org.jhotdraw.dra
   }
 
   protected void drawText(Graphics2D g) {
-    if (getText() != null || isEditable()) {
+    if (getText() == null && !isEditable()) {
+      return;
+    }
+    Font font = getFont();
+    boolean isUnderlined = FONT_UNDERLINED.get(this);
+    Insets2DDouble insets = getInsets();
+    Rectangle2D.Double textRect = new Rectangle2D.Double(bounds.x + insets.left, bounds.y + insets.top, bounds.width - insets.left - insets.right, bounds.height - insets.top - insets.bottom);
+    float leftMargin = (float) textRect.x;
+    float rightMargin = (float) Math.max(leftMargin + 1, textRect.x + textRect.width);
+    float verticalPos = (float) textRect.y;
+    if (leftMargin < rightMargin) {
+      float tabWidth = (getTabSize() * g.getFontMetrics(font).charWidth('m'));
+      float[] tabStops = new float[(int) (textRect.width / tabWidth)];
+      for (int i = 0; i < tabStops.length; i++) {
+        tabStops[i] = (float) (textRect.x + (int) (tabWidth * (i + 1)));
+      }
 
-      Font font = getFont();
-      boolean isUnderlined = FONT_UNDERLINED.get(this);
-      Insets2DDouble insets = getInsets();
-      Rectangle2D.Double textRect = new Rectangle2D.Double(bounds.x + insets.left, bounds.y + insets.top, bounds.width - insets.left - insets.right, bounds.height - insets.top - insets.bottom);
-      float leftMargin = (float) textRect.x;
-      float rightMargin = (float) Math.max(leftMargin + 1, textRect.x + textRect.width);
-      float verticalPos = (float) textRect.y;
-      if (leftMargin < rightMargin) {
-        float tabWidth = (float) (getTabSize() * g.getFontMetrics(font).charWidth('m'));
-        float[] tabStops = new float[(int) (textRect.width / tabWidth)];
-        for (int i = 0; i < tabStops.length; i++) {
-          tabStops[i] = (float) (textRect.x + (int) (tabWidth * (i + 1)));
-        }
+      if (getText() != null) {
+        Shape savedClipArea = g.getClip();
+        g.clip(textRect);
 
-        if (getText() != null) {
-          Shape savedClipArea = g.getClip();
-          g.clip(textRect);
-
-          String[] paragraphs = getText().split("\n");//Strings.split(getText(), '\n');
-          for (int i = 0; i < paragraphs.length; i++) {
-            if (paragraphs[i].isEmpty()) paragraphs[i] = " ";
-            AttributedString as = new AttributedString(paragraphs[i]);
-            as.addAttribute(TextAttribute.FONT, font);
-            if (isUnderlined) {
-              as.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_LOW_ONE_PIXEL);
-            }
-            int tabCount = new StringTokenizer(paragraphs[i], "\t").countTokens() - 1;
-            verticalPos = drawParagraph(g, as.getIterator(), verticalPos, leftMargin, rightMargin, tabStops, tabCount);
-            if (verticalPos > textRect.y + textRect.height) {
-              break;
-            }
+        String[] paragraphs = getText().split("\n");
+        for (int i = 0; i < paragraphs.length; i++) {
+          if (paragraphs[i].isEmpty()) paragraphs[i] = " ";
+          AttributedString as = new AttributedString(paragraphs[i]);
+          as.addAttribute(TextAttribute.FONT, font);
+          if (isUnderlined) {
+            as.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_LOW_ONE_PIXEL);
           }
-          g.setClip(savedClipArea);
+          int tabCount = new StringTokenizer(paragraphs[i], "\t").countTokens() - 1;
+          verticalPos = drawParagraph(g, as.getIterator(), verticalPos, leftMargin, rightMargin, tabStops, tabCount);
+          if (verticalPos > textRect.y + textRect.height) {
+            break;
+          }
         }
+        g.setClip(savedClipArea);
       }
+    }
 
-      if (leftMargin >= rightMargin || verticalPos > textRect.y + textRect.height) {
-        g.setColor(Color.red);
-        g.setStroke(dashes);
-        g.draw(new Line2D.Double(textRect.x, textRect.y + textRect.height - 1, textRect.x + textRect.width - 1, textRect.y + textRect.height - 1));
-      }
+    if (leftMargin >= rightMargin || verticalPos > textRect.y + textRect.height) {
+      g.setColor(Color.red);
+      g.setStroke(dashes);
+      g.draw(new Line2D.Double(textRect.x, textRect.y + textRect.height - 1, textRect.x + textRect.width - 1, textRect.y + textRect.height - 1));
     }
   }
 
@@ -210,17 +210,19 @@ public class TextAreaFigure extends AttributedFigure implements org.jhotdraw.dra
 
     while (measurer.getPosition() < styledText.getEndIndex()) {
 
-      // Lay out and draw each line.  All segments on a line
-      // must be computed before any drawing can occur, since
-      // we must know the largest ascent on the line.
-      // TextLayouts are computed and stored in a List;
-      // their horizontal positions are stored in a parallel
-      // List.
-
+      /*
+       * Lay out and draw each line.  All segments on a line
+       * must be computed before any drawing can occur, since
+       * we must know the largest ascent on the line.
+       * TextLayouts are computed and stored in a List;
+       * their horizontal positions are stored in a parallel
+       * List.
+       */
       // lineContainsText is true after first segment is drawn
       boolean lineContainsText = false;
       boolean lineComplete = false;
-      float maxAscent = 0, maxDescent = 0;
+      float maxAscent = 0;
+      float maxDescent = 0;
       float horizontalPos = leftMargin;
       LinkedList<TextLayout> layouts = new LinkedList<>();
       LinkedList<Float> penPositions = new LinkedList<>();

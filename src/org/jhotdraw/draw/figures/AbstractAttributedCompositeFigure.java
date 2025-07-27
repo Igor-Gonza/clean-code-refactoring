@@ -57,7 +57,7 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
    * AttributeKey name and semantics are defined by the class implementing
    * the figure interface.
    */
-  public void setAttribute(AttributeKey key, Object newValue) {
+  public void setAttribute(AttributeKey<?> key, Object newValue) {
     if (forbiddenAttributes == null || !forbiddenAttributes.contains(key)) {
 
       Object oldValue = attributes.get(key);
@@ -72,7 +72,7 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
     }
   }
 
-  public void setAttributeEnabled(AttributeKey key, boolean b) {
+  public void setAttributeEnabled(AttributeKey<?> key, boolean b) {
     if (forbiddenAttributes == null) {
       forbiddenAttributes = new HashSet<>();
     }
@@ -83,7 +83,7 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
     }
   }
 
-  public boolean isAttributeEnabled(AttributeKey key) {
+  public boolean isAttributeEnabled(AttributeKey<?> key) {
     return forbiddenAttributes == null || !forbiddenAttributes.contains(key);
   }
 
@@ -102,14 +102,14 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
    * AttributeKey name and semantics are defined by the class implementing
    * the figure interface.
    */
-  public void basicSetAttribute(AttributeKey key, Object newValue) {
+  public void basicSetAttribute(AttributeKey<?> key, Object newValue) {
     if (forbiddenAttributes == null || !forbiddenAttributes.contains(key)) {
       attributes.put(key, newValue);
     }
     basicSetAttributeOnChildren(key, newValue);
   }
 
-  protected void basicSetAttributeOnChildren(AttributeKey key, Object newValue) {
+  protected void basicSetAttributeOnChildren(AttributeKey<?> key, Object newValue) {
     for (org.jhotdraw.draw.figures.Figure child : getChildren()) {
       child.basicSetAttribute(key, newValue);
     }
@@ -118,7 +118,7 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
   /**
    * Gets an attribute from the figure.
    */
-  public Object getAttribute(AttributeKey key) {
+  public Object getAttribute(AttributeKey<?> key) {
     return hasAttribute(key) ? attributes.get(key) : key.getDefaultValue();
   }
 
@@ -236,11 +236,9 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
         in.openElement(i);
         String name = in.getTagName();
         Object value = in.readObject();
-        AttributeKey key = getAttributeKey(name);
-        if (key != null && key.isAssignable(value)) {
-          if (forbiddenAttributes == null || !forbiddenAttributes.contains(key)) {
-            setAttribute(key, value);
-          }
+        AttributeKey<?> key = getAttributeKey(name);
+        if (key != null && key.isAssignable(value) && (forbiddenAttributes == null || !forbiddenAttributes.contains(key))) {
+          setAttribute(key, value);
         }
         in.closeElement();
       }
@@ -248,7 +246,7 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
     }
   }
 
-  protected AttributeKey getAttributeKey(String name) {
+  protected AttributeKey<?> getAttributeKey(String name) {
     return AttributeKeys.supportedAttributeMap.get(name);
   }
 
@@ -271,7 +269,7 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
     readAttributes(in);
   }
 
-  public void removeAttribute(AttributeKey key) {
+  public void removeAttribute(AttributeKey<?> key) {
     if (hasAttribute(key)) {
       Object oldValue = getAttribute(key);
       attributes.remove(key);
@@ -279,7 +277,7 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
     }
   }
 
-  public boolean hasAttribute(AttributeKey key) {
+  public boolean hasAttribute(AttributeKey<?> key) {
     return attributes.containsKey(key);
   }
 }

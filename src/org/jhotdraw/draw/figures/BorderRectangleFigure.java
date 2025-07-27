@@ -27,7 +27,7 @@ import java.awt.*;
  */
 public class BorderRectangleFigure extends RectangleFigure {
   protected Border border;
-  protected final static JComponent borderComponent = new JPanel();
+  protected static final JComponent borderComponent = new JPanel();
 
   public BorderRectangleFigure(Border border) {
     this.border = border;

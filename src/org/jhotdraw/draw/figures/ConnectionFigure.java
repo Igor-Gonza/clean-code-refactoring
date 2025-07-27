@@ -14,8 +14,8 @@
 
 package org.jhotdraw.draw.figures;
 
-import org.jhotdraw.draw.liners.Liner;
 import org.jhotdraw.draw.connectors.Connector;
+import org.jhotdraw.draw.liners.Liner;
 
 import java.awt.geom.Point2D;
 
@@ -30,7 +30,7 @@ import java.awt.geom.Point2D;
  * @version 2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
-public interface ConnectionFigure extends org.jhotdraw.draw.figures.Figure {
+public interface ConnectionFigure extends Figure {
   // DRAWING
   // SHAPE AND BOUNDS
   // ATTRIBUTES
@@ -43,13 +43,13 @@ public interface ConnectionFigure extends org.jhotdraw.draw.figures.Figure {
    *
    * @param start the start figure of the connection
    */
-  void setStartConnector(org.jhotdraw.draw.connectors.Connector start);
+  void setStartConnector(Connector start);
 
   /**
    * Gets the start Connector.
    * Returns null, if there is no start connection.
    */
-  org.jhotdraw.draw.connectors.Connector getStartConnector();
+  Connector getStartConnector();
 
   /**
    * Sets the end Connector of the connection.
@@ -63,7 +63,7 @@ public interface ConnectionFigure extends org.jhotdraw.draw.figures.Figure {
    * Gets the end Connector.
    * Returns null, if there is no end connection.
    */
-  org.jhotdraw.draw.connectors.Connector getEndConnector();
+  Connector getEndConnector();
 
   /**
    * Updates the connection.
@@ -75,7 +75,7 @@ public interface ConnectionFigure extends org.jhotdraw.draw.figures.Figure {
    * Checks if two figures can be connected using this ConnectionFigure.
    * Implement this method to constrain the allowed connections between figures.
    */
-  boolean canConnect(org.jhotdraw.draw.figures.Figure start, Figure end);
+  boolean canConnect(Figure start, Figure end);
 
   /**
    * Checks if this ConnectionFigure can be attached to the provided
@@ -83,7 +83,7 @@ public interface ConnectionFigure extends org.jhotdraw.draw.figures.Figure {
    * This is used to provide an early feedback to the user, when he/she
    * creates a new connection.
    */
-  boolean canConnect(org.jhotdraw.draw.figures.Figure start);
+  boolean canConnect(Figure start);
 
   /**
    * Checks if the ConnectionFigure connects the same figures.
@@ -132,14 +132,14 @@ public interface ConnectionFigure extends org.jhotdraw.draw.figures.Figure {
    * This is a convenience method for doing getStartConnector().getOwner()
    * and handling null cases.
    */
-  org.jhotdraw.draw.figures.Figure getStartFigure();
+  Figure getStartFigure();
 
   /**
    * Gets the end figure of the connection.
    * This is a convenience method for doing getEndConnector().getOwner()
    * and handling null cases.
    */
-  org.jhotdraw.draw.figures.Figure getEndFigure();
+  Figure getEndFigure();
 // COMPOSITE FIGURES
 
   /**

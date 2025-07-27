@@ -14,7 +14,10 @@
 
 package org.jhotdraw.draw.figures;
 
-import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.AttributeKey;
+import org.jhotdraw.draw.AttributeKeys;
+import org.jhotdraw.draw.BoxHandleKit;
+import org.jhotdraw.draw.Options;
 import org.jhotdraw.draw.connectors.ChopBoxConnector;
 import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.draw.drawings.Drawing;
@@ -51,14 +54,14 @@ import java.util.*;
  * <br>3.0 2006-01-20 Reworked for J2SE 1.5.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
-public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure {
+public abstract class AbstractFigure implements Figure {
   protected EventListenerList listenerList = new EventListenerList();
   private boolean isConnectorsVisible;
   private ConnectionFigure courtingConnection;
-  private org.jhotdraw.draw.drawings.Drawing drawing;
+  private Drawing drawing;
   private boolean isInteractive;
   private boolean isVisible = true;
-  protected org.jhotdraw.draw.figures.Figure decorator;
+  protected Figure decorator;
   private boolean isDrawDecoratorFirst = false;
   /**
    * We increase this number on each invocation of willChange() and
@@ -80,12 +83,12 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
   // COMPOSITE FIGURES
   // CLONING
   // EVENT HANDLING
-  public void addFigureListener(org.jhotdraw.draw.listeners.FigureListener l) {
-    listenerList.add(org.jhotdraw.draw.listeners.FigureListener.class, l);
+  public void addFigureListener(FigureListener l) {
+    listenerList.add(FigureListener.class, l);
   }
 
-  public void removeFigureListener(org.jhotdraw.draw.listeners.FigureListener l) {
-    listenerList.remove(org.jhotdraw.draw.listeners.FigureListener.class, l);
+  public void removeFigureListener(FigureListener l) {
+    listenerList.remove(FigureListener.class, l);
   }
 
   public void addUndoableEditListener(UndoableEditListener l) {
@@ -96,12 +99,12 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
     listenerList.remove(UndoableEditListener.class, l);
   }
 
-  public void addNotify(org.jhotdraw.draw.drawings.Drawing d) {
+  public void addNotify(Drawing d) {
     this.drawing = d;
     fireFigureAdded();
   }
 
-  public void removeNotify(org.jhotdraw.draw.drawings.Drawing d) {
+  public void removeNotify(Drawing d) {
     fireFigureRemoved();
     this.drawing = null;
   }
@@ -136,17 +139,17 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
    */
   public void fireAreaInvalidated(Rectangle2D.Double invalidatedArea) {
     if (listenerList.getListenerCount() > 0) {
-      org.jhotdraw.draw.events.FigureEvent event = null;
+      FigureEvent event = null;
       // Notify all listeners that have registered interest for
       // Guaranteed to return a non-null array
       Object[] listeners = listenerList.getListenerList();
       // Process the listeners last to first, notifying
       // those that are interested in this event
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
-        if (listeners[i] == org.jhotdraw.draw.listeners.FigureListener.class) {
+        if (listeners[i] == FigureListener.class) {
           // Lazily create the event:
-          if (event == null) event = new org.jhotdraw.draw.events.FigureEvent(this, invalidatedArea);
-          ((org.jhotdraw.draw.listeners.FigureListener) listeners[i + 1]).figureAreaInvalidated(event);
+          if (event == null) event = new FigureEvent(this, invalidatedArea);
+          ((FigureListener) listeners[i + 1]).figureAreaInvalidated(event);
         }
       }
     }
@@ -158,16 +161,16 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
    */
   public void fireFigureRequestRemove() {
     if (listenerList.getListenerCount() > 0) {
-      org.jhotdraw.draw.events.FigureEvent event = null;
+      FigureEvent event = null;
       // Notify all listeners that have registered interest for
       // Guaranteed to return a non-null array
       Object[] listeners = listenerList.getListenerList();
       // Process the listeners last to first, notifying
       // those that are interested in this event
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
-        if (listeners[i] == org.jhotdraw.draw.listeners.FigureListener.class) {
+        if (listeners[i] == FigureListener.class) {
           // Lazily create the event:
-          if (event == null) event = new org.jhotdraw.draw.events.FigureEvent(this, getBounds());
+          if (event == null) event = new FigureEvent(this, getBounds());
           ((FigureListener) listeners[i + 1]).figureRequestRemove(event);
         }
       }
@@ -180,17 +183,17 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
    */
   protected void fireFigureAdded() {
     if (listenerList.getListenerCount() > 0) {
-      org.jhotdraw.draw.events.FigureEvent event = null;
+      FigureEvent event = null;
       // Notify all listeners that have registered interest for
       // Guaranteed to return a non-null array
       Object[] listeners = listenerList.getListenerList();
       // Process the listeners last to first, notifying
       // those that are interested in this event
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
-        if (listeners[i] == org.jhotdraw.draw.listeners.FigureListener.class) {
+        if (listeners[i] == FigureListener.class) {
           // Lazily create the event:
-          if (event == null) event = new org.jhotdraw.draw.events.FigureEvent(this, getBounds());
-          ((org.jhotdraw.draw.listeners.FigureListener) listeners[i + 1]).figureAdded(event);
+          if (event == null) event = new FigureEvent(this, getBounds());
+          ((FigureListener) listeners[i + 1]).figureAdded(event);
         }
       }
     }
@@ -209,10 +212,10 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
       // Process the listeners last to first, notifying
       // those that are interested in this event
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
-        if (listeners[i] == org.jhotdraw.draw.listeners.FigureListener.class) {
+        if (listeners[i] == FigureListener.class) {
           // Lazily create the event:
-          if (event == null) event = new org.jhotdraw.draw.events.FigureEvent(this, getBounds());
-          ((org.jhotdraw.draw.listeners.FigureListener) listeners[i + 1]).figureRemoved(event);
+          if (event == null) event = new FigureEvent(this, getBounds());
+          ((FigureListener) listeners[i + 1]).figureRemoved(event);
         }
       }
     }
@@ -228,23 +231,23 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
    */
   protected void fireFigureChanged(Rectangle2D.Double changedArea) {
     if (listenerList.getListenerCount() > 0) {
-      org.jhotdraw.draw.events.FigureEvent event = null;
+      FigureEvent event = null;
       // Notify all listeners that have registered interest for
       // Guaranteed to return a non-null array
       Object[] listeners = listenerList.getListenerList();
       // Process the listeners last to first, notifying
       // those that are interested in this event
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
-        if (listeners[i] == org.jhotdraw.draw.listeners.FigureListener.class) {
+        if (listeners[i] == FigureListener.class) {
           // Lazily create the event:
-          if (event == null) event = new org.jhotdraw.draw.events.FigureEvent(this, changedArea);
-          ((org.jhotdraw.draw.listeners.FigureListener) listeners[i + 1]).figureChanged(event);
+          if (event == null) event = new FigureEvent(this, changedArea);
+          ((FigureListener) listeners[i + 1]).figureChanged(event);
         }
       }
     }
   }
 
-  public void fireFigureChanged(org.jhotdraw.draw.events.FigureEvent event) {
+  public void fireFigureChanged(FigureEvent event) {
     if (listenerList.getListenerCount() > 0) {
       // Notify all listeners that have registered interest for
       // Guaranteed to return a non-null array
@@ -252,9 +255,9 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
       // Process the listeners last to first, notifying
       // those that are interested in this event
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
-        if (listeners[i] == org.jhotdraw.draw.listeners.FigureListener.class) {
+        if (listeners[i] == FigureListener.class) {
           // Lazily create the event:
-          ((org.jhotdraw.draw.listeners.FigureListener) listeners[i + 1]).figureChanged(event);
+          ((FigureListener) listeners[i + 1]).figureChanged(event);
         }
       }
     }
@@ -264,19 +267,19 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
    * Notify all listenerList that have registered interest for
    * notification on this event type.
    */
-  protected void fireAttributeChanged(AttributeKey attribute, Object oldValue, Object newValue) {
+  protected void fireAttributeChanged(AttributeKey<?> attribute, Object oldValue, Object newValue) {
     if (listenerList.getListenerCount() > 0) {
-      org.jhotdraw.draw.events.FigureEvent event = null;
+      FigureEvent event = null;
       // Notify all listeners that have registered interest for
       // Guaranteed to return a non-null array
       Object[] listeners = listenerList.getListenerList();
       // Process the listeners last to first, notifying
       // those that are interested in this event
       for (int i = listeners.length - 2; i >= 0; i -= 2) {
-        if (listeners[i] == org.jhotdraw.draw.listeners.FigureListener.class) {
+        if (listeners[i] == FigureListener.class) {
           // Lazily create the event:
-          if (event == null) event = new org.jhotdraw.draw.events.FigureEvent(this, attribute, oldValue, newValue);
-          ((org.jhotdraw.draw.listeners.FigureListener) listeners[i + 1]).figureAttributeChanged(event);
+          if (event == null) event = new FigureEvent(this, attribute, oldValue, newValue);
+          ((FigureListener) listeners[i + 1]).figureAttributeChanged(event);
         }
       }
     }
@@ -302,11 +305,11 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
       }
     }
   }
-    /*
-    public Set createHandles() {
-        return new HashSet();
-    }
-     */
+
+  public Collection<Handle> createHandles() {
+    return new HashSet<>();
+  }
+
 
   public AbstractFigure clone() {
     try {
@@ -315,7 +318,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
       that.isConnectorsVisible = false;
       that.courtingConnection = null;
       if (this.decorator != null) {
-        that.decorator = (org.jhotdraw.draw.figures.Figure) this.decorator.clone();
+        that.decorator = (Figure) this.decorator.clone();
       }
       return that;
     } catch (CloneNotSupportedException e) {
@@ -323,12 +326,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
     }
   }
 
-  public final AbstractFigure basicClone(HashMap<org.jhotdraw.draw.figures.Figure, org.jhotdraw.draw.figures.Figure> oldToNew) {
-    // XXX - Delete me
-    return null;
-  }
-
-  public void remap(HashMap<org.jhotdraw.draw.figures.Figure, org.jhotdraw.draw.figures.Figure> oldToNew) {
+  public void remap(HashMap<Figure, Figure> oldToNew) {
   }
 
   public Collection<Handle> createHandles(int detailLevel) {
@@ -435,20 +433,20 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
    *
    * @see ChopBoxConnector
    */
-  public org.jhotdraw.draw.connectors.Connector findConnector(Point2D.Double p, org.jhotdraw.draw.figures.ConnectionFigure prototype) {
-    return new org.jhotdraw.draw.connectors.ChopBoxConnector(this);
+  public Connector findConnector(Point2D.Double p, ConnectionFigure prototype) {
+    return new ChopBoxConnector(this);
   }
 
-  public boolean includes(org.jhotdraw.draw.figures.Figure figure) {
+  public boolean includes(Figure figure) {
     return figure == this;
   }
 
-  public org.jhotdraw.draw.figures.Figure findFigureInside(Point2D.Double p) {
+  public Figure findFigureInside(Point2D.Double p) {
     return (contains(p)) ? this : null;
   }
 
-  public Connector findCompatibleConnector(org.jhotdraw.draw.connectors.Connector c, boolean isStart) {
-    return new org.jhotdraw.draw.connectors.ChopBoxConnector(this);
+  public Connector findCompatibleConnector(Connector c, boolean isStart) {
+    return new ChopBoxConnector(this);
   }
 
   /**
@@ -476,7 +474,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
     return false;
   }
 
-  public boolean handleDrop(Point2D.Double p, Collection<Figure> droppedFigures, org.jhotdraw.draw.views.DrawingView view) {
+  public boolean handleDrop(Point2D.Double p, Collection<Figure> droppedFigures, DrawingView view) {
     return false;
   }
 
@@ -523,7 +521,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
     }
   }
 
-  public void setConnectorsVisible(boolean isVisible, org.jhotdraw.draw.figures.ConnectionFigure connection) {
+  public void setConnectorsVisible(boolean isVisible, ConnectionFigure connection) {
     willChange();
     isConnectorsVisible = isVisible;
     courtingConnection = connection;
@@ -534,21 +532,19 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
     return isConnectorsVisible;
   }
 
-  protected org.jhotdraw.draw.figures.ConnectionFigure getCourtingConnection() {
+  protected ConnectionFigure getCourtingConnection() {
     return courtingConnection;
   }
 
-  public Collection<org.jhotdraw.draw.figures.Figure> getDecomposition() {
-    LinkedList<org.jhotdraw.draw.figures.Figure> list = new LinkedList<>();
+  public Collection<Figure> getDecomposition() {
+    LinkedList<Figure> list = new LinkedList<>();
     list.add(this);
     return list;
   }
 
   protected FontRenderContext getFontRenderContext() {
-    FontRenderContext frc = null;
-    if (frc == null) {
-      frc = new FontRenderContext(new AffineTransform(), Options.isTextAntialiased(), Options.isFractionalMetrics());
-    }
+    FontRenderContext frc;
+    frc = new FontRenderContext(new AffineTransform(), Options.isTextAntialiased(), Options.isFractionalMetrics());
     return frc;
   }
 
@@ -564,7 +560,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
     return null;
   }
 
-  public void setDecorator(org.jhotdraw.draw.figures.Figure newValue) {
+  public void setDecorator(Figure newValue) {
     willChange();
     decorator = newValue;
     if (decorator != null) {
@@ -573,7 +569,7 @@ public abstract class AbstractFigure implements org.jhotdraw.draw.figures.Figure
     changed();
   }
 
-  public org.jhotdraw.draw.figures.Figure getDecorator() {
+  public Figure getDecorator() {
     return decorator;
   }
 

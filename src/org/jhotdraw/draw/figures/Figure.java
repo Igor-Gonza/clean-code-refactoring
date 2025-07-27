@@ -187,7 +187,7 @@ public interface Figure extends Cloneable, Serializable, DOMStorable {
    * the shape is affected by an attribute change,
    * <code>FigureListener.figureChanged</code> is fired too.
    */
-  void setAttribute(AttributeKey key, Object value);
+  void setAttribute(AttributeKey<?> key, Object value);
 
   /**
    * Sets an attribute of the figure without firing events.
@@ -198,7 +198,7 @@ public interface Figure extends Cloneable, Serializable, DOMStorable {
    *
    * @see AttributeKey#set
    */
-  void basicSetAttribute(AttributeKey key, Object value);
+  void basicSetAttribute(AttributeKey<?> key, Object value);
 
   /**
    * Gets an attribute from the Figure.
@@ -209,7 +209,7 @@ public interface Figure extends Cloneable, Serializable, DOMStorable {
    * attribute with the specified key, returns key.getDefaultValue().
    * @see AttributeKey#get
    */
-  Object getAttribute(AttributeKey key);
+  Object getAttribute(AttributeKey<?> key);
 
   /**
    * Returns a view to all attributes of this figure.

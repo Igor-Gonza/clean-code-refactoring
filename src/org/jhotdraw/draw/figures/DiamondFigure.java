@@ -38,7 +38,7 @@ public class DiamondFigure extends AttributedFigure {
    * If the attribute IS_QUADRATIC is set to true, all sides of the diamond have
    * the same length.
    */
-  public final static AttributeKey<Boolean> IS_QUADRATIC = new AttributeKey<>("isQuadratic", false);
+  public static final AttributeKey<Boolean> IS_QUADRATIC = new AttributeKey<>("isQuadratic", false);
 
   /**
    * The bounds of the diamond figure.
@@ -71,7 +71,8 @@ public class DiamondFigure extends AttributedFigure {
     }
 
     double grow = AttributeKeys.getPerpendicularFillGrowth(this);
-    double growX, growY;
+    double growX;
+    double growY;
     if (grow == 0d) {
       growX = growY = 0d;
     } else {
@@ -107,7 +108,8 @@ public class DiamondFigure extends AttributedFigure {
     }
 
     double grow = AttributeKeys.getPerpendicularDrawGrowth(this);
-    double growX, growY;
+    double growX;
+    double growY;
     if (grow == 0d) {
       growX = growY = 0d;
     } else {
@@ -147,7 +149,8 @@ public class DiamondFigure extends AttributedFigure {
       r.width = r.height = side;
     }
     double grow = AttributeKeys.getPerpendicularHitGrowth(this);
-    double growX, growY;
+    double growX;
+    double growY;
     if (grow == 0d) {
       growX = growY = 0d;
     } else {
@@ -181,7 +184,8 @@ public class DiamondFigure extends AttributedFigure {
     //   if (r.contains(p)) {
 
     double grow = AttributeKeys.getPerpendicularFillGrowth(this);
-    double growX, growY;
+    double growX;
+    double growY;
     if (grow == 0d) {
       growX = growY = 0d;
     } else {
@@ -255,12 +259,12 @@ public class DiamondFigure extends AttributedFigure {
    *
    * @see ChopDiamondConnector
    */
-  public org.jhotdraw.draw.connectors.Connector findConnector(Point2D.Double p, ConnectionFigure prototype) {
-    return new org.jhotdraw.draw.connectors.ChopDiamondConnector(this);
+  public Connector findConnector(Point2D.Double p, ConnectionFigure prototype) {
+    return new ChopDiamondConnector(this);
   }
 
-  public org.jhotdraw.draw.connectors.Connector findCompatibleConnector(Connector c, boolean isStart) {
-    return new org.jhotdraw.draw.connectors.ChopDiamondConnector(this);
+  public Connector findCompatibleConnector(Connector c, boolean isStart) {
+    return new ChopDiamondConnector(this);
   }
 
   // COMPOSITE FIGURES

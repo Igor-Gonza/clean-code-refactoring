@@ -88,10 +88,12 @@ public class RoundRectangleFigure extends AttributedFigure {
     fireFigureChanged(getDrawBounds());
     fireUndoableEditHappened(new AbstractUndoableEdit() {
       // FIXME German
+      @Override
       public String getPresentationName() {
         return "Rundung";
       }
 
+      @Override
       public void undo() throws CannotUndoException {
         super.undo();
         willChange();
@@ -100,6 +102,7 @@ public class RoundRectangleFigure extends AttributedFigure {
         changed();
       }
 
+      @Override
       public void redo() throws CannotRedoException {
         super.redo();
         willChange();

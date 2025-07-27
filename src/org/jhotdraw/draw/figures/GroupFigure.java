@@ -28,6 +28,7 @@ import org.jhotdraw.geom.*;
 public class GroupFigure extends AbstractCompositeFigure {
 
   public GroupFigure() {
+    // TODO document why this constructor is empty
   }
 
   /**
