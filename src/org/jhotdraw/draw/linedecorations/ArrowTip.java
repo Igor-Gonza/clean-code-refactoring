@@ -75,7 +75,7 @@ public class ArrowTip extends AbstractLineDecoration implements DOMStorable {
     return path;
   }
 
-  protected double getDecoratorPathRadius(org.jhotdraw.draw.figures.Figure f) {
+  protected double getDecoratorPathRadius(Figure f) {
     double offset = (isStroked()) ? 0.5 : -0.1;
 
     return innerRadius + offset;

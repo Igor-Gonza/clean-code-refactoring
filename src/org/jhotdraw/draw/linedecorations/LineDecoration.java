@@ -41,10 +41,10 @@ public interface LineDecoration extends Cloneable, Serializable {
    * This is used to crop the end of the line, to prevent it from being
    * drawn it over the decorator.
    */
-  double getDecorationRadius(org.jhotdraw.draw.figures.Figure f);
+  double getDecorationRadius(Figure f);
 
   /**
    * Returns the drawing bounds of the decorator.
    */
-  Rectangle2D.Double getDrawBounds(org.jhotdraw.draw.figures.Figure f, Point2D.Double p1, Point2D.Double p2);
+  Rectangle2D.Double getDrawBounds(Figure f, Point2D.Double p1, Point2D.Double p2);
 }

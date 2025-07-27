@@ -42,7 +42,7 @@ public class GeneralPathTip extends AbstractLineDecoration {
     this.decorationRadius = decorationRadius;
   }
 
-  protected GeneralPath getDecoratorPath(org.jhotdraw.draw.figures.Figure f) {
+  protected GeneralPath getDecoratorPath(Figure f) {
     return (GeneralPath) path.clone();
   }
 
