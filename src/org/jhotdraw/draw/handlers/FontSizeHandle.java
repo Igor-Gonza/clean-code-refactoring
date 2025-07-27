@@ -35,11 +35,11 @@ public class FontSizeHandle extends LocatorHandle {
   /**
    * Creates a new instance.
    */
-  public FontSizeHandle(org.jhotdraw.draw.figures.TextHolder owner) {
+  public FontSizeHandle(TextHolder owner) {
     super(owner, new FontSizeLocator());
   }
 
-  public FontSizeHandle(org.jhotdraw.draw.figures.TextHolder owner, Locator locator) {
+  public FontSizeHandle(TextHolder owner, Locator locator) {
     super(owner, locator);
   }
 
@@ -62,12 +62,12 @@ public class FontSizeHandle extends LocatorHandle {
 
   public void trackStart(Point anchor, int modifiersEx) {
     view.getDrawing().fireUndoableEditHappened(edit = new CompositeEdit("Schriftgrösse"));
-    org.jhotdraw.draw.figures.TextHolder textOwner = (org.jhotdraw.draw.figures.TextHolder) getOwner();
+    TextHolder textOwner = (TextHolder) getOwner();
     oldSize = textOwner.getFontSize();
   }
 
   public void trackStep(Point anchor, Point lead, int modifiersEx) {
-    org.jhotdraw.draw.figures.TextHolder textOwner = (TextHolder) getOwner();
+    TextHolder textOwner = (TextHolder) getOwner();
 
     float newSize = (float) Math.max(1, oldSize + view.viewToDrawing(new Point(0, lead.y - anchor.y)).y);
     textOwner.setFontSize(newSize);

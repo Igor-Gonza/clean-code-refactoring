@@ -32,7 +32,7 @@ public class ChangeConnectionEndHandle extends ChangeConnectionHandle {
   /**
    * Constructs the connection handle for the given start figure.
    */
-  public ChangeConnectionEndHandle(org.jhotdraw.draw.figures.Figure owner) {
+  public ChangeConnectionEndHandle(Figure owner) {
     super(owner);
   }
 
@@ -50,7 +50,7 @@ public class ChangeConnectionEndHandle extends ChangeConnectionHandle {
     getConnection().setEndConnector(null);
   }
 
-  protected org.jhotdraw.draw.connectors.Connector getTarget() {
+  protected Connector getTarget() {
     return getConnection().getEndConnector();
   }
 
@@ -71,7 +71,7 @@ public class ChangeConnectionEndHandle extends ChangeConnectionHandle {
     return getConnection().getEndPoint();
   }
 
-  protected boolean canConnect(Figure existingEnd, org.jhotdraw.draw.figures.Figure targetEnd) {
+  protected boolean canConnect(Figure existingEnd, Figure targetEnd) {
     return getConnection().canConnect(existingEnd, targetEnd);
   }
 }

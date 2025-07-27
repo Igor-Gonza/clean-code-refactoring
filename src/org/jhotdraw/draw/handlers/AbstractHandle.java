@@ -14,19 +14,19 @@
 
 package org.jhotdraw.draw.handlers;
 
-import org.jhotdraw.draw.views.DrawingView;
-import org.jhotdraw.draw.listeners.FigureListener;
-import org.jhotdraw.draw.listeners.HandleListener;
 import org.jhotdraw.draw.events.FigureEvent;
 import org.jhotdraw.draw.events.HandleEvent;
 import org.jhotdraw.draw.figures.Figure;
+import org.jhotdraw.draw.views.DrawingView;
+import org.jhotdraw.draw.listeners.FigureListener;
+import org.jhotdraw.draw.listeners.HandleListener;
 
-import java.util.Collection;
-import javax.swing.event.*;
+import javax.swing.event.EventListenerList;
+import javax.swing.undo.UndoableEdit;
 import java.awt.*;
-import java.awt.event.*;
-import javax.swing.undo.*;
-import java.util.*;
+import java.awt.event.KeyEvent;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * AbstractHandle.
@@ -47,7 +47,7 @@ public abstract class AbstractHandle implements Handle, FigureListener {
   /**
    * Creates a new instance.
    */
-  public AbstractHandle(org.jhotdraw.draw.figures.Figure owner) {
+  public AbstractHandle(Figure owner) {
     this.owner = owner;
     owner.addFigureListener(this);
   }
@@ -73,7 +73,7 @@ public abstract class AbstractHandle implements Handle, FigureListener {
     listenerList.remove(HandleListener.class, l);
   }
 
-  public org.jhotdraw.draw.figures.Figure getOwner() {
+  public Figure getOwner() {
     return owner;
   }
 
@@ -95,7 +95,7 @@ public abstract class AbstractHandle implements Handle, FigureListener {
     for (int i = listeners.length - 2; i >= 0; i -= 2) {
       if (listeners[i] == HandleListener.class) {
         // Lazily create the event:
-        if (event == null) event = new org.jhotdraw.draw.events.HandleEvent(this, invalidatedArea);
+        if (event == null) event = new HandleEvent(this, invalidatedArea);
         ((HandleListener) listeners[i + 1]).areaInvalidated(event);
       }
     }
@@ -129,7 +129,7 @@ public abstract class AbstractHandle implements Handle, FigureListener {
    * notification on this event type.
    */
   protected void fireHandleRequestRemove(Rectangle invalidatedArea) {
-    org.jhotdraw.draw.events.HandleEvent event = null;
+    HandleEvent event = null;
     // Notify all listeners that have registered interest for
     // Guaranteed to return a non-null array
     Object[] listeners = listenerList.getListenerList();
@@ -138,7 +138,7 @@ public abstract class AbstractHandle implements Handle, FigureListener {
     for (int i = listeners.length - 2; i >= 0; i -= 2) {
       if (listeners[i] == HandleListener.class) {
         // Lazily create the event:
-        if (event == null) event = new org.jhotdraw.draw.events.HandleEvent(this, invalidatedArea);
+        if (event == null) event = new HandleEvent(this, invalidatedArea);
         ((HandleListener) listeners[i + 1]).handleRequestRemove(event);
       }
     }
@@ -149,7 +149,7 @@ public abstract class AbstractHandle implements Handle, FigureListener {
    * notification on this event type.
    */
   protected void fireHandleRequestSecondaryHandles() {
-    org.jhotdraw.draw.events.HandleEvent event = null;
+    HandleEvent event = null;
     // Notify all listeners that have registered interest for
     // Guaranteed to return a non-null array
     Object[] listeners = listenerList.getListenerList();
@@ -158,7 +158,7 @@ public abstract class AbstractHandle implements Handle, FigureListener {
     for (int i = listeners.length - 2; i >= 0; i -= 2) {
       if (listeners[i] == HandleListener.class) {
         // Lazily create the event:
-        if (event == null) event = new org.jhotdraw.draw.events.HandleEvent(this, null);
+        if (event == null) event = new HandleEvent(this, null);
         ((HandleListener) listeners[i + 1]).handleRequestSecondaryHandles(event);
       }
     }
@@ -229,28 +229,28 @@ public abstract class AbstractHandle implements Handle, FigureListener {
    * If the handle is located elsewhere this method must be reimplemented
    * by the subclass.
    */
-  public void figureAreaInvalidated(org.jhotdraw.draw.events.FigureEvent evt) {
+  public void figureAreaInvalidated(FigureEvent evt) {
     updateBounds();
   }
 
   /**
    * Sent when a figure was added.
    */
-  public void figureAdded(org.jhotdraw.draw.events.FigureEvent e) {
+  public void figureAdded(FigureEvent e) {
     // Empty
   }
 
   /**
    * Sent when a figure was removed.
    */
-  public void figureRemoved(org.jhotdraw.draw.events.FigureEvent e) {
+  public void figureRemoved(FigureEvent e) {
     // Empty
   }
 
   /**
    * Sent when a figure requests to be removed.
    */
-  public void figureRequestRemove(org.jhotdraw.draw.events.FigureEvent e) {
+  public void figureRequestRemove(FigureEvent e) {
     // Empty
   }
 
@@ -302,7 +302,7 @@ public abstract class AbstractHandle implements Handle, FigureListener {
 
   protected void updateBounds() {
     Rectangle newBounds = basicGetBounds();
-    if (bounds == null || !newBounds.equals(bounds)) {
+    if (!newBounds.equals(bounds)) {
       if (bounds != null) fireAreaInvalidated(getDrawBounds());
       bounds = newBounds;
       fireAreaInvalidated(getDrawBounds());
@@ -315,7 +315,7 @@ public abstract class AbstractHandle implements Handle, FigureListener {
   public void trackDoubleClick(Point p, int modifiersEx) {
   }
 
-  public void figureAttributeChanged(org.jhotdraw.draw.events.FigureEvent e) {
+  public void figureAttributeChanged(FigureEvent e) {
   }
 
   public void viewTransformChanged() {

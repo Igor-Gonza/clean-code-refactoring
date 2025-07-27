@@ -42,7 +42,7 @@ public class BezierNodeHandle extends AbstractHandle {
   /**
    * Creates a new instance.
    */
-  public BezierNodeHandle(org.jhotdraw.draw.figures.BezierFigure owner, int index) {
+  public BezierNodeHandle(BezierFigure owner, int index) {
     super(owner);
     this.index = index;
   }
@@ -51,7 +51,7 @@ public class BezierNodeHandle extends AbstractHandle {
    * Draws this handle.
    */
   public void draw(Graphics2D g) {
-    org.jhotdraw.draw.figures.BezierFigure f = getBezierFigure();
+    BezierFigure f = getBezierFigure();
     if (f.getPointCount() > index) {
       BezierPath.Node v = f.getNode(index);
       if (v.mask == 0) {
@@ -64,8 +64,8 @@ public class BezierNodeHandle extends AbstractHandle {
     }
   }
 
-  protected org.jhotdraw.draw.figures.BezierFigure getBezierFigure() {
-    return (org.jhotdraw.draw.figures.BezierFigure) getOwner();
+  protected BezierFigure getBezierFigure() {
+    return (BezierFigure) getOwner();
   }
 
   protected Point getLocation() {
@@ -79,7 +79,7 @@ public class BezierNodeHandle extends AbstractHandle {
   }
 
   public void trackStart(Point anchor, int modifiersEx) {
-    org.jhotdraw.draw.figures.BezierFigure figure = getBezierFigure();
+    BezierFigure figure = getBezierFigure();
     view.getDrawing().fireUndoableEditHappened(edit = new CompositeEdit("Punkt verschieben"));
     Point2D.Double location = view.getConstrainer().constrainPoint(view.viewToDrawing(getLocation()));
     Point2D.Double p = view.getConstrainer().constrainPoint(view.viewToDrawing(anchor));
@@ -88,7 +88,7 @@ public class BezierNodeHandle extends AbstractHandle {
   }
 
   public void trackStep(Point anchor, Point lead, int modifiersEx) {
-    org.jhotdraw.draw.figures.BezierFigure figure = getBezierFigure();
+    BezierFigure figure = getBezierFigure();
     figure.willChange();
     Point2D.Double p = view.getConstrainer().constrainPoint(view.viewToDrawing(lead));
     BezierPath.Node n = figure.getNode(index);
@@ -110,7 +110,7 @@ public class BezierNodeHandle extends AbstractHandle {
   }
 
   public void trackEnd(Point anchor, Point lead, int modifiersEx) {
-    org.jhotdraw.draw.figures.BezierFigure f = getBezierFigure();
+    BezierFigure f = getBezierFigure();
 
     // Change node type
     if ((modifiersEx & (InputEvent.META_DOWN_MASK | InputEvent.CTRL_DOWN_MASK)) != 0 && (modifiersEx & InputEvent.BUTTON2_DOWN_MASK) == 0) {
@@ -144,7 +144,7 @@ public class BezierNodeHandle extends AbstractHandle {
   }
 
   public void trackDoubleClick(Point p, int modifiersEx) {
-    org.jhotdraw.draw.figures.BezierFigure f = getBezierFigure();
+    BezierFigure f = getBezierFigure();
     if (f.getNodeCount() > 2 && (modifiersEx & (InputEvent.META_DOWN_MASK | InputEvent.CTRL_DOWN_MASK | InputEvent.ALT_DOWN_MASK)) == 0
 
     ) {

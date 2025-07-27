@@ -142,5 +142,4 @@ public class TriangleRotationHandler extends AbstractHandle {
       fireUndoableEditHappened(new AttributeChangeEdit(getOwner(), ORIENTATION, oldValue, newValue));
     }
   }
-
 }

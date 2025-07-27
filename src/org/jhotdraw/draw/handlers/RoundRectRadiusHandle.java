@@ -52,22 +52,23 @@ public class RoundRectRadiusHandle extends AbstractHandle {
   }
 
   private Point locate() {
-    org.jhotdraw.draw.figures.RoundRectangleFigure owner = (org.jhotdraw.draw.figures.RoundRectangleFigure) getOwner();
+    RoundRectangleFigure owner = (RoundRectangleFigure) getOwner();
     Rectangle r = view.drawingToView(owner.getBounds());
     Point arc = view.drawingToView(new Point2D.Double(owner.getArcWidth(), owner.getArcHeight()));
     return new Point(r.x + arc.x / 2 + OFFSET, r.y + arc.y / 2 + OFFSET);
   }
 
   public void trackStart(Point anchor, int modifiersEx) {
-    view.getDrawing().fireUndoableEditHappened(edit = new CompositeEdit("Mehrfachaenderung"));
-    org.jhotdraw.draw.figures.RoundRectangleFigure owner = (RoundRectangleFigure) getOwner();
+    edit = new CompositeEdit("Mehrfachaenderung");
+    view.getDrawing().fireUndoableEditHappened(edit);
+    RoundRectangleFigure owner = (RoundRectangleFigure) getOwner();
     originalArc = view.drawingToView(new Point2D.Double(owner.getArcWidth(), owner.getArcHeight()));
   }
 
   public void trackStep(Point anchor, Point lead, int modifiersEx) {
     int dx = lead.x - anchor.x;
     int dy = lead.y - anchor.y;
-    org.jhotdraw.draw.figures.RoundRectangleFigure owner = (org.jhotdraw.draw.figures.RoundRectangleFigure) getOwner();
+    RoundRectangleFigure owner = (RoundRectangleFigure) getOwner();
     Rectangle r = view.drawingToView(owner.getBounds());
     Point viewArc = new Point(Geom.range(0, r.width, 2 * (originalArc.x / 2 + dx)), Geom.range(0, r.height, 2 * (originalArc.y / 2 + dy)));
     Point2D.Double arc = view.viewToDrawing(viewArc);

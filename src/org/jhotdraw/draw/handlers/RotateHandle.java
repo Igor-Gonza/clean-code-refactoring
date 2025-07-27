@@ -107,5 +107,4 @@ public class RotateHandle extends AbstractHandle {
     view.getDrawing().fireUndoableEditHappened(new RestoreDataEdit(getOwner(), restoreData));
     location = null;
   }
-
 }

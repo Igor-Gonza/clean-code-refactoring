@@ -50,7 +50,7 @@ public class ChangeConnectionStartHandle extends ChangeConnectionHandle {
     getConnection().setStartConnector(null);
   }
 
-  protected org.jhotdraw.draw.connectors.Connector getTarget() {
+  protected Connector getTarget() {
     return getConnection().getStartConnector();
   }
 
@@ -70,7 +70,7 @@ public class ChangeConnectionStartHandle extends ChangeConnectionHandle {
     return getConnection().getStartPoint();
   }
 
-  protected boolean canConnect(org.jhotdraw.draw.figures.Figure existingEnd, org.jhotdraw.draw.figures.Figure targetEnd) {
+  protected boolean canConnect(Figure existingEnd, Figure targetEnd) {
     return getConnection().canConnect(targetEnd, existingEnd);
   }
 }

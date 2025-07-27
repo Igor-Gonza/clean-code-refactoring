@@ -14,8 +14,8 @@
 
 package org.jhotdraw.draw.handlers;
 
-import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.connectors.Connector;
+import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.figures.ConnectionFigure;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.locators.Locator;
@@ -39,22 +39,22 @@ public class ConnectionHandle extends LocatorHandle {
   /**
    * the currently created connection
    */
-  private org.jhotdraw.draw.figures.ConnectionFigure currentConnection;
+  private ConnectionFigure currentConnection;
 
   /**
    * the prototype of the connection to be created
    */
-  private final org.jhotdraw.draw.figures.ConnectionFigure prototype;
+  private final ConnectionFigure prototype;
 
   /**
    * the current target
    */
-  private org.jhotdraw.draw.figures.Figure targetFigure;
+  private Figure targetFigure;
 
   /**
    * Creates a new instance.
    */
-  public ConnectionHandle(org.jhotdraw.draw.figures.Figure owner, Locator locator, org.jhotdraw.draw.figures.ConnectionFigure prototype) {
+  public ConnectionHandle(Figure owner, Locator locator, ConnectionFigure prototype) {
     super(owner, locator);
     this.prototype = prototype;
   }
@@ -91,7 +91,7 @@ public class ConnectionHandle extends LocatorHandle {
       }
     }
 
-    org.jhotdraw.draw.connectors.Connector target = findConnectionTarget(p, view.getDrawing());
+    Connector target = findConnectionTarget(p, view.getDrawing());
     if (target != null) {
       p = Geom.center(target.getBounds());
     }
@@ -100,7 +100,7 @@ public class ConnectionHandle extends LocatorHandle {
 
   public void trackEnd(Point anchor, Point lead, int modifiersEx) {
     Point2D.Double p = view.viewToDrawing(lead);
-    org.jhotdraw.draw.connectors.Connector target = findConnectionTarget(p, view.getDrawing());
+    Connector target = findConnectionTarget(p, view.getDrawing());
     if (target != null) {
       getConnection().setStartConnector(getStartConnector());
       getConnection().setEndConnector(target);
@@ -123,28 +123,28 @@ public class ConnectionHandle extends LocatorHandle {
    * Creates the ConnectionFigure. By default, the figure prototype is
    * cloned.
    */
-  protected org.jhotdraw.draw.figures.ConnectionFigure createConnection() {
-    return (org.jhotdraw.draw.figures.ConnectionFigure) prototype.clone();
+  protected ConnectionFigure createConnection() {
+    return (ConnectionFigure) prototype.clone();
   }
 
   protected void setConnection(ConnectionFigure newConnection) {
     currentConnection = newConnection;
   }
 
-  protected org.jhotdraw.draw.figures.ConnectionFigure getConnection() {
+  protected ConnectionFigure getConnection() {
     return currentConnection;
   }
 
-  protected org.jhotdraw.draw.figures.Figure getTargetFigure() {
+  protected Figure getTargetFigure() {
     return targetFigure;
   }
 
-  protected void setTargetFigure(org.jhotdraw.draw.figures.Figure newTargetFigure) {
+  protected void setTargetFigure(Figure newTargetFigure) {
     targetFigure = newTargetFigure;
   }
 
-  private org.jhotdraw.draw.figures.Figure findConnectableFigure(Point2D.Double p, Drawing drawing) {
-    for (org.jhotdraw.draw.figures.Figure figure : drawing.getFiguresFrontToBack()) {
+  private Figure findConnectableFigure(Point2D.Double p, Drawing drawing) {
+    for (Figure figure : drawing.getFiguresFrontToBack()) {
       if (!figure.includes(getConnection()) && figure.canConnect() && figure.contains(p)) {
         return figure;
       }
@@ -160,8 +160,8 @@ public class ConnectionHandle extends LocatorHandle {
   /**
    * Finds a connection end figure.
    */
-  protected org.jhotdraw.draw.connectors.Connector findConnectionTarget(Point2D.Double p, Drawing drawing) {
-    org.jhotdraw.draw.figures.Figure target = findConnectableFigure(p, drawing);
+  protected Connector findConnectionTarget(Point2D.Double p, Drawing drawing) {
+    Figure target = findConnectableFigure(p, drawing);
     if ((target != null) && target.canConnect() && !target.includes(getOwner()) && getConnection().canConnect(getOwner(), target)) {
       return target.findConnector(p, getConnection());
     }
