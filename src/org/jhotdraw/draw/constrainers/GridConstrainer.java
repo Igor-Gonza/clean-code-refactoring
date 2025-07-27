@@ -82,13 +82,12 @@ public class GridConstrainer implements Constrainer {
       Point2D.Double viewPoint = new Point2D.Double();
 
       if (width * view.getScaleFactor() > 1) {
-
         g.setColor(minorColor);
         for (int i = (int) (origin.x / width), m = (int) ((origin.x + bounds.width) / width) + 1; i <= m; i++) {
           g.setColor((i % 5 == 0) ? majorColor : minorColor);
 
           point.x = width * i;
-          t.transform(point, viewPoint);
+          t.transform(point, viewPoint);  
           g.drawLine((int) viewPoint.x, viewBounds.y, (int) viewPoint.x, viewBounds.y + viewBounds.height);
         }
       }

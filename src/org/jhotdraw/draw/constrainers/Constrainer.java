@@ -29,6 +29,7 @@ import java.awt.geom.Point2D;
  * <br>1.0 2004-03-14  Created.
  */
 public interface Constrainer {
+
   /**
    * Constrains the given point.
    * This method changes the point which is passed as a parameter.
