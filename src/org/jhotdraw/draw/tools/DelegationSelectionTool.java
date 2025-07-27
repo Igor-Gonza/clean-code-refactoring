@@ -14,16 +14,18 @@
 
 package org.jhotdraw.draw.tools;
 
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.util.*;
-
 import org.jhotdraw.app.action.Actions;
-import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.views.DrawingView;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * A SelectionTool, which recognizes double clicks and popup menu triggers.
@@ -54,7 +56,7 @@ public class DelegationSelectionTool extends SelectionTool {
    * We use this timer, to show a popup menu, when the user presses the
    * mouse key for a second without moving the mouse.
    */
-  private javax.swing.Timer popupTimer;
+  private Timer popupTimer;
 
   /**
    * When the popup menu is visible, we do not track mouse movements.
@@ -101,7 +103,7 @@ public class DelegationSelectionTool extends SelectionTool {
       handlePopupMenu(evt);
     } else {
       super.mousePressed(evt);
-      popupTimer = new javax.swing.Timer(1000, actionEvt -> {
+      popupTimer = new Timer(1000, actionEvt -> {
         handlePopupMenu(evt);
         popupTimer = null;
       });
@@ -151,7 +153,7 @@ public class DelegationSelectionTool extends SelectionTool {
    */
   protected void handlePopupMenu(MouseEvent evt) {
     Point p = new Point(evt.getX(), evt.getY());
-    org.jhotdraw.draw.figures.Figure figure = getView().findFigure(p);
+    Figure figure = getView().findFigure(p);
     if (figure != null || !drawingActions.isEmpty()) {
       showPopupMenu(figure, p, evt.getComponent());
     } else {
@@ -159,7 +161,7 @@ public class DelegationSelectionTool extends SelectionTool {
     }
   }
 
-  protected void showPopupMenu(org.jhotdraw.draw.figures.Figure figure, Point p, Component c) {
+  protected void showPopupMenu(Figure figure, Point p, Component c) {
     JPopupMenu menu = new JPopupMenu();
     popupMenu = menu;
     JMenu submenu = null;
@@ -236,7 +238,7 @@ public class DelegationSelectionTool extends SelectionTool {
       handle.trackDoubleClick(pos, evt.getModifiersEx());
     } else {
       Point2D.Double p = viewToDrawing(pos);
-      org.jhotdraw.draw.figures.Figure outerFigure = getView().findFigure(pos);
+      Figure outerFigure = getView().findFigure(pos);
       Figure figure = outerFigure;
       if (figure != null) {
         Tool figureTool = figure.getTool(p);

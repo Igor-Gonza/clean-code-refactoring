@@ -25,7 +25,7 @@ import java.awt.event.MouseEvent;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class SelectAreaTracker extends AbstractTool {
-  private Rectangle rubberBand = new Rectangle();
+  private final Rectangle rubberBand = new Rectangle();
 
   /**
    * Creates a new instance.

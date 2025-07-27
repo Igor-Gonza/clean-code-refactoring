@@ -21,9 +21,10 @@ import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.undo.CompositeEdit;
 
 import java.awt.*;
-import java.awt.geom.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.Map;
 
 /**
  * A tool to create new figures. The figure to be created is specified by a
@@ -36,21 +37,21 @@ import java.util.*;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class CreationTool extends AbstractTool {
-  private Map<AttributeKey, Object> attributes;
+  private final Map<AttributeKey, Object> attributes;
   private String name;
-  private Dimension minimalSizeThreshold = new Dimension(10, 10);
+  private final Dimension minimalSizeThreshold = new Dimension(10, 10);
   /**
    * We set the figure to the minimal size, if it is smaller than the minimal size threshold.
    */
-  private Dimension minimalSize = new Dimension(40, 40);
+  private final Dimension minimalSize = new Dimension(40, 40);
   /**
    * The prototype for new figures.
    */
-  private Figure prototype;
+  private final Figure prototype;
   /**
    * The created figure.
    */
-  protected org.jhotdraw.draw.figures.Figure createdFigure;
+  protected Figure createdFigure;
 
   protected CompositeEdit creationEdit;
 
@@ -67,7 +68,7 @@ public class CreationTool extends AbstractTool {
 
   public CreationTool(String prototypeClassName, Map<AttributeKey, Object> attributes, String name) {
     try {
-      this.prototype = (org.jhotdraw.draw.figures.Figure) Class.forName(prototypeClassName).newInstance();
+      this.prototype = (Figure) Class.forName(prototypeClassName).newInstance();
     } catch (Exception e) {
       throw new InternalError("Unable to create Figure from " + prototypeClassName, e);
     }
@@ -75,27 +76,27 @@ public class CreationTool extends AbstractTool {
     this.name = name;
   }
 
-  public CreationTool(org.jhotdraw.draw.figures.Figure prototype) {
+  public CreationTool(Figure prototype) {
     this(prototype, null, null);
   }
 
   /**
    * Creates a new instance.
    */
-  public CreationTool(org.jhotdraw.draw.figures.Figure prototype, Map<AttributeKey, Object> attributes) {
+  public CreationTool(Figure prototype, Map<AttributeKey, Object> attributes) {
     this(prototype, attributes, null);
   }
 
   /**
    * Creates a new instance.
    */
-  public CreationTool(org.jhotdraw.draw.figures.Figure prototype, Map<AttributeKey, Object> attributes, String name) {
+  public CreationTool(Figure prototype, Map<AttributeKey, Object> attributes, String name) {
     this.prototype = prototype;
     this.attributes = attributes;
     this.name = name;
   }
 
-  public org.jhotdraw.draw.figures.Figure getPrototype() {
+  public Figure getPrototype() {
     return prototype;
   }
 
@@ -111,8 +112,8 @@ public class CreationTool extends AbstractTool {
       getView().setCursor(Cursor.getDefaultCursor());
     }
     if (createdFigure != null) {
-      if (createdFigure instanceof org.jhotdraw.draw.figures.CompositeFigure) {
-        ((org.jhotdraw.draw.figures.CompositeFigure) createdFigure).layout();
+      if (createdFigure instanceof CompositeFigure) {
+        ((CompositeFigure) createdFigure).layout();
       }
       createdFigure = null;
     }
@@ -134,8 +135,8 @@ public class CreationTool extends AbstractTool {
     getDrawing().add(createdFigure);
   }
 
-  protected org.jhotdraw.draw.figures.Figure createFigure() {
-    org.jhotdraw.draw.figures.Figure f = (org.jhotdraw.draw.figures.Figure) prototype.clone();
+  protected Figure createFigure() {
+    Figure f = (Figure) prototype.clone();
     getEditor().applyDefaultAttributesTo(f);
     if (attributes != null) {
       for (Map.Entry<AttributeKey, Object> entry : attributes.entrySet()) {
@@ -145,11 +146,11 @@ public class CreationTool extends AbstractTool {
     return f;
   }
 
-  protected org.jhotdraw.draw.figures.Figure getCreatedFigure() {
+  protected Figure getCreatedFigure() {
     return createdFigure;
   }
 
-  protected org.jhotdraw.draw.figures.Figure getAddedFigure() {
+  protected Figure getAddedFigure() {
     return createdFigure;
   }
 
@@ -173,7 +174,7 @@ public class CreationTool extends AbstractTool {
         }
         getView().addToSelection(createdFigure);
       }
-      if (createdFigure instanceof org.jhotdraw.draw.figures.CompositeFigure) {
+      if (createdFigure instanceof CompositeFigure) {
         ((CompositeFigure) createdFigure).layout();
       }
       createdFigure = null;

@@ -38,17 +38,17 @@ import java.awt.geom.Rectangle2D;
  * @author Werner Randelshofer
  * @version 2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
- * @see org.jhotdraw.draw.figures.TextHolder
+ * @see TextHolder
  * @see FloatingTextArea
  */
 public class TextAreaTool extends CreationTool implements ActionListener {
   private FloatingTextArea textArea;
-  private org.jhotdraw.draw.figures.TextHolder typingTarget;
+  private TextHolder typingTarget;
 
   /**
    * Creates a new instance.
    */
-  public TextAreaTool(org.jhotdraw.draw.figures.TextHolder prototype) {
+  public TextAreaTool(TextHolder prototype) {
     super(prototype);
   }
 
@@ -62,10 +62,10 @@ public class TextAreaTool extends CreationTool implements ActionListener {
    * a new text figure is created.
    */
   public void mousePressed(MouseEvent e) {
-    org.jhotdraw.draw.figures.TextHolder textHolder = null;
+    TextHolder textHolder = null;
     Figure pressedFigure = getDrawing().findFigureInside(getView().viewToDrawing(new Point(e.getX(), e.getY())));
-    if (pressedFigure instanceof org.jhotdraw.draw.figures.TextHolder) {
-      textHolder = (org.jhotdraw.draw.figures.TextHolder) pressedFigure;
+    if (pressedFigure instanceof TextHolder) {
+      textHolder = (TextHolder) pressedFigure;
       if (!textHolder.isEditable()) textHolder = null;
     }
 
@@ -110,7 +110,7 @@ public class TextAreaTool extends CreationTool implements ActionListener {
     typingTarget = textHolder;
   }
 
-  private Rectangle2D.Double getFieldBounds(org.jhotdraw.draw.figures.TextHolder figure) {
+  private Rectangle2D.Double getFieldBounds(TextHolder figure) {
     Rectangle2D.Double r = figure.getBounds();
     Insets2DDouble insets = figure.getInsets();
     r = new Rectangle2D.Double(r.x + insets.left, r.y + insets.top, r.width - insets.left - insets.right, r.height - insets.top - insets.bottom);
@@ -126,7 +126,7 @@ public class TextAreaTool extends CreationTool implements ActionListener {
 
   public void mouseReleased(MouseEvent evt) {
     if (createdFigure != null) {
-      org.jhotdraw.draw.figures.TextHolder textHolder = (org.jhotdraw.draw.figures.TextHolder) createdFigure;
+      TextHolder textHolder = (TextHolder) createdFigure;
       Rectangle2D.Double bounds = createdFigure.getBounds();
       if (bounds.width == 0 && bounds.height == 0) {
         getDrawing().remove(createdFigure);
@@ -138,7 +138,7 @@ public class TextAreaTool extends CreationTool implements ActionListener {
         }
         getView().addToSelection(createdFigure);
       }
-      if (createdFigure instanceof org.jhotdraw.draw.figures.CompositeFigure) {
+      if (createdFigure instanceof CompositeFigure) {
         ((CompositeFigure) createdFigure).layout();
       }
       createdFigure = null;

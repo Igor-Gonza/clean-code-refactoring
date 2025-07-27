@@ -14,13 +14,14 @@
 
 package org.jhotdraw.draw.tools;
 
-import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.HandleMultiCaster;
+import org.jhotdraw.draw.editors.DrawingEditor;
 import org.jhotdraw.draw.handlers.Handle;
 
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.util.Collection;
 /**
  * HandleTracker implements interactions with the handles of a Figure.
  *
@@ -30,16 +31,16 @@ import java.util.*;
  * @version 1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class HandleTracker extends AbstractTool {
-    private final org.jhotdraw.draw.handlers.Handle masterHandle;
+    private final Handle masterHandle;
     private final HandleMultiCaster multiCaster;
     private Point anchor;
     
     /** Creates a new instance. */
-    public HandleTracker(org.jhotdraw.draw.handlers.Handle handle) {
+    public HandleTracker(Handle handle) {
         masterHandle = handle;
         multiCaster = new HandleMultiCaster(handle);
     }
-    public HandleTracker(org.jhotdraw.draw.handlers.Handle master, Collection<Handle> handles) {
+    public HandleTracker(Handle master, Collection<Handle> handles) {
         masterHandle = master;
         multiCaster = new HandleMultiCaster(handles);
     }
@@ -80,9 +81,11 @@ public class HandleTracker extends AbstractTool {
     }
     
     public void mouseEntered(MouseEvent evt) {
+        // TODO document why this method is empty
     }
     
     public void mouseExited(MouseEvent evt) {
+        // TODO document why this method is empty
     }
     
     public void mouseMoved(MouseEvent evt) {

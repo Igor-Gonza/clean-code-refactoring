@@ -16,19 +16,24 @@ package org.jhotdraw.draw.tools;
 
 import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.editors.DrawingEditor;
-import org.jhotdraw.draw.views.DrawingView;
-import org.jhotdraw.draw.listeners.ToolListener;
 import org.jhotdraw.draw.edits.TransformEdit;
 import org.jhotdraw.draw.events.ToolEvent;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.listeners.ToolListener;
+import org.jhotdraw.draw.views.DrawingView;
 import org.jhotdraw.undo.CompositeEdit;
 
+import javax.swing.event.EventListenerList;
+import javax.swing.event.UndoableEditListener;
 import java.awt.*;
-import java.awt.geom.*;
-import java.awt.event.*;
-import javax.swing.event.*;
-import java.util.*;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.Collection;
 
 /**
  * AbstractTool.
@@ -171,7 +176,7 @@ public abstract class AbstractTool implements Tool {
       }
       case KeyEvent.VK_A: {
         if ((evt.getModifiersEx() &
-                (KeyEvent.CTRL_MASK | KeyEvent.META_MASK)) != 0) {
+                (InputEvent.CTRL_MASK | InputEvent.META_MASK)) != 0) {
           getView().addToSelection(getView().getDrawing().getFigures());
         }
         break;
@@ -180,31 +185,31 @@ public abstract class AbstractTool implements Tool {
         Collection<Figure> figures = getView().getSelectedFigures();
         AffineTransform tx = new AffineTransform();
         tx.translate(-1, 0);
-        for (org.jhotdraw.draw.figures.Figure f : figures) {
+        for (Figure f : figures) {
           f.willChange();
           f.basicTransform(tx);
           f.changed();
         }
-        getDrawing().fireUndoableEditHappened(new org.jhotdraw.draw.edits.TransformEdit(figures, tx));
+        getDrawing().fireUndoableEditHappened(new TransformEdit(figures, tx));
         break;
       }
       case KeyEvent.VK_RIGHT: {
-        Collection<org.jhotdraw.draw.figures.Figure> figures = getView().getSelectedFigures();
+        Collection<Figure> figures = getView().getSelectedFigures();
         AffineTransform tx = new AffineTransform();
         tx.translate(1, 0);
-        for (org.jhotdraw.draw.figures.Figure f : figures) {
+        for (Figure f : figures) {
           f.willChange();
           f.basicTransform(tx);
           f.changed();
         }
-        getDrawing().fireUndoableEditHappened(new org.jhotdraw.draw.edits.TransformEdit(figures, tx));
+        getDrawing().fireUndoableEditHappened(new TransformEdit(figures, tx));
         break;
       }
       case KeyEvent.VK_UP: {
-        Collection<org.jhotdraw.draw.figures.Figure> figures = getView().getSelectedFigures();
+        Collection<Figure> figures = getView().getSelectedFigures();
         AffineTransform tx = new AffineTransform();
         tx.translate(0, -1);
-        for (org.jhotdraw.draw.figures.Figure f : figures) {
+        for (Figure f : figures) {
           f.willChange();
           f.basicTransform(tx);
           f.changed();
@@ -213,18 +218,20 @@ public abstract class AbstractTool implements Tool {
         break;
       }
       case KeyEvent.VK_DOWN: {
-        Collection<org.jhotdraw.draw.figures.Figure> figures = getView().getSelectedFigures();
+        Collection<Figure> figures = getView().getSelectedFigures();
         getDrawing().fireUndoableEditHappened(edit = new CompositeEdit("Figur(en) verschieben"));
         AffineTransform tx = new AffineTransform();
         tx.translate(0, 1);
-        for (org.jhotdraw.draw.figures.Figure f : figures) {
+        for (Figure f : figures) {
           f.willChange();
           f.basicTransform(tx);
           f.changed();
         }
-        getDrawing().fireUndoableEditHappened(new org.jhotdraw.draw.edits.TransformEdit(figures, tx));
+        getDrawing().fireUndoableEditHappened(new TransformEdit(figures, tx));
         break;
       }
+      default:
+        break;
     }
   }
 
@@ -268,7 +275,7 @@ public abstract class AbstractTool implements Tool {
    * notification on this event type.
    */
   protected void fireToolStarted(DrawingView view) {
-    org.jhotdraw.draw.events.ToolEvent event = null;
+    ToolEvent event = null;
     // Notify all listeners that have registered interest for
     // Guaranteed to return a non-null array
     Object[] listeners = listenerList.getListenerList();
@@ -278,7 +285,7 @@ public abstract class AbstractTool implements Tool {
       if (listeners[i] == ToolListener.class) {
         // Lazily create the event:
         if (event == null)
-          event = new org.jhotdraw.draw.events.ToolEvent(this, view, new Rectangle(0, 0, -1, -1));
+          event = new ToolEvent(this, view, new Rectangle(0, 0, -1, -1));
         ((ToolListener) listeners[i + 1]).toolStarted(event);
       }
     }
@@ -289,7 +296,7 @@ public abstract class AbstractTool implements Tool {
    * notification on this event type.
    */
   protected void fireToolDone() {
-    org.jhotdraw.draw.events.ToolEvent event = null;
+    ToolEvent event = null;
     // Notify all listeners that have registered interest for
     // Guaranteed to return a non-null array
     Object[] listeners = listenerList.getListenerList();
@@ -299,7 +306,7 @@ public abstract class AbstractTool implements Tool {
       if (listeners[i] == ToolListener.class) {
         // Lazily create the event:
         if (event == null)
-          event = new org.jhotdraw.draw.events.ToolEvent(this, getView(), new Rectangle(0, 0, -1, -1));
+          event = new ToolEvent(this, getView(), new Rectangle(0, 0, -1, -1));
         ((ToolListener) listeners[i + 1]).toolDone(event);
       }
     }
@@ -322,7 +329,7 @@ public abstract class AbstractTool implements Tool {
    * notification on this event type.
    */
   protected void fireAreaInvalidated(Rectangle invalidatedArea) {
-    org.jhotdraw.draw.events.ToolEvent event = null;
+    ToolEvent event = null;
     // Notify all listeners that have registered interest for
     // Guaranteed to return a non-null array
     Object[] listeners = listenerList.getListenerList();
@@ -346,7 +353,7 @@ public abstract class AbstractTool implements Tool {
     if (handle != null) {
       view.setCursor(handle.getCursor());
     } else {
-      org.jhotdraw.draw.figures.Figure figure = view.findFigure(p);
+      Figure figure = view.findFigure(p);
       if (figure != null) {
         view.setCursor(figure.getCursor(view.viewToDrawing(p)));
       } else {
