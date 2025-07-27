@@ -14,15 +14,17 @@
 
 package org.jhotdraw.draw.handlers;
 
-import java.awt.*;
-import java.awt.geom.*;
-
-import static org.jhotdraw.draw.AttributeKeys.*;
-
 import org.jhotdraw.draw.AttributeKeys;
 import org.jhotdraw.draw.edits.AttributeChangeEdit;
+import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.figures.TriangleFigure;
-import org.jhotdraw.geom.*;
+import org.jhotdraw.geom.Geom;
+
+import java.awt.*;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+
+import static org.jhotdraw.draw.AttributeKeys.ORIENTATION;
 
 /**
  * A Handle to rotate a TriangleFigure
@@ -34,8 +36,8 @@ import org.jhotdraw.geom.*;
  */
 public class TriangleRotationHandler extends AbstractHandle {
   private Rectangle centerBox;
-  private Orientation oldValue;
-  private Orientation newValue;
+  private AttributeKeys.Orientation oldValue;
+  private AttributeKeys.Orientation newValue;
 
   /**
    * Creates a new instance.
@@ -52,7 +54,7 @@ public class TriangleRotationHandler extends AbstractHandle {
     Rectangle2D.Double r = getOwner().getBounds();
     Point2D.Double p;
     double offset = getHandleSize();
-    switch (ORIENTATION.get(getOwner())) {
+    switch (ORIENTATION.get((Figure) getOwner())) {
       case NORTH:
       default:
         p = new Point2D.Double(r.x + r.width / 2d, r.y + offset);
@@ -90,7 +92,7 @@ public class TriangleRotationHandler extends AbstractHandle {
   }
 
   public void trackStart(Point anchor, int modifiersEx) {
-    oldValue = ORIENTATION.get(getOwner());
+    oldValue = ORIENTATION.get((Figure) getOwner());
 
     centerBox = view.drawingToView(getOwner().getBounds());
     centerBox.grow(centerBox.width / -3, centerBox.height / -3);
@@ -128,7 +130,7 @@ public class TriangleRotationHandler extends AbstractHandle {
     }
     // FIXME - Add undo redo support
     getOwner().willChange();
-    ORIENTATION.basicSet(getOwner(), newValue);
+    ORIENTATION.basicSet((Figure) getOwner(), newValue);
     getOwner().changed();
     updateBounds();
   }

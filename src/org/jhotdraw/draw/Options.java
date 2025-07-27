@@ -27,6 +27,7 @@ public class Options {
    * Creates a new instance.
    */
   public Options() {
+    // TODO document why this constructor is empty
   }
 
   public static boolean isFractionalMetrics() {

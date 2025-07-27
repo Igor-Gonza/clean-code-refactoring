@@ -33,10 +33,11 @@ import java.awt.event.ActionListener;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  * @see TextFigure
  */
+@SuppressWarnings("unused")
 public class FloatingTextField {
 
-  private JTextField editWidget;
-  private org.jhotdraw.draw.views.DrawingView view;
+  private final JTextField editWidget;
+  private DrawingView view;
 
   public FloatingTextField() {
     editWidget = new JTextField(20);
@@ -45,7 +46,7 @@ public class FloatingTextField {
   /**
    * Creates the overlay for the given Component.
    */
-  public void createOverlay(org.jhotdraw.draw.views.DrawingView view) {
+  public void createOverlay(DrawingView view) {
     createOverlay(view, null);
   }
 

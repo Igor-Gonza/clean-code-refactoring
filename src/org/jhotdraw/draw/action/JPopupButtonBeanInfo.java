@@ -15,7 +15,7 @@ package org.jhotdraw.draw.action;
 
 import java.beans.*;
 
-@SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal"})
+@SuppressWarnings({"FieldMayBeFinal"})
 public class JPopupButtonBeanInfo extends SimpleBeanInfo {
 
   // Bean descriptor information will be obtained from introspection.//GEN-FIRST:BeanDescriptor

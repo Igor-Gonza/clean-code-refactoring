@@ -15,13 +15,12 @@
 package org.jhotdraw.draw;
 
 import org.jhotdraw.draw.figures.Figure;
-
-import java.lang.reflect.*;
+import java.lang.reflect.TypeVariable;
 
 /**
  * Provides typesafe getter and setter for a Figure attribute.
  * An AttributeKey has a name, a type and a default value. The default value
- * is returned by Figure.getAttribute, if a Figure does not have an attribute
+ * is returned by .getAttribute, if a Figure does not have an attribute
  * of the specified key.
  *
  * @author Werner Randelshofer
@@ -30,9 +29,9 @@ import java.lang.reflect.*;
  * <br>1.0 7. Juni 2006 Created.
  */
 public class AttributeKey<T> {
-  private String key;
-  private T defaultValue;
-  private boolean isNullValueAllowed;
+  private final String key;
+  private final T defaultValue;
+  private final boolean isNullValueAllowed;
 
   /**
    * Creates a new instance.
@@ -59,7 +58,7 @@ public class AttributeKey<T> {
     return defaultValue;
   }
 
-  public T get(org.jhotdraw.draw.figures.Figure f) {
+  public T get(Figure f) {
     // FIXME Whataheck is even this????
     T value = (T) f.getAttribute(this);
     return (value == null && !isNullValueAllowed) ? defaultValue : value;
@@ -72,7 +71,7 @@ public class AttributeKey<T> {
     f.setAttribute(this, value);
   }
 
-  public void basicSet(org.jhotdraw.draw.figures.Figure f, T value) {
+  public void basicSet(Figure f, T value) {
     if (value == null && !isNullValueAllowed) {
       throw new NullPointerException("Null value not allowed for AttributeKey " + key);
     }
@@ -81,7 +80,7 @@ public class AttributeKey<T> {
 
   public boolean equals(Object o) {
     if (o instanceof AttributeKey) {
-      AttributeKey that = (AttributeKey) o;
+      AttributeKey<?> that = (AttributeKey<?>) o;
       return that.key.equals(this.key);
     }
     return false;

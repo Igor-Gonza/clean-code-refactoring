@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import java.awt.*;
 import java.beans.*;
 
 public class DefaultDrawingViewBeanInfo extends SimpleBeanInfo {
@@ -34,7 +35,7 @@ public class DefaultDrawingViewBeanInfo extends SimpleBeanInfo {
   } //GEN-LAST:BeanDescriptor
 
   // Properties information will be obtained from introspection.//GEN-FIRST:Properties
-  private static PropertyDescriptor[] properties = null;
+  private static final PropertyDescriptor[] properties = null;
 
   private static PropertyDescriptor[] getPDescriptor() {//GEN-HEADEREND:Properties
 
@@ -44,7 +45,7 @@ public class DefaultDrawingViewBeanInfo extends SimpleBeanInfo {
   } //GEN-LAST:Properties
 
   // Event set information will be obtained from introspection.//GEN-FIRST:Events
-  private static EventSetDescriptor[] eventSets = null;
+  private static final EventSetDescriptor[] eventSets = null;
 
   private static EventSetDescriptor[] getEDescriptor() {//GEN-HEADEREND:Events
 
@@ -54,7 +55,7 @@ public class DefaultDrawingViewBeanInfo extends SimpleBeanInfo {
   } //GEN-LAST:Events
 
   // Method information will be obtained from introspection.//GEN-FIRST:Methods
-  private static MethodDescriptor[] methods = null;
+  private static final MethodDescriptor[] methods = null;
 
   private static MethodDescriptor[] getMDescriptor() {//GEN-HEADEREND:Methods
 
@@ -63,10 +64,10 @@ public class DefaultDrawingViewBeanInfo extends SimpleBeanInfo {
     return methods;
   } //GEN-LAST:Methods
 
-  private static java.awt.Image iconColor16 = null; //GEN-BEGIN:IconsDef
-  private static java.awt.Image iconColor32 = null;
-  private static java.awt.Image iconMono16 = null;
-  private static java.awt.Image iconMono32 = null; //GEN-END:IconsDef
+  private static Image iconColor16 = null; //GEN-BEGIN:IconsDef
+  private static Image iconColor32 = null;
+  private static Image iconMono16 = null;
+  private static Image iconMono32 = null; //GEN-END:IconsDef
   private static String iconNameC16 = null; //GEN-BEGIN:Icons
   private static String iconNameC32 = null;
   private static String iconNameM16 = null;
@@ -88,6 +89,7 @@ public class DefaultDrawingViewBeanInfo extends SimpleBeanInfo {
    * properties of this bean.  May return null if the
    * information should be obtained by automatic analysis.
    */
+  @Override
   public BeanDescriptor getBeanDescriptor() {
     return getBDescriptor();
   }
@@ -104,6 +106,7 @@ public class DefaultDrawingViewBeanInfo extends SimpleBeanInfo {
    * A client of getPropertyDescriptors can use "instanceof" to check
    * if a given PropertyDescriptor is an IndexedPropertyDescriptor.
    */
+  @Override
   public PropertyDescriptor[] getPropertyDescriptors() {
     return getPDescriptor();
   }
@@ -115,6 +118,7 @@ public class DefaultDrawingViewBeanInfo extends SimpleBeanInfo {
    * events fired by this bean.  May return null if the information
    * should be obtained by automatic analysis.
    */
+  @Override
   public EventSetDescriptor[] getEventSetDescriptors() {
     return getEDescriptor();
   }
@@ -126,6 +130,7 @@ public class DefaultDrawingViewBeanInfo extends SimpleBeanInfo {
    * implemented by this bean.  May return null if the information
    * should be obtained by automatic analysis.
    */
+  @Override
   public MethodDescriptor[] getMethodDescriptors() {
     return getMDescriptor();
   }
@@ -139,6 +144,7 @@ public class DefaultDrawingViewBeanInfo extends SimpleBeanInfo {
    * returned by getPropertyDescriptors.
    * <P>	Returns -1 if there is no default property.
    */
+  @Override
   public int getDefaultPropertyIndex() {
     return defaultPropertyIndex;
   }
@@ -151,6 +157,7 @@ public class DefaultDrawingViewBeanInfo extends SimpleBeanInfo {
    * returned by getEventSetDescriptors.
    * <P>	Returns -1 if there is no default event.
    */
+  @Override
   public int getDefaultEventIndex() {
     return defaultEventIndex;
   }
@@ -176,7 +183,8 @@ public class DefaultDrawingViewBeanInfo extends SimpleBeanInfo {
    * @return An image object representing the requested icon.  May
    * return null if no suitable icon is available.
    */
-  public java.awt.Image getIcon(int iconKind) {
+  @Override
+  public Image getIcon(int iconKind) {
     switch (iconKind) {
       case ICON_COLOR_16x16:
         if (iconNameC16 == null) return null;

@@ -110,7 +110,7 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
   }
 
   protected void basicSetAttributeOnChildren(AttributeKey<?> key, Object newValue) {
-    for (org.jhotdraw.draw.figures.Figure child : getChildren()) {
+    for (Figure child : getChildren()) {
       child.basicSetAttribute(key, newValue);
     }
   }
@@ -205,7 +205,7 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
   }
 
   protected void writeAttributes(DOMOutput out) throws IOException {
-    org.jhotdraw.draw.figures.Figure prototype = (org.jhotdraw.draw.figures.Figure) out.getPrototype();
+    Figure prototype = (Figure) out.getPrototype();
 
     boolean isElementOpen = false;
     for (Map.Entry<AttributeKey, Object> entry : attributes.entrySet()) {
@@ -253,7 +253,7 @@ public abstract class AbstractAttributedCompositeFigure extends AbstractComposit
   /**
    * Applies all attributes of this figure to that figure.
    */
-  protected void applyAttributesTo(org.jhotdraw.draw.figures.Figure that) {
+  protected void applyAttributesTo(Figure that) {
     for (Map.Entry<AttributeKey, Object> entry : attributes.entrySet()) {
       that.setAttribute(entry.getKey(), entry.getValue());
     }

@@ -51,7 +51,7 @@ public class FloatingTextArea {
     editWidget = new JTextArea();
     editWidget.setWrapStyleWord(true);
     editWidget.setLineWrap(true);
-    editScrollContainer = new JScrollPane(editWidget, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    editScrollContainer = new JScrollPane(editWidget, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     editScrollContainer.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     editScrollContainer.setBorder(BorderFactory.createLineBorder(Color.black));
   }

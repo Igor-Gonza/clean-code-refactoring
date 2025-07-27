@@ -14,7 +14,7 @@
 
 package org.jhotdraw.draw.figures;
 
-import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.AttributeKey;
 import org.jhotdraw.draw.connectors.Connector;
 import org.jhotdraw.draw.drawings.Drawing;
 import org.jhotdraw.draw.handlers.Handle;
@@ -241,7 +241,7 @@ public interface Figure extends Cloneable, Serializable, DOMStorable {
    * @return a Collection of handles
    * @see Handle
    */
-  Collection<org.jhotdraw.draw.handlers.Handle> createHandles(int detailLevel);
+  Collection<Handle> createHandles(int detailLevel);
 
   /**
    * Returns a cursor for the specified location.
@@ -294,7 +294,7 @@ public interface Figure extends Cloneable, Serializable, DOMStorable {
    * with the same semantics for this figure.
    * Return null, if no compatible connector is available.
    */
-  org.jhotdraw.draw.connectors.Connector findCompatibleConnector(org.jhotdraw.draw.connectors.Connector c, boolean isStartConnector);
+  Connector findCompatibleConnector(Connector c, boolean isStartConnector);
 
   /**
    * Sets whether the connectors should be visible for the
@@ -356,7 +356,7 @@ public interface Figure extends Cloneable, Serializable, DOMStorable {
    * Informs a figure, that it has been removed from the specified drawing.
    * The figure must inform all FigureListeners that it has been removed.
    */
-  void removeNotify(org.jhotdraw.draw.drawings.Drawing d);
+  void removeNotify(Drawing d);
 
   /**
    * Informs that a Figure is about to change its shape.
@@ -407,7 +407,7 @@ public interface Figure extends Cloneable, Serializable, DOMStorable {
    * @param view The drawing view which is the source of the mouse event.
    * @return Returns true, if the figure consumed the mouse click.
    */
-  boolean handleMouseClick(Point2D.Double p, MouseEvent evt, org.jhotdraw.draw.views.DrawingView view);
+  boolean handleMouseClick(Point2D.Double p, MouseEvent evt, DrawingView view);
 
   /**
    * Adds a listener for FigureEvent's.
@@ -417,7 +417,7 @@ public interface Figure extends Cloneable, Serializable, DOMStorable {
   /**
    * Removes a listener for FigureEvent's.
    */
-  void removeFigureListener(org.jhotdraw.draw.listeners.FigureListener l);
+  void removeFigureListener(FigureListener l);
 
   /**
    * Adds a listener for UndoableEdit events.

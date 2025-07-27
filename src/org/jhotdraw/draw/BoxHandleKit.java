@@ -17,9 +17,9 @@ package org.jhotdraw.draw;
 import org.jhotdraw.draw.edits.GeometryEdit;
 import org.jhotdraw.draw.figures.Figure;
 import org.jhotdraw.draw.handlers.Handle;
+import org.jhotdraw.draw.locators.RelativeLocator;
 import org.jhotdraw.draw.handlers.LocatorHandle;
 import org.jhotdraw.draw.locators.Locator;
-import org.jhotdraw.draw.locators.RelativeLocator;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -41,13 +41,14 @@ public class BoxHandleKit {
    * Creates a new instance.
    */
   public BoxHandleKit() {
+    // TODO document why this constructor is empty
   }
 
   /**
    * Creates handles for each lead of a
    * figure and adds them to the provided collection.
    */
-  static public void addLeadHandles(org.jhotdraw.draw.figures.Figure f, Collection<org.jhotdraw.draw.handlers.Handle> handles) {
+  public static void addLeadHandles(Figure f, Collection<Handle> handles) {
     handles.add(southEast(f));
     handles.add(southWest(f));
     handles.add(northEast(f));
@@ -58,7 +59,7 @@ public class BoxHandleKit {
    * Fills the given Vector with handles at each
    * the north, south, east, and west of the figure.
    */
-  static public void addEdgeHandles(org.jhotdraw.draw.figures.Figure f, Collection<org.jhotdraw.draw.handlers.Handle> handles) {
+  public static void addEdgeHandles(Figure f, Collection<Handle> handles) {
     handles.add(south(f));
     handles.add(north(f));
     handles.add(east(f));
@@ -69,48 +70,49 @@ public class BoxHandleKit {
    * Fills the given Vector with handles at each
    * the north, south, east, and west of the figure.
    */
-  static public void addBoxHandles(org.jhotdraw.draw.figures.Figure f, Collection<org.jhotdraw.draw.handlers.Handle> handles) {
+  public static void addBoxHandles(Figure f, Collection<Handle> handles) {
     addLeadHandles(f, handles);
     addEdgeHandles(f, handles);
   }
 
-  static public org.jhotdraw.draw.handlers.Handle south(org.jhotdraw.draw.figures.Figure owner) {
+  public static Handle south(Figure owner) {
     return new SouthHandle(owner);
   }
 
-  static public org.jhotdraw.draw.handlers.Handle southEast(org.jhotdraw.draw.figures.Figure owner) {
+  public static Handle southEast(Figure owner) {
     return new SouthEastHandle(owner);
   }
 
-  static public org.jhotdraw.draw.handlers.Handle southWest(org.jhotdraw.draw.figures.Figure owner) {
+  public static Handle southWest(Figure owner) {
     return new SouthWestHandle(owner);
   }
 
-  static public Handle north(org.jhotdraw.draw.figures.Figure owner) {
+  public static Handle north(Figure owner) {
     return new NorthHandle(owner);
   }
 
-  static public org.jhotdraw.draw.handlers.Handle northEast(org.jhotdraw.draw.figures.Figure owner) {
+  public static Handle northEast(Figure owner) {
     return new NorthEastHandle(owner);
   }
 
-  static public org.jhotdraw.draw.handlers.Handle northWest(org.jhotdraw.draw.figures.Figure owner) {
+  public static Handle northWest(Figure owner) {
     return new NorthWestHandle(owner);
   }
 
-  static public org.jhotdraw.draw.handlers.Handle east(org.jhotdraw.draw.figures.Figure owner) {
+  public static Handle east(Figure owner) {
     return new EastHandle(owner);
   }
 
-  static public org.jhotdraw.draw.handlers.Handle west(org.jhotdraw.draw.figures.Figure owner) {
+  public static Handle west(Figure owner) {
     return new WestHandle(owner);
   }
 
   private static class ResizeHandle extends LocatorHandle {
-    private int dx, dy;
+    private int dx;
+    private int dy;
     Object geometry;
 
-    ResizeHandle(org.jhotdraw.draw.figures.Figure owner, Locator loc) {
+    ResizeHandle(Figure owner, Locator loc) {
       super(owner, loc);
     }
 
@@ -134,13 +136,14 @@ public class BoxHandleKit {
     }
 
     protected void trackStepNormalized(Point2D.Double p) {
+      // TODO document why this method is empty
     }
 
     /**
      * FIXME - Replace operation parameters by a Rectangle2D.Double.
      */
     protected void setBounds(Point2D.Double anchor, Point2D.Double lead) {
-      org.jhotdraw.draw.figures.Figure f = getOwner();
+      Figure f = getOwner();
       f.willChange();
       Rectangle2D.Double oldBounds = f.getBounds();
       Rectangle2D.Double newBounds = new Rectangle2D.Double(Math.min(anchor.x, lead.x), Math.min(anchor.y, lead.y), Math.abs(anchor.x - lead.x), Math.abs(anchor.y - lead.y));
@@ -149,7 +152,7 @@ public class BoxHandleKit {
 
       AffineTransform tx = new AffineTransform();
       tx.translate(-oldBounds.x, -oldBounds.y);
-      if (!Double.isNaN(sx) && !Double.isNaN(sy) && (sx != 1d || sy != 1d) && !(sx < 0.0001) && !(sy < 0.0001)) {
+      if (!Double.isNaN(sx) && !Double.isNaN(sy) && (sx != 1d || sy != 1d) && sx >= 0.0001 && sy >= 0.0001) {
         f.basicTransform(tx);
         tx.setToIdentity();
         tx.scale(sx, sy);
@@ -163,105 +166,119 @@ public class BoxHandleKit {
   }
 
   private static class NorthEastHandle extends ResizeHandle {
-    NorthEastHandle(org.jhotdraw.draw.figures.Figure owner) {
-      super(owner, RelativeLocator.northEast());
+    NorthEastHandle(Figure owner) {
+      super(owner, org.jhotdraw.draw.locators.RelativeLocator.northEast());
     }
 
+    @Override
     protected void trackStepNormalized(Point2D.Double p) {
       Rectangle2D.Double r = getOwner().getBounds();
       setBounds(new Point2D.Double(r.x, Math.min(r.y + r.height - 1, p.y)), new Point2D.Double(Math.max(r.x, p.x), r.y + r.height));
     }
 
+    @Override
     public Cursor getCursor() {
       return Cursor.getPredefinedCursor(Cursor.NE_RESIZE_CURSOR);
     }
   }
 
   private static class EastHandle extends ResizeHandle {
-    EastHandle(org.jhotdraw.draw.figures.Figure owner) {
-      super(owner, org.jhotdraw.draw.locators.RelativeLocator.east());
+    EastHandle(Figure owner) {
+      super(owner, RelativeLocator.east());
     }
 
+    @Override
     protected void trackStepNormalized(Point2D.Double p) {
       Rectangle2D.Double r = getOwner().getBounds();
       setBounds(new Point2D.Double(r.x, r.y), new Point2D.Double(Math.max(r.x + 1, p.x), r.y + r.height));
     }
 
+    @Override
     public Cursor getCursor() {
       return Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR);
     }
   }
 
   private static class NorthHandle extends ResizeHandle {
-    NorthHandle(org.jhotdraw.draw.figures.Figure owner) {
-      super(owner, org.jhotdraw.draw.locators.RelativeLocator.north());
+    NorthHandle(Figure owner) {
+      super(owner, RelativeLocator.north());
     }
 
+    @Override
     protected void trackStepNormalized(Point2D.Double p) {
       Rectangle2D.Double r = getOwner().getBounds();
       setBounds(new Point2D.Double(r.x, Math.min(r.y + r.height - 1, p.y)), new Point2D.Double(r.x + r.width, r.y + r.height));
     }
 
+    @Override
     public Cursor getCursor() {
       return Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR);
     }
   }
 
   private static class NorthWestHandle extends ResizeHandle {
-    NorthWestHandle(org.jhotdraw.draw.figures.Figure owner) {
-      super(owner, org.jhotdraw.draw.locators.RelativeLocator.northWest());
+    NorthWestHandle(Figure owner) {
+      super(owner, RelativeLocator.northWest());
     }
 
+    @Override
     protected void trackStepNormalized(Point2D.Double p) {
       Rectangle2D.Double r = getOwner().getBounds();
       setBounds(new Point2D.Double(Math.min(r.x + r.width - 1, p.x), Math.min(r.y + r.height - 1, p.y)), new Point2D.Double(r.x + r.width, r.y + r.height));
     }
 
+    @Override
     public Cursor getCursor() {
       return Cursor.getPredefinedCursor(Cursor.NW_RESIZE_CURSOR);
     }
   }
 
   private static class SouthEastHandle extends ResizeHandle {
-    SouthEastHandle(org.jhotdraw.draw.figures.Figure owner) {
-      super(owner, org.jhotdraw.draw.locators.RelativeLocator.southEast());
+    SouthEastHandle(Figure owner) {
+      super(owner, RelativeLocator.southEast());
     }
 
+    @Override
     protected void trackStepNormalized(Point2D.Double p) {
       Rectangle2D.Double r = getOwner().getBounds();
       setBounds(new Point2D.Double(r.x, r.y), new Point2D.Double(Math.max(r.x + 1, p.x), Math.max(r.y + 1, p.y)));
     }
 
+    @Override
     public Cursor getCursor() {
       return Cursor.getPredefinedCursor(Cursor.SE_RESIZE_CURSOR);
     }
   }
 
   private static class SouthHandle extends ResizeHandle {
-    SouthHandle(org.jhotdraw.draw.figures.Figure owner) {
-      super(owner, org.jhotdraw.draw.locators.RelativeLocator.south());
+    SouthHandle(Figure owner) {
+      super(owner, RelativeLocator.south());
     }
 
+    @Override
     protected void trackStepNormalized(Point2D.Double p) {
       Rectangle2D.Double r = getOwner().getBounds();
       setBounds(new Point2D.Double(r.x, r.y), new Point2D.Double(r.x + r.width, Math.max(r.y + 1, p.y)));
     }
 
+    @Override
     public Cursor getCursor() {
       return Cursor.getPredefinedCursor(Cursor.S_RESIZE_CURSOR);
     }
   }
 
   private static class SouthWestHandle extends ResizeHandle {
-    SouthWestHandle(org.jhotdraw.draw.figures.Figure owner) {
-      super(owner, org.jhotdraw.draw.locators.RelativeLocator.southWest());
+    SouthWestHandle(Figure owner) {
+      super(owner, RelativeLocator.southWest());
     }
 
+    @Override
     protected void trackStepNormalized(Point2D.Double p) {
       Rectangle2D.Double r = getOwner().getBounds();
       setBounds(new Point2D.Double(Math.min(r.x + r.width - 1, p.x), r.y), new Point2D.Double(r.x + r.width, Math.max(r.y + 1, p.y)));
     }
 
+    @Override
     public Cursor getCursor() {
       return Cursor.getPredefinedCursor(Cursor.SW_RESIZE_CURSOR);
     }
@@ -269,14 +286,16 @@ public class BoxHandleKit {
 
   private static class WestHandle extends ResizeHandle {
     WestHandle(Figure owner) {
-      super(owner, org.jhotdraw.draw.locators.RelativeLocator.west());
+      super(owner, RelativeLocator.west());
     }
 
+    @Override
     protected void trackStepNormalized(Point2D.Double p) {
       Rectangle2D.Double r = getOwner().getBounds();
       setBounds(new Point2D.Double(Math.min(r.x + r.width - 1, p.x), r.y), new Point2D.Double(r.x + r.width, r.y + r.height));
     }
 
+    @Override
     public Cursor getCursor() {
       return Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR);
     }
