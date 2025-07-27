@@ -30,7 +30,7 @@ import java.util.EventObject;
  */
 public class FigureEvent extends EventObject {
   private Rectangle2D.Double invalidatedArea;
-  private AttributeKey attribute;
+  private AttributeKey<?> attribute;
   private Object oldValue;
   private Object newValue;
 
@@ -47,7 +47,7 @@ public class FigureEvent extends EventObject {
   /**
    * Constructs an event for the given source Figure.
    */
-  public FigureEvent(org.jhotdraw.draw.figures.Figure source, AttributeKey attribute, Object oldValue, Object newValue) {
+  public FigureEvent(Figure source, AttributeKey<?> attribute, Object oldValue, Object newValue) {
     super(source);
     this.attribute = attribute;
     this.oldValue = oldValue;
@@ -57,8 +57,8 @@ public class FigureEvent extends EventObject {
   /**
    * Gets the changed figure
    */
-  public org.jhotdraw.draw.figures.Figure getFigure() {
-    return (org.jhotdraw.draw.figures.Figure) getSource();
+  public Figure getFigure() {
+    return (Figure) getSource();
   }
 
   /**
