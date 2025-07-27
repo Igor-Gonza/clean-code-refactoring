@@ -16,7 +16,7 @@ package org.jhotdraw.draw.listeners;
 
 import org.jhotdraw.draw.events.FigureEvent;
 
-import java.util.*;
+import java.util.EventListener;
 
 /**
  * Listener interested in Figure changes.
@@ -29,12 +29,12 @@ public interface FigureListener extends EventListener {
   /**
    * Sent when an area used by the figure needs to be repainted.
    */
-  void figureAreaInvalidated(org.jhotdraw.draw.events.FigureEvent e);
+  void figureAreaInvalidated(FigureEvent e);
 
   /**
    * Sent when an attribute of the figure has changed.
    */
-  void figureAttributeChanged(org.jhotdraw.draw.events.FigureEvent e);
+  void figureAttributeChanged(FigureEvent e);
 
   /**
    * Sent when the geometry (e.g. the bounds) of the figure has changed.
@@ -44,15 +44,15 @@ public interface FigureListener extends EventListener {
   /**
    * Sent when a figure was added to a drawing.
    */
-  void figureAdded(org.jhotdraw.draw.events.FigureEvent e);
+  void figureAdded(FigureEvent e);
 
   /**
    * Sent when a figure was removed from a drawing.
    */
-  void figureRemoved(org.jhotdraw.draw.events.FigureEvent e);
+  void figureRemoved(FigureEvent e);
 
   /**
    * Sent when the figure requests to be removed from a drawing.
    */
-  void figureRequestRemove(org.jhotdraw.draw.events.FigureEvent e);
+  void figureRequestRemove(FigureEvent e);
 }

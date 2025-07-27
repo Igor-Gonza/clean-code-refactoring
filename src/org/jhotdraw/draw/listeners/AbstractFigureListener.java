@@ -25,21 +25,21 @@ import org.jhotdraw.draw.events.FigureEvent;
 // TODO Unimplemented class
 public abstract class AbstractFigureListener implements FigureListener {
 
-  public void figureAreaInvalidated(org.jhotdraw.draw.events.FigureEvent e) {
+  public void figureAreaInvalidated(FigureEvent e) {
   }
 
-  public void figureAttributeChanged(org.jhotdraw.draw.events.FigureEvent e) {
+  public void figureAttributeChanged(FigureEvent e) {
   }
 
   public void figureAdded(FigureEvent e) {
   }
 
-  public void figureChanged(org.jhotdraw.draw.events.FigureEvent e) {
+  public void figureChanged(FigureEvent e) {
   }
 
-  public void figureRemoved(org.jhotdraw.draw.events.FigureEvent e) {
+  public void figureRemoved(FigureEvent e) {
   }
 
-  public void figureRequestRemove(org.jhotdraw.draw.events.FigureEvent e) {
+  public void figureRequestRemove(FigureEvent e) {
   }
 }
