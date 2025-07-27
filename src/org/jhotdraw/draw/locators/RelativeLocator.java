@@ -49,7 +49,7 @@ public class RelativeLocator extends AbstractLocator {
     this.relativeY = relativeY;
   }
 
-  public java.awt.geom.Point2D.Double locate(Figure owner) {
+  public Point2D.Double locate(Figure owner) {
     Rectangle2D.Double bounds = owner.getBounds();
     if (owner.getDecorator() != null) {
       Insets2DDouble insets = DECORATOR_INSETS.get(owner);
@@ -63,39 +63,39 @@ public class RelativeLocator extends AbstractLocator {
     return new Point2D.Double(bounds.x + bounds.width * relativeX, bounds.y + bounds.height * relativeY);
   }
 
-  static public org.jhotdraw.draw.locators.Locator east() {
+  public static Locator east() {
     return new RelativeLocator(1.0, 0.5);
   }
 
-  static public org.jhotdraw.draw.locators.Locator north() {
+  public static Locator north() {
     return new RelativeLocator(0.5, 0.0);
   }
 
-  static public org.jhotdraw.draw.locators.Locator west() {
+  public static Locator west() {
     return new RelativeLocator(0.0, 0.5);
   }
 
-  static public Locator northEast() {
+  public static Locator northEast() {
     return new RelativeLocator(1.0, 0.0);
   }
 
-  static public org.jhotdraw.draw.locators.Locator northWest() {
+  public static Locator northWest() {
     return new RelativeLocator(0.0, 0.0);
   }
 
-  static public org.jhotdraw.draw.locators.Locator south() {
+  public static Locator south() {
     return new RelativeLocator(0.5, 1.0);
   }
 
-  static public org.jhotdraw.draw.locators.Locator southEast() {
+  public static Locator southEast() {
     return new RelativeLocator(1.0, 1.0);
   }
 
-  static public org.jhotdraw.draw.locators.Locator southWest() {
+  public static Locator southWest() {
     return new RelativeLocator(0.0, 1.0);
   }
 
-  static public org.jhotdraw.draw.locators.Locator center() {
+  public static Locator center() {
     return new RelativeLocator(0.5, 0.5);
   }
 
